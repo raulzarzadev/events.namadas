@@ -14,7 +14,7 @@ export class Nav extends Component {
           />
           <meta name="description" content="Description" />
           <meta name="keywords" content="Keywords" />
-          <title>Next.js PWA Example</title>
+          <title>events - nadamas</title>
 
           <link rel="manifest" href="/manifest.json" />
           <link
@@ -32,7 +32,9 @@ export class Nav extends Component {
           <link rel="apple-touch-icon" href="/icons.icon.png"></link>
           <meta name="theme-color" content="#317EFB" />
         </Head>
-        <div>Nav</div>
+        <div>
+          
+        </div>
       </nav>
     );
   }

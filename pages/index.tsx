@@ -1,20 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useDispatch, useSelector } from "react-redux";
 import Layout from "../components/layout";
-import { selectAuthState, setAuthState } from "../slices/authSlice";
-import {
-  decrement,
-  increment,
-  incrementAsyncByAmount,
-  selectCountState,
-} from "../slices/couterSlice";
+
 
 const Home: NextPage = () => {
-  const dispatch = useDispatch();
-  const authState = useSelector(selectAuthState);
-  const counterValue = useSelector(selectCountState);
-
+ 
   return (
     <div>
       <Head>

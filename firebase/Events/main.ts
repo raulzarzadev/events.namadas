@@ -1,4 +1,3 @@
-import { where } from 'firebase/firestore'
 import { FirebaseCRUD } from '../FirebaseCRUD'
 import { User } from './user.model'
 

@@ -1,6 +1,6 @@
-import EventCard, { Event } from './EventCard';
+import EventCard, { EventType } from './EventCard';
 
-const events: Event[] = [
+const events: EventType[] = [
   {
     title: 'Triatlon caimancito',
     resume: 'Triatlon caimancito',

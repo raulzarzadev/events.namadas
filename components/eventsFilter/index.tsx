@@ -27,7 +27,7 @@ const EventsFilter = () => {
 
 const FilterChip=({label='', checked=false})=>{
   const [isChecked, setIsChecked]=useState(checked)
-  const handleChange=({target:{checked}})=>{
+  const handleChange=({target:{checked}}:any)=>{
     console.log(checked);
     setIsChecked(checked)
   }

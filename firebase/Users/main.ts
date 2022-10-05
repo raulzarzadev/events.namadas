@@ -10,7 +10,7 @@ const usersCRUD = new FirebaseCRUD('users')
 export const setUser = (itemId: string, newItem: object) =>
   usersCRUD.setDoc(itemId, newItem)
 
-export const createUser = (newItem: User) =>
+export const createUser = (newItem: any) =>
   usersCRUD.create(newItem)
 
 export const updateUser = (itemId: string, newItem: User) =>

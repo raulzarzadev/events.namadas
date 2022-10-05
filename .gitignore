@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+.env
 
 # testing
 /coverage
@@ -41,5 +42,3 @@ next-env.d.ts
 **/public/sw.js.map
 **/public/worker-*.js
 **/public/worbox-*.js.map
-
-.env

@@ -19,6 +19,12 @@ const events: EventType[] = [
     id: '3',
     image: undefined,
   },
+  {
+    title: 'Etapa 1 ciclismo',
+    resume: 'Triatlon caimancito',
+    id: '4',
+    image: undefined,
+  },
 ];
 const EventsList = () => {
   const handleSuscribeTo=(id:string)=>{

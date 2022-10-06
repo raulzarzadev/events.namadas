@@ -30,24 +30,28 @@ const EventCard = ({
     md: 'max-w-[250px]',
     lg: 'max-w-xs',
   };
+
+  // FIX group-hover is not working
   return (
     <div>
-      <div
-        className={`card w-full ${sizing[size]} border-2 border-transparent hover:border-primary cursor-pointer active:border-gray-600`}
-      >
-        <figure>
-          <img src="https://placeimg.com/400/225/arch" alt="car!" />
-        </figure>
-        <div className="card-body glass">
-          <h2 className="card-title">{title}</h2>
-          <p>{resume}</p>
-          <div className="card-actions justify-end">
-            <Link href={`/events/${id}`}>
-              <button className="btn btn-primary">Saber más!</button>
-            </Link>
+      <Link href={`/events/${id}`}>
+        <a>
+          <div
+            className={`card w-full ${sizing[size]} border-2 border-transparent  hover:border-primary cursor-pointer active:border-gray-600`}
+          >
+            <figure>
+              <img src="https://placeimg.com/400/225/arch" alt="car!" />
+            </figure>
+            <div className="card-body glass">
+              <h2 className="card-title">{title}</h2>
+              <p>{resume}</p>
+              <div className="card-actions justify-end">
+                <button className="btn btn-outline ">Saber más!</button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </a>
+      </Link>
     </div>
   );
 };

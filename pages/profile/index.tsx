@@ -1,4 +1,5 @@
 import Profile from "@comps/Profile";
+import withAuth from "@comps/HOCs/PrivatePage";
 
 const ProfilePage = () => {
   return (
@@ -8,4 +9,4 @@ const ProfilePage = () => {
   );
 }
 
-export default ProfilePage;
+export default withAuth(ProfilePage);

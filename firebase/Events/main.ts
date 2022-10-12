@@ -1,24 +1,24 @@
 import { FirebaseCRUD } from '../FirebaseCRUD'
-import { User } from './user.model'
+import { Event } from './event.model'
 
-const usersCRUD = new FirebaseCRUD('events_v2')
+const eventsCRUD = new FirebaseCRUD('events_v2')
 
-export const setUser = (itemId: string, newItem: object) =>
-  usersCRUD.setDoc(itemId, newItem)
+export const setEvent = (itemId: string, newItem: object) =>
+  eventsCRUD.setDoc(itemId, newItem)
 
-export const createUser = (newItem: User) =>
-  usersCRUD.create(newItem)
+export const createEvent = (newItem: Event) =>
+  eventsCRUD.create(newItem)
 
-export const updateUser = (itemId: string, newItem: User) =>
-  usersCRUD.update(itemId, newItem)
+export const updateEvent = (itemId: string, newItem: Event) =>
+  eventsCRUD.update(itemId, newItem)
 
-export const deleteUser = (itemId: string) =>
-  usersCRUD.delete(itemId)
+export const deleteEvent = (itemId: string) =>
+  eventsCRUD.delete(itemId)
 
-export const getUser = (itemId: string) =>
-  usersCRUD.get(itemId)
+export const getEvent = (itemId: string) =>
+  eventsCRUD.get(itemId)
 
-export const listenUser = (
+export const listenEvent = (
   itemId: string,
   cb: CallableFunction
-) => usersCRUD.listen(itemId, cb)
+) => eventsCRUD.listen(itemId, cb)

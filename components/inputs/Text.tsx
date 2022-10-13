@@ -3,17 +3,16 @@ import { InputType } from ".";
 
  const Text =React.forwardRef<HTMLInputElement, InputType>((props, ref) => {
 
-  const { label, errors, name, type, ...rest } = props;
+  const { label, errors, name='', type } = props;
   return (
-    <div className="form-control w-full max-w-xs">
-      <label className="label">{label}</label>
+    <div className="form-control w-full ">
+      <label className="label ">{label}</label>
       <input
         type={type}
-        name={name}
-        className="input  input-bordered"
+        className="input  input-bordered "
         ref={ref}
         aria-invalid={errors[name] ? 'true' : 'false'}
-        {...rest}
+        {...props}
       />
       <label>{errors[name] && <span>{errors[name]}</span>}</label>
     </div>

@@ -37,9 +37,9 @@ const FormEvent = () => {
 
   return (
     <div>
-      <h2>Crea un evento aquí </h2>
+      <h2 className='text-xl font-bold text-center my-4'>Create an event</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid mx-auto place-content-center gap-2">
+        <div className="grid mx-auto gap-2 max-w-md  ">
           <Text
             {...register('title')}
             name="title"
@@ -75,33 +75,8 @@ const FormEvent = () => {
             label=" Address / Location"
             errors={errors}
           />
-          <Select
-            label="Kind of event"
-            {...register('eventType')}
-            name="eventType"
-            errors={errors}
-            options={[
-              { label: 'Sports', value: 'sportEvent' },
-              { label: 'Social', value: 'socialEvent' },
-            ]}
-          />
-          {isSportType && (
-            <Select
-              label="Sport"
-              {...register('sport')}
-              name="sport"
-              errors={errors}
-              options={[
-                { label: 'Swimming', value: 'swimming' },
-                { label: 'Running', value: 'running' },
-                { label: 'Cycling', value: 'cycling' },
-                { label: 'Triathlon', value: 'triathlon' },
-                { label: 'Duathlon', value: 'duathlon' },
-              ]}
-            />
-          )}
-          {isSwimmingEvent && (
-            <div className="flex ">
+          <h4>Choose type of event</h4>
+            <div className="flex justify-around">
               <RadioInput
                 label="Open water"
                 {...register('swimmingType')}
@@ -118,8 +93,8 @@ const FormEvent = () => {
                 value="50m"
               />
             </div>
-          )}
-          {/* {isSwimmingPool && <PickerSwimmingTests />}
+          {/*
+           {isSwimmingPool && <PickerSwimmingTests />}
           {isOpenWater && (
             <div className='text-center'>
               <div className='flex'>

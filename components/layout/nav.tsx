@@ -5,12 +5,13 @@ import React from 'react';
 
 const Nav = () => {
 const {user, handleLogin, handleLogout}=useAuth()
-console.log(user)
   return (
     <nav className="w-full ">
       <div className="navbar bg-base-100 shadow-md">
         <div className="navbar-start">
+          <Link href={'/'}>
           <a className="btn btn-ghost normal-case text-xl">Eventos </a>
+          </Link>
         </div>
         <div className="navbar-end">
           <button className="btn btn-ghost btn-circle">
@@ -85,9 +86,7 @@ console.log(user)
                     <a>Settings</a>
                   </li>
                   <li>
-                    <a>
-                      <button onClick={() => handleLogout()}>Logout</button>
-                    </a>
+                    <button className='border' onClick={() => handleLogout()}>Logout</button>
                   </li>
                 </ul>
               </div>

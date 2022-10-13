@@ -3,22 +3,28 @@ import { useState } from "react";
 const EventsFilter = () => {
   return (
     <div>
-      <h2 className="text-center text-2xl">Encuentra un evento para tí</h2>
-      <div className=" max-w-sm mx-auto my-2">
-        <h3 className="mb-2">Por deporte:</h3>
-        <div className="flex mx-auto justify-around ">
-          <FilterChip label="Natación" />
-          <FilterChip label="Ciclismo" />
-          <FilterChip label="Carrera" />
-        </div>
-      </div>
       <div className=" max-w-sm mx-auto ">
-        <h3 className="mb-2">Por fecha:</h3>
+        <h3 className="mb-2">Eventos por fecha:</h3>
         <div className="flex mx-auto justify-around flex-wrap gap-2 ">
           <FilterChip label="Pasados" />
           <FilterChip label="Esta semana" />
           <FilterChip label="Este mes " />
           <FilterChip label="Este año" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const BySport=()=>{
+  return (
+    <div>
+      <div className=" max-w-sm mx-auto my-2">
+        <h3 className="mb-2">Por deporte:</h3>
+        <div className="flex mx-auto justify-around ">
+          <FilterChip label="Aguas abiertas" />
+          <FilterChip label="Natación Olimpica" />
+          <FilterChip label="Que incluyan natación" />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import Text  from "./Text";
 import Toggle from './Toggle'
-import Date from './Date'
+import InputDate from './InputDate';
 export interface InputType {
   label: string;
   name: string;
@@ -9,4 +9,4 @@ export interface InputType {
   rules?: any;
 }
 
-export { Text , Toggle , Date }
+export { Text, Toggle, InputDate };

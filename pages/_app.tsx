@@ -1,20 +1,11 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { wrapper } from '../store';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAuthState } from 'store/slices/authSlice';
-import { useEffect } from 'react';
-import { authStateChanged } from '@firebase/Users/main';
 import Layout from '@comps/layout';
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    authStateChanged((res: any) => {
-      dispatch(setAuthState(res));
-    });
-  }, []);
+
   return (
     <Layout>
       <Head>

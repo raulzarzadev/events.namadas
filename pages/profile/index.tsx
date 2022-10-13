@@ -1,17 +1,13 @@
 
 import Profile from "@comps/Profile";
-import useAuth from "hooks/useAuth";
+import PrivatePage from "HOCS/PrivatePage";
 
 const ProfilePage = () => {
-const {isAuth, user}=useAuth()
-console.log(isAuth, user)
-
- 
-  return (
-    <div>
-      <Profile/>
-    </div>
-  );
+    return (
+      <PrivatePage>
+        <Profile />
+      </PrivatePage>
+    );
 }
 
 export default ProfilePage;

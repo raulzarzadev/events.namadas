@@ -13,7 +13,7 @@ interface SelectOption {
  const Select = React.forwardRef<HTMLInputElement, SelectInput>((props, ref) => {
    const { label, errors, name, type, options, placeholder='Select an opiton',...rest } = props;
    return (
-     <div className="form-control w-full max-w-xs">
+     <div className="form-control w-full ">
        <label className="label">{label}</label>
        <select
          type={type}

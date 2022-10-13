@@ -1,27 +1,25 @@
 import { InputDate, Text, Toggle } from '@comps/inputs';
-import Chip from '@comps/inputs/Chip';
+import InputLocalDate from '@comps/inputs/InputLocalDate';
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest';
 import RadioInput from '@comps/inputs/Radio';
-import Select from '@comps/inputs/Select';
+import { Event } from '@firebase/Events/event.model';
 import { createEvent, updateEvent } from '@firebase/Events/main';
 import { useRouter } from 'next/router';
-import { Key, useEffect } from 'react';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 
-const FormEvent = ({event}) => {
+const FormEvent = ({event}:{event?:undefined|Event}) => {
   const router = useRouter();
   const {
     register,
     handleSubmit,
     watch,
-    setValue,
     control,
     formState: { errors },
   } = useForm({
     defaultValues:event||undefined
   });
   const onSubmit = (data) => {
-    console.log(data);
+   // console.log(data);
   const eventAllreadyExist = !!event?.id
     
   eventAllreadyExist
@@ -57,10 +55,10 @@ const FormEvent = ({event}) => {
     name: 'subEvents', // unique name for your Field Array,
   });
   const handleAddSubEvent = () => {
-    append({ title: '', distance: '', comments: '' });
+    append({ title: '', distance: '', comments: '', date:'' });
   };
 
-   console.log(formResults)
+   //console.log(formResults)
 
   return (
     <div>
@@ -153,6 +151,12 @@ const FormEvent = ({event}) => {
                       // name={`subEvents.${index}.distance`}
                       errors={errors}
                     />
+                      <InputLocalDate
+                        {...register(`subEvents.${index}.date`)}
+                        label={'Date time'}
+                        // name={`subEvents.${index}.title`}
+                        errors={errors}
+                      />
                     <Text
                       {...register(`subEvents.${index}.comments`)}
                       label={'Coments'}

@@ -1,14 +1,14 @@
 import React from "react";
 import { InputType } from ".";
 
- const InputDate = React.forwardRef<HTMLInputElement, InputType>(
+ const InputLocalDate = React.forwardRef<HTMLInputElement, InputType>(
    (props, ref) => {
      const { label, errors, name, type='date', ...rest } = props;
      return (
        <div className="form-control w-full ">
          <label className="label">{label}</label>
          <input
-           type={"date"}
+           type={'datetime-local'}
            name={name}
            className="input  input-bordered"
            ref={ref}
@@ -21,4 +21,4 @@ import { InputType } from ".";
    }
  );
 
-export default InputDate;
+export default InputLocalDate;

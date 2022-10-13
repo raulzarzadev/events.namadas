@@ -5,7 +5,7 @@ const NewEvent = () => {
   
   return (
       <PrivatePage>
-        <FormEvent/>
+        <FormEvent />
       </PrivatePage>
   );
 }

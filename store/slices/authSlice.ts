@@ -6,13 +6,13 @@ import { User } from "@firebase/Events/user.model";
 // Type for our state
 export interface AuthState {
   authState: boolean;
-  user:User|null
+  user:User|null|undefined
 }
 
 // Initial state
 const initialState: AuthState = {
   authState: false,
-  user: null
+  user: undefined
 };
 
 

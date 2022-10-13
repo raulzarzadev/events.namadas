@@ -1,18 +1,11 @@
-import { googleLogin, logout } from '@firebase/Users/main';
+import useAuth from 'hooks/useAuth';
+import Image from 'next/image';
 import Link from 'next/link';
-import React, { Component } from 'react';
-import { useSelector } from 'react-redux';
-import { selectAuthState } from 'store/slices/authSlice';
+import React from 'react';
 
 const Nav = () => {
-  const {user} = useSelector(selectAuthState)
-  const handleLogin=()=>{
-    googleLogin()
-  }
-  const handleLogout=()=>{
-    logout()
-  }
-  
+const {user, handleLogin, handleLogout}=useAuth()
+console.log(user)
   return (
     <nav className="w-full ">
       <div className="navbar bg-base-100 shadow-md">
@@ -72,8 +65,8 @@ const Nav = () => {
 
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                  <div className="w-10 rounded-full">
-                    <img src={user?.image || user?.photoURL} />
+                  <div className="relative w-10 rounded-full">
+                    <Image src={user?.image || user?.photoURL} layout='fill' objectFit='contain'/>
                   </div>
                 </label>
                 <ul
@@ -82,10 +75,10 @@ const Nav = () => {
                 >
                   <li>
                     <Link href={'/profile'}>
-                    <a className="justify-between">
-                      Profile
-                      <span className="badge">New</span>
-                    </a>
+                      <a className="justify-between">
+                        Profile
+                        <span className="badge">New</span>
+                      </a>
                     </Link>
                   </li>
                   <li>
@@ -93,7 +86,7 @@ const Nav = () => {
                   </li>
                   <li>
                     <a>
-                      <button onClick={()=>handleLogout()}>Logout</button>
+                      <button onClick={() => handleLogout()}>Logout</button>
                     </a>
                   </li>
                 </ul>

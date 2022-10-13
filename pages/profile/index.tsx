@@ -1,7 +1,12 @@
+
 import Profile from "@comps/Profile";
-import withAuth from "@comps/HOCs/PrivatePage";
+import useAuth from "hooks/useAuth";
 
 const ProfilePage = () => {
+const {isAuth, user}=useAuth()
+console.log(isAuth, user)
+
+ 
   return (
     <div>
       <Profile/>
@@ -9,4 +14,4 @@ const ProfilePage = () => {
   );
 }
 
-export default withAuth(ProfilePage);
+export default ProfilePage;

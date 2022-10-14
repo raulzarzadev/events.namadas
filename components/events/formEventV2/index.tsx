@@ -15,6 +15,7 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
     handleSubmit,
     watch,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues:event||undefined
@@ -48,8 +49,7 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
     formValues?.sport === 'swimming';
   const isOpenWater = formValues?.swimmingType === 'openWater';
   const isSwimmingPool =
-    isSwimmingEvent &&
-    (formValues.swimmingType === '25m' || formValues.swimmingType === '50m');
+    formValues.swimmingType === '25m' || formValues.swimmingType === '50m'
 
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
@@ -58,6 +58,8 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
   const handleAddSubEvent = () => {
     append({ title: '', distance: '', comments: '', date:'' });
   };
+
+  console.log(isSwimmingEvent);
 
   return (
     <div>
@@ -121,7 +123,7 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
             />
           </div>
 
-          {isSwimmingPool && <PickerSwimmingTests tests={undefined} />}
+          {isSwimmingPool && <PickerSwimmingTests  setTests={(tests)=>setValue('subEvents',tests)} tests={formValues?.subEvents} />}
           {isOpenWater && (
             <div>
               <h4 className="font-bold text-lg">Set sub-events!</h4>

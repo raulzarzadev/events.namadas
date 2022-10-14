@@ -6,12 +6,14 @@ export interface Event extends Base {
   finishDate: string;
   address: string;
   includeFinishDate: string;
-  swimmingType: string;
+  swimmingType: SwimmingTypes;
   subEvents: SubEvent[];
   resume: string;
   image: string;
   images: EventImage[];
 }
+
+export type SwimmingTypes = "openWater" | "25m" | "50m"
 
 export interface EventImage {
   src:string
@@ -22,4 +24,5 @@ export interface SubEvent{
   title:string,
   comments:string
   date:string
+  style:string
 }

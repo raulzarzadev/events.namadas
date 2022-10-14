@@ -1,19 +1,38 @@
-import { listenEvent } from "@firebase/Events/main"
-import { SetStateAction, useEffect, useState } from "react"
+import { listenEvent, listenUserEvents } from '@firebase/Events/main';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectEventState, setEvent } from 'store/slices/eventSlice';
+import useAuth from './useAuth';
 
-function useEvents({eventId}){
-  const [event, setEvent]=useState(undefined)
-  useEffect(()=>{
-    if(eventId){
-      listenEvent(eventId, (res: SetStateAction<undefined>)=>{
-        setEvent(res)
-      })
+interface UseEvenType{
+  eventId?: string
+}
+function useEvents(props: UseEvenType) {
+  const eventId = props?.eventId
+  // const [event, setEvent]=useState(undefined)
+  const dispatch = useDispatch();
+  const event = useSelector(selectEventState);
+  const {user}=useAuth()
+  const [userEvents, setUserEvents] = useState([]);
+
+  useEffect(() => {
+    if (eventId) {
+      listenEvent(eventId, (res: any) => {
+        dispatch(setEvent(res));
+      });
     }
+  }, [eventId]);
 
-  },[eventId])
+  useEffect(() => {
+    if(user){
 
-  
-  return {event}
+      listenUserEvents((res) => {
+        setUserEvents(res);
+      });
+    }
+  }, [user]);
+
+  return { event, userEvents };
 }
 
-export default useEvents
+export default useEvents;

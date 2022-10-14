@@ -1,3 +1,4 @@
+import useEvents from 'hooks/useEvents';
 import EventCard, { EventType } from './EventCard';
 
 const events: EventType[] = [
@@ -26,16 +27,21 @@ const events: EventType[] = [
     image: undefined,
   },
 ];
+
+
 const EventsList = () => {
+
+  const { userEvents } = useEvents();
   const handleSuscribeTo=(id:string)=>{
     console.log(id)
     return ''
   }
+console.log(userEvents);
   return (
     <div>
       <h3 className="text-2xl text-center font-bold my-4">Events</h3>
       <div className="flex flex-wrap justify-around gap-2">
-        {events.map((event) => (
+        {userEvents.map((event) => (
           <EventCard
             event={event}
             key={event.id}

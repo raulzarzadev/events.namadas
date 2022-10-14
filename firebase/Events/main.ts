@@ -22,3 +22,5 @@ export const listenEvent = (
   itemId: string,
   cb: CallableFunction
 ) => eventsCRUD.listen(itemId, cb)
+
+export const listenUserEvents=(cb:CallableFunction)=>eventsCRUD.listenCurrentUserDocs(cb)

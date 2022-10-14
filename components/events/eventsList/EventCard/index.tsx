@@ -6,6 +6,7 @@ export interface EventType {
   id: string;
   image?: string;
   images?: EventImageType[]
+  userId:string
 }
 
 export interface EventImageType {

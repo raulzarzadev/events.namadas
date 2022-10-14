@@ -8,6 +8,9 @@ export interface Event extends Base {
   includeFinishDate:string 
   swimmingType:string
   subEvents:SubEvent[]
+  resume:string
+  image:string
+  images:string[]
 }
 interface SubEvent{
   distance:string | number

@@ -16,7 +16,7 @@ interface Image {
   text?: string;
 }
 
-const Carousel = ({ images = [] }: { images: Image[] | [] | undefined}) => {
+const Carousel = ({ images = [] }: { images?: Image[] | [] | undefined}) => {
  
   return (
     <div className="">

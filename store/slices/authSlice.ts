@@ -1,7 +1,7 @@
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import { AppState } from "..";
 import { HYDRATE } from "next-redux-wrapper";
-import { User } from "@firebase/Events/user.model";
+import { User } from "@firebase/Users/user.model";
 
 // Type for our state
 export interface AuthState {

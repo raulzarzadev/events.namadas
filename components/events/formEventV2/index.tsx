@@ -6,6 +6,7 @@ import { Event } from '@firebase/Events/event.model';
 import { createEvent, updateEvent } from '@firebase/Events/main';
 import { useRouter } from 'next/router';
 import { useFieldArray, useForm } from 'react-hook-form';
+import myFormatDate from 'utils/myFormatDate';
 
 const FormEvent = ({event}:{event?:undefined|Event}) => {
   const router = useRouter();
@@ -38,17 +39,17 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
         .catch((err) => console.error(err));
   };
 
-  const formResults = watch();
+  const formValues = watch();
 
-  const includeFinishDate = formResults?.includeFinishDate;
-  const isSportType = formResults?.eventType === 'sportEvent';
+  const includeFinishDate = formValues?.includeFinishDate;
+  const isSportType = formValues?.eventType === 'sportEvent';
   const isSwimmingEvent =
-    formResults?.eventType === 'sportEvent' &&
-    formResults?.sport === 'swimming';
-  const isOpenWater = formResults?.swimmingType === 'openWater';
+    formValues?.eventType === 'sportEvent' &&
+    formValues?.sport === 'swimming';
+  const isOpenWater = formValues?.swimmingType === 'openWater';
   const isSwimmingPool =
     isSwimmingEvent &&
-    (formResults.swimmingType === '25m' || formResults.swimmingType === '50m');
+    (formValues.swimmingType === '25m' || formValues.swimmingType === '50m');
 
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
@@ -57,8 +58,6 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
   const handleAddSubEvent = () => {
     append({ title: '', distance: '', comments: '', date:'' });
   };
-
-   //console.log(formResults)
 
   return (
     <div>
@@ -73,11 +72,12 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
             type="text"
           />
           <InputDate
-            {...register('date')}
+            {...register('date', {
+              value: myFormatDate(formValues.date, 'yyyy-MM-dd'),
+            })}
             name="date"
             label="Date"
             errors={errors}
-            type="date"
           />
           <Toggle
             label={'Include finish date'}
@@ -87,7 +87,9 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
           />
           {includeFinishDate && (
             <InputDate
-              {...register('finishDate')}
+              {...register('finishDate', {
+                value: myFormatDate(formValues.date, 'yyyy-MM-dd'),
+              })}
               name="finishDate"
               label="Finish date"
               errors={errors}
@@ -151,12 +153,12 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
                       // name={`subEvents.${index}.distance`}
                       errors={errors}
                     />
-                      <InputLocalDate
-                        {...register(`subEvents.${index}.date`)}
-                        label={'Date time'}
-                        // name={`subEvents.${index}.title`}
-                        errors={errors}
-                      />
+                    <InputLocalDate
+                      {...register(`subEvents.${index}.date`)}
+                      label={'Date time'}
+                      // name={`subEvents.${index}.title`}
+                      errors={errors}
+                    />
                     <Text
                       {...register(`subEvents.${index}.comments`)}
                       label={'Coments'}

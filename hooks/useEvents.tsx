@@ -7,7 +7,7 @@ import useAuth from './useAuth';
 interface UseEvenType{
   eventId?: string
 }
-function useEvents(props: UseEvenType) {
+function useEvents(props?: UseEvenType) {
   const eventId = props?.eventId
   // const [event, setEvent]=useState(undefined)
   const dispatch = useDispatch();

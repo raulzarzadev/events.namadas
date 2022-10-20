@@ -1,6 +1,8 @@
 import { Base } from '@firebase/Base.model'
 
 export interface Event extends Base {
+  sport: string;
+  eventType: string;
   date: string | number | Date;
   title: string;
   finishDate: string;

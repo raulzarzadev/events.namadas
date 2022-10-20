@@ -33,10 +33,8 @@ const EventsList = () => {
 
   const { userEvents } = useEvents();
   const handleSuscribeTo=(id:string)=>{
-    console.log(id)
     return ''
   }
-console.log(userEvents);
   return (
     <div>
       <h3 className="text-2xl text-center font-bold my-4">Events</h3>

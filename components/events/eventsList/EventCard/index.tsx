@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export interface EventType {
@@ -25,7 +26,7 @@ const EventCard = ({
   event: EventType;
   onSuscribe?: (id: string) => {};
 }) => {
-  const { title, resume, id } = event;
+  const { title, resume, id ,image} = event;
   const sizing = {
     sm: 'max-w-[200px]',
     md: 'max-w-[250px]',
@@ -40,8 +41,10 @@ const EventCard = ({
           <div
             className={`card w-full ${sizing[size]} border-2 border-transparent  hover:border-primary cursor-pointer active:border-gray-600`}
           >
-            <figure>
-              <img src="https://placeimg.com/400/225/arch" alt="car!" />
+            <figure className="relative w-[400px] h-[225px] ">
+              {image &&
+              <Image src={image} objectFit="cover" layout="fill" />
+              }
             </figure>
             <div className="card-body glass">
               <h2 className="card-title">{title}</h2>

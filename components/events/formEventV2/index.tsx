@@ -1,14 +1,17 @@
 import { InputDate, Text, Toggle } from '@comps/inputs';
+import InputFiles from '@comps/inputs/inputFiles_V2';
 import InputLocalDate from '@comps/inputs/InputLocalDate';
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest';
 import RadioInput from '@comps/inputs/Radio';
-import { Event } from '@firebase/Events/event.model';
+import { Event, SubEvent } from '@firebase/Events/event.model';
 import { createEvent, updateEvent } from '@firebase/Events/main';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useFieldArray, useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 
-const FormEvent = ({event}:{event?:undefined|Event}) => {
+const FormEvent = ({event}:{event?:Event}) => {
+  const eventAllreadyExist = event?.id;
   const router = useRouter();
   const {
     register,
@@ -20,19 +23,19 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
   } = useForm({
     defaultValues:event||undefined
   });
-  const onSubmit = (data) => {
+
+  const onSubmit = (data: Event) => {
    // console.log(data);
-  const eventAllreadyExist = !!event?.id
     
-  eventAllreadyExist
-    ? updateEvent(event.id, data)
+  event?.id // eventAllreadyExist
+    ? updateEvent(event?.id, data)
         .then((res) => {
           console.log(res);
         })
         .catch((err) => console.error(err))
     : createEvent(data)
         .then((res) => {
-          if (res.ok) {
+          if (res?.ok) {
             router.push(`/events/${res.res.id}/edit`);
           }
           console.log(res);
@@ -56,16 +59,27 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
     name: 'subEvents', // unique name for your Field Array,
   });
   const handleAddSubEvent = () => {
-    append({ title: '', distance: '', comments: '', date:'' });
+    const appendNewEvent: SubEvent = {
+      title: '',
+      distance: '',
+      comments: '',
+      date: '',
+      style: ''
+    };
+    append(appendNewEvent);
   };
 
   console.log(isSwimmingEvent);
-
+const formLabel = eventAllreadyExist?'Edit event':'Create event'
   return (
     <div>
-      <h2 className="text-xl font-bold text-center my-4">Create an event</h2>
+      <Head>
+        <title>{formLabel}</title>
+      </Head>
+      <h2 className="text-xl font-bold text-center my-4">{formLabel}</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid mx-auto gap-2 max-w-md  ">
+          <EventImages/>
           <Text
             {...register('title')}
             name="title"
@@ -123,7 +137,12 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
             />
           </div>
 
-          {isSwimmingPool && <PickerSwimmingTests  setTests={(tests)=>setValue('subEvents',tests)} tests={formValues?.subEvents} />}
+          {isSwimmingPool && (
+            <PickerSwimmingTests
+              setTests={(tests) => setValue('subEvents', tests)}
+              tests={formValues?.subEvents}
+            />
+          )}
           {isOpenWater && (
             <div>
               <h4 className="font-bold text-lg">Set sub-events!</h4>
@@ -211,5 +230,20 @@ const FormEvent = ({event}:{event?:undefined|Event}) => {
     </div>
   );
 };
+
+const EventImages=()=>{
+  return (
+    <div>
+      <InputFiles
+        label="Add more images "
+        // defaultImages={watch('images')}
+        // imagesUploaded={onUploadImages}
+        // onDeleteImage={handleDeleteImage}
+        // onLoading={onLoadingImages}
+        // disabled={disabledInput}
+      />
+    </div>
+  );
+}
 
 export default FormEvent;

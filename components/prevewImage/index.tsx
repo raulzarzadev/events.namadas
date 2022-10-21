@@ -5,12 +5,12 @@ import { useState } from 'react';
 
 type Sizes = 'sm'|'md'|'lg'|'xl'| 'full'
 export interface PreviewImageType {
-  label: null | string;
+  label?: null | string;
   image: string;
-  previewSize: Sizes;
-  uploading: boolean;
-  handleDelete: ()=>{}
-  showOrigin:boolean
+  previewSize?: Sizes;
+  uploading?: boolean;
+  handleDelete?: ()=>void
+  showOrigin?:boolean
 }
 
 const PreviewImage = ({

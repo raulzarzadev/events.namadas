@@ -20,10 +20,11 @@ export default function Icon({ name = 'gear', size = 'md', ...rest }: IconCompon
 
 const SIZE = 25;
 
-const sizign:Record<string, string> = {
+const sizign: Record<string, string> = {
   xs: `${SIZE * 0.85}px`,
   sm: `${SIZE * 0.92}px`,
   md: `${SIZE * 1}px`,
   lg: `${SIZE * 1.2}px`,
   xl: `${SIZE * 1.4}px`,
+  '2xl': `${SIZE * 2.4}px`,
 };

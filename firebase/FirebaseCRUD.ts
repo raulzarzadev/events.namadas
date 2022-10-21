@@ -97,16 +97,17 @@ export class FirebaseCRUD {
   }
 
   static deleteFile = async ({ url }:{url:string}) => {
-    const desertRef = ref(storage, url);
+    const desertRef = storageRef(url);
     return deleteObject(desertRef)
       .then(() => {
         // File deleted successfully
         return { ok: true, url };
       })
-      .catch((error) => {
-        console.error(error);
-        // Uh-oh, an error occurred!
-      });
+      // .catch((error) => {
+      //   console.error(error);
+      //   return { ok:false, url}
+      //   // Uh-oh, an error occurred!
+      // });
   };
 
   static uploadFileAsync =async  ({ file, fieldName = '' }:UpladFileAsync) => {

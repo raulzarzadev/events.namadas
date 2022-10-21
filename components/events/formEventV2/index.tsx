@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { useFieldArray, useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 
-const FormEvent = ({event}:{event?:Event}) => {
+const FormEvent = ({ event }: { event?: Event }) => {
   const eventAllreadyExist = event?.id;
   const router = useRouter();
   const {
@@ -21,65 +21,74 @@ const FormEvent = ({event}:{event?:Event}) => {
     setValue,
     formState: { errors },
   } = useForm({
-    defaultValues:event||undefined
+    defaultValues: event || undefined,
   });
 
   const onSubmit = (data: Event) => {
-   // console.log(data);
-    
-  event?.id // eventAllreadyExist
-    ? updateEvent(event?.id, data)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => console.error(err))
-    : createEvent(data)
-        .then((res) => {
-          if (res?.ok) {
-            router.push(`/events/${res.res.id}/edit`);
-          }
-          console.log(res);
-        })
-        .catch((err) => console.error(err));
+    event?.id // eventAllreadyExist
+      ? updateEvent(event?.id, data)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.error(err))
+      : createEvent(data)
+          .then((res) => {
+            if (res?.ok) {
+              router.push(`/events/${res.res.id}/edit`);
+            }
+            console.log(res);
+          })
+          .catch((err) => console.error(err));
   };
 
   const formValues = watch();
 
   const includeFinishDate = formValues?.includeFinishDate;
-  const isSportType = formValues?.eventType === 'sportEvent';
-  const isSwimmingEvent =
-    formValues?.eventType === 'sportEvent' &&
-    formValues?.sport === 'swimming';
+  // const isSportType = formValues?.eventType === 'sportEvent';
+  // const isSwimmingEvent =
+  //   formValues?.eventType === 'sportEvent' &&
+  //   formValues?.sport === 'swimming';
   const isOpenWater = formValues?.swimmingType === 'openWater';
   const isSwimmingPool =
-    formValues.swimmingType === '25m' || formValues.swimmingType === '50m'
+    formValues.swimmingType === '25m' || formValues.swimmingType === '50m';
 
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: 'subEvents', // unique name for your Field Array,
   });
+
   const handleAddSubEvent = () => {
     const appendNewEvent: SubEvent = {
       title: '',
       distance: '',
       comments: '',
       date: '',
-      style: ''
+      style: '',
     };
     append(appendNewEvent);
   };
 
-  console.log(isSwimmingEvent);
-const formLabel = eventAllreadyExist?'Edit event':'Create event'
+  const formLabel = eventAllreadyExist
+    ? `Edit event \n ${event.title}`
+    : 'Create event';
+  const handleSetImages = (images: any[]) => {
+    setValue('images', images);
+     handleSubmit((props)=>{
+      onSubmit(props)
+     })()
+  };
+
   return (
     <div>
       <Head>
         <title>{formLabel}</title>
       </Head>
-      <h2 className="text-xl font-bold text-center my-4">{formLabel}</h2>
+      <h2 className="text-xl font-bold text-center my-4 whitespace-pre">
+        {formLabel}
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid mx-auto gap-2 max-w-md  ">
-          <EventImages/>
+          <EventImages images={formValues.images} setImages={handleSetImages} />
           <Text
             {...register('title')}
             name="title"
@@ -230,20 +239,23 @@ const formLabel = eventAllreadyExist?'Edit event':'Create event'
     </div>
   );
 };
+export interface EventImages {
+  images: any[];
+  disabled?: boolean;
+  setImages: (images: any[]) => void;
+}
 
-const EventImages=()=>{
+const EventImages = ({ images, disabled = false, setImages }: EventImages) => {
   return (
     <div>
       <InputFiles
         label="Add more images "
-        // defaultImages={watch('images')}
-        // imagesUploaded={onUploadImages}
-        // onDeleteImage={handleDeleteImage}
-        // onLoading={onLoadingImages}
-        // disabled={disabledInput}
+        images={images}
+        setImages={setImages}
+        disabled={disabled}
       />
     </div>
   );
-}
+};
 
 export default FormEvent;

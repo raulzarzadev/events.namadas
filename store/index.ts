@@ -3,13 +3,15 @@ import { authSlice } from "./slices/authSlice";
 import { createWrapper } from "next-redux-wrapper";
 import { counterSlice } from "./slices/couterSlice";
 import { eventSlice } from "./slices/eventSlice";
+import {eventFormSlice} from "./slices/eventFormSlice";
 
 const makeStore = () =>
   configureStore({
     reducer: {
       [authSlice.name]: authSlice.reducer,
       [counterSlice.name]: counterSlice.reducer,
-      [eventSlice.name]:eventSlice.reducer
+      [eventSlice.name]:eventSlice.reducer,
+      [eventFormSlice.name]:eventFormSlice.reducer
     },
     devTools: true,
   });

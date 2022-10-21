@@ -1,15 +1,13 @@
-import PreviewImage from '@comps/prevewImage';
 import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
 import Image from 'next/image';
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
+import ImagesList from './imagesList';
 
 interface InputFilesType {
   label: string;
-  imagesUploaded: (image: Image) => {};
-  defaultImages?: Image[];
-  onDeleteImage?: any;
-  onLoading?: any;
-  disabled?: undefined | boolean;
+  setImages: (images: Image[]) => void;
+  images?: Image[];
+  disabled?: boolean;
 }
 interface Image {
   url?: string | undefined;
@@ -19,18 +17,14 @@ interface Image {
 
 const InputFiles = ({
   label = 'Files input',
-  imagesUploaded=()=>{},
-  onDeleteImage=()=>{},
-  defaultImages=[],
-  onLoading = () => {},
-  disabled=false,
-}) => {
-  const [images, setImages] = useState(defaultImages || []);
+  images = [],
+  setImages,
+  disabled,
+}: InputFilesType) => {
   const [upladingImages, setUploadingImages] = useState<Image[] | []>([]);
 
   const handleChange = async (e: any) => {
     const files = e.target.files;
-    onLoading(true);
     setUploadingImages(
       [...files].map(() => {
         return { uploading: true };
@@ -46,61 +40,74 @@ const InputFiles = ({
     });
 
     const newImages: any = await Promise.all(ulpadingFiles);
-    // console.log(newImages)
     setUploadingImages([]);
-    imagesUploaded(newImages);
     setImages([...images, ...newImages]);
-    onLoading(false);
   };
 
-  const handleOpenDelete = async (url: string | undefined) => {
-    //console.log('delete url', url)
-    if (!url) return console.log('no valid url');
-    onLoading(true);
-    const res = await FirebaseCRUD.deleteFile({ url });
-    onDeleteImage(url);
-    onLoading(false);
-    //console.log(res)
+  const handleDeleteImage = (url: string) => {
+    FirebaseCRUD.deleteFile({ url })
+    .then((res) => {
+      console.log(res, 'image deleted')
+    })
+    .catch(err => {
+      console.error(err);
+    }).finally(()=>{
+      const filteredList = [...images].filter((image)=>image.url!==url)
+      setImages([...filteredList])
+
+    })
   };
-  //console.log(images)
-  //console.log(images)
+
   return (
     <div>
-      <label>
-        <div
-          className={`h-32  w-40 hover:border-dotted  hover:border-white flex justify-center items-center rounded-lg relative cursor-pointer border-dashed border-2  ${
-            disabled && 'opacity-30 cursor-wait '
-          }`}
-        >
-          <div className="absolute ">{label}</div>
-          <input
-            disabled={disabled}
-            accept=".jpg,.png,.jpeg"
-            onChange={handleChange}
-            className="hidden"
-            type={'file'}
-            multiple
+      <label className="pl-1">Add some images</label>
+      <div className="grid">
+        <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2">
+          <div className="w-36 h-36 ">
+            <SquareInputFile
+              disabled={disabled}
+              handleChange={handleChange}
+              label={label}
+            />
+          </div>
+
+          <ImagesList
+            images={[...images, ...upladingImages]}
+            childrensClassName={'w-36 h-36  '}
+            onDeleteImage={handleDeleteImage}
           />
-        </div>
-      </label>
-      <div className="w-full max-w-md mx-auto overflow-auto">
-        <div className="grid grid-cols-4 gap-1 p-1">
-          {[...images, ...upladingImages]?.map(({ url, uploading }, i) => (
-            <div key={`${url}-${i}`} className="">
-              <PreviewImage
-                image={url}
-                uploading={uploading}
-                previewSize="full"
-                handleDelete={() => {
-                  handleOpenDelete(url);
-                }}
-              />
-            </div>
-          ))}
         </div>
       </div>
     </div>
   );
 };
-
+interface InputFile {
+  disabled?:boolean
+  handleChange:(props:any)=>{}
+  label:string
+}
+const SquareInputFile=({disabled, handleChange, label}:InputFile)=>{
+  // TODO add label to accesiblity
+  return (
+    <label>
+      <div
+        className={`h-full w-full hover:border-dotted  hover:border-white flex justify-center items-center rounded-sm relative cursor-pointer border-dashed border-2  ${
+          disabled && 'opacity-30 cursor-wait '
+        }`}
+      >
+        <div className="absolute text-[110px] transform -translate-y-2">
+          +
+        </div>
+        <input
+          disabled={disabled}
+          accept=".jpg,.png,.jpeg"
+          onChange={handleChange}
+          className="hidden"
+          type={'file'}
+          multiple
+        />
+      </div>
+    </label>
+  );
+}
 export default InputFiles;

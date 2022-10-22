@@ -34,7 +34,7 @@ const EventCard = ({
           <EventTitle title={title} />
         <figure className="relative w-full h-[115px] ">
           {firsImage && (
-            <Image src={firsImage?.url} objectFit="cover" layout="fill" />
+            <Image src={firsImage?.url || firsImage?.src} objectFit="cover" layout="fill" />
           )}
 
           <UpcommingLabel status={status}  />

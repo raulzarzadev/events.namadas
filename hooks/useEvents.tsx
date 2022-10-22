@@ -6,7 +6,7 @@ import { selectEventState, setEvent } from 'store/slices/eventSlice';
 import useAuth from './useAuth';
 
 interface UseEvenType  {
-  eventId?: string;
+  eventId?: Event['id'];
   allEvents?: boolean;
   getByStatus?: Event["status"] | undefined
 }

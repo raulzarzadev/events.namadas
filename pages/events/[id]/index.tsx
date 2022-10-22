@@ -10,10 +10,10 @@ const EventPage = () => {
   const {
     query: { id: eventId },
   } = useRouter();
-  
+
   const { user } = useAuth();
 
-  const { event } = useEvents({ eventId });
+  const { event } = useEvents({ eventId:`${eventId}` });
 
   const isOwner = event?.userId === user?.id;
   return (

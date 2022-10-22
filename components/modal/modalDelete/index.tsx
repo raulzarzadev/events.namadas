@@ -1,9 +1,18 @@
+import Icon from '@comps/Icon'
 import { useState } from 'react'
 import Modal from '..'
-import DeleteIcon from '../icons/DeleteIcon'
-
+export interface ModalDeleteType {
+   handleDelete: (itemId:string)=>void
+  deleteSuccessful: () => void
+  itemLabel?: string
+  itemId?: string
+  deleteText: string | null
+  modalTitle:string
+  buttonType :'icon'|'btn'
+  disabled:boolean
+}
 export default function ModalDelete ({
-  handleDelete = null,
+  handleDelete = ()=>{},
   deleteSuccessful = () => {},
   itemLabel = 'elemento',
   itemId = '',
@@ -11,7 +20,7 @@ export default function ModalDelete ({
   modalTitle = 'Eliminar elemento',
   buttonType = 'icon', // icon | btn
   disabled=false
-}) {
+}:ModalDeleteType) {
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(!open)
@@ -26,7 +35,7 @@ export default function ModalDelete ({
     const deleteFunc = async () => {
       try {
         if (handleDelete && typeof handleDelete === 'function') {
-          await handleDelete(itemId);
+           handleDelete(itemId);
         } else {
           console.error('handleDelete is not defined');
         }
@@ -49,7 +58,7 @@ export default function ModalDelete ({
       {buttonType === 'icon'
         ? (
         <button disabled={disabled} onClick={handleOpen} className="text-error">
-          <DeleteIcon />
+          <Icon name='delete' />
         </button>
           )
         : (
@@ -59,7 +68,7 @@ export default function ModalDelete ({
           className="btn btn-sm text-error"
         >
           <span className="mr-1">Delete</span>
-          <DeleteIcon />
+          <Icon name='delete' />
         </button>
           )}
       <Modal title={modalTitle} open={open} handleOpen={handleOpen}>

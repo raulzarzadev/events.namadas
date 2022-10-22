@@ -5,7 +5,7 @@ interface TextareaType extends InputType {
   rows?:number 
 }
 
-const Textarea = React.forwardRef<HTMLInputElement, TextareaType>(
+const Textarea = React.forwardRef<HTMLTextAreaElement , TextareaType>(
   (props, ref) => {
     const { label, errors, name = '', type, rows=5 } = props;
     return (

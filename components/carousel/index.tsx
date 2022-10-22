@@ -37,7 +37,7 @@ const Carousel = ({ images = [] }: { images?: ImageType[] | [] | undefined}) => 
         {images.map((image, i) => (
           <SwiperSlide key={i} className="">
             <div className='relative w-full h-72 '>
-              <Image src={image?.src || image?.url} objectFit='cover' layout='fill' />
+              <Image src={image?.src || image?.url || '/images/defaultEventImage.jpeg'} objectFit='cover' layout='fill' />
             </div>
             {/* <PreviewImage image={image?.src || image?.url}  previewSize='full'/> */}
           </SwiperSlide>

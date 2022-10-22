@@ -1,9 +1,9 @@
-import EventCard from '@comps/EventCard_V2';
+import EventCard, { EventType } from '@comps/EventCard_V2';
 import useEvents from 'hooks/useEvents';
 
 const EventsList = () => {
 
-  const { userEvents } = useEvents();
+  const { userEvents } = useEvents({});
   const handleSuscribeTo=(id:string)=>{
     return ''
   }
@@ -12,7 +12,7 @@ const EventsList = () => {
       <h3 className="text-2xl text-center font-bold my-4 ">Events</h3>
       <div className="grid ">
         <div className="grid grid-flow-col gap-1 overflow-x-auto pb-4 ">
-          {userEvents.map((event) => (
+          {userEvents.map((event:EventType) => (
             <EventCard
               size='sm'
               event={event}

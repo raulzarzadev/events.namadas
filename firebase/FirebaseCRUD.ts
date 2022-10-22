@@ -279,7 +279,7 @@ export class FirebaseCRUD {
     const q: Query = query(collection(db, this.collectionName), ...filters);
 
     const querySnapshot = await getDocs(q);
-    const res: ({ id: any } | null)[] = [];
+    const res: any[] = [];
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       //console.log(doc.id, " => ", doc.data());

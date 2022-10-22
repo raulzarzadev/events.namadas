@@ -16,13 +16,11 @@ function useEvents({ eventId, getByStatus }: UseEvenType) {
   const { user } = useAuth();
 
   const [userEvents, setUserEvents] = useState([]);
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState<Event[] | [] >([]);
 
   useEffect(() => {
     if (getByStatus) {
-      getEventsByStatus(getByStatus).then((res) => {
-        setEvents(res);
-      });
+      getEventsByStatus(getByStatus).then((res) => setEvents(res));
     }
   }, []);
   

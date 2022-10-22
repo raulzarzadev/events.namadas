@@ -6,7 +6,7 @@ import { useState } from 'react';
 type Sizes = 'sm'|'md'|'lg'|'xl'| 'full'
 export interface PreviewImageType {
   label?: null | string;
-  image: string;
+  image?: string;
   previewSize?: Sizes;
   uploading?: boolean;
   handleDelete?: ()=>void

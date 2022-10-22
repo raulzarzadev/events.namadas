@@ -2,21 +2,11 @@ import { Event } from '@firebase/Events/event.model';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export interface EventType extends Pick<Event, 'status'>{
-  title: string;
-  resume: string;
-  id: string;
-  image?: string;
-  images?: EventImageType[];
-  userId: string;
+export interface EventType extends Event{
+ 
 }
 
-export interface EventImageType {
-  url: string;
-  src?: string;
-  alt?: string;
-  text?: string;
-}
+
 
 const EventCard = ({
   event,

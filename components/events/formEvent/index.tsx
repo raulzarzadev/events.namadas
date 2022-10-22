@@ -1,8 +1,9 @@
-import { Date, Text, Toggle } from '@comps/inputs';
+import { Text, Toggle, InputDate } from '@comps/inputs';
 import Chip from '@comps/inputs/Chip';
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest';
 import RadioInput from '@comps/inputs/Radio';
 import Select from '@comps/inputs/Select';
+import { Event } from '@firebase/Events/event.model';
 import { createEvent } from '@firebase/Events/main';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -15,7 +16,7 @@ const FormEvent = () => {
     setValue,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     createEvent(data)
       .then((res) => console.log(res))
       .catch((err) => console.error(err));
@@ -47,8 +48,8 @@ const FormEvent = () => {
             errors={errors}
             type="text"
           />
-      
-          <Date
+
+          <InputDate
             {...register('date')}
             name="date"
             label="Date"
@@ -62,7 +63,7 @@ const FormEvent = () => {
             errors={errors}
           />
           {includeFinishDate && (
-            <Date
+            <InputDate
               {...register('finishDate')}
               name="finishDate"
               label="Finish date"

@@ -1,22 +1,30 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { DISTANCES, STYLES } from './SWIMMING_TESTS';
-
+import { TestType } from './tests.model';
+export interface PickerSwimmingTestType {
+  tests?:TestType[]
+  setTests?: (tests:TestType[]) => void,
+  onTestClick? : (test:TestType) => void,
+  disabled? :boolean,
+  compact? :boolean,
+  currentSelected?: TestType|null,
+}
 export default function PickerSwimmingTests({
   tests,
-  setTests = (tests) => {},
+  setTests = () => {},
   onTestClick = () => {},
   disabled = false,
   compact = true,
   currentSelected = null,
-}) {
-  const isCurrentlySelected = (test) => {
+}:PickerSwimmingTestType) {
+  const isCurrentlySelected = (test:TestType) => {
     const distance = currentSelected?.distance;
     const style = currentSelected?.style;
 
     return distance === test?.distance && style === test?.style;
   };
-  const [form, setForm] = useState([]);
-  const handleAddTest = (test) => {
+  const [form, setForm] = useState<TestType[] | []>([]);
+  const handleAddTest = (test:TestType) => {
     if (testsAlreadyExist(test)) {
       const cleaned = form.filter(
         ({ distance, style }) =>
@@ -39,7 +47,7 @@ export default function PickerSwimmingTests({
     };
   }, [tests]);
 
-  const testsAlreadyExist = (test) => {
+  const testsAlreadyExist = (test: { distance: any; style: any; }) => {
     return !!form.find(
       ({ distance, style }) =>
         distance === test.distance && style === test.style
@@ -55,7 +63,7 @@ export default function PickerSwimmingTests({
           </div>
         </Cell>
         {DISTANCES.map(({ id, label: distance }) => (
-          <Cell key={id} style="small" size={compact ? 'sm' : 'lg'}>
+          <Cell key={id} style="normal" size={compact ? 'sm' : 'lg'}>
             {distance}
           </Cell>
         ))}
@@ -67,7 +75,7 @@ export default function PickerSwimmingTests({
             <div className="sm:hidden">{label}</div>
           </Cell>
           {DISTANCES.map(({ id, label: distance }) => (
-            <Cell size={compact ? 'sm' : 'lg'} style="small" key={id}>
+            <Cell size={compact ? 'sm' : 'lg'} style="normal" key={id}>
               <button
                 className="w-full h-full p-1 flex justify-center items-center"
                 disabled={disabled}
@@ -103,7 +111,13 @@ export default function PickerSwimmingTests({
     </div>
   );
 }
-const Cell = ({ children, style = 'normal', size = 'md' }) => {
+
+interface PickerCell {
+  children:ReactNode
+  style:'normal'|'title'
+  size: 'sm'|'md' |'lg' 
+}
+const Cell = ({ children, style = 'normal', size = 'md' }:PickerCell) => {
   const styling = {
     title: `font-bold  text-sm`,
     normal: `font-normal`,

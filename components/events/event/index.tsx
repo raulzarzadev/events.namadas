@@ -14,10 +14,11 @@ const Event = ({ event }: { event: Event | null }) => {
     subEvents = [],
     swimmingType,
   } = event;
-  const LABES = {
+  const LABELS:Record<Event['swimmingType'], string> = {
     '25m': 'Pool 25m',
     '50m': 'Pool 50m',
     openWater: 'Open Water',
+    swimmingPool: 'Swimming pool'
   };
   // console.log(event)
   return (
@@ -31,7 +32,7 @@ const Event = ({ event }: { event: Event | null }) => {
           {title || 'Event title'}
         </h1>
         <p className="text-center">{date && myFormatDate(date)}</p>
-        <p className="text-center">{LABES[swimmingType]}</p>
+        <p className="text-center">{LABELS[swimmingType]}</p>
         <p className=" mx-auto whitespace-pre-line">
           {resume || 'Event resume'}
         </p>

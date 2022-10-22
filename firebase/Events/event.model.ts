@@ -21,11 +21,13 @@ export type SwimmingTypes = "openWater" | "25m" | "50m" |'swimmingPool'
 export interface EventImage {
   src:string
   alt:string
+  url?:string
+  text?:string
 }
 export interface SubEvent{
   distance:string | number
-  title:string,
-  comments:string
-  date:string
+  title?:string,
+  comments?:string
+  date?:string
   style:string
 }

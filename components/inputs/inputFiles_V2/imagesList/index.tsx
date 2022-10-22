@@ -1,7 +1,7 @@
 import PreviewImage from "@comps/prevewImage";
 
 export interface ImagesListType {
-  images: Image[];
+  images: Image[] | any[];
   childrensClassName?: string;
   onDeleteImage?: (url: string) => void;
 }

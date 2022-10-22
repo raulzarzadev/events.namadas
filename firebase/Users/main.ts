@@ -1,50 +1,43 @@
 import { auth } from '@firebase/index';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth'
-import { where } from 'firebase/firestore'
-import { FirebaseCRUD } from '../FirebaseCRUD'
-import { User } from './user.model'
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
+import { where } from 'firebase/firestore';
+import { FirebaseCRUD } from '../FirebaseCRUD';
+import { User } from './user.model';
 
-
-const usersCRUD = new FirebaseCRUD('users')
+const usersCRUD = new FirebaseCRUD('users');
 
 export const setUser = (itemId: string, newItem: object) =>
-  usersCRUD.setDoc(itemId, newItem)
+  usersCRUD.setDoc(itemId, newItem);
 
-export const createUser = (newItem: any) =>
-  usersCRUD.create(newItem)
+export const createUser = (newItem: any) => usersCRUD.create(newItem);
 
 export const updateUser = (itemId: string, newItem: User) =>
-  usersCRUD.update(itemId, newItem)
+  usersCRUD.update(itemId, newItem);
 
-export const deleteUser = (itemId: string) =>
-  usersCRUD.delete(itemId)
+export const deleteUser = (itemId: string) => usersCRUD.delete(itemId);
 
-export const getUser = (itemId: string) =>
-  usersCRUD.get(itemId)
+export const getUser = (itemId: string) => usersCRUD.get(itemId);
 
-export const listenUser = (
-  itemId: string,
-  cb: CallableFunction
-) => usersCRUD.listen(itemId, cb)
+export const listenUser = (itemId: string, cb: CallableFunction) =>
+  usersCRUD.listen(itemId, cb);
 
-export function authStateChanged (cb:CallableFunction) {
- 
-  return onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      listenUser(user?.uid, (dbUser: User) => {
-        if (dbUser) {
-          cb({ id: user?.uid, ...dbUser })
-        } else {
-          createUser(user)
-        }
-      })
-    } else {
-      cb(null)
-      console.log('not logged')
+export function authStateChanged(cb: CallableFunction) {
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      // console.log('not logged');
+      return cb(null);
     }
-  })
-}
+    getUser(user.uid).then((res) => {
+      cb(res);
+    });
 
+  });
+}
 
 export async function googleLogin() {
   const provider = new GoogleAuthProvider();

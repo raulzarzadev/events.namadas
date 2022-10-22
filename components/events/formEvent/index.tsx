@@ -37,7 +37,7 @@ const FormEvent = () => {
 
   return (
     <div>
-      <h2 className='text-xl font-bold text-center my-4'>Create an event</h2>
+      <h2 className="text-xl font-bold text-center my-4">Create an event</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid mx-auto gap-2 max-w-md  ">
           <Text
@@ -47,6 +47,7 @@ const FormEvent = () => {
             errors={errors}
             type="text"
           />
+      
           <Date
             {...register('date')}
             name="date"
@@ -76,23 +77,23 @@ const FormEvent = () => {
             errors={errors}
           />
           <h4>Choose type of event</h4>
-            <div className="flex justify-around">
-              <RadioInput
-                label="Open water"
-                {...register('swimmingType')}
-                value="openWater"
-              />
-              <RadioInput
-                label="25mts Pool"
-                {...register('swimmingType')}
-                value="25m"
-              />
-              <RadioInput
-                label="50mts Pool"
-                {...register('swimmingType')}
-                value="50m"
-              />
-            </div>
+          <div className="flex justify-around">
+            <RadioInput
+              label="Open water"
+              {...register('swimmingType')}
+              value="openWater"
+            />
+            <RadioInput
+              label="25mts Pool"
+              {...register('swimmingType')}
+              value="25m"
+            />
+            <RadioInput
+              label="50mts Pool"
+              {...register('swimmingType')}
+              value="50m"
+            />
+          </div>
           {/*
            {isSwimmingPool && <PickerSwimmingTests />}
           {isOpenWater && (

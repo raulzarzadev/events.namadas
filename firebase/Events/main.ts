@@ -1,3 +1,4 @@
+import { where } from 'firebase/firestore'
 import { FirebaseCRUD } from '../FirebaseCRUD'
 import { Event } from './event.model'
 
@@ -24,3 +25,10 @@ export const listenEvent = (
 ) => eventsCRUD.listen(itemId, cb)
 
 export const listenUserEvents=(cb:CallableFunction)=>eventsCRUD.listenCurrentUserDocs(cb)
+
+export const getEvents = () =>
+eventsCRUD.getMany([where('satus', '==', 'ACTIVE')]);
+
+
+export const getEventsByStatus = (status :Event['status']) =>
+  eventsCRUD.getMany([where('status', '==', status)]);

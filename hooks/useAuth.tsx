@@ -1,25 +1,29 @@
-import { googleLogin, logout } from "@firebase/Users/main";
-import { useRouter } from "next/router"
-import { useEffect } from "react"
-import { useSelector } from "react-redux"
-import { selectAuthState } from "store/slices/authSlice"
+import { authStateChanged, googleLogin, logout } from '@firebase/Users/main';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuthState, setAuthState } from 'store/slices/authSlice';
 
-function useAuth(){
-    const handleLogin = () => {
-      googleLogin();
-    };
-    const handleLogout = () => {
-      logout();
-    };
-  
-  const router = useRouter()
-  const {user, authState}=useSelector(selectAuthState)
-  useEffect(()=>{
-    if(!user===null){
-      router.push('/')
-    }
-  },[])
+function useAuth() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { user, authState } = useSelector(selectAuthState);
+
+  const handleLogin = () => {
+    googleLogin();
+  };
+  const handleLogout = () => {
+    logout();
+  };
+
+
+  useEffect(() => {
+    authStateChanged((res: any) => {
+      dispatch(setAuthState(res));
+    });
+  }, []);
+
   return { isAuth: authState, user, handleLogin, handleLogout };
 }
 
-export default useAuth
+export default useAuth;

@@ -3,6 +3,7 @@ import InputFiles from '@comps/inputs/inputFiles_V2';
 import InputLocalDate from '@comps/inputs/InputLocalDate';
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest';
 import RadioInput from '@comps/inputs/Radio';
+import Textarea from '@comps/inputs/Textarea';
 import { Event, SubEvent } from '@firebase/Events/event.model';
 import { createEvent, updateEvent } from '@firebase/Events/main';
 import Head from 'next/head';
@@ -41,16 +42,30 @@ const FormEvent = ({ event }: { event?: Event }) => {
           .catch((err) => console.error(err));
   };
 
+
+  const EVENT_TYPE_OPTIONS = [
+    { name: 'swimmingPool', label: 'Swimming Pool' },
+    { name: 'openWater', label: 'Open water' },
+    // { name: '50m', label: '50m swimming pool' },
+    // { name: '250m', label: '25m swimming pool' },
+    // '50m':'50m swimming pool'
+    // '25m':'25m swimming pool'
+  ];
+const EVENT_STATUS_OPTIONS = [
+  { name: 'PLANING', label: 'Planing' },
+  { name: 'ACTIVE', label: 'Active' },
+  // { name: 'PAUSED', label: 'Paused' },
+  // { name: 'CANCELED', label: 'Canceled' },
+  { name: 'IN_PROGRESS', label: 'In progress' },
+  { name: 'FINISHED', label: 'Finished' },
+];
   const formValues = watch();
 
   const includeFinishDate = formValues?.includeFinishDate;
-  // const isSportType = formValues?.eventType === 'sportEvent';
-  // const isSwimmingEvent =
-  //   formValues?.eventType === 'sportEvent' &&
-  //   formValues?.sport === 'swimming';
+ 
   const isOpenWater = formValues?.swimmingType === 'openWater';
   const isSwimmingPool =
-    formValues.swimmingType === '25m' || formValues.swimmingType === '50m';
+    formValues?.swimmingType === 'swimmingPool' 
 
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
@@ -78,6 +93,7 @@ const FormEvent = ({ event }: { event?: Event }) => {
      })()
   };
 
+  
   return (
     <div>
       <Head>
@@ -93,6 +109,27 @@ const FormEvent = ({ event }: { event?: Event }) => {
             {...register('title')}
             name="title"
             label="Title"
+            errors={errors}
+            type="text"
+          />
+          <h4 className="font-bold text-lg">Current event status</h4>
+          <div className="flex justify-around flex-grow">
+            {EVENT_STATUS_OPTIONS.map(
+              ({ name, label }: { name: string; label: string }) => {
+                return (
+                  <RadioInput
+                    label={label}
+                    {...register('status')}
+                    value={name}
+                  />
+                );
+              }
+            )}
+          </div>
+          <Textarea
+            {...register('resume')}
+            name="resume"
+            label="A small resume"
             errors={errors}
             type="text"
           />
@@ -129,21 +166,17 @@ const FormEvent = ({ event }: { event?: Event }) => {
           />
           <h4 className="font-bold text-lg">Choose type of event</h4>
           <div className="flex justify-around">
-            <RadioInput
-              label="Open water"
-              {...register('swimmingType')}
-              value="openWater"
-            />
-            <RadioInput
-              label="25mts Pool"
-              {...register('swimmingType')}
-              value="25m"
-            />
-            <RadioInput
-              label="50mts Pool"
-              {...register('swimmingType')}
-              value="50m"
-            />
+            {EVENT_TYPE_OPTIONS.map(
+              ({ name, label }: { name: string; label: string }) => {
+                return (
+                  <RadioInput
+                    label={label}
+                    {...register('swimmingType')}
+                    value={name}
+                  />
+                );
+              }
+            )}
           </div>
 
           {isSwimmingPool && (

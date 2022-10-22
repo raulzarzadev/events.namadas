@@ -9,25 +9,32 @@ import { selectEventState } from "store/slices/eventSlice";
 const EventPage = () => {
   const {query:{id:eventId}}=useRouter()
   const {user}=useAuth()
+  
   const {event} = useEvents({eventId})
-    const isOwner = event?.userId === user?.id
-    console.log(event)
+  const isOwner = event?.userId === user?.id
   return (
     <div>
-      {isOwner && <Options/>}
       <Event event={event} />
+      {isOwner && <Options/>}
     </div>
   );
 }
 
 const Options=()=>{
   const event =useSelector(selectEventState)
-  return <div className="flex w-full
-  justify-around p-2">
-       <Link href={`/events/${event?.id}/edit`}>
-         <button className="btn btn-outline ">Edit </button>
-       </Link>
+  return (
+    <div
+      className="flex w-full
+  justify-evenly max-w-lg mx-auto p-2"
+    >
+      <Link href={`/events/${event?.id}/edit`}>
+        <button className="btn btn-outline ">Edit </button>
+      </Link>
+      <Link href={`/events/${event?.id}/manage`}>
+        <button className="btn btn-outline ">Manage </button>
+      </Link>
     </div>
+  );
 }
 
 export default EventPage;

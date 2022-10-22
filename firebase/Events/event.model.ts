@@ -13,9 +13,10 @@ export interface Event extends Base {
   resume: string;
   image: string;
   images: EventImage[];
+  status: 'PLANING'|'ACTIVE'|'IN_PROGRESS'|'FINISHED'
 }
 
-export type SwimmingTypes = "openWater" | "25m" | "50m"
+export type SwimmingTypes = "openWater" | "25m" | "50m" |'swimmingPool'
 
 export interface EventImage {
   src:string

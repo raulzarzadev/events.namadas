@@ -11,7 +11,8 @@ export interface EventType {
 }
 
 export interface EventImageType {
-  src:string
+  url: string
+  src?:string
   alt?:string
   text?:string
 }
@@ -26,14 +27,20 @@ const EventCard = ({
   event: EventType;
   onSuscribe?: (id: string) => {};
 }) => {
-  const { title, resume, id ,image} = event;
+  const { title, resume, id ,image, images=[]} = event;
   const sizing = {
-    sm: 'max-w-[200px]',
-    md: 'max-w-[250px]',
-    lg: 'max-w-xs',
+    sm: 'max-w-[180px]',
+    md: 'max-w-[200px]',
+    lg: 'max-w-[250px]',
   };
 
+  const firsImage=images?.[0]
+  console.log(firsImage);
+
   // FIX group-hover is not working
+  const cutTestAt=(length:number, text:string='')=>{
+    return text.slice(0, length).concat('...')
+  }
   return (
     <div>
       <Link href={`/events/${id}`}>
@@ -42,13 +49,13 @@ const EventCard = ({
             className={`card w-full ${sizing[size]} border-2 border-transparent  hover:border-primary cursor-pointer active:border-gray-600`}
           >
             <figure className="relative w-[400px] h-[225px] ">
-              {image &&
-              <Image src={image} objectFit="cover" layout="fill" />
-              }
+              {firsImage && (
+                <Image src={firsImage?.url} objectFit="cover" layout="fill" />
+              )}
             </figure>
             <div className="card-body glass">
               <h2 className="card-title">{title}</h2>
-              <p>{resume}</p>
+              <p className="whitespace-pre-line">{cutTestAt(120, resume)}</p>
               <div className="card-actions justify-end">
                 <button className="btn btn-outline ">Saber más!</button>
               </div>

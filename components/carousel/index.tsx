@@ -10,17 +10,21 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 import Image from 'next/image';
+import PreviewImage from '@comps/prevewImage';
 
-interface Image {
+interface ImageType {
   src: string;
   text?: string;
+  url?:string,
+  loading?:boolean
 }
 
-const Carousel = ({ images = [] }: { images?: Image[] | [] | undefined}) => {
+const Carousel = ({ images = [] }: { images?: ImageType[] | [] | undefined}) => {
  
   return (
     <div className="">
       <Swiper
+        className=""
         modules={[Navigation, Pagination, Scrollbar, A11y]}
         spaceBetween={50}
         slidesPerView={1}
@@ -31,11 +35,13 @@ const Carousel = ({ images = [] }: { images?: Image[] | [] | undefined}) => {
         onSlideChange={() => {}}
       >
         {images.map((image, i) => (
-          <SwiperSlide key={i}>
-            <img src={image.src} className='mx-auto' />
+          <SwiperSlide key={i} className="">
+            <div className='relative w-full h-72 '>
+              <Image src={image?.src || image?.url} objectFit='cover' layout='fill' />
+            </div>
+            {/* <PreviewImage image={image?.src || image?.url}  previewSize='full'/> */}
           </SwiperSlide>
         ))}
-        
       </Swiper>
     </div>
   );

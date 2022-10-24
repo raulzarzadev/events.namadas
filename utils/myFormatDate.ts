@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, formatDistanceStrict } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 type FormatType = 'datatime' | 'inputDate' | string
@@ -14,6 +14,10 @@ export default function myFormatDate(
   const res = format(validDateAsNumber(date), choosenFormat(strFormat));
   return res;
 }
+
+export const fromNow=(date: string | number | Date,options: { addSuffix?: boolean | undefined; unit?: "second" | "minute" | "hour" | "day" | "month" | "year" | undefined; roundingMethod?: "floor" | "ceil" | "round" | undefined; locale?: Locale | undefined; } | undefined) =>{
+  return formatDistanceStrict(new Date(date), new Date(),options)
+} 
 
 const choosenFormat = (format: FormatType) => {
   if (format === 'datatime') return `yyyy-MM-dd'T'HH:mm`;

@@ -13,6 +13,8 @@ const Event = ({ event }: { event: Event | null }) => {
     images,
     subEvents = [],
     swimmingType,
+    includeFinishDate,
+    finishAt
   } = event;
   const LABELS:Record<Event['swimmingType'], string> = {
     '25m': 'Pool 25m',
@@ -31,7 +33,14 @@ const Event = ({ event }: { event: Event | null }) => {
         <h1 className="text-center font-bold text-2xl">
           {title || 'Event title'}
         </h1>
-        <p className="text-center">{date && myFormatDate(date)}</p>
+        <p className="text-center">
+          {includeFinishDate
+            ? `from ${myFormatDate(date, 'dd MMM yy')} to ${myFormatDate(
+                finishAt,
+                'dd MMM yy'
+              )}`
+            : myFormatDate(date, 'dd MMM yy')}
+        </p>
         <p className="text-center">{LABELS[swimmingType]}</p>
         <p className=" mx-auto whitespace-pre-line">
           {resume || 'Event resume'}
@@ -44,7 +53,7 @@ const Event = ({ event }: { event: Event | null }) => {
             </span>
           </h3>
           <div className="grid gap-2 p-1">
-            {subEvents?.map((sub:SubEvent, i) => (
+            {subEvents?.map((sub: SubEvent, i) => (
               <SubEvent key={`${sub.title}-${i}`} subEvent={sub} />
             ))}
           </div>

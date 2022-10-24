@@ -1,6 +1,7 @@
 import { Event } from '@firebase/Events/event.model';
 import Image from 'next/image';
 import Link from 'next/link';
+import myFormatDate, { fromNow } from 'utils/myFormatDate';
 export interface EventType extends Event{
 }
 
@@ -12,13 +13,13 @@ const EventCard = ({
   event: EventType;
   onSuscribe?: (id: string) => {};
 }) => {
-  const { title, id,  images = [],status} = event;
+  const { title, id,  images = [],status, date} = event;
   const firsImage = images?.[0];
   return (
     <Link href={`/events/${id}`}>
-      <a className="">
+      <a className="w-[200px]">
         <EventTitle title={title} />
-        <figure className="relative w-[200px]  h-[115px] ">
+        <figure className="relative  w-[200px] h-[115px] ">
           {firsImage && (
             <Image
               src={firsImage?.url || firsImage?.src}
@@ -28,8 +29,19 @@ const EventCard = ({
           )}
           <UpcommingLabel status={status} />
         </figure>
+        <EventInfo when={date ? fromNow(date, { addSuffix: true }) : 'soon'} />
       </a>
     </Link>
+  );
+};
+
+const EventInfo = ({ when }: { when?: string }) => {
+  return (
+    <div className="">
+      <div className="w-full text-sm truncate text-center">
+        <label className=" ">{when}</label>
+      </div>
+    </div>
   );
 };
 

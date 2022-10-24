@@ -5,7 +5,7 @@ function Profile() {
   const { userEvents } = useEvents({});
   return (
     <div>
-      <EventsRow title='My events' events={userEvents}/>
+      <EventsRow title='My created events' events={userEvents}/>
     </div>
   );
 }

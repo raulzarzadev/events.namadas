@@ -152,17 +152,11 @@ const FormEvent = ({ event }: { event?: Event }) => {
               errors={errors}
             />
 
-            <input
-            type={'date'}
-            {...register('date')}
-
-            />
-
             <InputDate
               {...register('date', {
                 value: myFormatDate(formValues.date, 'datatime'),
               })}
-              type="date"
+              type="datetime-local"
               name="date"
               label="Event date"
               errors={errors}
@@ -189,20 +183,17 @@ const FormEvent = ({ event }: { event?: Event }) => {
               errors={errors}
               type="number"
             />
-            <input 
-            type='datetime-local'
-            value={'2022-11-23T17:00'}
-            ></input>
-            {/* <InputDate
+
+            <InputDate
               {...register('suscriptionsOptions.startAt')}
-              type="datetime-local"
+              type="date"
               name="suscriptionsOptions.startAt"
               label="Starts at"
               errors={errors}
-            /> */}
+            />
             <InputDate
               {...register('suscriptionsOptions.finishAt')}
-              type="datetime-local"
+              type="date"
               name="suscriptionsOptions.finishAt"
               label="Finish at"
               errors={errors}
@@ -292,7 +283,9 @@ const FormEvent = ({ event }: { event?: Event }) => {
           </FormSection>
           <FormSection title="">
             <div className="flex justify-around">
-              <button className="btn btn-error" disabled>Delete </button>
+              <button className="btn btn-error" disabled>
+                Delete{' '}
+              </button>
               <button className="btn btn-primary">Save </button>
             </div>
           </FormSection>

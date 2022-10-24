@@ -7,13 +7,11 @@ export default function myFormatDate(
   date: string | number | Date | undefined,
   strFormat: FormatType='dd MM yy'
 ): string {
-  console.log(date);
   if (!date) {
     console.error('No date');
     return '';
   }
   const res = format(validDateAsNumber(date), choosenFormat(strFormat));
-  console.log(res);
   return res;
 }
 

@@ -1,19 +1,23 @@
 import React from "react";
 import { InputType } from ".";
 
- const InputDate = React.forwardRef<HTMLInputElement, InputType>(
+interface InputDateType extends Omit<InputType, 'type'> {
+  type: 'date' | 'datetime-local';
+}
+
+ const InputDate = React.forwardRef<HTMLInputElement, InputDateType>(
    (props, ref) => {
-     const { label, errors, name, ...rest } = props;
+     const { label, errors, name, type, ...rest } = props;
      return (
        <div className="form-control w-full ">
          <label className="label">{label}</label>
          <input
-           type='date'
+           {...rest}
+           ref={ref}
+           type={type}
            name={name}
            className="input  input-bordered"
            aria-invalid={errors[name] ? 'true' : 'false'}
-           {...rest}
-           ref={ref}
          />
          <label>{errors[name] && <span>{errors[name]}</span>}</label>
        </div>

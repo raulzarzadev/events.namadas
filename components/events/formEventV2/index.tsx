@@ -8,6 +8,7 @@ import { Event, SubEvent } from '@firebase/Events/event.model';
 import { createEvent, updateEvent } from '@firebase/Events/main';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { ReactNode } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 
@@ -42,7 +43,6 @@ const FormEvent = ({ event }: { event?: Event }) => {
           .catch((err) => console.error(err));
   };
 
-
   const EVENT_TYPE_OPTIONS = [
     { name: 'swimmingPool', label: 'Swimming Pool' },
     { name: 'openWater', label: 'Open water' },
@@ -51,21 +51,20 @@ const FormEvent = ({ event }: { event?: Event }) => {
     // '50m':'50m swimming pool'
     // '25m':'25m swimming pool'
   ];
-const EVENT_STATUS_OPTIONS = [
-  { name: 'PLANING', label: 'Planing' },
-  { name: 'ACTIVE', label: 'Active' },
-  // { name: 'PAUSED', label: 'Paused' },
-  // { name: 'CANCELED', label: 'Canceled' },
-  { name: 'IN_PROGRESS', label: 'In progress' },
-  { name: 'FINISHED', label: 'Finished' },
-];
+  const EVENT_STATUS_OPTIONS = [
+    { name: 'PLANING', label: 'Planing' },
+    { name: 'ACTIVE', label: 'Active' },
+    // { name: 'PAUSED', label: 'Paused' },
+    // { name: 'CANCELED', label: 'Canceled' },
+    { name: 'IN_PROGRESS', label: 'In progress' },
+    { name: 'FINISHED', label: 'Finished' },
+  ];
   const formValues = watch();
 
   const includeFinishDate = formValues?.includeFinishDate;
- 
+
   const isOpenWater = formValues?.swimmingType === 'openWater';
-  const isSwimmingPool =
-    formValues?.swimmingType === 'swimmingPool' 
+  const isSwimmingPool = formValues?.swimmingType === 'swimmingPool';
 
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
@@ -88,12 +87,11 @@ const EVENT_STATUS_OPTIONS = [
     : 'Create event';
   const handleSetImages = (images: any[]) => {
     setValue('images', images);
-     handleSubmit((props)=>{
-      onSubmit(props)
-     })()
+    handleSubmit((props) => {
+      onSubmit(props);
+    })();
   };
 
-  
   return (
     <div>
       <Head>
@@ -105,168 +103,192 @@ const EVENT_STATUS_OPTIONS = [
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid mx-auto gap-2 max-w-md  ">
           <EventImages images={formValues.images} setImages={handleSetImages} />
-          <Text
-            {...register('title')}
-            name="title"
-            label="Title"
-            errors={errors}
-            type="text"
-          />
-          <h4 className="font-bold text-lg">Current event status</h4>
-          <div className="flex justify-around flex-grow">
-            {EVENT_STATUS_OPTIONS.map(
-              ({ name, label }: { name: string; label: string }) => {
-                return (
-                  <RadioInput
-                    label={label}
-                    {...register('status')}
-                    value={name}
-                  />
-                );
-              }
-            )}
-          </div>
-          <Textarea
-            {...register('resume')}
-            name="resume"
-            label="A small resume"
-            errors={errors}
-            type="text"
-          />
-          <InputDate
-            {...register('date', {
-              value: myFormatDate(formValues.date, 'yyyy-MM-dd'),
-            })}
-            name="date"
-            label="Date"
-            errors={errors}
-          />
-          <Toggle
-            label={'Include finish date'}
-            {...register('includeFinishDate')}
-            name="includeFinishDate"
-            errors={errors}
-          />
-          {includeFinishDate && (
-            <InputDate
-              {...register('finishDate', {
-                value: myFormatDate(formValues.date, 'yyyy-MM-dd'),
-              })}
-              name="finishDate"
-              label="Finish date"
+          <FormSection title="Basic information">
+            <h4 className="font-bold text-lg">Current event status</h4>
+            <div className="flex justify-around flex-grow">
+              {EVENT_STATUS_OPTIONS.map(
+                ({ name, label }: { name: string; label: string }) => {
+                  return (
+                    <RadioInput
+                      key={name}
+                      label={label}
+                      {...register('status')}
+                      value={name}
+                    />
+                  );
+                }
+              )}
+            </div>
+
+            <Text
+              {...register('address')}
+              name="address"
+              label=" Address / Location"
               errors={errors}
-              type="date"
             />
-          )}
-          <Text
-            {...register('address')}
-            name="address"
-            label=" Address / Location"
-            errors={errors}
-          />
-          <h4 className="font-bold text-lg">Choose type of event</h4>
-          <div className="flex justify-around">
-            {EVENT_TYPE_OPTIONS.map(
-              ({ name, label }: { name: string; label: string }) => {
-                return (
-                  <RadioInput
-                    label={label}
-                    {...register('swimmingType')}
-                    value={name}
-                  />
-                );
-              }
+
+            <Text
+              {...register('title')}
+              name="title"
+              label="Title"
+              errors={errors}
+              type="text"
+            />
+
+            <Textarea
+              {...register('resume')}
+              name="resume"
+              label="A small resume"
+              errors={errors}
+              type="text"
+            />
+          </FormSection>
+
+          <FormSection title="Event dates">
+            <Toggle
+              label={'Include finish date'}
+              {...register('includeFinishDate')}
+              name="includeFinishDate"
+              errors={errors}
+            />
+
+            <InputDate
+              {...register('date', {
+                value: myFormatDate(formValues.date, 'datatime'),
+              })}
+              type="datetime-local"
+              name="date"
+              label="Event date"
+              errors={errors}
+            />
+            {includeFinishDate && (
+              <InputDate
+                {...register('finishAt', {
+                  value: myFormatDate(formValues.finishAt, 'datatime'),
+                })}
+                type="datetime-local"
+                name="finishAt"
+                label="Finish date"
+                errors={errors}
+              />
             )}
-          </div>
-
-          {isSwimmingPool && (
-            <PickerSwimmingTests
-              setTests={(tests) => setValue('subEvents', tests)}
-              tests={formValues?.subEvents}
+          </FormSection>
+          <FormSection title="Suscriptions options">
+            <Text
+              {...register('suscriptionsOptions.limit', {
+                valueAsNumber: true,
+              })}
+              name="suscriptionsOptions.limit"
+              label="Limited to:"
+              errors={errors}
+              type="number"
             />
-          )}
-          {isOpenWater && (
-            <div>
-              <h4 className="font-bold text-lg">Set sub-events!</h4>
 
-              <div className="grid gap-4">
-                {fields.map((field, index) => (
-                  <div
-                    key={field.id}
-                    className="flex items-end flex-col bg-base-200 py-4 "
-                  >
-                    <button
-                      type="button"
-                      className="btn btn-outline btn-error btn-xs"
-                      onClick={() => remove(index)}
+            <InputDate
+              {...register('suscriptionsOptions.startAt')}
+              type="date"
+              name="suscriptionsOptions.startAt"
+              label="Starts at"
+              errors={errors}
+            />
+            <InputDate
+              {...register('suscriptionsOptions.finishAt')}
+              type="date"
+              name="suscriptionsOptions.finishAt"
+              label="Finish at"
+              errors={errors}
+            />
+          </FormSection>
+
+          <FormSection title="Sub events">
+            <div className="flex justify-around">
+              {EVENT_TYPE_OPTIONS.map(
+                ({ name, label }: { name: string; label: string }) => {
+                  return (
+                    <RadioInput
+                      key={name}
+                      label={label}
+                      {...register('swimmingType')}
+                      value={name}
+                    />
+                  );
+                }
+              )}
+            </div>
+            {isSwimmingPool && (
+              <PickerSwimmingTests
+                setTests={(tests) => setValue('subEvents', tests)}
+                tests={formValues?.subEvents}
+              />
+            )}
+            {isOpenWater && (
+              <div>
+                <h4 className="font-bold text-lg">Set sub-events!</h4>
+
+                <div className="grid gap-4">
+                  {fields.map((field, index) => (
+                    <div
+                      key={field.id}
+                      className="flex items-end flex-col bg-base-200 py-4 "
                     >
-                      Delete
-                    </button>
-                    <Text
-                      {...register(`subEvents.${index}.title`)}
-                      label={'Title'}
-                      // name={`subEvents.${index}.title`}
-                      errors={errors}
-                    />
+                      <button
+                        type="button"
+                        className="btn btn-outline btn-error btn-xs"
+                        onClick={() => remove(index)}
+                      >
+                        Delete
+                      </button>
+                      <Text
+                        {...register(`subEvents.${index}.title`)}
+                        label={'Title'}
+                        // name={`subEvents.${index}.title`}
+                        errors={errors}
+                      />
 
-                    <Text
-                      {...register(`subEvents.${index}.distance`)}
-                      label={'Distance (m)'}
-                      type="number"
-                      // name={`subEvents.${index}.distance`}
-                      errors={errors}
-                    />
-                    <InputLocalDate
-                      {...register(`subEvents.${index}.date`)}
-                      label={'Date time'}
-                      // name={`subEvents.${index}.title`}
-                      errors={errors}
-                    />
-                    <Text
-                      {...register(`subEvents.${index}.comments`)}
-                      label={'Coments'}
-                      // name={`subEvents.${index}.title`}
-                      errors={errors}
-                    />
+                      <Text
+                        {...register(`subEvents.${index}.distance`)}
+                        label={'Distance (m)'}
+                        type="number"
+                        // name={`subEvents.${index}.distance`}
+                        errors={errors}
+                      />
+                      <InputLocalDate
+                        {...register(`subEvents.${index}.date`)}
+                        label={'Date time'}
+                        // name={`subEvents.${index}.title`}
+                        errors={errors}
+                      />
+                      <Text
+                        {...register(`subEvents.${index}.comments`)}
+                        label={'Coments'}
+                        // name={`subEvents.${index}.title`}
+                        errors={errors}
+                      />
+                    </div>
+                  ))}
+                  <div className="w-full flex justify-center my-2">
+                    <button
+                      className="btn btn-md "
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleAddSubEvent();
+                      }}
+                    >
+                      Add a event
+                    </button>
                   </div>
-                ))}
-                <div className="w-full flex justify-center my-2">
-                  <button
-                    className="btn btn-md "
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleAddSubEvent();
-                    }}
-                  >
-                    Add a event
-                  </button>
                 </div>
               </div>
+            )}
+          </FormSection>
+          <FormSection title="">
+            <div className="flex justify-around">
+              <button className="btn btn-error" disabled>
+                Delete{' '}
+              </button>
+              <button className="btn btn-primary">Save </button>
             </div>
-          )}
-          {/*
-          {isOpenWater && (
-            <div className='text-center'>
-              <div className='flex'>
-              <Text 
-              label='Label'
-              errors={errors}
-              {register}
-              />
-
-              <Text
-                type="number"
-                label={'Custom distance (mts)'}
-                {...register('distance')}
-                errors={errors}
-                />
-                </div>
-              <button className='btn btn-sm btn-outline' >Add distance</button>
-            </div>
-          )} */}
-          <div>
-            <button className="btn btn-primary w-full">Guardar </button>
-          </div>
+          </FormSection>
         </div>
       </form>
     </div>
@@ -290,5 +312,13 @@ const EventImages = ({ images, disabled = false, setImages }: EventImages) => {
     </div>
   );
 };
-
+const FormSection = ({children, title}:{children:ReactNode, title:string})=>{
+  return (
+  <div className='p-1 py-2 my-2 mx-1 bg-base-200 rounded-md'>
+    <h3 className='font-bold' >{title}</h3>
+    <div>
+      {children}
+    </div>
+  </div>)
+}
 export default FormEvent;

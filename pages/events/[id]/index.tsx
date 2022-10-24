@@ -1,4 +1,5 @@
 import Event from '@comps/events/event';
+import { Event as EventType } from '@firebase/Events/event.model';
 import useAuth from 'hooks/useAuth';
 import useEvents from 'hooks/useEvents';
 import Link from 'next/link';
@@ -19,22 +20,26 @@ const EventPage = () => {
   return (
     <div>
       <Event event={event} />
-      {isOwner && <Options />}
+      {isOwner && <Options eventId={event?.id} />}
     </div>
   );
 };
 
-const Options = () => {
-  const event = useSelector(selectEventState);
+const Options = ({ eventId }: { eventId: EventType['id'] }) => {
+  // const event = useSelector(selectEventState);
   return (
     <div
-      className="flex w-full
-  justify-evenly max-w-lg mx-auto p-2"
+      className=" 
+      flex w-full
+      justify-evenly 
+      max-w-lg 
+      mx-auto 
+      p-2"
     >
-      <Link href={`/events/${event?.id}/edit`}>
+      <Link href={`/events/${eventId}/edit`}>
         <button className="btn btn-outline ">Edit </button>
       </Link>
-      <Link href={`/events/${event?.id}/manage`}>
+      <Link href={`/events/${eventId}/manage`}>
         <button className="btn btn-outline ">Manage </button>
       </Link>
     </div>

@@ -10,7 +10,7 @@ const {user, handleLogin, handleLogout}=useAuth()
       <div className="navbar bg-base-100 shadow-md">
         <div className="navbar-start">
           <Link href={'/'}>
-          <a className="btn btn-ghost normal-case text-xl">Eventos </a>
+            <a className="btn btn-ghost normal-case text-xl">Eventos </a>
           </Link>
         </div>
         <div className="navbar-end">
@@ -67,7 +67,11 @@ const {user, handleLogin, handleLogout}=useAuth()
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="relative w-10 rounded-full">
-                    <Image src={user?.image || user?.photoURL} layout='fill' objectFit='contain'/>
+                    <Image
+                      src={user?.image || user?.photoURL}
+                      layout="fill"
+                      objectFit="contain"
+                    />
                   </div>
                 </label>
                 <ul
@@ -78,15 +82,21 @@ const {user, handleLogin, handleLogout}=useAuth()
                     <Link href={'/profile'}>
                       <a className="justify-between">
                         Profile
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href={'/new-event'}>
+                      <a className="justify-between">
+                        New event
                         <span className="badge">New</span>
                       </a>
                     </Link>
                   </li>
                   <li>
-                    <a>Settings</a>
-                  </li>
-                  <li>
-                    <button className='border' onClick={() => handleLogout()}>Logout</button>
+                    <button className="border" onClick={() => handleLogout()}>
+                      Logout
+                    </button>
                   </li>
                 </ul>
               </div>

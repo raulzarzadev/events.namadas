@@ -1,46 +1,47 @@
 import { Event } from '@firebase/Events/event.model';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import myFormatDate, { fromNow } from 'utils/myFormatDate';
 export interface EventType extends Event{
- 
 }
-
-
 
 const EventCard = ({
   event,
-  redirect = false,
-  size = 'lg',
 }: {
   redirect?: boolean;
   size?: 'sm' | 'md' | 'lg';
   event: EventType;
   onSuscribe?: (id: string) => {};
 }) => {
-  const { title, resume, id, image, images = [],status} = event;
-
-
+  const { title, id,  images = [],status, date} = event;
   const firsImage = images?.[0];
-  // console.log(firsImage);
-
-  // FIX group-hover is not working
-  const cutTestAt = (length: number, text: string = '') => {
-    return text.slice(0, length).concat('...');
-  };
   return (
     <Link href={`/events/${id}`}>
-      <a className="w-[200px] ">
-          <EventTitle title={title} />
-        <figure className="relative w-full h-[115px] ">
+      <a className="w-[200px]">
+        <EventTitle title={title} />
+        <figure className="relative  w-[200px] h-[115px] ">
           {firsImage && (
-            <Image src={firsImage?.url || firsImage?.src} objectFit="cover" layout="fill" />
+            <Image
+              src={firsImage?.url || firsImage?.src}
+              objectFit="cover"
+              layout="fill"
+            />
           )}
-
-          <UpcommingLabel status={status}  />
+          <UpcommingLabel status={status} />
         </figure>
+        <EventInfo when={date ? fromNow(date, { addSuffix: true }) : 'soon'} />
       </a>
     </Link>
+  );
+};
+
+const EventInfo = ({ when }: { when?: string }) => {
+  return (
+    <div className="">
+      <div className="w-full text-sm truncate text-center">
+        <label className=" ">{when}</label>
+      </div>
+    </div>
   );
 };
 
@@ -77,25 +78,5 @@ const UpcommingLabel = ({
     </div>
   );
 };
-//       <Link href={`/events/${id}`}>
-//         <a>
-//           <div
-//             className={`card w-full ${sizing[size]} border-2 border-transparent  hover:border-primary cursor-pointer active:border-gray-600`}
-//           >
-//             <figure className="relative w-[400px] h-[225px] ">
-//               {firsImage && (
-//                 <Image src={firsImage?.url} objectFit="cover" layout="fill" />
-//               )}
-//             </figure>
-//             <div className="card-body glass">
-//               <h2 className="card-title">{title}</h2>
-//               <p className="whitespace-pre-line">{cutTestAt(120, resume)}</p>
-//               <div className="card-actions justify-end">
-//                 <button className="btn btn-outline ">Saber más!</button>
-//               </div>
-//             </div>
-//           </div>
-//         </a>
-//       </Link>
-//     </div>
+
 export default EventCard;

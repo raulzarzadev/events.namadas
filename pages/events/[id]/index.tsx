@@ -28,8 +28,12 @@ const Options = () => {
   const event = useSelector(selectEventState);
   return (
     <div
-      className="flex w-full
-  justify-evenly max-w-lg mx-auto p-2"
+      className=" 
+      flex w-full
+      justify-evenly 
+      max-w-lg 
+      mx-auto 
+      p-2"
     >
       <Link href={`/events/${event?.id}/edit`}>
         <button className="btn btn-outline ">Edit </button>

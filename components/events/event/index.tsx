@@ -27,7 +27,7 @@ const Event = ({ event }: { event: Event | null }) => {
       <div className="flex w-full justify-around my-4">
         <button className="btn btn-primary ">Participa</button>
       </div>
-      <div className="max-w-md mx-auto" >
+      <div className="max-w-md mx-auto">
         <h1 className="text-center font-bold text-2xl">
           {title || 'Event title'}
         </h1>
@@ -44,8 +44,8 @@ const Event = ({ event }: { event: Event | null }) => {
             </span>
           </h3>
           <div className="grid gap-2 p-1">
-            {subEvents?.map((sub) => (
-              <SubEvent key={sub.title} subEvent={sub} />
+            {subEvents?.map((sub:SubEvent, i) => (
+              <SubEvent key={`${sub.title}-${i}`} subEvent={sub} />
             ))}
           </div>
         </div>

@@ -11,9 +11,9 @@ const EventsRow = ({ events, title='Events' }:{events:EventType[], title:string}
         <div className="flex flex-row gap-2 overflow-x-auto pb-4 min-h-[115px] ">
           {events?.map((event) => (
             <EventCard
+              key={event?.id}
               size="sm"
               event={event}
-              key={event?.id}
               onSuscribe={handleSuscribeTo}
               />
           ))}

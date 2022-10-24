@@ -14,7 +14,6 @@ const EventCard = ({
 }) => {
   const { title, id,  images = [],status} = event;
   const firsImage = images?.[0];
-
   return (
     <Link href={`/events/${id}`}>
       <a className="">

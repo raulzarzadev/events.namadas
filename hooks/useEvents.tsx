@@ -1,8 +1,8 @@
 import { Event } from '@firebase/Events/event.model';
 import { getEventsByStatus, listenEvent, listenUserEvents } from '@firebase/Events/main';
 import { SetStateAction, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectEventState, setEvent } from 'store/slices/eventSlice';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { selectEventState, setEvent } from 'store/slices/eventSlice';
 import useAuth from './useAuth';
 
 interface UseEvenType  {
@@ -11,13 +11,13 @@ interface UseEvenType  {
   getByStatus?: Event["status"] | undefined
 }
 function useEvents({ eventId, getByStatus }: UseEvenType) {
-  const dispatch = useDispatch();
-  const event = useSelector(selectEventState);
+  // const dispatch = useDispatch();
+ //  const event = useSelector(selectEventState);
   const { user } = useAuth();
 
   const [userEvents, setUserEvents] = useState([]);
   const [events, setEvents] = useState<Event[] | [] >([]);
-
+const [event, setEvent]=useState<Event|null>(null)
   useEffect(() => {
     if (getByStatus) {
       getEventsByStatus(getByStatus).then((res) => setEvents(res));
@@ -27,7 +27,8 @@ function useEvents({ eventId, getByStatus }: UseEvenType) {
   useEffect(() => {
     if (eventId) {
       listenEvent(eventId, (res: any) => {
-        dispatch(setEvent(res));
+       //dispatch(setEvent(res));
+       setEvent(res)
       });
     }
   }, [eventId]);

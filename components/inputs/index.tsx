@@ -9,6 +9,7 @@ export interface InputType {
   errors?: any;
   type?: 'date' | 'text' | 'checkbox' | 'toggle' | 'number' ;
   rules?: any;
+  
 }
 
 export { Text, Toggle, InputDate , Select , Chip};

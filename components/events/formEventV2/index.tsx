@@ -8,7 +8,7 @@ import { Event, SubEvent } from '@firebase/Events/event.model';
 import { createEvent, updateEvent } from '@firebase/Events/main';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 
@@ -25,6 +25,35 @@ const FormEvent = ({ event }: { event?: Event }) => {
   } = useForm({
     defaultValues: event || undefined,
   });
+  const formValues = watch();
+  
+  const setEventOptionalDatesBasedInEventDate = () => {
+    setValue(
+      'suscriptionsOptions.finishAt',
+      myFormatDate(watch('date'), 'yyyy-MM-dd')
+    );
+    setValue(
+      'suscriptionsOptions.startAt',
+      myFormatDate(new Date().getTime(), 'yyyy-MM-dd')
+    );
+    setValue(
+      'finishAt',
+      myFormatDate(formValues.finishAt, `yyyy-MM-dd'T'HH:mm`)
+    );
+  };
+
+
+  useEffect(()=>{
+    setEventOptionalDatesBasedInEventDate();
+  },[formValues.date])
+
+  useEffect(()=>{
+    setValue('date', myFormatDate(formValues.date, `yyyy-MM-dd'T'HH:mm`));
+    setValue(
+      'finishAt',
+      myFormatDate(formValues.finishAt, `yyyy-MM-dd'T'HH:mm`)
+    );
+  },[])
 
   const onSubmit = (data: Event) => {
     event?.id // eventAllreadyExist
@@ -59,7 +88,6 @@ const FormEvent = ({ event }: { event?: Event }) => {
     { name: 'IN_PROGRESS', label: 'In progress' },
     { name: 'FINISHED', label: 'Finished' },
   ];
-  const formValues = watch();
 
   const includeFinishDate = formValues?.includeFinishDate;
 
@@ -121,7 +149,7 @@ const FormEvent = ({ event }: { event?: Event }) => {
             </div>
 
             <Text
-              {...register('title', {required:true})}
+              {...register('title', { required: true })}
               name="title"
               label="Title"
               errors={errors}
@@ -149,25 +177,21 @@ const FormEvent = ({ event }: { event?: Event }) => {
               name="includeFinishDate"
               errors={errors}
             />
-
             <InputDate
-              {...register('date', {
-                value: myFormatDate(formValues.date, 'datatime'),
-              })}
+              {...register('date')}
               type="datetime-local"
               name="date"
-              label="Event date"
+              label="Event date and time"
               errors={errors}
             />
             {includeFinishDate && (
               <InputDate
-                {...register('finishAt', {
-                  value: myFormatDate(formValues.finishAt, 'datatime'),
-                })}
+                {...register('finishAt')}
                 type="datetime-local"
                 name="finishAt"
                 label="Finish date"
                 errors={errors}
+                min={myFormatDate(formValues.date, 'yyyy-MM-dd')}
               />
             )}
           </FormSection>
@@ -180,6 +204,8 @@ const FormEvent = ({ event }: { event?: Event }) => {
               label="Limited to:"
               errors={errors}
               type="number"
+              min={0}
+              max={99999}
             />
 
             <InputDate
@@ -195,6 +221,7 @@ const FormEvent = ({ event }: { event?: Event }) => {
               name="suscriptionsOptions.finishAt"
               label="Finish at"
               errors={errors}
+              max={myFormatDate(formValues.date, 'yyyy-MM-dd')}
             />
           </FormSection>
 

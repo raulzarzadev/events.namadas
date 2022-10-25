@@ -121,20 +121,18 @@ const FormEvent = ({ event }: { event?: Event }) => {
             </div>
 
             <Text
-              {...register('address')}
-              name="address"
-              label=" Address / Location"
-              errors={errors}
-            />
-
-            <Text
-              {...register('title')}
+              {...register('title', {required:true})}
               name="title"
               label="Title"
               errors={errors}
               type="text"
             />
-
+            <Text
+              {...register('address')}
+              name="address"
+              label=" Address / Location"
+              errors={errors}
+            />
             <Textarea
               {...register('resume')}
               name="resume"

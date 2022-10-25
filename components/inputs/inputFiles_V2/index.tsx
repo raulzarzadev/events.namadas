@@ -100,7 +100,7 @@ const SquareInputFile=({disabled, handleChange, label}:InputFile)=>{
         </div>
         <input
           disabled={disabled}
-          accept=".jpg,.png,.jpeg"
+          accept=".jpg,.png,.jpeg, .webp"
           onChange={handleChange}
           className="hidden"
           type={'file'}

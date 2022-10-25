@@ -4,8 +4,10 @@ import useEvents from "hooks/useEvents";
 function Profile() {
   const { userEvents } = useEvents({});
   return (
-    <div data-test-id="user-events-created">
-      <EventsRow title="My created events" events={userEvents} />
+    <div className="sm:p-4">
+      <div data-test-id="user-events-created">
+        <EventsRow title="My created events" events={userEvents} />
+      </div>
     </div>
   );
 }

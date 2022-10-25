@@ -18,6 +18,7 @@
     "date-fns": "^2.29.3",
     "eslint-config-standard": "^17.0.0",
     "firebase": "^9.10.0",
+    "firebase-admin": "^11.2.0",
     "firebase-dates-util": "^0.4.9",
     "next": "12.2.5",
     "next-pwa": "^5.6.0",

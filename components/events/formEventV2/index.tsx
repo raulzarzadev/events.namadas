@@ -100,7 +100,7 @@ const FormEvent = ({ event }: { event?: Event }) => {
       <h2 className="text-xl font-bold text-center my-4 whitespace-pre">
         {formLabel}
       </h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} data-test-id="event-form">
         <div className="grid mx-auto gap-2 max-w-md  ">
           <EventImages images={formValues.images} setImages={handleSetImages} />
           <FormSection title="Basic information">

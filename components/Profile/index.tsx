@@ -4,8 +4,8 @@ import useEvents from "hooks/useEvents";
 function Profile() {
   const { userEvents } = useEvents({});
   return (
-    <div>
-      <EventsRow title='My created events' events={userEvents}/>
+    <div data-test-id="user-events-created">
+      <EventsRow title="My created events" events={userEvents} />
     </div>
   );
 }

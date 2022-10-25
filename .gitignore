@@ -50,3 +50,4 @@ public/sw.js
 # cypress 
 
 cypress.env.json
+serviceAccountKey.json

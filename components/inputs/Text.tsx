@@ -14,7 +14,7 @@ import { InputType } from ".";
         aria-invalid={errors[name] ? 'true' : 'false'}
         {...props}
       />
-      <label>{errors[name] && <span>{errors[name]}</span>}</label>
+      <label className="label label-text-alt text-error">{errors[name] && <span>{'This field is required'}</span>}</label>
     </div>
   );
 });

@@ -5,7 +5,7 @@ type FormatType = 'datatime' | 'inputDate' | string
 
 export default function myFormatDate(
   date: string | number | Date | undefined,
-  strFormat: FormatType='dd MM yy'
+  strFormat: 'datatime' | 'inputDate' | string
 ): string {
   if (!date) {
     console.error('No date');

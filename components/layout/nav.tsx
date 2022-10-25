@@ -33,6 +33,7 @@ const {user, handleLogin, handleLogout}=useAuth()
           {!user && (
             <div>
               <button
+                data-test-id="navbar-button-login"
                 className="btn btn-primary"
                 onClick={() => {
                   handleLogin();
@@ -65,7 +66,11 @@ const {user, handleLogin, handleLogout}=useAuth()
               </button>
 
               <div className="dropdown dropdown-end">
-                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <label
+                  tabIndex={0}
+                  className="btn btn-ghost btn-circle avatar"
+                  data-test-id="user-logged-avatar"
+                >
                   <div className="relative w-10 rounded-full">
                     <Image
                       src={user?.image || user?.photoURL}
@@ -80,14 +85,15 @@ const {user, handleLogin, handleLogout}=useAuth()
                 >
                   <li>
                     <Link href={'/profile'}>
-                      <a className="justify-between">
-                        Profile
-                      </a>
+                      <a className="justify-between">Profile</a>
                     </Link>
                   </li>
                   <li>
                     <Link href={'/new-event'}>
-                      <a className="justify-between">
+                      <a
+                        className="justify-between"
+                        data-test-id="new-event-link"
+                      >
                         New event
                         <span className="badge">New</span>
                       </a>

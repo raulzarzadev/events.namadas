@@ -3,6 +3,7 @@ import { InputType } from ".";
 
 interface InputDateType extends Omit<InputType, 'type'> {
   type: 'date' | 'datetime-local';
+
 }
 
  const InputDate = React.forwardRef<any, InputDateType>((props, ref) => {

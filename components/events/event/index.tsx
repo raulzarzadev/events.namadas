@@ -70,7 +70,7 @@ const SubEvent = ({ subEvent }: { subEvent: SubEvent }) => {
       <div className="flex w-full justify-between">
         <h3 className="w-1/3 ">{title || style}</h3>
         <span className="w-1/3 text-center">{distance}</span>
-        <span className="w-1/3 text-end">{date && myFormatDate(date)}</span>
+        <span className="w-1/3 text-end">{date && myFormatDate(date,'dd MMM yy')}</span>
       </div>
       <div>
         <p>{comments}</p>

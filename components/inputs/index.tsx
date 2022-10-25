@@ -7,9 +7,10 @@ export interface InputType {
   label?: string;
   name: string;
   errors?: any;
-  type?: 'date' | 'text' | 'checkbox' | 'toggle' | 'number' ;
+  type?: 'date' | 'text' | 'checkbox' | 'toggle' | 'number';
   rules?: any;
-  
+  min?: string | number;
+  max?: string | number;
 }
 
 export { Text, Toggle, InputDate , Select , Chip};

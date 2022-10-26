@@ -28,6 +28,7 @@ const EventPyment = () => {
       <div className='text-center'>
         <span>Price:</span>
         <span className='font-bold text-xl'>${parseInt(price?.price)?.toFixed(2)}</span>
+        
       </div>
     
     </div>

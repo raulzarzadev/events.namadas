@@ -20,6 +20,18 @@ export interface Event extends Base {
   suscriptionsOptions?: SuscriptionsOptions;
   suscriptions: EventSuscription[];
   links:EventLink[]
+  prices?:Price[]
+}
+export interface Price {
+  id:string,
+  eventId?:string
+  title:string
+  description?:string
+  image?:string
+  price:number
+  disconunt?:number
+  finishAt?:DateType
+  startAt?:DateType
 }
 export interface EventLink {
   label:string
@@ -53,4 +65,5 @@ export interface SubEvent{
   comments?:string
   date?:string
   style:string
+  image?:string
 }

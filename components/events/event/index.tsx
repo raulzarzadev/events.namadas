@@ -1,5 +1,6 @@
 import Carousel from '@comps/carousel';
 import { Event, SubEvent } from '@firebase/Events/event.model';
+import Link from 'next/link';
 import myFormatDate from 'utils/myFormatDate';
 
 const Event = ({ event }: { event: Event | null }) => {
@@ -14,8 +15,10 @@ const Event = ({ event }: { event: Event | null }) => {
     subEvents = [],
     swimmingType,
     includeFinishDate,
-    finishAt
+    finishAt,
+    id:eventId
   } = event;
+  
   const LABELS:Record<Event['swimmingType'], string> = {
     '25m': 'Pool 25m',
     '50m': 'Pool 50m',
@@ -27,7 +30,9 @@ const Event = ({ event }: { event: Event | null }) => {
     <div>
       <Carousel images={images} />
       <div className="flex w-full justify-around my-4">
-        <button className="btn btn-primary ">Participa</button>
+        <Link href={`/events/${eventId}/join`}>
+          <button className="btn btn-primary ">Participa</button>
+        </Link>
       </div>
       <div className="max-w-md mx-auto">
         <h1 className="text-center font-bold text-2xl">

@@ -4,14 +4,14 @@ import InputLocalDate from '@comps/inputs/InputLocalDate';
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest';
 import RadioInput from '@comps/inputs/Radio';
 import Textarea from '@comps/inputs/Textarea';
-import { Event, SubEvent } from '@firebase/Events/event.model';
+import { Event, Price, SubEvent } from '@firebase/Events/event.model';
 import { createEvent, updateEvent } from '@firebase/Events/main';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
-
+import { v4 as uidGenerator } from 'uuid'
 const FormEvent = ({ event }: { event?: Event }) => {
   const eventAllreadyExist = event?.id;
   const router = useRouter();
@@ -99,6 +99,21 @@ const FormEvent = ({ event }: { event?: Event }) => {
     name: 'subEvents', // unique name for your Field Array,
   });
 
+    const { fields:priceFields, append:appendPrice, remove:removePrice } = useFieldArray({
+      control, // control props comes from useForm (optional: if you are using FormContext)
+      name: 'prices', // unique name for your Field Array,
+    });
+const handleAddPrice=()=>{
+  const uuid = uidGenerator().replace('-','').slice(0,20);
+  const appendNewPrice: Price = {
+    id: uuid,
+    eventId:event?.id,
+    price: 0,
+    title: `Price ${(formValues.prices?.length||0) + 1 }`,
+    description: 'Description price',
+  };
+  appendPrice(appendNewPrice);
+}
   const handleAddSubEvent = () => {
     const appendNewEvent: SubEvent = {
       title: '',
@@ -119,6 +134,7 @@ const FormEvent = ({ event }: { event?: Event }) => {
       onSubmit(props);
     })();
   };
+
 
   return (
     <div>
@@ -195,6 +211,7 @@ const FormEvent = ({ event }: { event?: Event }) => {
               />
             )}
           </FormSection>
+
           <FormSection title="Suscriptions options">
             <Text
               {...register('suscriptionsOptions.limit', {
@@ -215,6 +232,7 @@ const FormEvent = ({ event }: { event?: Event }) => {
               label="Starts at"
               errors={errors}
             />
+
             <InputDate
               {...register('suscriptionsOptions.finishAt')}
               type="date"
@@ -223,6 +241,55 @@ const FormEvent = ({ event }: { event?: Event }) => {
               errors={errors}
               max={myFormatDate(formValues.date, 'yyyy-MM-dd')}
             />
+          </FormSection>
+
+          <FormSection title="Prices">
+            <div>
+              {priceFields.map((field, index) => (
+                <div
+                  key={field.id}
+                  className="flex items-end flex-col bg-base-200 py-4 "
+                >
+                  <button
+                    type="button"
+                    className="btn btn-outline btn-error btn-xs"
+                    onClick={() => removePrice(index)}
+                  >
+                    Delete
+                  </button>
+                  <Text
+                    {...register(`prices.${index}.title`)}
+                    label={'Title'}
+                    // name={`subEvents.${index}.title`}
+                    errors={errors}
+                  />
+                  <Text
+                    {...register(`prices.${index}.description`)}
+                    label={'Description'}
+                    // name={`subEvents.${index}.title`}
+                    errors={errors}
+                  />
+                  <Text
+                    {...register(`prices.${index}.price`)}
+                    label={'Price'}
+                    type="number"
+                    // name={`subEvents.${index}.title`}
+                    errors={errors}
+                  />
+                </div>
+              ))}
+              <div className="w-full flex justify-center my-2">
+                <button
+                  className="btn btn-md "
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleAddPrice();
+                  }}
+                >
+                  Add a price
+                </button>
+              </div>
+            </div>
           </FormSection>
 
           <FormSection title="Sub events">

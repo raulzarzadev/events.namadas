@@ -37,3 +37,12 @@ const validDateAsNumber = (date: string | Date | number): number => {
   }
   return 0;
 };
+
+export const sortFromNow = (a: any, b: any) => {
+  const currentTime = new Date().getTime();
+  const aDiference = Math.abs(a?.date - currentTime);
+  const baDiference = Math.abs(b?.date - currentTime);
+  if (aDiference < baDiference) return -1;
+  if (aDiference > baDiference) return 1;
+  return 0;
+};

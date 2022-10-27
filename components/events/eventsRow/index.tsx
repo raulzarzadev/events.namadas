@@ -1,4 +1,5 @@
 import EventCard, { EventType } from '@comps/EventCard_V2';
+import { sortFromNow } from 'utils/myFormatDate';
 
 const EventsRow = ({ events, title='Events' }:{events:EventType[], title:string}) => {
   const handleSuscribeTo = (id: string) => {
@@ -9,14 +10,7 @@ const EventsRow = ({ events, title='Events' }:{events:EventType[], title:string}
     if (a?.date > b?.date) return -1;
     return 0
   }
-  const sortFromNow=(a:any, b:any)=>{
-    const currentTime = new Date().getTime()
-    const aDiference= Math.abs(a?.date - currentTime)
-    const baDiference = Math.abs(b?.date - currentTime);
-    if (aDiference < baDiference) return -1;
-    if (aDiference > baDiference) return 1;
-    return 0
-  }
+
   return (
     <div className=" mx-auto">
       <h3 className="text-lg  font-bold mt-4 ">{title}</h3>

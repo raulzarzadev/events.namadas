@@ -108,7 +108,7 @@ const handleAddPrice=()=>{
   const appendNewPrice: Price = {
     id: uuid,
     eventId:event?.id,
-    price: 0,
+    amount: 0,
     title: `Price ${(formValues.prices?.length||0) + 1 }`,
     description: 'Description price',
   };
@@ -270,7 +270,7 @@ const handleAddPrice=()=>{
                     errors={errors}
                   />
                   <Text
-                    {...register(`prices.${index}.price`)}
+                    {...register(`prices.${index}.amount`)}
                     label={'Price'}
                     type="number"
                     // name={`subEvents.${index}.title`}

@@ -22,7 +22,7 @@ const OrderSumary = ({ items = [] }: { items: Price[] }) => {
                 <div className="grid">
                   <span>{item?.title}</span>
                   <span className="text-sm font-thin">{item?.description}</span>
-                  <span className="font-bold">{item?.price}</span>
+                  <span className="font-bold">{item?.amount}</span>
                 </div>
               </div>
             </div>

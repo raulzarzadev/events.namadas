@@ -9,9 +9,9 @@ export const calculateOrderAmount = (items:Price[]) => {
   // people from directly manipulating the amount on the client
   let total = 1
   items.forEach((item)=>{
-    total += parseFloat(`${item?.price||0}`)
+    total += parseFloat(`${item?.amount||0}`)
   })
-  console.log(total)
+  // console.log(total)
   return total
 }
 
@@ -24,7 +24,7 @@ export default async function handler (req: { body: { items: any } }, res: { sen
     amount: calculateOrderAmount(items),
     currency: 'eur',
     automatic_payment_methods: {
-      enabled: true
+      enabled: false,
     }
   })
 

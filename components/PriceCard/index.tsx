@@ -20,7 +20,7 @@ const PriceCard = ({price}:{price:Price}) => {
         <h4 className="text-center font-bold sm:text-xl">{price.title}</h4>
         <p>{price.description}</p>
         <div className="mt-4 btn group-hover:bg-primary group-active:bg-base-100 ">
-          <span>${parseInt(price.price).toFixed(2)} mxn</span>
+          <span>${parseInt(`${price.amount||0}`).toFixed(2)} mxn</span>
         </div>
       </div>
       <Modal
@@ -35,7 +35,7 @@ const PriceCard = ({price}:{price:Price}) => {
           <Link
             href={{
               pathname: 'payment/[priceId]/checkout',
-              query: { priceId: price.id, id:price.eventId },
+              query: { priceId: price.id, id: price.eventId },
             }}
           >
             <button className="btn  btn-sm ">Pay now</button>

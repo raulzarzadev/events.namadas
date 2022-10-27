@@ -226,7 +226,7 @@ export class FirebaseCRUD {
       newItem,
       'number'
     );
-    console.log(itemDatesToFirebaseTimestamp);
+    // console.log(itemDatesToFirebaseTimestamp);
 
     return await addDoc(
       collection(db, this.collectionName),

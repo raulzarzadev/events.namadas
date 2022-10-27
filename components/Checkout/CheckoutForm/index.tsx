@@ -4,14 +4,19 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
-
+import { useRouter } from 'next/router';
+import { createEventPayment } from '@firebase/EventPayments/main';
+const URL_BASE = 'http://localhost:3000';
 export default function CheckoutForm() {
+  const {query:{id:eventId,priceId}} = useRouter()
   const stripe = useStripe();
   const elements = useElements();
 
   const [message, setMessage] = React.useState<string|null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
-
+  
+  const REDIRECT_TO = `${URL_BASE}/events/${eventId}/payment/${priceId}/processing`;
+  console.log(REDIRECT_TO)
   React.useEffect(() => {
     if (!stripe) {
       return;
@@ -53,14 +58,15 @@ export default function CheckoutForm() {
     }
 
     setIsLoading(true);
-
+    
+    
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000',
+        return_url: REDIRECT_TO,
       },
-    });
+    })
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to

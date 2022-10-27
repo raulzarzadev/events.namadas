@@ -28,7 +28,8 @@ export interface Price {
   title:string
   description?:string
   image?:string
-  price:number
+  // price:number
+  amount:number
   disconunt?:number
   finishAt?:DateType
   startAt?:DateType

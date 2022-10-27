@@ -18,7 +18,7 @@ export default function CheckoutPage() {
 
   useEffect(()=>{
     if(event){
-      const eventItems = event.prices?.find(({id})=>id===priceId)
+      const eventItems = event?.prices?.find(({id})=>id===priceId)
       setItems([eventItems])
     }
   },[event, priceId])

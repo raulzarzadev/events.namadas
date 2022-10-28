@@ -20,7 +20,7 @@ const EventPage = () => {
   return (
     <div>
       <Event event={event} />
-      {isOwner && <Options eventId={event?.id} />}
+      {isOwner && <Options eventId={eventId} />}
     </div>
   );
 };

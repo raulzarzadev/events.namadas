@@ -4,10 +4,6 @@ import Checkout from '@comps/Checkout';
 import useEvents from 'hooks/useEvents';
 import { useRouter } from 'next/router';
 
-// Make sure to call loadStripe outside of a component’s render to avoid
-// recreating the Stripe object on every render.
-// This is your test publishable API key.
-
 export default function CheckoutPage() {
   const {
     query: { id: eventId, priceId },
@@ -17,11 +13,12 @@ export default function CheckoutPage() {
   const { event } = useEvents({ eventId: `${eventId}` });
 
   useEffect(()=>{
-    if(event){
-      const eventItems = event?.prices?.find(({id})=>id===priceId)
-      setItems([eventItems])
+    const eventItem = event?.prices?.find(({id})=>id===priceId)
+    if(eventItem){
+      setItems([eventItem])
     }
   },[event, priceId])
+  
   return (
     <div className="grid sm:grid-cols-2 gap-4 px-4  my-10">
       <div className="sm:order-1">

@@ -69,6 +69,7 @@ const EventPyment = () => {
       };
       createEventPayment(newEventPayment).then((res) => {
         setEventPayment(newEventPayment);
+      
       });
     }else{
       setEventPayment(eventPayment);
@@ -93,14 +94,7 @@ const EventPyment = () => {
           <EventDate date={event?.date} />
         )}
       </div>
-      <div className='text-center'>
-        {/* payemnt status  */}
-        
-        <span className='font-bold text-center '>
-
-          Payment status : {eventPayment?.status}
-        </span>
-      </div>
+      <div className="text-center">{/* payemnt status  */}</div>
       <div className="grid place-content-center text-center">
         <span className="font-bold">{price.title}</span>
         <span>{price.description}</span>
@@ -111,9 +105,19 @@ const EventPyment = () => {
           ${parseInt(`${price?.amount}`)?.toFixed(2)}
         </span>
       </div>
-      <div className="flex">
+<div className='text-center'>
+
+      <span className="font-bold text-center text-xl my-2 bg-base-200 w-full flex justify-center ">
+        Payment status : {eventPayment?.status}
+      </span>
+</div>
+
+      <div className="flex justify-center flex-col gap-2 max-w-sm mx-auto">
         <Link href={'/profile'}>
-          <a className="btn mx-auto btn-outline">Back to your profile</a>
+          <a className="btn mx-auto btn-outline w-full">Back to your profile</a>
+        </Link>
+        <Link href={`/events/${eventId}`}>
+          <a className="btn mx-auto btn-outline w-full">Back to the event</a>
         </Link>
       </div>
     </div>

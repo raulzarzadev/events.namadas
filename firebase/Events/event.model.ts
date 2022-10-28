@@ -17,8 +17,8 @@ export interface Event extends Base {
   image: string;
   images: EventImage[];
   status: 'PLANING' | 'ACTIVE' | 'IN_PROGRESS' | 'FINISHED';
-  suscriptionsOptions?: SuscriptionsOptions;
-  suscriptions: EventSuscription[];
+  subscriptionsOptions?: SubscriptionsOptions;
+  subscriptions: EventSubscription[];
   links:EventLink[]
   prices?:Price[]
 }
@@ -30,7 +30,7 @@ export interface Price {
   image?:string
   // price:number
   amount:number
-  disconunt?:number
+  discount?:number
   finishAt?:DateType
   startAt?:DateType
 }
@@ -40,13 +40,13 @@ export interface EventLink {
   image:string
 }
 
-export interface SuscriptionsOptions {
+export interface SubscriptionsOptions {
   limit: number;
   startAt: DateType;
   finishAt: DateType;
 }
 
-export interface EventSuscription {
+export interface EventSubscription {
   userId:User['id']
   createdAt:DateType
 

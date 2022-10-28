@@ -31,6 +31,7 @@ import { es } from 'date-fns/locale'
 
 export const storageRef = (path = '') => ref(storage, path);
 export class FirebaseCRUD {
+
   constructor(private collectionName: string = '') {}
 
   static format = (
@@ -62,7 +63,7 @@ export class FirebaseCRUD {
     }
   };
 
-  static validateFiters(filters: any[], collectionName: string) {
+  static validateFilters(filters: any[], collectionName: string) {
     if (!filters) return console.error('Should have filters implentade');
     if (!Array.isArray(filters))
       return console.error('filter is not an array', {
@@ -96,26 +97,25 @@ export class FirebaseCRUD {
     return Dates.deepFormatObjectDates(object, target);
   }
 
-  static deleteFile = async ({ url }:{url:string}) => {
+  static deleteFile = async ({ url }: { url: string }) => {
     const desertRef = storageRef(url);
-    return deleteObject(desertRef)
-      .then(() => {
-        // File deleted successfully
-        return { ok: true, url };
-      })
-      // .catch((error) => {
-      //   console.error(error);
-      //   return { ok:false, url}
-      //   // Uh-oh, an error occurred!
-      // });
+    return deleteObject(desertRef).then(() => {
+      // File deleted successfully
+      return { ok: true, url };
+    });
+    // .catch((error) => {
+    //   console.error(error);
+    //   return { ok:false, url}
+    //   // Uh-oh, an error occurred!
+    // });
   };
 
-  static uploadFileAsync =async  ({ file, fieldName = '' }:UpladFileAsync) => {
+  static uploadFileAsync = async ({ file, fieldName = '' }: UploadFileAsync) => {
     const uuid = uidGenerator();
     const imageRef = storageRef(`${fieldName}/${uuid}`);
-    // console.log('uplading')
+    // console.log('uploading')
     const uploadTask = await uploadBytes(imageRef, file).then(async (res) => {
-      // console.log('upladed')
+      // console.log('uploaded')
       const url = await getDownloadURL(res.ref);
       const { bucket, contentType, fullPath, size } = res.metadata;
       return {
@@ -272,10 +272,10 @@ export class FirebaseCRUD {
   }
   async getMany(filters: any[]) {
     /**
-     * * get all documents in a collection implmementing filters
+     * * get all documents in a collection implementing filters
      * @param filters: where(itemField,'==','value')
      */
-    FirebaseCRUD.validateFiters(filters, this.collectionName);
+    FirebaseCRUD.validateFilters(filters, this.collectionName);
     const q: Query = query(collection(db, this.collectionName), ...filters);
 
     const querySnapshot = await getDocs(q);
@@ -298,10 +298,10 @@ export class FirebaseCRUD {
 
   async listenDocs(filters: any, cb: CallableFunction) {
     /**
-     * listen all documents in a collection implmementing filters
+     * listen all documents in a collection implementing filters
      * @param filters: where(itemField,'==','value')
      */
-    FirebaseCRUD.validateFiters(filters, this.collectionName);
+    FirebaseCRUD.validateFilters(filters, this.collectionName);
     const q = query(collection(db, this.collectionName), ...filters);
 
     onSnapshot(q, (querySnapshot) => {
@@ -318,13 +318,19 @@ export class FirebaseCRUD {
     this.listenDocs([where('userId', '==', userId)], cb);
   }
 
+  async listenCurrentUserDocsFilter(filters: any=[], cb: CallableFunction) {
+   
+    const userId = getAuth().currentUser?.uid;
+    this.listenDocs([where('userId', '==', userId), ...filters], cb);
+  }
+
   async listenDocsByFilters(filters: any, cb: CallableFunction) {
     /**
-     * listen all documents in a collection implmementing filters
+     * listen all documents in a collection implementing filters
      * @param filters[]: where(itemField,'==','value')
      */
 
-    FirebaseCRUD.validateFiters(filters, this.collectionName);
+    FirebaseCRUD.validateFilters(filters, this.collectionName);
 
     const q = query(collection(db, this.collectionName), ...filters);
 
@@ -375,7 +381,7 @@ export class FirebaseCRUD {
   };
 }
 
-export interface UpladFileAsync {
+export interface UploadFileAsync {
   file: File;
   fieldName: string;
 }

@@ -1,15 +1,39 @@
 import { EventPaymentType } from '@firebase/EventPayments/eventPayment.model';
-import { getEventPayments, listenUserEventPayments } from '@firebase/EventPayments/main';
+import { getEventPayment, listenUserEventPayments, listenUserEventsPayments } from '@firebase/EventPayments/main';
+import { Event } from '@firebase/Events/event.model';
 import { useEffect, useState } from 'react';
+export interface UseEventPaymentType {
+  eventId?:Event['id']
+  paymentId?:string 
+}
+function useEventsPayments(props?:UseEventPaymentType) {
+  const eventId:string|undefined = props?.eventId
+  const paymentId: string | undefined = props?.paymentId;
 
-function useEventsPayments() {
-  const [payments, setPayments]=useState<EventPaymentType[]|[]>([])
+  const [userPayments, setUserPayments] = useState<EventPaymentType[] | []>([]);
+  const [userEventPayments, setUserEvenPayment]= useState<EventPaymentType[]|[]>([])
+  const [payment, setPayment]=useState<EventPaymentType|null>(null)
+  useEffect(()=>{
+    if (eventId) {
+      listenUserEventPayments(eventId, setUserEvenPayment);
+    }
+  },[eventId])
+
+   useEffect(() => {
+     if (paymentId) {
+       getEventPayment(paymentId).then(res=>{
+        console.log(res)
+        setPayment(res)
+       })
+     }
+   }, [paymentId]);
+   
   useEffect(() => {
-    listenUserEventPayments(setPayments);
+    listenUserEventsPayments(setUserPayments);
   }, []);
 
 
-  return { payments };
+  return { userPayments, userEventPayments, payment };
 }
 
 export default useEventsPayments;

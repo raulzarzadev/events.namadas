@@ -3,18 +3,17 @@ import useEventsPayments from "hooks/useEventsPayments";
 import { sortFromNow } from "utils/myFormatDate";
 
 const PaymentsHistory = ({title=''}) => {
-  const {payments}=useEventsPayments()
+  const { userPayments } = useEventsPayments();
   return (
     <div>
       <h3 className="text-lg  font-bold mt-4 ">{title}</h3>
       <div className="grid ">
         <div className="flex flex-row gap-2 overflow-x-auto pb-4 min-h-[115px] ">
-          {payments?.sort(sortFromNow).map((payment) => (
+          {userPayments?.sort(sortFromNow).map((payment) => (
             <PaymentCard
               key={payment?.id}
               size="sm"
               payment={payment}
-              //onSuscribe={handleSuscribeTo}
             />
           ))}
         </div>

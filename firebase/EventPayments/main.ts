@@ -1,3 +1,4 @@
+import { Event } from '@firebase/Events/event.model';
 import { where } from 'firebase/firestore';
 import { FirebaseCRUD } from '../FirebaseCRUD';
 import { EventPaymentType } from './eventPayment.model';
@@ -22,8 +23,14 @@ export const getEventPayment = (itemId: string) =>
 export const listenEventPayment = (itemId: string, cb: CallableFunction) =>
   eventPaymentsCRUD.listen(itemId, cb);
 
-export const listenUserEventPayments = (cb: CallableFunction) =>
+export const listenUserEventsPayments = (cb: CallableFunction) =>
   eventPaymentsCRUD.listenCurrentUserDocs(cb);
+
+  export const listenUserEventPayments = (
+    eventId: Event['id'],
+    cb: CallableFunction
+  ) =>
+    eventPaymentsCRUD.listenCurrentUserDocsFilter([where('price.eventId', '==', eventId)],cb);
 
 export const getEventPayments = (itemId: EventPaymentType['id']) =>
   eventPaymentsCRUD.getMany([where('id', '==', itemId)]);

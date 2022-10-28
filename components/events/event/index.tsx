@@ -1,11 +1,16 @@
 import Carousel from '@comps/carousel';
+import PriceCard from '@comps/PriceCard';
 import { Event, SubEvent } from '@firebase/Events/event.model';
+import useEventsPayments from 'hooks/useEventsPayments';
 import Link from 'next/link';
 import myFormatDate from 'utils/myFormatDate';
 
 const Event = ({ event }: { event: Event | null }) => {
+  
+  const { userEventPayments } = useEventsPayments({ eventId:event?.id });
+  console.log(userEventPayments);
   if (!event) return <div>Loading ...</div>;
-
+  
   const {
     title,
     date,
@@ -16,23 +21,47 @@ const Event = ({ event }: { event: Event | null }) => {
     swimmingType,
     includeFinishDate,
     finishAt,
-    id:eventId
+    id: eventId,
   } = event;
   
-  const LABELS:Record<Event['swimmingType'], string> = {
+  const LABELS: Record<Event['swimmingType'], string> = {
     '25m': 'Pool 25m',
     '50m': 'Pool 50m',
     openWater: 'Open Water',
-    swimmingPool: 'Swimming pool'
+    swimmingPool: 'Swimming pool',
   };
-  // console.log(event)
+
   return (
     <div>
       <Carousel images={images} />
       <div className="flex w-full justify-around my-4">
-        <Link href={`/events/${eventId}/join`}>
-          <button className="btn btn-primary ">Participa</button>
-        </Link>
+        {userEventPayments?.length ? (
+          <div>
+            <h1 className="text-center font-bold">You all ready are part </h1>
+            <div className="flex max-w-lg flex-wrap justify-center">
+              {userEventPayments?.map((payment) => (
+                <div key={payment.id} className="w-1/2 p-2">
+                  <PriceCard
+                    price={payment?.price}
+                    // alreadyPaid={payment.id}
+                    paymentId={payment.id}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="flex mx-auto w-full justify-center">
+              <Link href={`/events/${eventId}/join`}>
+                <button className="btn btn-primary ">buy other sub</button>
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <Link href={`/events/${eventId}/join`}>
+              <button className="btn btn-primary ">Participa</button>
+            </Link>
+          </div>
+        )}
       </div>
       <div className="max-w-md mx-auto">
         <h1 className="text-center font-bold text-2xl">
@@ -75,7 +104,9 @@ const SubEvent = ({ subEvent }: { subEvent: SubEvent }) => {
       <div className="flex w-full justify-between">
         <h3 className="w-1/3 ">{title || style}</h3>
         <span className="w-1/3 text-center">{distance}</span>
-        <span className="w-1/3 text-end">{date && myFormatDate(date,'dd MMM yy')}</span>
+        <span className="w-1/3 text-end">
+          {date && myFormatDate(date, 'dd MMM yy')}
+        </span>
       </div>
       <div>
         <p>{comments}</p>

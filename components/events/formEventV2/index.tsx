@@ -12,6 +12,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 import { v4 as uidGenerator } from 'uuid';
+
 const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const eventAlreadyExist = event?.id;
   const router = useRouter();
@@ -26,7 +27,6 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     defaultValues: { ...event } || undefined,
   });
   const formValues = watch();
-
   const setEventOptionalDatesBasedInEventDate = () => {
     setValue(
       'subscriptionsOptions.finishAt',
@@ -45,7 +45,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   };
 
   useEffect(() => {
-    setEventOptionalDatesBasedInEventDate();
+    if (formValues.date) setEventOptionalDatesBasedInEventDate();
   }, [formValues.date]);
 
   useEffect(() => {
@@ -108,6 +108,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: 'prices', // unique name for your Field Array,
   });
+  
   const handleAddPrice = () => {
     const uuid = uidGenerator().replace('-', '').slice(0, 20);
     const appendNewPrice: Price = {

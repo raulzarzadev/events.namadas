@@ -1,9 +1,9 @@
 import { Base } from '@firebase/Base.model'
 import { User } from '@firebase/Users/user.model';
 
-type  DateType=string | number | Date | undefined;
+type  DateType = string | number | Date | undefined;
 export interface Event extends Base {
-  finishAt: DateType;
+  finishAt?: DateType;
   sport: string;
   eventType: string;
   date: DateType;

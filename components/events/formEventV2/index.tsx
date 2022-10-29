@@ -11,8 +11,8 @@ import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
-import { v4 as uidGenerator } from 'uuid'
-const FormEvent = ({ event }: { event?: Event }) => {
+import { v4 as uidGenerator } from 'uuid';
+const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const eventAlreadyExist = event?.id;
   const router = useRouter();
   const {
@@ -23,39 +23,40 @@ const FormEvent = ({ event }: { event?: Event }) => {
     setValue,
     formState: { errors },
   } = useForm({
-    defaultValues: event || undefined,
+    defaultValues: { ...event } || undefined,
   });
   const formValues = watch();
-  
+
   const setEventOptionalDatesBasedInEventDate = () => {
     setValue(
       'subscriptionsOptions.finishAt',
-      myFormatDate(watch('date'), 'yyyy-MM-dd')
+      myFormatDate(formValues.date, 'yyyy-MM-dd')
     );
     setValue(
       'subscriptionsOptions.startAt',
       myFormatDate(new Date().getTime(), 'yyyy-MM-dd')
     );
-    setValue(
-      'finishAt',
-      myFormatDate(formValues.finishAt, `yyyy-MM-dd'T'HH:mm`)
-    );
+    if (formValues.includeFinishDate) {
+      setValue(
+        'finishAt',
+        myFormatDate(formValues?.finishAt, `yyyy-MM-dd'T'HH:mm`)
+      );
+    }
   };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     setEventOptionalDatesBasedInEventDate();
-  },[formValues.date])
+  }, [formValues.date]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setValue('date', myFormatDate(formValues.date, `yyyy-MM-dd'T'HH:mm`));
     setValue(
       'finishAt',
       myFormatDate(formValues.finishAt, `yyyy-MM-dd'T'HH:mm`)
     );
-  },[])
+  }, []);
 
-  const onSubmit = (data: Event) => {
+  const onSubmit = (data:Event) => {
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)
           .then((res) => {
@@ -99,21 +100,25 @@ const FormEvent = ({ event }: { event?: Event }) => {
     name: 'subEvents', // unique name for your Field Array,
   });
 
-    const { fields:priceFields, append:appendPrice, remove:removePrice } = useFieldArray({
-      control, // control props comes from useForm (optional: if you are using FormContext)
-      name: 'prices', // unique name for your Field Array,
-    });
-const handleAddPrice=()=>{
-  const uuid = uidGenerator().replace('-','').slice(0,20);
-  const appendNewPrice: Price = {
-    id: uuid,
-    eventId:event?.id,
-    amount: 0,
-    title: `Price ${(formValues.prices?.length||0) + 1 }`,
-    description: 'Description price',
+  const {
+    fields: priceFields,
+    append: appendPrice,
+    remove: removePrice,
+  } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormContext)
+    name: 'prices', // unique name for your Field Array,
+  });
+  const handleAddPrice = () => {
+    const uuid = uidGenerator().replace('-', '').slice(0, 20);
+    const appendNewPrice: Price = {
+      id: uuid,
+      eventId: event?.id,
+      amount: 0,
+      title: `Price ${(formValues.prices?.length || 0) + 1}`,
+      description: 'Description price',
+    };
+    appendPrice(appendNewPrice);
   };
-  appendPrice(appendNewPrice);
-}
   const handleAddSubEvent = () => {
     const appendNewEvent: SubEvent = {
       title: '',
@@ -130,11 +135,10 @@ const handleAddPrice=()=>{
     : 'Create event';
   const handleSetImages = (images: any[]) => {
     setValue('images', images);
-    handleSubmit((props) => {
+    handleSubmit((props:any) => {
       onSubmit(props);
     })();
   };
-
 
   return (
     <div>
@@ -144,9 +148,9 @@ const handleAddPrice=()=>{
       <h2 className="text-xl font-bold text-center my-4 whitespace-pre">
         {formLabel}
       </h2>
-      <form onSubmit={handleSubmit(onSubmit)} data-test-id="event-form">
+      <form onSubmit={handleSubmit((data:any)=>onSubmit(data))} data-test-id="event-form">
         <div className="grid mx-auto gap-2 max-w-md  ">
-          <EventImages images={formValues.images} setImages={handleSetImages} />
+          <EventImages images={formValues?.images} setImages={handleSetImages} />
           <FormSection title="Basic information">
             <h4 className="font-bold text-lg">Current event status</h4>
             <div className="flex justify-around flex-grow">
@@ -387,7 +391,7 @@ const handleAddPrice=()=>{
   );
 };
 export interface EventImages {
-  images: any[];
+  images?: any[];
   disabled?: boolean;
   setImages: (images: any[]) => void;
 }
@@ -404,13 +408,18 @@ const EventImages = ({ images, disabled = false, setImages }: EventImages) => {
     </div>
   );
 };
-const FormSection = ({children, title}:{children:ReactNode, title:string})=>{
+const FormSection = ({
+  children,
+  title,
+}: {
+  children: ReactNode;
+  title: string;
+}) => {
   return (
-  <div className='p-1 py-2 my-2 mx-1 bg-base-200 rounded-md'>
-    <h3 className='font-bold' >{title}</h3>
-    <div>
-      {children}
+    <div className="p-1 py-2 my-2 mx-1 bg-base-200 rounded-md">
+      <h3 className="font-bold">{title}</h3>
+      <div>{children}</div>
     </div>
-  </div>)
-}
+  );
+};
 export default FormEvent;

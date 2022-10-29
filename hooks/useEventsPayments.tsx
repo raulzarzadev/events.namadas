@@ -2,14 +2,17 @@ import { EventPaymentType } from '@firebase/EventPayments/eventPayment.model';
 import { getEventPayment, listenUserEventPayments, listenUserEventsPayments } from '@firebase/EventPayments/main';
 import { Event } from '@firebase/Events/event.model';
 import { useEffect, useState } from 'react';
+import useAuth from './useAuth';
 export interface UseEventPaymentType {
-  eventId?:Event['id']
-  paymentId?:string 
+  eventId?: Event['id'];
+  paymentId?: string;
+  getUserPayments?:boolean
 }
 function useEventsPayments(props?:UseEventPaymentType) {
+  const {user}=useAuth()
   const eventId:string|undefined = props?.eventId
   const paymentId: string | undefined = props?.paymentId;
-
+  const getUserPayments: boolean | undefined=props?.getUserPayments
   const [userPayments, setUserPayments] = useState<EventPaymentType[] | []>([]);
   const [userEventPayments, setUserEvenPayment]= useState<EventPaymentType[]|[]>([])
   const [payment, setPayment]=useState<EventPaymentType|null|undefined>(undefined)
@@ -22,13 +25,12 @@ function useEventsPayments(props?:UseEventPaymentType) {
 
    useEffect(() => {
      if (paymentId) {
-       console.log(paymentId)
        getEventPayment(paymentId).then(res=>setPayment(res))
      }
    }, [paymentId]);
    
   useEffect(() => {
-    listenUserEventsPayments(setUserPayments);
+    if (user&&getUserPayments) listenUserEventsPayments(setUserPayments);
   }, []);
 
 

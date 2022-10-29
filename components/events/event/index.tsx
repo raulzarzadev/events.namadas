@@ -10,7 +10,6 @@ import myFormatDate from 'utils/myFormatDate';
 const Event = ({ event }: { event: Event | null }) => {
   
   const { userEventPayments } = useEventsPayments({ eventId:event?.id });
-  console.log(userEventPayments);
   if (!event) return <div>Loading ...</div>;
   
   const {

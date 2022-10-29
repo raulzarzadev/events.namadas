@@ -23,7 +23,7 @@ export const listenUserEvents = (cb: CallableFunction) =>
   eventsCRUD.listenCurrentUserDocs(cb);
 
 export const getEvents = () =>
-  eventsCRUD.getMany([where('satus', '==', 'ACTIVE')]);
+  eventsCRUD.getMany([where('status', '==', 'ACTIVE')]);
 
 export const getEventsByStatus = (status: Event['status']) => {
   return eventsCRUD.getMany([where('status', '==', status)]);

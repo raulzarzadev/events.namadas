@@ -27,7 +27,6 @@ const [event, setEvent]=useState<Event|null>(null)
   useEffect(() => {
     if (eventId) {
       listenEvent(eventId, (res: any) => {
-       //dispatch(setEvent(res));
        setEvent(res)
       });
     }

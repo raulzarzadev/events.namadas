@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 const PriceCard = ({
   price,
-  alreadyPaid,
   paymentId,
 }: {
   price?: Price;
@@ -16,7 +15,6 @@ const PriceCard = ({
   const handleOpenModal = () => {
     setOpenModal(!openModal);
   };
-  console.log(alreadyPaid);
   return (
     <>
       <div
@@ -31,7 +29,7 @@ const PriceCard = ({
           </h4>
 
           <div className=" text-center  ">
-            <p className="p-2   ">{price?.description}</p>
+            <p className="p-2">{price?.description}</p>
           </div>
 
           <div className="self-end ">

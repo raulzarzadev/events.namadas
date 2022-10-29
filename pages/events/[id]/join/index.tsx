@@ -1,4 +1,4 @@
-import BePartOf from "@comps/BePartOf";
+import JoinEvent from "@comps/JoinEvent";
 import Head from "next/head";
 
 const Join  = () => {
@@ -6,11 +6,11 @@ const Join  = () => {
     <>
     <Head>
       <title>
-        Be part
+        Join 
       </title>
     </Head>
     <div>
-    <BePartOf />
+    <JoinEvent />
     </div>
     </>
   );

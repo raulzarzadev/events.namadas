@@ -3,7 +3,7 @@ import useEventsPayments from "hooks/useEventsPayments";
 import { sortFromNow } from "utils/myFormatDate";
 
 const PaymentsHistory = ({title=''}) => {
-  const { userPayments } = useEventsPayments();
+  const { userPayments } = useEventsPayments({getUserPayments:true});
   return (
     <div>
       <h3 className="text-lg  font-bold mt-4 ">{title}</h3>

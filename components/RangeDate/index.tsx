@@ -7,7 +7,7 @@ type DateType = string | number | Date | undefined;
 
 const RangeDate = ({ startAt, finishAt }: RangeDateType) => {
   return (
-    <div className="grid place-content-center text-center">
+    <span className="grid place-content-center text-center">
       <span>
         {`From: 
           ${myFormatDate(startAt, 'dd-MMM-yy')}`}
@@ -18,7 +18,7 @@ const RangeDate = ({ startAt, finishAt }: RangeDateType) => {
         ${myFormatDate(finishAt, 'dd-MMM-yy')}
         `}
       </span>
-    </div>
+    </span>
   );
 };
 export default RangeDate

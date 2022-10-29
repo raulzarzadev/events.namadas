@@ -11,7 +11,7 @@ export default function myFormatDate(
     console.error('No date');
     return '';
   }
-  const res = format(validDateAsNumber(date), choosenFormat(strFormat));
+  const res = format(validDateAsNumber(date), choseFormat(strFormat));
   return res;
 }
 
@@ -22,7 +22,7 @@ export const fromNow=(date?: string | number | Date,options?: { addSuffix?: bool
   return formatDistanceStrict(new Date(date), new Date(),options)
 } 
 
-const choosenFormat = (format: FormatType) => {
+const choseFormat = (format: FormatType) => {
   if (format === 'datatime') return `yyyy-MM-dd'T'HH:mm`;
   if (format === 'inputDate') return `yyyy-MM-dd`;
   return format;

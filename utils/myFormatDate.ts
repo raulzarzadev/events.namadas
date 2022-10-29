@@ -1,11 +1,11 @@
 import { format, formatDistanceStrict } from 'date-fns';
 import { es } from 'date-fns/locale';
 
-type FormatType = 'datatime' | 'inputDate' | string
+type FormatType = 'datetime' | 'inputDate' | string;
 
 export default function myFormatDate(
   date: string | number | Date | undefined,
-  strFormat: 'datatime' | 'inputDate' | string
+  strFormat: 'datetime' | 'inputDate' | string
 ): string {
   if (!date) {
     console.error('No date');
@@ -23,7 +23,7 @@ export const fromNow=(date?: string | number | Date,options?: { addSuffix?: bool
 } 
 
 const choseFormat = (format: FormatType) => {
-  if (format === 'datatime') return `yyyy-MM-dd'T'HH:mm`;
+  if (format === 'datetime') return `yyyy-MM-dd'T'HH:mm`;
   if (format === 'inputDate') return `yyyy-MM-dd`;
   return format;
 };
@@ -43,9 +43,9 @@ const validDateAsNumber = (date: string | Date | number): number => {
 
 export const sortFromNow = (a: any, b: any) => {
   const currentTime = new Date().getTime();
-  const aDiference = Math.abs(a?.date - currentTime);
-  const baDiference = Math.abs(b?.date - currentTime);
-  if (aDiference < baDiference) return -1;
-  if (aDiference > baDiference) return 1;
+  const aDifference = Math.abs(a?.date - currentTime);
+  const baDifference = Math.abs(b?.date - currentTime);
+  if (aDifference < baDifference) return -1;
+  if (aDifference > baDifference) return 1;
   return 0;
 };

@@ -3,7 +3,6 @@ import { Event } from '@firebase/Events/event.model';
 import { createEvent, updateEvent } from '@firebase/Events/main';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect} from 'react';
 import { useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 import BasicInformation from './BasicInformation';
@@ -13,11 +12,17 @@ import PricesSection from './PricesSection';
 import Subscriptions from './Subscriptions';
 
 const FormEvent = ({ event }: { event?: Partial<Event> }) => {
-  
   const eventAlreadyExist = event?.id;
-
   const router = useRouter();
-
+  const currentDate = new Date().getTime()
+  const defaultValues: Partial<Event> = {
+    date: myFormatDate(currentDate, 'datetime'),
+    subscriptionsOptions: {
+      finishAt: myFormatDate(currentDate, 'inputDate'),
+      startAt: myFormatDate(currentDate, 'inputDate'),
+      limit:0
+    },
+  };
   const {
     register,
     handleSubmit,
@@ -26,40 +31,12 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     setValue,
     formState: { errors },
   } = useForm({
-    defaultValues: { ...event } || undefined,
+    defaultValues: event ? event : defaultValues,
   });
+
   const formValues = watch();
- 
-  const setEventOptionalDatesBasedInEventDate = () => {
-    setValue(
-      'subscriptionsOptions.finishAt',
-      myFormatDate(formValues.date, 'yyyy-MM-dd')
-    );
-    setValue(
-      'subscriptionsOptions.startAt',
-      myFormatDate(new Date().getTime(), 'yyyy-MM-dd')
-    );
-    if (formValues.includeFinishDate) {
-      setValue(
-        'finishAt',
-        myFormatDate(formValues?.finishAt, `yyyy-MM-dd'T'HH:mm`)
-      );
-    }
-  };
 
-  useEffect(() => {
-    if (formValues.date) setEventOptionalDatesBasedInEventDate();
-  }, [formValues.date]);
-
-  useEffect(() => {
-    setValue('date', myFormatDate(formValues.date, `yyyy-MM-dd'T'HH:mm`));
-    setValue(
-      'finishAt',
-      myFormatDate(formValues.finishAt, `yyyy-MM-dd'T'HH:mm`)
-    );
-  }, []);
-
-  const onSubmit = (data:Event) => {
+  const onSubmit = (data: Event) => {
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)
           .then((res) => {
@@ -76,19 +53,12 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
           .catch((err) => console.error(err));
   };
 
-
-
-
-
-
-
-
   const formLabel = eventAlreadyExist
     ? `Edit event \n ${event.title}`
     : 'Create event';
   const handleSetImages = (images: any[]) => {
     setValue('images', images);
-    handleSubmit((props:any) => {
+    handleSubmit((props: any) => {
       onSubmit(props);
     })();
   };
@@ -106,7 +76,6 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
         data-test-id="event-form"
       >
         <div className="grid mx-auto gap-2 max-w-md  ">
-         
           <InputFiles
             label="Add more images "
             images={formValues?.images}
@@ -150,7 +119,6 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
               <button className="btn btn-primary">Save </button>
             </div>
           </FormSection>
-          
         </div>
       </form>
     </div>

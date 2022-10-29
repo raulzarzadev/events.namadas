@@ -10,7 +10,7 @@ const PriceCard = ({
 }: {
   price?: Price;
   alreadyPaid?: string;
-  paymentId:string;
+  paymentId?:string;
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => {

@@ -1,4 +1,4 @@
-import EventPyment from "@comps/EventPayment";
+import EventPayment from "@comps/EventPayment";
 import Head from "next/head";
 
 const ProcessingPayment = () => {
@@ -7,7 +7,7 @@ const ProcessingPayment = () => {
       <Head>
         <title>Procesing payment</title>
       </Head>
-      <EventPyment />
+      <EventPayment />
     </>
   );
 };

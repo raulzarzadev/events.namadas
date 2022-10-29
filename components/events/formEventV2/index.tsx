@@ -13,7 +13,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 import { v4 as uidGenerator } from 'uuid'
 const FormEvent = ({ event }: { event?: Event }) => {
-  const eventAllreadyExist = event?.id;
+  const eventAlreadyExist = event?.id;
   const router = useRouter();
   const {
     register,
@@ -29,11 +29,11 @@ const FormEvent = ({ event }: { event?: Event }) => {
   
   const setEventOptionalDatesBasedInEventDate = () => {
     setValue(
-      'suscriptionsOptions.finishAt',
+      'subscriptionsOptions.finishAt',
       myFormatDate(watch('date'), 'yyyy-MM-dd')
     );
     setValue(
-      'suscriptionsOptions.startAt',
+      'subscriptionsOptions.startAt',
       myFormatDate(new Date().getTime(), 'yyyy-MM-dd')
     );
     setValue(
@@ -56,7 +56,7 @@ const FormEvent = ({ event }: { event?: Event }) => {
   },[])
 
   const onSubmit = (data: Event) => {
-    event?.id // eventAllreadyExist
+    event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)
           .then((res) => {
             console.log(res);
@@ -125,7 +125,7 @@ const handleAddPrice=()=>{
     append(appendNewEvent);
   };
 
-  const formLabel = eventAllreadyExist
+  const formLabel = eventAlreadyExist
     ? `Edit event \n ${event.title}`
     : 'Create event';
   const handleSetImages = (images: any[]) => {
@@ -212,12 +212,12 @@ const handleAddPrice=()=>{
             )}
           </FormSection>
 
-          <FormSection title="Suscriptions options">
+          <FormSection title="Subscriptions options">
             <Text
-              {...register('suscriptionsOptions.limit', {
+              {...register('subscriptionsOptions.limit', {
                 valueAsNumber: true,
               })}
-              name="suscriptionsOptions.limit"
+              name="subscriptionsOptions.limit"
               label="Limited to:"
               errors={errors}
               type="number"
@@ -226,17 +226,17 @@ const handleAddPrice=()=>{
             />
 
             <InputDate
-              {...register('suscriptionsOptions.startAt')}
+              {...register('subscriptionsOptions.startAt')}
               type="date"
-              name="suscriptionsOptions.startAt"
+              name="subscriptionsOptions.startAt"
               label="Starts at"
               errors={errors}
             />
 
             <InputDate
-              {...register('suscriptionsOptions.finishAt')}
+              {...register('subscriptionsOptions.finishAt')}
               type="date"
-              name="suscriptionsOptions.finishAt"
+              name="subscriptionsOptions.finishAt"
               label="Finish at"
               errors={errors}
               max={myFormatDate(formValues.date, 'yyyy-MM-dd')}
@@ -352,7 +352,7 @@ const handleAddPrice=()=>{
                       />
                       <Text
                         {...register(`subEvents.${index}.comments`)}
-                        label={'Coments'}
+                        label={'Comments'}
                         // name={`subEvents.${index}.title`}
                         errors={errors}
                       />

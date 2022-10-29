@@ -20,12 +20,12 @@ const EventPage = () => {
   return (
     <div>
       <Event event={event} />
-      {isOwner && <Options eventId={eventId} />}
+      {isOwner && <Options eventId={`${eventId}`} />}
     </div>
   );
 };
 
-const Options = ({ eventId }: { eventId: EventType['id'] }) => {
+const Options = ({ eventId }: { eventId?: string}) => {
   // const event = useSelector(selectEventState);
   return (
     <div

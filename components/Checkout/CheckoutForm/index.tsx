@@ -12,7 +12,7 @@ export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = React.useState<string|null>(null);
+  const [message, setMessage] = React.useState<string|undefined>(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
   
   const REDIRECT_TO = `${URL_BASE}/events/${eventId}/payment/${priceId}/processing`;
@@ -48,7 +48,7 @@ export default function CheckoutForm() {
     });
   }, [stripe]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -74,7 +74,7 @@ export default function CheckoutForm() {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message);
+      setMessage(error?.message);
     } else {
       setMessage('An unexpected error occurred.');
     }

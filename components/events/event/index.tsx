@@ -1,5 +1,7 @@
 import Carousel from '@comps/carousel';
+import DateComponent from '@comps/DateComponent';
 import PriceCard from '@comps/PriceCard';
+import RangeDate from '@comps/RangeDate';
 import { Event, SubEvent } from '@firebase/Events/event.model';
 import useEventsPayments from 'hooks/useEventsPayments';
 import Link from 'next/link';
@@ -44,7 +46,7 @@ const Event = ({ event }: { event: Event | null }) => {
                   <PriceCard
                     price={payment?.price}
                     // alreadyPaid={payment.id}
-                    paymentId={payment.id}
+                    paymentId={payment?.id}
                   />
                 </div>
               ))}
@@ -58,7 +60,7 @@ const Event = ({ event }: { event: Event | null }) => {
         ) : (
           <div>
             <Link href={`/events/${eventId}/join`}>
-              <button className="btn btn-primary ">Participa</button>
+              <button className="btn btn-primary ">Participate</button>
             </Link>
           </div>
         )}
@@ -69,11 +71,9 @@ const Event = ({ event }: { event: Event | null }) => {
         </h1>
         <p className="text-center">
           {includeFinishDate
-            ? `from ${myFormatDate(date, 'dd MMM yy')} to ${myFormatDate(
-                finishAt,
-                'dd MMM yy'
-              )}`
-            : myFormatDate(date, 'dd MMM yy')}
+            ? <RangeDate startAt={date}  finishAt={finishAt}/>
+            : <DateComponent date={date}/>
+            }
         </p>
         <p className="text-center">{LABELS[swimmingType]}</p>
         <p className=" mx-auto whitespace-pre-line">

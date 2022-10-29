@@ -9,9 +9,9 @@ import CheckoutForm from './CheckoutForm';
 
 
 const stripePromise = loadStripe(
-  process?.env?.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  process?.env?.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY||''
 );
-const Checkout = ({items=[]}) => {
+const Checkout = ({items=[]}:{items:any[]}) => {
   const [clientSecret, setClientSecret] = React.useState('');
   React.useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -32,7 +32,7 @@ const Checkout = ({items=[]}) => {
   };
   const options = {
     clientSecret,
-    appearance,
+    // appearance,// is not in options type from stripe
   };
   return (
     <div>

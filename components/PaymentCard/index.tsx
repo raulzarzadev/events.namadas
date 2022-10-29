@@ -24,7 +24,7 @@ const PaymentCard = ({
           {defaultImage && (
             <Image src={defaultImage} objectFit="cover" layout="fill" />
           )}
-          <UpcommingLabel status={status} />
+          <UpcomingLabel status={status} />
         </figure>
         <EventInfo
           when={
@@ -56,14 +56,14 @@ const EventTitle = ({ title }: { title?: string }) => {
   );
 };
 
-const UpcommingLabel = ({
-  status = 'WATTING',
+const UpcomingLabel = ({
+  status = 'WAITING',
   fromNow,
 }: {
   status: EventPaymentType['status'];
   fromNow?: string;
 }) => {
-  const STATUS_LABEL: Record<EventPaymentType['status'], string> = {
+  const STATUS_LABEL: Record<any, string> = {
     INVALID: 'Invalid payment',
     VALID: 'Valid ',
     WAITING: 'Waiting',

@@ -12,7 +12,8 @@ function useEventsPayments(props?:UseEventPaymentType) {
 
   const [userPayments, setUserPayments] = useState<EventPaymentType[] | []>([]);
   const [userEventPayments, setUserEvenPayment]= useState<EventPaymentType[]|[]>([])
-  const [payment, setPayment]=useState<EventPaymentType|null>(null)
+  const [payment, setPayment]=useState<EventPaymentType|null|undefined>(undefined)
+  
   useEffect(()=>{
     if (eventId) {
       listenUserEventPayments(eventId, setUserEvenPayment);
@@ -21,10 +22,8 @@ function useEventsPayments(props?:UseEventPaymentType) {
 
    useEffect(() => {
      if (paymentId) {
-       getEventPayment(paymentId).then(res=>{
-        console.log(res)
-        setPayment(res)
-       })
+       console.log(paymentId)
+       getEventPayment(paymentId).then(res=>setPayment(res))
      }
    }, [paymentId]);
    

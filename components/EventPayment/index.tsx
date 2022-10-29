@@ -1,9 +1,9 @@
-import PriceCard from '@comps/PriceCard';
+import DateComponent from '@comps/DateComponent';
+import RangeDate from '@comps/RangeDate';
 import { EventPaymentType } from '@firebase/EventPayments/eventPayment.model';
 import {
   createEventPayment,
   getEventPaymentByIntent,
-  setEventPayment,
 } from '@firebase/EventPayments/main';
 import { Price } from '@firebase/Events/event.model';
 import useEvents from 'hooks/useEvents';
@@ -20,7 +20,7 @@ const LABELS: Record<string, LabelOptions> = {
     label: 'Successful payment',
   },
   WAITING: {
-    label: 'Watting for the confirmation',
+    label: 'Waiting for the confirmation',
   },
   PAID_OUT: {
     label: 'Payment Confirmed',
@@ -29,12 +29,12 @@ const LABELS: Record<string, LabelOptions> = {
 
 const PAYMENT_STATUS = {
   VALID: 'VALID',
-  WATTING: 'WATTING',
+  WAITING: 'WAITING',
   PAID_OUT: 'PAID_OUT',
   INVALID: 'INVALID',
 };
 
-const EventPyment = () => {
+const EventPayment = () => {
   const {
     query: {
       id: eventId,
@@ -91,10 +91,10 @@ const EventPyment = () => {
         {event?.includeFinishDate ? (
           <RangeDate startAt={event.date} finishAt={event.finishAt} />
         ) : (
-          <EventDate date={event?.date} />
+          <DateComponent date={event?.date} />
         )}
       </div>
-      <div className="text-center">{/* payemnt status  */}</div>
+      <div className="text-center">{/* payment status  */}</div>
       <div className="grid place-content-center text-center">
         <span className="font-bold">{price.title}</span>
         <span>{price.description}</span>
@@ -126,30 +126,7 @@ const EventPyment = () => {
 
 type DateType = string | number | Date | undefined;
 
-interface RangeDateType {
-  startAt?: DateType;
-  finishAt?: DateType;
-}
 
-const EventDate = ({ date }: { date?: DateType }) => {
-  return <div>{myFormatDate(date, 'dd/MMM/yy')}</div>;
-};
 
-const RangeDate = ({ startAt, finishAt }: RangeDateType) => {
-  return (
-    <div className="grid place-content-center text-center">
-      <span>
-        {`From: 
-          ${myFormatDate(startAt, 'dd-MMM-yy')}`}
-      </span>
-      <span>
-        {` 
-        To: 
-        ${myFormatDate(finishAt, 'dd-MMM-yy')}
-        `}
-      </span>
-    </div>
-  );
-};
 
-export default EventPyment;
+export default EventPayment;

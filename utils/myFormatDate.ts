@@ -15,7 +15,10 @@ export default function myFormatDate(
   return res;
 }
 
-export const fromNow=(date: string | number | Date,options: { addSuffix?: boolean | undefined; unit?: "second" | "minute" | "hour" | "day" | "month" | "year" | undefined; roundingMethod?: "floor" | "ceil" | "round" | undefined; locale?: Locale | undefined; } | undefined) =>{
+export const fromNow=(date?: string | number | Date,options?: { addSuffix?: boolean | undefined; unit?: "second" | "minute" | "hour" | "day" | "month" | "year" | undefined; roundingMethod?: "floor" | "ceil" | "round" | undefined; locale?: Locale | undefined; } | undefined) =>{
+  if(!date) {
+    console.error('date error')
+    return ''}
   return formatDistanceStrict(new Date(date), new Date(),options)
 } 
 

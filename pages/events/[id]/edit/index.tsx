@@ -1,4 +1,4 @@
-import FormEvent from '@comps/events/formEventV2'
+import FormEvent from '@comps/events/formEvent_V3'
 import useEvents from 'hooks/useEvents'
 import { useRouter } from 'next/router'
 const Edit = () => {

@@ -1,7 +1,7 @@
 import PreviewImage from '@comps/prevewImage';
 import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
 import Image from 'next/image';
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 
 interface InputFilesType {
   label: string;

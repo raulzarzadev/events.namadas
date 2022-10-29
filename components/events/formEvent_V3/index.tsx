@@ -111,14 +111,13 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
             control={control}
           />
 
-          <FormSection title="">
-            <div className="flex justify-around">
+            <div className="flex justify-around fixed w-full bottom-0 bg-base-200 p-2 border-t-4 border-t-base-100">
               <button className="btn btn-error" disabled>
                 Delete{' '}
               </button>
               <button className="btn btn-primary">Save </button>
             </div>
-          </FormSection>
+          
         </div>
       </form>
     </div>

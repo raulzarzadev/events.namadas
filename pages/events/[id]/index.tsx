@@ -1,41 +1,42 @@
 import Event from '@comps/events/event';
+import JoinEvent from '@comps/JoinEvent';
 import ModalDelete from '@comps/modal/ModalDelete_v2';
-import { deleteEvent } from '@firebase/Events/main';
+import { Event as EventType } from '@firebase/Events/event.model';
+import { deleteEvent, getEvent } from '@firebase/Events/main';
 import useAuth from 'hooks/useAuth';
 import useEvents from 'hooks/useEvents';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const EventPage = () => {
   const {
-  
     query: { id: eventId },
-    back,
   } = useRouter();
 
-  const { user } = useAuth();
+  const {user} =useAuth()
 
-  const { event } = useEvents({ eventId: `${eventId}` });
-  const isOwner = event?.userId === user?.id;
-  
-  if (event===undefined) return <div>Loading ...</div>;
-  if (event === null) {
-    return (
-      <div className="text-center">
-        <p className="my-6">This event is not visible</p>
-        <div className="flex justify-center w-full">
-          <button className="btn btn-outline" onClick={()=>back}>Go back</button>
-        </div>
-      </div>
-    );
-  }
+  const [event, setEvent] = useState<any>(undefined);
+  useEffect(()=>{
+    if(eventId){
+      getEvent(`${eventId}`).then(res=>setEvent(res))
+    }
+  },[eventId])
+
+  const isOwner = (user && user.id )=== event?.userId
+  if (event === undefined) return <div>Loading...</div>;
+  if (event === null) return <div>This element is not visible...</div>;
+
   return (
     <div>
       <Event event={event} />
+      <JoinEvent event={event}/>
       {isOwner && <Options eventId={`${eventId}`} />}
     </div>
   );
 };
+
+
 const Options = ({ eventId }: { eventId?: string }) => {
   // const event = useSelector(selectEventState);
   const router = useRouter();

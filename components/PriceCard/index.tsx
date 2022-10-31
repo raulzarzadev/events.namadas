@@ -65,7 +65,7 @@ const PriceCard = ({
           </button>
           <Link
             href={{
-              pathname: 'payment/[priceId]/checkout',
+              pathname: '/events/[id]/payment/[priceId]/checkout',
               query: { priceId: price?.id, id: price?.eventId },
             }}
           >

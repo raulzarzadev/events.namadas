@@ -35,35 +35,7 @@ const Event = ({ event }: { event: Event | null |undefined }) => {
   return (
     <div>
       <Carousel images={images} />
-      <div className="flex w-full justify-around my-4">
-        {userEventPayments?.length ? (
-          <div>
-            <h1 className="text-center font-bold">You all ready are part </h1>
-            <div className="flex max-w-lg flex-wrap justify-center">
-              {userEventPayments?.map((payment) => (
-                <div key={payment.id} className="w-1/2 p-2">
-                  <PriceCard
-                    price={payment?.price}
-                    // alreadyPaid={payment.id}
-                    paymentId={payment?.id}
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="flex mx-auto w-full justify-center">
-              <Link href={`/events/${eventId}/join`}>
-                <button className="btn btn-primary ">buy other sub</button>
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <div>
-            <Link href={`/events/${eventId}/join`}>
-              <button className="btn btn-primary ">Participate</button>
-            </Link>
-          </div>
-        )}
-      </div>
+   
       <div className="max-w-md mx-auto">
         <h1 className="text-center font-bold text-2xl">
           {title || 'Event title'}

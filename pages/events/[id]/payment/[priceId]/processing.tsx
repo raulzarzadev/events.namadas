@@ -5,7 +5,7 @@ const ProcessingPayment = () => {
   return (
     <>
       <Head>
-        <title>Procesing payment</title>
+        <title>Processing payment</title>
       </Head>
       <EventPayment />
     </>

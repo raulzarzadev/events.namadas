@@ -26,14 +26,7 @@ const [event, setEvent]=useState<Event|null|undefined>(undefined)
   
   useEffect(() => {
     if (eventId) {
-      listenEvent(eventId, (res: any) => {
-        if(res){
-
-          setEvent(res)
-        }else{
-          setEvent(null)
-        }
-      });
+      listenEvent(eventId, setEvent)
     }
   }, [eventId]);
 

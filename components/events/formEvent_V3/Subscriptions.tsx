@@ -11,6 +11,7 @@ const Subscriptions = ({ register, errors, formValues, control }: any) => {
         <Text
           {...register('subscriptionsOptions.limit', {
             valueAsNumber: true,
+            value: 0,
           })}
           name="subscriptionsOptions.limit"
           label="Limited to:"
@@ -31,7 +32,8 @@ const Subscriptions = ({ register, errors, formValues, control }: any) => {
                   type={'date'}
                   {...rest}
                   value={myFormatDate(
-                    formValues?.subscriptionsOptions?.startAt,
+                    formValues?.subscriptionsOptions?.startAt ||
+                      new Date().getTime(),
                     'inputDate'
                   )}
                 />
@@ -48,10 +50,8 @@ const Subscriptions = ({ register, errors, formValues, control }: any) => {
                   className="input  input-bordered"
                   type={'date'}
                   {...rest}
-                  value={myFormatDate(
-                    formValues?.subscriptionsOptions?.finishAt,
-                    'inputDate'
-                  )}
+                  // defaultValue={myFormatDate(formValues.date, 'inputDate')}
+                  value={myFormatDate(value,'inputDate')}
                 />
               </div>
             )}

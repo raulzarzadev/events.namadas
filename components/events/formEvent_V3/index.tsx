@@ -18,6 +18,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const currentDate = new Date().getTime();
   const defaultValues: Partial<Event> = {
     date: myFormatDate(currentDate, 'datetime'),
+    finishAt: myFormatDate(currentDate, 'datetime'),
     status: 'PLANING',
     subscriptionsOptions: {
       finishAt: myFormatDate(currentDate, 'inputDate'),
@@ -34,12 +35,12 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     formState: { errors },
     
   } = useForm({
-    defaultValues: event ? event : defaultValues,
+    defaultValues: event ? {...defaultValues, ...event} : defaultValues,
   });
 
   const formValues = watch();
-
   const onSubmit = (data: Event) => {
+    console.log(data)
     setFormStatus(FORM_LABELS.loading);
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)

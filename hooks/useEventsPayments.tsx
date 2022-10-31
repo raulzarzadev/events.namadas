@@ -19,7 +19,7 @@ function useEventsPayments(props?:UseEventPaymentType) {
   
   useEffect(()=>{
     if (eventId) {
-      listenUserEventPayments(eventId, setUserEvenPayment);
+      // listenUserEventPayments(eventId, setUserEvenPayment);
     }
   },[eventId])
 

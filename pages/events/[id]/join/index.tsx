@@ -10,7 +10,7 @@ const Join  = () => {
       </title>
     </Head>
     <div>
-    <JoinEvent />
+    {/* <JoinEvent /> */}
     </div>
     </>
   );

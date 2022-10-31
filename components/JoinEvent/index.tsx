@@ -1,15 +1,11 @@
 import PriceCard from '@comps/PriceCard';
-import { Price } from '@firebase/Events/event.model';
+import { Event, Price } from '@firebase/Events/event.model';
 import useEvents from 'hooks/useEvents';
 import useEventsPayments from 'hooks/useEventsPayments';
 import { useRouter } from 'next/router';
 
-const JoinEvent = () => {
-  const {
-    query: { id: eventId },
-  } = useRouter();
+const JoinEvent = ({event}:{event:Event}) => {
 
-  const { event } = useEvents({ eventId: `${eventId}` });
   const { userEventPayments } = useEventsPayments({ eventId: event?.id });
 
   const alreadyPaid = (priceId: Price['id']): string => {

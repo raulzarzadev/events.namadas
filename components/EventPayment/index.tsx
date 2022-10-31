@@ -55,31 +55,38 @@ const EventPayment = () => {
     return payment[0];
   };
 
-  const [eventPayment, setEventPayment]=useState<EventPaymentType|null>(null)
+  const [eventPayment, setEventPayment] = useState<EventPaymentType | null>(
+    null
+  );
 
-  const verifyEventPayment = async ({price, paymentIntent}:{price:Price, paymentIntent:EventPaymentType['paymentIntent']}) => {
+  const verifyEventPayment = async ({
+    price,
+    paymentIntent,
+  }: {
+    price: Price;
+    paymentIntent: EventPaymentType['paymentIntent'];
+  }) => {
     const eventPayment = await eventPaymentExist(paymentIntent);
     if (!eventPayment) {
       const newEventPayment: EventPaymentType = {
         status: 'VALID',
-        priceId:price?.id,
+        priceId: price?.id,
         price,
         paymentIntent,
         paymentIntentSecret,
       };
       createEventPayment(newEventPayment).then((res) => {
         setEventPayment(newEventPayment);
-      
       });
-    }else{
+    } else {
       setEventPayment(eventPayment);
     }
   };
 
   useEffect(() => {
     if (redirectStatus === 'succeeded' && price) {
-      verifyEventPayment({price, paymentIntent});
-    } 
+      verifyEventPayment({ price, paymentIntent });
+    }
   }, [paymentIntent, price]);
 
   if (!price || !event) return <div>Loading ...</div>;
@@ -105,12 +112,11 @@ const EventPayment = () => {
           ${parseInt(`${price?.amount}`)?.toFixed(2)}
         </span>
       </div>
-<div className='text-center'>
-
-      <span className="font-bold text-center text-xl my-2 bg-base-200 w-full flex justify-center ">
-        Payment status : {eventPayment?.status}
-      </span>
-</div>
+      <div className="text-center">
+        <span className="font-bold text-center text-xl my-2 bg-base-200 w-full flex justify-center ">
+          Payment status : {eventPayment?.status}
+        </span>
+      </div>
 
       <div className="flex justify-center flex-col gap-2 max-w-sm mx-auto">
         <Link href={'/profile'}>
@@ -125,8 +131,5 @@ const EventPayment = () => {
 };
 
 type DateType = string | number | Date | undefined;
-
-
-
 
 export default EventPayment;

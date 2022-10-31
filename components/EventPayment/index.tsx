@@ -94,11 +94,11 @@ const EventPayment = () => {
   return (
     <div>
       <h1 className="text-xl font-bold text-center">{event?.title}</h1>
-      <div>
+      <div className='text-center'>
         {event?.includeFinishDate ? (
           <RangeDate startAt={event.date} finishAt={event.finishAt} />
         ) : (
-          <DateComponent date={event?.date} />
+          <DateComponent date={event?.date} format='dd MMMM yy' />
         )}
       </div>
       <div className="text-center">{/* payment status  */}</div>

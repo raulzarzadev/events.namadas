@@ -1,10 +1,7 @@
 import Carousel from '@comps/carousel';
 import DateComponent from '@comps/DateComponent';
-import PriceCard from '@comps/PriceCard';
 import RangeDate from '@comps/RangeDate';
 import { Event, SubEvent } from '@firebase/Events/event.model';
-import useEventsPayments from 'hooks/useEventsPayments';
-import Link from 'next/link';
 import myFormatDate from 'utils/myFormatDate';
 
 const Event = ({ event }: { event: Event | null |undefined }) => {
@@ -52,7 +49,7 @@ const Event = ({ event }: { event: Event | null |undefined }) => {
         </p>
         <div>
           <h3 className="font-bold text-lg">
-            The events
+            Sub events {' '}
             <span className="text-sm font-normal">
               {`(${subEvents.length || 0})`}
             </span>
@@ -76,7 +73,7 @@ const SubEvent = ({ subEvent }: { subEvent: SubEvent }) => {
         <h3 className="w-1/3 ">{title || style}</h3>
         <span className="w-1/3 text-center">{distance}</span>
         <span className="w-1/3 text-end">
-          {date && myFormatDate(date, 'dd MMM yy')}
+          {date && myFormatDate(date, 'dd MMM HH:mm')}
         </span>
       </div>
       <div>

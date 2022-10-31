@@ -14,21 +14,21 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         {/* ---- icons ----- */}
 
-        <link rel="icon" href="/icons.icon.ico" />
+        <link rel="icon" href="/icons/icon.ico" />
         <link rel="manifest" href="/manifest.json" />
         <link
-          href="/icons.icon.png"
+          href="/icons/icon.png"
           rel="icon"
           type="image/png"
           sizes="16x16"
         />
         <link
-          href="/icons.icon.png"
+          href="/icons/icon.png"
           rel="icon"
           type="image/png"
           sizes="32x32"
         />
-        <link rel="apple-touch-icon" href="/icons.icon.png"></link>
+        <link rel="apple-touch-icon" href="/icons/icon.png"></link>
 
         {/* ---- meta tags ----- */}
 

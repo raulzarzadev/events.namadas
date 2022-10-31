@@ -40,6 +40,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const formValues = watch();
 
   const onSubmit = (data: Event) => {
+    console.log(data)
     setFormStatus(FORM_LABELS.loading);
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)
@@ -128,6 +129,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     }
   };
 
+
   return (
     <div>
       <Head>
@@ -139,8 +141,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       >
         {formValues?.title}
       </h2>
-      <p className='text-center mb-4'>
-
+      <p className="text-center mb-4">
         {formStatus?.title || 'Create new event'}
       </p>
       <form
@@ -163,15 +164,6 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
             control={control}
           />
 
-          <SubEventsSection
-           register={register}
-            errors={errors}
-            formValues={formValues}
-            control={control}
-
-            setValue={setValue}
-          />
-
           <EventDates
             register={register}
             errors={errors}
@@ -186,14 +178,20 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
             control={control}
           />
 
+          <SubEventsSection
+            register={register}
+            errors={errors}
+            formValues={formValues}
+            control={control}
+            setValue={setValue}
+          />
+
           <PricesSection
             register={register}
             errors={errors}
             formValues={formValues}
             control={control}
           />
-
-
 
           <div className="flex justify-around fixed w-full bottom-0 bg-base-200 p-2 border-t-4 border-t-base-100 left-0 right-0">
             <button

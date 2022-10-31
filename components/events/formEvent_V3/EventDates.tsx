@@ -3,7 +3,7 @@ import { Controller, UseFormRegister } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 import FormSection from './FormSection';
 
-const EventDates = ({ register, errors, formValues, control }) => {
+const EventDates = ({ register, errors, formValues, control }:any) => {
   //  const setEventOptionalDatesBasedInEventDate = () => {
   //    setValue(
   //      'subscriptionsOptions.finishAt',

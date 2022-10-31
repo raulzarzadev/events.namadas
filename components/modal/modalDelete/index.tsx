@@ -14,25 +14,23 @@ export interface ModalDeleteType {
 export default function ModalDelete ({
   handleDelete = ()=>{},
   deleteSuccessful = () => {},
-  itemLabel = 'elemento',
+  itemLabel = 'element',
   itemId = '',
   deleteText = null,
-  modalTitle = 'Eliminar elemento',
+  modalTitle = 'delete element',
   buttonType = 'icon', // icon | btn
   disabled=false
 }:ModalDeleteType) {
   const [open, setOpen] = useState(false)
-  const handleOpen = (e) => {
-    e?.preventDefault()
-    e?.stopPropagation()
+  const handleOpen = () => {
     setOpen(!open)
   }
   const [loading, setLoading] = useState(false)
-  const [buttonLabelModal, setButtonLabelModal] = useState('Eliminar')
+  const [buttonLabelModal, setButtonLabelModal] = useState('Delete')
 
   const functionDelete = async () => {
     setLoading(true)
-    setButtonLabelModal('Eliminando')
+    setButtonLabelModal('Deleted')
 
     const deleteFunc = async () => {
       try {
@@ -45,10 +43,10 @@ export default function ModalDelete ({
         console.error(error)
       } finally {
         setLoading(false)
-        setButtonLabelModal('Eliminado')
+        setButtonLabelModal('Delete')
         deleteSuccessful()
         setTimeout(() => {
-          setButtonLabelModal('Eliminar')
+          setButtonLabelModal('Delete')
           setOpen(false)
         }, 1000)
       }
@@ -57,44 +55,46 @@ export default function ModalDelete ({
   }
   return (
     <div>
-      {buttonType === 'icon'
-        ? (
-        <button disabled={disabled} onClick={handleOpen} className="text-error">
-          <Icon name='delete' />
-        </button>
-          )
-        : (
+      {buttonType === 'icon' ? (
         <button
           disabled={disabled}
-          onClick={handleOpen}
+          onClick={() => handleOpen()}
+          className="text-error"
+        >
+          <Icon name="delete" />
+        </button>
+      ) : (
+        <button
+          disabled={disabled}
+          onClick={() => handleOpen()}
           className="btn text-error"
         >
           <span className="mr-1">Delete</span>
-          <Icon name='delete' />
+          <Icon name="delete" />
         </button>
-          )}
-      <Modal title={modalTitle} open={open} handleOpen={handleOpen}>
+      )}
+      <Modal title={modalTitle} open={open} handleOpen={() => handleOpen()}>
         <div className="text-center whitespace-pre-line">
           {deleteText ||
-            `¿Seguro que desea eliminar 
+            `¿Are you sure delete this element
            ${itemLabel.toUpperCase()} 
-           de forma permanente?`}
+           permanently?`}
 
           <div className="w-full justify-evenly flex my-4 ">
             <button
               className={'btn-outline btn btn-sm'}
               onClick={() => {
-                handleOpen()
+                handleOpen();
               }}
             >
-              Cancelar
+              Cancel
             </button>
             <button
               className={'btn-error  btn btn-sm'}
               onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                functionDelete()
+                e.preventDefault();
+                e.stopPropagation();
+                functionDelete();
               }}
             >
               {buttonLabelModal}
@@ -103,5 +103,5 @@ export default function ModalDelete ({
         </div>
       </Modal>
     </div>
-  )
+  );
 }

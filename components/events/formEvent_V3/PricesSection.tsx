@@ -2,6 +2,7 @@ import { Text } from "@comps/inputs";
 import { useFieldArray } from "react-hook-form";
 import FormSection from "./FormSection";
 import { v4 as uidGenerator } from 'uuid';
+import { Price } from "@firebase/Events/event.model";
 
 const PricesSection = ({
   register, errors, formValues, control
@@ -19,7 +20,7 @@ const PricesSection = ({
      const uuid = uidGenerator().replace('-', '').slice(0, 20);
      const appendNewPrice: Price = {
        id: uuid,
-       eventId: event?.id,
+       eventId: formValues?.id,
        amount: 0,
        title: `Price ${(formValues.prices?.length || 0) + 1}`,
        description: 'Description price',

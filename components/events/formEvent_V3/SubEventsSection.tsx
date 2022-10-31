@@ -15,7 +15,7 @@ import FormSection from "./FormSection";
     // '25m':'25m swimming pool'
   ];
 
-const SubEventsSection = ({ register, errors, formValues, control }:any) => {
+const SubEventsSection = ({ register, errors, formValues, control , setValue}:any) => {
     const { fields, append, remove } = useFieldArray({
       control, // control props comes from useForm (optional: if you are using FormContext)
       name: 'subEvents', // unique name for your Field Array,

@@ -9,6 +9,7 @@ import myFormatDate from 'utils/myFormatDate';
 import BasicInformation from './BasicInformation';
 import EventDates from './EventDates';
 import PricesSection from './PricesSection';
+import SubEventsSection from './SubEventsSection';
 import Subscriptions from './Subscriptions';
 
 const FormEvent = ({ event }: { event?: Partial<Event> }) => {
@@ -147,7 +148,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
         data-test-id="event-form"
         data-test-op={eventAlreadyExist ? 'editing-event' : 'new-event'}
       >
-        <div className="grid mx-auto gap-2 max-w-md  ">
+        <div className="grid mx-auto gap-2 max-w-md  mb-20">
           <InputFiles
             label="Add more images "
             images={formValues?.images}
@@ -160,6 +161,15 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
             errors={errors}
             formValues={formValues}
             control={control}
+          />
+
+          <SubEventsSection
+           register={register}
+            errors={errors}
+            formValues={formValues}
+            control={control}
+
+            setValue={setValue}
           />
 
           <EventDates
@@ -182,6 +192,8 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
             formValues={formValues}
             control={control}
           />
+
+
 
           <div className="flex justify-around fixed w-full bottom-0 bg-base-200 p-2 border-t-4 border-t-base-100 left-0 right-0">
             <button

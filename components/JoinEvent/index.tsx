@@ -5,8 +5,8 @@ import useEventsPayments from 'hooks/useEventsPayments';
 import { useRouter } from 'next/router';
 
 const JoinEvent = ({event}:{event:Event}) => {
-
-  const { userEventPayments } = useEventsPayments({ eventId: event?.id });
+  
+  const { userEventPayments } = useEventsPayments({ eventId: event?.id});
 
   const alreadyPaid = (priceId: Price['id']): string => {
     let res = '';

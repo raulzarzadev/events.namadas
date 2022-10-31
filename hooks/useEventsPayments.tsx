@@ -13,13 +13,14 @@ function useEventsPayments(props?:UseEventPaymentType) {
   const eventId:string|undefined = props?.eventId
   const paymentId: string | undefined = props?.paymentId;
   const getUserPayments: boolean | undefined=props?.getUserPayments
+
   const [userPayments, setUserPayments] = useState<EventPaymentType[] | []>([]);
   const [userEventPayments, setUserEvenPayment]= useState<EventPaymentType[]|[]>([])
   const [payment, setPayment]=useState<EventPaymentType|null|undefined>(undefined)
   
   useEffect(()=>{
     if (eventId) {
-      // listenUserEventPayments(eventId, setUserEvenPayment);
+      listenUserEventPayments(eventId, setUserEvenPayment);
     }
   },[eventId])
 

@@ -9,7 +9,7 @@ import myFormatDate from 'utils/myFormatDate';
 
 const Event = ({ event }: { event: Event | null |undefined }) => {
   
-  const { userEventPayments } = useEventsPayments({ eventId:event?.id });
+  //const { userEventPayments } = useEventsPayments({ eventId:event?.id });
   if (!event) return <div>Loading ...</div>;
   
   const {

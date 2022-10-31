@@ -3,19 +3,19 @@ interface RangeDateType {
   startAt?: DateType;
   finishAt?: DateType;
 }
-type DateType = string | number | Date | undefined;
+type DateType = string | number | Date | undefined | null;
 
 const RangeDate = ({ startAt, finishAt }: RangeDateType) => {
   return (
     <span className="grid place-content-center text-center">
       <span>
         {`From: 
-          ${myFormatDate(startAt, 'dd-MMM-yy')}`}
+          ${startAt ? myFormatDate(startAt, 'dd-MMM-yy') : ''}`}
       </span>
       <span>
         {` 
         To: 
-        ${myFormatDate(finishAt, 'dd-MMM-yy')}
+        ${finishAt?myFormatDate(finishAt, 'dd-MMM-yy'):''}
         `}
       </span>
     </span>

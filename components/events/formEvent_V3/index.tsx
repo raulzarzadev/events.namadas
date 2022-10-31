@@ -33,14 +33,13 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     control,
     setValue,
     formState: { errors },
-    
   } = useForm({
-    defaultValues: event ? {...defaultValues, ...event} : defaultValues,
+    defaultValues: event ? { ...defaultValues, ...event } : defaultValues,
   });
 
   const formValues = watch();
   const onSubmit = (data: Event) => {
-    console.log(data)
+    console.log(data);
     setFormStatus(FORM_LABELS.loading);
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)
@@ -109,19 +108,18 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     },
   };
 
-
   useEffect(() => {
     if (eventAlreadyExist) {
       setFormStatus(FORM_LABELS?.edit);
-    }else{
-      setFormStatus(FORM_LABELS.save)
+    } else {
+      setFormStatus(FORM_LABELS.save);
     }
   }, []);
 
   const [formStatus, setFormStatus] = useState(FORM_LABELS.clean);
-  const handleSetImages = (images: any[], setImagesOps?:SetImagesOps) => {
+  const handleSetImages = (images: any[], setImagesOps?: SetImagesOps) => {
     if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading);
-    if(images.length){
+    if (images.length) {
       setValue('images', images);
       handleSubmit((props: any) => {
         onSubmit(props);
@@ -129,16 +127,12 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     }
   };
 
-
   return (
-    <div>
+    <div className='relative'>
       <Head>
         <title>{formStatus.title}</title>
       </Head>
-      <h2
-        className="text-xl font-bold text-center mt-4 whitespace-pre"
-        data-test-id={`edit-`}
-      >
+      <h2 className="text-xl font-bold text-center mt-4 whitespace-pre-wrap">
         {formValues?.title}
       </h2>
       <p className="text-center mb-4">
@@ -150,12 +144,14 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
         data-test-op={eventAlreadyExist ? 'editing-event' : 'new-event'}
       >
         <div className="grid mx-auto gap-2 max-w-md  mb-20">
-          <InputFiles
-            label="Add more images "
-            images={formValues?.images}
-            setImages={handleSetImages}
-            // disabled={disabled}
-          />
+          {eventAlreadyExist && (
+            <InputFiles
+              label="Add more images "
+              images={formValues?.images}
+              setImages={handleSetImages}
+              // disabled={disabled}
+            />
+          )}
 
           <BasicInformation
             register={register}
@@ -177,21 +173,23 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
             formValues={formValues}
             control={control}
           />
-
-          <SubEventsSection
-            register={register}
-            errors={errors}
-            formValues={formValues}
-            control={control}
-            setValue={setValue}
-          />
-
-          <PricesSection
-            register={register}
-            errors={errors}
-            formValues={formValues}
-            control={control}
-          />
+          {eventAlreadyExist && (
+            <SubEventsSection
+              register={register}
+              errors={errors}
+              formValues={formValues}
+              control={control}
+              setValue={setValue}
+            />
+          )}
+          {eventAlreadyExist && (
+            <PricesSection
+              register={register}
+              errors={errors}
+              formValues={formValues}
+              control={control}
+            />
+          )}
 
           <div className="flex justify-around fixed w-full bottom-0 bg-base-200 p-2 border-t-4 border-t-base-100 left-0 right-0">
             <button

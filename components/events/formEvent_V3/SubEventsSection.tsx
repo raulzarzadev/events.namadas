@@ -2,7 +2,8 @@ import { Text } from '@comps/inputs';
 import InputLocalDate from '@comps/inputs/InputLocalDate';
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest';
 import RadioInput from '@comps/inputs/Radio';
-import { SubEvent } from '@firebase/Events/event.model';
+import { Event, SubEvent } from '@firebase/Events/event.model';
+import { ReactNode } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 import FormSection from './FormSection';
@@ -28,7 +29,8 @@ const SubEventsSection = ({
 
   const isOpenWater = formValues?.swimmingType === 'openWater';
   const isSwimmingPool = formValues?.swimmingType === 'swimmingPool';
-  const EVENT_TYPE_COMPONENT = {
+
+  const EVENT_TYPE_COMPONENT:Record<Event['eventType'],ReactNode> = {
     swimmingPool: (
       <PickerSwimmingTests
         setTests={(tests) => setValue('subEvents', tests)}

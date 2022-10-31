@@ -40,7 +40,6 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const formValues = watch();
 
   const onSubmit = (data: Event) => {
-    console.log(data)
     setFormStatus(FORM_LABELS.loading);
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)

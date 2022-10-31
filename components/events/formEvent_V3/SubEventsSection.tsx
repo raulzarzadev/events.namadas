@@ -4,6 +4,7 @@ import PickerSwimmingTests from "@comps/inputs/PickerSwimmingTest";
 import RadioInput from "@comps/inputs/Radio";
 import { SubEvent } from "@firebase/Events/event.model";
 import { useFieldArray } from "react-hook-form";
+import myFormatDate from "utils/myFormatDate";
 import FormSection from "./FormSection";
 
   const EVENT_TYPE_OPTIONS = [
@@ -22,10 +23,10 @@ const SubEventsSection = ({ register, errors, formValues, control , setValue}:an
     });
     const handleAddSubEvent = () => {
       const appendNewEvent: SubEvent = {
-        title: '',
+        title: `event ${formValues?.subEvents?.length+1}`,
         distance: '',
         comments: '',
-        date: '',
+        date: myFormatDate(formValues.date, 'datetime'),
         style: '',
       };
       append(appendNewEvent);

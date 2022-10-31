@@ -7,7 +7,7 @@ import useEventsPayments from 'hooks/useEventsPayments';
 import Link from 'next/link';
 import myFormatDate from 'utils/myFormatDate';
 
-const Event = ({ event }: { event: Event | null }) => {
+const Event = ({ event }: { event: Event | null |undefined }) => {
   
   const { userEventPayments } = useEventsPayments({ eventId:event?.id });
   if (!event) return <div>Loading ...</div>;

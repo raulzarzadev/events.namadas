@@ -22,7 +22,9 @@ export default function ModalDelete ({
   disabled=false
 }:ModalDeleteType) {
   const [open, setOpen] = useState(false)
-  const handleOpen = () => {
+  const handleOpen = (e) => {
+    e?.preventDefault()
+    e?.stopPropagation()
     setOpen(!open)
   }
   const [loading, setLoading] = useState(false)
@@ -65,7 +67,7 @@ export default function ModalDelete ({
         <button
           disabled={disabled}
           onClick={handleOpen}
-          className="btn btn-sm text-error"
+          className="btn text-error"
         >
           <span className="mr-1">Delete</span>
           <Icon name='delete' />

@@ -1,10 +1,10 @@
 import { InputDate, Text } from "@comps/inputs";
+import { Controller } from "react-hook-form";
 import myFormatDate from "utils/myFormatDate";
 import FormSection from "./FormSection";
 
-const Subscriptions = (
-  {register, errors, formValues}:any
-) => {
+const Subscriptions = ({ register, errors, formValues, control }: any) => {
+
   return (
     <div>
       <FormSection title="Subscriptions options">
@@ -19,26 +19,47 @@ const Subscriptions = (
           min={0}
           max={99999}
         />
-
-        <InputDate
-          {...register('subscriptionsOptions.startAt')}
-          type="date"
-          name="subscriptionsOptions.startAt"
-          label="Starts at"
-          errors={errors}
-        />
-
-        <InputDate
-          {...register('subscriptionsOptions.finishAt')}
-          type="date"
-          name="subscriptionsOptions.finishAt"
-          label="Finish at"
-          errors={errors}
-          max={myFormatDate(formValues.date, 'yyyy-MM-dd')}
-        />
+        <div className="grid gap-4 place-content-center">
+          <Controller
+            name="subscriptionsOptions.startAt"
+            control={control}
+            render={({ field: { value, ...rest } }) => (
+              <div className="form-control w-full ">
+                <label className="label">{`Subscriptions starts`}</label>
+                <input
+                  className="input  input-bordered"
+                  type={'date'}
+                  {...rest}
+                  value={myFormatDate(
+                    formValues?.subscriptionsOptions?.startAt,
+                    'inputDate'
+                  )}
+                />
+              </div>
+            )}
+          />
+          <Controller
+            name="subscriptionsOptions.finishAt"
+            control={control}
+            render={({ field: { value, ...rest } }) => (
+              <div className="form-control w-full ">
+                <label className="label">{`Subscriptions finish`}</label>
+                <input
+                  className="input  input-bordered"
+                  type={'date'}
+                  {...rest}
+                  value={myFormatDate(
+                    formValues?.subscriptionsOptions?.finishAt,
+                    'inputDate'
+                  )}
+                />
+              </div>
+            )}
+          />
+        </div>
       </FormSection>
     </div>
   );
-}
+};
 
 export default Subscriptions;

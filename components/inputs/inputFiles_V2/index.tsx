@@ -5,7 +5,7 @@ import ImagesList from './imagesList';
 
 interface InputFilesType {
   label: string;
-  setImages: (images: Image[]) => void;
+  setImages: (images: Image[], setImagesOps?: SetImagesOps) => void;
   images?: Image[];
   disabled?: boolean;
 }
@@ -14,16 +14,19 @@ interface Image {
   metadata?: any;
   uploading?: boolean;
 }
-
+export interface SetImagesOps {
+  uploading: boolean;
+}
 const InputFiles = ({
   label = 'Files input',
   images = [],
   setImages,
   disabled,
 }: InputFilesType) => {
-  const [upladingImages, setUploadingImages] = useState<Image[] | []>([]);
+  const [uploadingImages, setUploadingImages] = useState<Image[] | []>([]);
 
   const handleChange = async (e: any) => {
+    setImages([],{uploading:true})
     const files = e.target.files;
     setUploadingImages(
       [...files].map(() => {
@@ -31,7 +34,7 @@ const InputFiles = ({
       })
     );
 
-    const ulpadingFiles = [...files].map(async (file) => {
+    const uploadingFiles = [...files].map(async (file) => {
       const imageUploaded = await FirebaseCRUD.uploadFileAsync({
         file,
         fieldName: 'EventImages',
@@ -39,9 +42,9 @@ const InputFiles = ({
       return imageUploaded;
     });
 
-    const newImages: any = await Promise.all(ulpadingFiles);
+    const newImages: any = await Promise.all(uploadingFiles);
     setUploadingImages([]);
-    setImages([...images, ...newImages]);
+    setImages([...images, ...newImages],{uploading:false});
   };
 
   const handleDeleteImage = (url: string) => {
@@ -72,8 +75,8 @@ const InputFiles = ({
           </div>
 
           <ImagesList
-            images={[...images, ...upladingImages]}
-            childrensClassName={'w-36 h-36  '}
+            images={[...images, ...uploadingImages]}
+            childrenClassName={'w-36 h-36  '}
             onDeleteImage={handleDeleteImage}
           />
         </div>

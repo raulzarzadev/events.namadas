@@ -2,7 +2,7 @@ import PreviewImage from "@comps/prevewImage";
 
 export interface ImagesListType {
   images: Image[] | any[];
-  childrensClassName?: string;
+  childrenClassName?: string;
   onDeleteImage?: (url: string) => void;
 }
 
@@ -14,7 +14,7 @@ interface Image {
 
 const ImagesList = ({
   images = [],
-  childrensClassName,
+  childrenClassName,
   onDeleteImage,
 }: ImagesListType) => {
   const handleOpenDelete = async (url: string | undefined) => {
@@ -25,7 +25,7 @@ const ImagesList = ({
   return (
     <>
       {images?.map(({ url, uploading }, i) => (
-        <div key={`${url}-${i}`} className={` ${childrensClassName}  `}>
+        <div key={`${url}-${i}`} className={` ${childrenClassName}  `}>
           <PreviewImage
             image={url}
             uploading={uploading}

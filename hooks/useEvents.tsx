@@ -17,7 +17,7 @@ function useEvents({ eventId, getByStatus }: UseEvenType) {
 
   const [userEvents, setUserEvents] = useState([]);
   const [events, setEvents] = useState<Event[] | [] >([]);
-const [event, setEvent]=useState<Event|null>(null)
+const [event, setEvent]=useState<Event|null|undefined>(undefined)
   useEffect(() => {
     if (getByStatus) {
       getEventsByStatus(getByStatus).then((res) => setEvents(res));
@@ -27,7 +27,12 @@ const [event, setEvent]=useState<Event|null>(null)
   useEffect(() => {
     if (eventId) {
       listenEvent(eventId, (res: any) => {
-       setEvent(res)
+        if(res){
+
+          setEvent(res)
+        }else{
+          setEvent(null)
+        }
       });
     }
   }, [eventId]);

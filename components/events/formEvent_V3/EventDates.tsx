@@ -1,8 +1,9 @@
-import { InputDate, Toggle } from "@comps/inputs";
-import myFormatDate from "utils/myFormatDate";
-import FormSection from "./FormSection";
+import { InputDate, Toggle } from '@comps/inputs';
+import { Controller, UseFormRegister } from 'react-hook-form';
+import myFormatDate from 'utils/myFormatDate';
+import FormSection from './FormSection';
 
-const EventDates = ({register, errors, formValues}:any) => {
+const EventDates = ({ register, errors, formValues, control }) => {
   //  const setEventOptionalDatesBasedInEventDate = () => {
   //    setValue(
   //      'subscriptionsOptions.finishAt',
@@ -31,7 +32,6 @@ const EventDates = ({register, errors, formValues}:any) => {
   //      myFormatDate(formValues.finishAt, `yyyy-MM-dd'T'HH:mm`)
   //    );
   //  }, []);
-  console.log(formValues)
   return (
     <div>
       <FormSection title="Event dates">
@@ -41,26 +41,44 @@ const EventDates = ({register, errors, formValues}:any) => {
           name="includeFinishDate"
           errors={errors}
         />
-        <InputDate
-          {...register('date')}
-          type="datetime-local"
-          name="date"
-          label="Event date and time"
-          errors={errors}
-        />
-        {formValues?.includeFinishDate && (
-          <InputDate
-            {...register('finishAt')}
-            type="datetime-local"
-            name="finishAt"
-            label="Finish date"
-            errors={errors}
-            min={myFormatDate(formValues?.date, 'yyyy-MM-dd')}
+        <div className="grid gap-4 place-content-center">
+          <Controller
+            name="date"
+            control={control}
+            render={({ field: { value, ...rest } }) => (
+              <div className="form-control w-full ">
+                <label className="label">{`Event Date`}</label>
+                <input
+                  className="input  input-bordered"
+                  type={'datetime-local'}
+                  {...rest}
+                  value={myFormatDate(formValues.date, 'datetime')}
+                />
+              </div>
+            )}
           />
-        )}
+
+          {formValues?.includeFinishDate && (
+            <Controller
+              name="finishAt"
+              control={control}
+              render={({ field: { value, ...rest } }) => (
+                <div className="form-control w-full ">
+                  <label className="label">{`Event finish at`}</label>
+                  <input
+                    className="input  input-bordered"
+                    type={'datetime-local'}
+                    {...rest}
+                    value={myFormatDate(formValues.finishAt, 'datetime')}
+                  />
+                </div>
+              )}
+            />
+          )}
+        </div>
       </FormSection>
     </div>
   );
-}
+};
 
 export default EventDates;

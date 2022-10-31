@@ -1,9 +1,14 @@
-const ManageEvent = () => {
+import ManageEvent from "@comps/events/ManageEvent";
+import PrivatePage from "HOCS/PrivatePage";
+
+const Manage = () => {
   return (
     <div>
-      Manage Event
+      <PrivatePage>
+     <ManageEvent />
+      </PrivatePage>
     </div>
   );
 }
 
-export default ManageEvent;
+export default Manage;

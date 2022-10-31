@@ -41,3 +41,6 @@ export const getEventPaymentsByStatus = (status: EventPaymentType['status']) =>
   export const getEventPaymentByIntent = (
     paymentIntent: EventPaymentType['paymentIntent']
   ) => eventPaymentsCRUD.getMany([where('paymentIntent', '==', paymentIntent)]);
+
+  export const listenEventPayments = (itemId: string) =>
+    eventPaymentsCRUD.getMany([where('price.eventId','==',itemId)]);

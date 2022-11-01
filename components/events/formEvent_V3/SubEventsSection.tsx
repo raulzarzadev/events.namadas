@@ -1,6 +1,6 @@
 import { Text } from '@comps/inputs';
 import InputLocalDate from '@comps/inputs/InputLocalDate';
-import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest';
+import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
 import RadioInput from '@comps/inputs/Radio';
 import { Event, SubEvent } from '@firebase/Events/event.model';
 import { ReactNode } from 'react';

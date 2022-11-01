@@ -102,56 +102,62 @@ export default function PickerSwimmingTests({
   return (
     <div>
       <div className="flex justify-evenly">
-        <div className="flex items-center">
-          <label className="label">
-            <span className="label-text">Distance</span>
-          </label>
-          <input
-            name="poolSize"
-            type="number"
-            className="input input-bordered w-14 input-xs mx-auto"
-            onChange={handleChangeOptions}
-            value={newDistance}
-            min={0}
-            max={99999}
-            step={1}
-          />
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              handleAddDistance(newDistance);
-            }}
-          >
-            <Icon name="plus" />
-          </button>
-        </div>
+        {!disabled ? (
+          <div className="flex items-center">
+            <label className="label">
+              <span className="label-text">Distance</span>
+            </label>
+            <input
+              name="poolSize"
+              type="number"
+              className="input input-bordered w-14 input-xs mx-auto"
+              onChange={handleChangeOptions}
+              value={newDistance}
+              min={0}
+              max={99999}
+              step={1}
+            />
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleAddDistance(newDistance);
+              }}
+            >
+              <Icon name="plus" />
+            </button>
+          </div>
+        ) : null}
       </div>
-      <div className="flex w-full p-1 max-w-md mx-auto">
+      <div className="flex w-full p-1 max-w-md mx-auto relative">
         <div className="flex flex-col w-16">
           <Cell size={compact ? 'md' : 'lg'} style="title">
-            <div className="flex flex-col">
-              <span className="text-right text-xs sm:text-sm">Style</span>
-              <span className="text-right text-xs sm:text-sm">Distance</span>
+            <div className="flex flex-col w-full">
+              <span className="text-right text-xs sm:text-sm font-normal">Style</span>
+              <span className="text-right text-xs sm:text-sm font-normal">Distance</span> 
             </div>
           </Cell>
-          {distances.map((distance) => (
-            <Cell key={distance} style="normal" size={compact ? 'sm' : 'lg'}>
-              <span className={'flex justify-end w-full'}>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleRemoveDistance(distance);
-                  }}
-                >
-                  <Icon name="delete" size="xs" />
-                </button>
-                <span className='w-8 text-end'>
-              {distance}
-                </span>
-              </span>{' '}
-            </Cell>
-          ))}
+          <div className='relative'>
+         
+            {distances.map((distance) => (
+              <Cell key={distance} style="normal" size={compact ? 'sm' : 'lg'}>
+                <span className={'flex justify-end w-full'}>
+                  {!disabled ? (
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleRemoveDistance(distance);
+                      }}
+                    >
+                      <Icon name="delete" size="xs" />
+                    </button>
+                  ) : null}
+                  <span className="w-8 text-end">{distance}</span>
+                </span>{' '}
+              </Cell>
+            ))}
+          </div>
         </div>
+
         {STYLES.map(({ id: styleId, label, largeLabel }) => (
           <div key={styleId} className="flex flex-col w-1/6 ">
             <Cell size={compact ? 'md' : 'lg'} style="title">

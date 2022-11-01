@@ -52,7 +52,7 @@ const Event = ({ event }: { event: Event | null |undefined }) => {
           {resume || 'Event resume'}
         </p>
         <div>
-          <h3 className="font-bold text-lg">
+          <h3 className="font-bold text-lg text-center">
             Sub events{' '}
             <span className="text-sm font-normal">
               {`(${subEvents.length || 0})`}

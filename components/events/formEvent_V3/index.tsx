@@ -127,6 +127,8 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     }
   };
 
+  console.log(formValues)
+
   return (
     <div className='relative'>
       <Head>

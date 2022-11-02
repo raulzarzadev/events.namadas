@@ -8,8 +8,10 @@
 // import { useForm } from 'react-hook-form';
 
 import { Text, Toggle } from '@comps/inputs';
+import InputFiles from '@comps/inputs/inputFiles_V2';
 import Phone from '@comps/inputs/Phone';
 import RadioInput from '@comps/inputs/Radio';
+import Textarea from '@comps/inputs/Textarea';
 import Section from '@comps/Section';
 import { updateUser } from '@firebase/Users/main';
 import { User } from '@firebase/Users/user.model';
@@ -45,6 +47,15 @@ export default function UserForm({ user }) {
   const formValues = watch()
 
   console.log(formValues)
+    const handleSetImages = (images: any[], setImagesOps?: SetImagesOps) => {
+      // if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading);
+      if (images.length) {
+        setValue('images', images);
+        handleSubmit((props: any) => {
+          onSubmit(props);
+        })();
+      }
+    };
 
   return (
     <div className="relative">
@@ -52,7 +63,13 @@ export default function UserForm({ user }) {
         <div className="flex justify-end sticky top-8 p-2 bg-base-100">
           <button className="btn btn-primary ">Save</button>
         </div>
-        <Section title="Personal information " open indent={false} >
+        <InputFiles
+          label="Add more images "
+          images={formValues?.images}
+          setImages={handleSetImages}
+          // disabled={disabled}
+        />
+        <Section title="Personal information " open indent={false}>
           <Text
             label={'Name'}
             placeholder="Name"
@@ -106,7 +123,7 @@ export default function UserForm({ user }) {
           </div>
         </Section>
 
-        <Section title="Contact " open indent={false}>
+        <Section title="Personal Contact " open indent={false}>
           <Phone
             label={'Whatsapp'}
             placeholder="Phone (optional)"
@@ -127,9 +144,49 @@ export default function UserForm({ user }) {
             //  error={errors.name.message}
             {...register('email', { value: formValues.email || null })}
             errors={errors}
-            helperText='You can not change this option'
+            helperText="You can not change this option"
           />
         </Section>
+        {formValues.profileType.isCompany && (
+          <>
+            <Section title="Company information" open>
+              <Textarea
+                label={'Presentation'}
+                placeholder="A small description of your company, there goals and the values can be a good presentation"
+                // onChange={(e) => console.log(e.target.value)}
+                //  error={errors.name.message}
+                {...register('companyInfo.resume', {
+                  value: formValues?.companyInfo?.resume || null,
+                })}
+                rows={2}
+                errors={errors}
+              />
+              <h2 className="font-bold my-4">Company contacts</h2>
+              <Phone
+                label={' Phone Number '}
+                placeholder="Phone (optional)"
+                //  error={errors.name.message}
+                onChange={(value: any) => {
+                  setValue('companyInfo.phone', value);
+                }}
+                value={formValues.companyInfo?.phone}
+                /* {...register('contact.whatsapp', {
+            value: watch('contact.whatsapp') || null
+          })} */
+              />
+              <Text
+                label={'Email'}
+                placeholder="Company Email (recommended)"
+                // onChange={(e) => console.log(e.target.value)}
+                //  error={errors.name.message}
+                {...register('companyInfo.email', {
+                  value: formValues?.companyInfo?.email || null,
+                })}
+                errors={errors}
+              />
+            </Section>
+          </>
+        )}
         {formValues.profileType.isAthlete && (
           <>
             <Section title="Medic information " indent={false}>

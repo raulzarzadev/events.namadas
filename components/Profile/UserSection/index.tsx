@@ -8,9 +8,13 @@
 
 import UserForm from '@comps/forms/UserForm';
 import Icon from '@comps/Icon';
+import InputFiles from '@comps/inputs/inputFiles_V2';
+import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
 import Modal from '@comps/modal';
+import PreviewImage from '@comps/prevewImage';
 import Section from '@comps/Section';
 import { User } from '@firebase/Users/user.model';
+import Image from 'next/image';
 import { useState } from 'react';
 import myFormatDate from 'utils/myFormatDate';
 
@@ -33,6 +37,8 @@ export default function UserSection({ user }: { user: User }) {
     photoURL: image,
     birth,
     profileType,
+    images,
+    companyInfo,
   } = user;
   console.log(user);
 
@@ -121,6 +127,23 @@ export default function UserSection({ user }: { user: User }) {
             <p className="font-bold text-center">{contact?.email || email}</p>
           </div>
         </Section>
+        {profileType?.isCompany && (
+          <>
+            <Section title="Company information">
+              <div>
+                <h4 className="font-bold text-center">Resume:</h4>
+                <p className=" text-center whitespace-pre-line">
+                  {companyInfo?.resume}
+                </p>
+              </div>
+              <div>
+                <h4 className="font-bold text-center">Contact: </h4>
+                <p className=" text-center">{companyInfo?.email || 'sin'}</p>
+                <p className=" text-center">{companyInfo?.phone || 'sin'}</p>
+              </div>
+            </Section>
+          </>
+        )}
         {profileType?.isAthlete && (
           <>
             <Section title={'Medic information'}>
@@ -160,6 +183,22 @@ export default function UserSection({ user }: { user: User }) {
           </>
         )}
       </Section>
+      <div>
+        <h3 className="font-bold ">Gallery</h3>
+      </div>
+      <div className="grid">
+        <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2">
+          <ImagesList
+            showDelete={false}
+            // label="Add more images "
+            images={images}
+            childrenClassName={'w-36 h-36  '}
+
+            //setImages={handleSetImages}
+            // disabled={disabled}
+          />
+        </div>
+      </div>
     </>
   );
 }

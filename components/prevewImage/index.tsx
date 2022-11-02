@@ -9,8 +9,9 @@ export interface PreviewImageType {
   image?: string;
   previewSize?: Sizes;
   uploading?: boolean;
-  handleDelete?: ()=>void
-  showOrigin?:boolean
+  handleDelete?: () => void;
+  showOrigin?: boolean;
+  showDelete:boolean
 }
 
 const PreviewImage = ({
@@ -19,6 +20,7 @@ const PreviewImage = ({
   previewSize = 'md',
   uploading,
   handleDelete,
+  showDelete=true,
   showOrigin = false,
 }:PreviewImageType) => {
   const [openModal, setOpenModal] = useState(false);
@@ -57,7 +59,7 @@ const PreviewImage = ({
             onClick={handleOpenModal}
           >
             <Image src={image} layout="fill" objectFit="cover" />
-            {handleDelete && (
+            {showDelete  && (
               <div className="absolute right-0 ">
                 <button
                   className=" hover:text-error text-white "
@@ -67,7 +69,7 @@ const PreviewImage = ({
                     handleOpenDelete();
                   }}
                 >
-                  <Icon name='delete'  />
+                  <Icon name="delete" />
                 </button>
                 <Modal
                   open={openDelete}
@@ -98,14 +100,14 @@ const PreviewImage = ({
           </div>
           <Modal title="Image" open={openModal} handleOpen={handleOpenModal}>
             <>
-            <div className="relative w-full aspect-square mx-auto ">
-              <Image src={image} layout="fill" objectFit="contain" />
-            </div>
-            {showOrigin && (
-              <a href={image} target={'_blank'}>
-                {image}
-              </a>
-            )}
+              <div className="relative w-full aspect-square mx-auto ">
+                <Image src={image} layout="fill" objectFit="contain" />
+              </div>
+              {showOrigin && (
+                <a href={image} target={'_blank'}>
+                  {image}
+                </a>
+              )}
             </>
           </Modal>
         </>

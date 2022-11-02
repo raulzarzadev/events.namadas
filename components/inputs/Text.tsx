@@ -14,7 +14,7 @@ import { InputType } from ".";
         {...props}
       />
 
-      <label className="label label-text-alt ">
+      <label className={`label label-text-alt ${!(errors[name]||helperText)&&'hidden'}`}>
         {errors[name] && (
           <span className="text-error">{'This field is required'}</span>
         )}

@@ -8,6 +8,7 @@ interface InputFilesType {
   setImages: (images: Image[], setImagesOps?: SetImagesOps) => void;
   images?: Image[];
   disabled?: boolean;
+  fieldName:string
 }
 interface Image {
   url?: string | undefined;
@@ -21,12 +22,13 @@ const InputFiles = ({
   label = 'Files input',
   images = [],
   setImages,
+  fieldName = 'EventImages',
   disabled,
 }: InputFilesType) => {
   const [uploadingImages, setUploadingImages] = useState<Image[] | []>([]);
 
   const handleChange = async (e: any) => {
-    setImages([],{uploading:true})
+    setImages([], { uploading: true });
     const files = e.target.files;
     setUploadingImages(
       [...files].map(() => {
@@ -37,28 +39,28 @@ const InputFiles = ({
     const uploadingFiles = [...files].map(async (file) => {
       const imageUploaded = await FirebaseCRUD.uploadFileAsync({
         file,
-        fieldName: 'EventImages',
+        fieldName: fieldName,
       });
       return imageUploaded;
     });
 
     const newImages: any = await Promise.all(uploadingFiles);
     setUploadingImages([]);
-    setImages([...images, ...newImages],{uploading:false});
+    setImages([...images, ...newImages], { uploading: false });
   };
 
   const handleDeleteImage = (url: string) => {
     FirebaseCRUD.deleteFile({ url })
-    .then((res) => {
-      console.log(res, 'image deleted')
-    })
-    .catch(err => {
-      console.error(err);
-    }).finally(()=>{
-      const filteredList = [...images].filter((image)=>image.url!==url)
-      setImages([...filteredList])
-
-    })
+      .then((res) => {
+        console.log(res, 'image deleted');
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        const filteredList = [...images].filter((image) => image.url !== url);
+        setImages([...filteredList]);
+      });
   };
 
   return (
@@ -90,7 +92,7 @@ interface InputFile {
   label:string
 }
 const SquareInputFile=({disabled, handleChange, label}:InputFile)=>{
-  // TODO add label to accesiblity
+  // TODO add label to accessibility
   return (
     <label>
       <div

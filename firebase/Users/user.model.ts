@@ -8,6 +8,7 @@ export interface User extends Base {
   isCoach?: boolean;
   displayName?: string;
   alias?: string;
+  images: Image[];
   contact?: {
     email: string | null;
     phone: string | null;
@@ -15,7 +16,7 @@ export interface User extends Base {
   };
   phone?: string;
   medicInformation?: {
-    bloodType: string|null;
+    bloodType: string | null;
     considerations: string | null;
   };
   emergencyContact?: {
@@ -29,4 +30,14 @@ export interface User extends Base {
     isCompany?: boolean;
     isAthlete?: boolean;
   };
+  companyInfo?: {
+    email?: string|null;
+    phone?: string|null;
+    resume?: string | null;
+  };
+}
+
+interface Image {
+  url:string
+  metadata?:any
 }

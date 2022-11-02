@@ -16,7 +16,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement , TextareaType>(
           className="textarea input-bordered resize-none"
           aria-invalid={errors[name] ? 'true' : 'false'}
           {...props}
-          rows={5}
+          rows={rows}
           ref={ref}
         />
         <label>{errors[name] && <span>{errors[name]}</span>}</label>

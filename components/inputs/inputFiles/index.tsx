@@ -1,4 +1,4 @@
-import PreviewImage from '@comps/prevewImage';
+import PreviewImage from '@comps/previewImage';
 import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -30,7 +30,7 @@ const InputFiles = React.forwardRef(
     ref
   ) => {
     const [images, setImages] = useState(defaultImages || []);
-    const [upladingImages, setUploadingImages] = useState<Image[] | []>([]);
+    const [uploadingImages, setUploadingImages] = useState<Image[] | []>([]);
 
     const handleChange = async (e: any) => {
       const files = e.target.files;
@@ -41,12 +41,12 @@ const InputFiles = React.forwardRef(
         })
       );
 
-      const ulpadingFiles = [...files].map(async (file) => {
+      const uploadingFiles = [...files].map(async (file) => {
         const imageUploaded = await FirebaseCRUD.uploadFileAsync({file,  fieldName:'EventImages'});
         return imageUploaded;
       });
 
-      const newImages: any = await Promise.all(ulpadingFiles);
+      const newImages: any = await Promise.all(uploadingFiles);
       // console.log(newImages)
       setUploadingImages([]);
       imagesUploaded(newImages);
@@ -87,7 +87,7 @@ const InputFiles = React.forwardRef(
         </label>
         <div className="w-full max-w-md mx-auto overflow-auto">
           <div className="grid grid-cols-4 gap-1 p-1">
-            {[...images, ...upladingImages]?.map(({ url, uploading }, i) => (
+            {[...images, ...uploadingImages]?.map(({ url, uploading }, i) => (
               <div key={`${url}-${i}`} className="">
                 <PreviewImage
                   image={url}

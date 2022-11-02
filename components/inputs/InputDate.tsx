@@ -1,7 +1,7 @@
 import React from "react";
 import { InputType } from ".";
 
-interface InputDateType extends Omit<InputType, 'type'> {
+interface InputDateType extends Omit<InputType, 'type' | 'size'> {
   type: 'date' | 'datetime-local';
 
 }

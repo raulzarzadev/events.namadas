@@ -10,7 +10,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 import Image from 'next/image';
-import PreviewImage from '@comps/prevewImage';
+import PreviewImage from '@comps/previewImage';
 
 interface ImageType {
   src: string;

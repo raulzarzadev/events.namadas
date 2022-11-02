@@ -81,11 +81,22 @@ const {user, handleLogin, handleLogout}=useAuth()
                 </label>
                 <ul
                   tabIndex={0}
-                  className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+                  className="menu  dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <li>
                     <Link href={'/profile'}>
                       <a className="justify-between">Profile</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href={'/publish-event'}>
+                      <a
+                        className="justify-between"
+                        data-test-id="new-event-link"
+                      >
+                        Publish event
+                        <span className="badge">New</span>
+                      </a>
                     </Link>
                   </li>
                   <li>
@@ -94,7 +105,7 @@ const {user, handleLogin, handleLogout}=useAuth()
                         className="justify-between"
                         data-test-id="new-event-link"
                       >
-                        New event
+                        Create event
                         <span className="badge">New</span>
                       </a>
                     </Link>

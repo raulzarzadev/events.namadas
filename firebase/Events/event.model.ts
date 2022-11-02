@@ -4,6 +4,7 @@ import { User } from '@firebase/Users/user.model';
 type  DateType = string | number | Date | undefined;
 export interface Event extends Base {
   finishAt?: DateType|null;
+  link?:string,
   sport: string;
   eventType: string;
   date: DateType;
@@ -19,7 +20,7 @@ export interface Event extends Base {
   status: 'PLANING' | 'ACTIVE' | 'IN_PROGRESS' | 'FINISHED';
   subscriptionsOptions?: SubscriptionsOptions;
   subscriptions: EventSubscription[];
-  links:EventLink[]
+  links?:EventLink[]
   prices?:Price[]
 }
 export interface Price {
@@ -37,7 +38,7 @@ export interface Price {
 export interface EventLink {
   label:string
   url:string
-  image:string
+  image?:string
 }
 
 export interface SubscriptionsOptions {

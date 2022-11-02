@@ -1,6 +1,6 @@
 import React from 'react';
 import { InputType } from '.';
-interface RadioInput extends InputType{
+interface RadioInput extends Omit<InputType, 'size'>{
   value:string
 }
 const RadioInput = React.forwardRef<HTMLInputElement, RadioInput>(

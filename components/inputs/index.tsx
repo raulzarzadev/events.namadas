@@ -11,6 +11,9 @@ export interface InputType {
   rules?: any;
   min?: string | number;
   max?: string | number;
+  placeholder?:string,
+  helperText?:string,
+  size?:string
 }
 
 export { Text, Toggle, InputDate , Select , Chip};

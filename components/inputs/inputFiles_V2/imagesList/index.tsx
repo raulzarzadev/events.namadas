@@ -1,9 +1,10 @@
-import PreviewImage from "@comps/prevewImage";
+import PreviewImage from "@comps/previewImage";
 
 export interface ImagesListType {
   images: Image[] | any[];
   childrenClassName?: string;
   onDeleteImage?: (url: string) => void;
+  showDelete?:boolean
 }
 
 interface Image {
@@ -14,13 +15,13 @@ interface Image {
 
 const ImagesList = ({
   images = [],
-  childrenClassName,
+  childrenClassName: childrenClassName,
   onDeleteImage,
+  showDelete=true,
 }: ImagesListType) => {
   const handleOpenDelete = async (url: string | undefined) => {
     if (!url) return console.log('no valid url');
-    if(onDeleteImage) onDeleteImage(url);
-    
+    if (onDeleteImage) onDeleteImage(url);
   };
   return (
     <>
@@ -28,6 +29,7 @@ const ImagesList = ({
         <div key={`${url}-${i}`} className={` ${childrenClassName}  `}>
           <PreviewImage
             image={url}
+            showDelete={showDelete}
             uploading={uploading}
             previewSize="full"
             handleDelete={() => {

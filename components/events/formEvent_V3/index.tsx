@@ -1,3 +1,4 @@
+import AddLinksSection from '@comps/forms/AddLinksSection';
 import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2';
 import { Event } from '@firebase/Events/event.model';
 import { createEvent, deleteEvent, updateEvent } from '@firebase/Events/main';
@@ -130,7 +131,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   console.log(formValues)
 
   return (
-    <div className='relative'>
+    <div className="relative">
       <Head>
         <title>{formStatus.title}</title>
       </Head>
@@ -148,6 +149,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
         <div className="grid mx-auto gap-2 max-w-md  mb-20">
           {eventAlreadyExist && (
             <InputFiles
+              fieldName="eventImage"
               label="Add more images "
               images={formValues?.images}
               setImages={handleSetImages}
@@ -169,12 +171,20 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
             control={control}
           />
 
+          <AddLinksSection
+            control={control}
+            errors={errors}
+            register={register}
+            formValues={formValues}
+          />
+
           <Subscriptions
             register={register}
             errors={errors}
             formValues={formValues}
             control={control}
           />
+
           {eventAlreadyExist && (
             <SubEventsSection
               register={register}

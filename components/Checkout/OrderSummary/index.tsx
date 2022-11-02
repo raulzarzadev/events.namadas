@@ -1,23 +1,23 @@
-import PreviewImage from '@comps/prevewImage';
+import PreviewImage from '@comps/previewImage';
 import { Price } from '@firebase/Events/event.model';
 import { calculateOrderAmount } from 'pages/api/create-payment-intent';
 import { useEffect, useState } from 'react';
 
-const OrderSumary = ({ items = [] }: { items: Price[] }) => {
+const OrderSummary = ({ items = [] }: { items: Price[] }) => {
   const [total, setTotal]=useState(0)
   useEffect(()=>{
     setTotal(calculateOrderAmount(items));
   })
   return (
     <div className="bg-base-200 max-w-md mx-auto  rounded-lg p-2 w-full">
-      <h4 className="font-bold">Order sumary </h4>
+      <h4 className="font-bold">Order summary </h4>
       <div className="grid">
         {items?.map((item, i) => {
           return (
             <div key={`${item?.id}-${i}`}>
               <div className="flex">
                 <div>
-                  <PreviewImage image={item?.image} />
+                  <PreviewImage image={item?.image} showDelete={false} />
                 </div>
                 <div className="grid">
                   <span>{item?.title}</span>
@@ -42,4 +42,4 @@ const OrderSumary = ({ items = [] }: { items: Price[] }) => {
   );
 };
 
-export default OrderSumary;
+export default OrderSummary;

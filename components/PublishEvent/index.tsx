@@ -3,6 +3,7 @@ import {  Text } from '@comps/inputs';
 import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2';
 import { Event, EventLink } from '@firebase/Events/event.model';
 import { createEvent } from '@firebase/Events/main';
+import { useRouter } from 'next/router';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 
@@ -16,6 +17,7 @@ const PublishEvent = () => {
     ],
     title: ''
   }
+  const router = useRouter()
   const {
     handleSubmit,
     formState: { errors },
@@ -27,9 +29,9 @@ const PublishEvent = () => {
     defaultValues
   });
   const formValues = watch()
-  const onSubmit = (data) => {
-    createEvent(data).then(res => {
-      console.log(res)
+  const onSubmit = (data:any) => {
+    createEvent(data).then(({res}:any) => {
+      router.push(`/events/${res.id}/edit`)
     })
   };
 

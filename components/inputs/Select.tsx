@@ -1,7 +1,7 @@
 import React from "react";
 import { InputType } from ".";
 
-interface SelectInput extends Omit<InputType, 'type' >{
+interface SelectInput extends Omit<InputType, 'type'|'size' >{
   options: SelectOption[]
   placeholder?:string
 }
@@ -11,7 +11,7 @@ interface SelectOption {
 }
 
  const Select = React.forwardRef<HTMLSelectElement, SelectInput>((props, ref) => {
-   const { label, errors, name, options, placeholder='Select an opiton',...rest } = props;
+   const { label, errors, name, options, placeholder='Select an option',...rest } = props;
    return (
      <div className="form-control w-full ">
        <label className="label">{label}</label>

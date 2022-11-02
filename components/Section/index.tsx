@@ -8,11 +8,13 @@ export default function Section({
   open=false,
   indent = false,
   sticky = false,
-}) {
+}:any) {
+  
   const [show, setShow] = useState(open || false);
   useState(() => {
-    setShow(open);
+    setShow(open)
   }, [open]);
+
   return (
     <section className="my-2 bg-base-100   text-base-content shadow-lg px-1 rounded-md pb-2 pt-1 ">
       <h3

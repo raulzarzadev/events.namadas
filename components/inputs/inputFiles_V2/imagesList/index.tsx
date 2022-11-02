@@ -1,4 +1,4 @@
-import PreviewImage from "@comps/prevewImage";
+import PreviewImage from "@comps/previewImage";
 
 export interface ImagesListType {
   images: Image[] | any[];

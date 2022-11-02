@@ -11,7 +11,7 @@ import Icon from '@comps/Icon';
 import InputFiles from '@comps/inputs/inputFiles_V2';
 import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
 import Modal from '@comps/modal';
-import PreviewImage from '@comps/prevewImage';
+import PreviewImage from '@comps/previewImage';
 import Section from '@comps/Section';
 import { User } from '@firebase/Users/user.model';
 import Image from 'next/image';

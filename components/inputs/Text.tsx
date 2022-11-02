@@ -10,7 +10,7 @@ export interface TextType extends  Omit<InputType, 'size' >{
      name = '',
      type,
      placeholder = '',
-     helperText = '',
+     helpertext = '',
    } = props;
    return (
      <div className="form-control w-full ">
@@ -25,13 +25,13 @@ export interface TextType extends  Omit<InputType, 'size' >{
 
        <label
          className={`label label-text-alt ${
-           !(errors[name] || helperText) && 'hidden'
+           !(errors[name] || helpertext) && 'hidden'
          }`}
        >
          {errors[name] && (
            <span className="text-error">{'This field is required'}</span>
          )}
-         {helperText && <span className="text-info">{helperText}</span>}
+         {helpertext && <span className="text-info">{helpertext}</span>}
        </label>
      </div>
    );

@@ -6,12 +6,12 @@ export interface InputPhoneType {
   label?:string
   value?:any
   onChange?:any
-  helperText?:string
+  helpertext?:string
   error?:string
   placeholder?:string
 }
 const Phone = React.forwardRef(
-  ({ onChange, value, label, helperText, error, ...rest }:InputPhoneType, ref) => (
+  ({ onChange, value, label, helpertext, error, ...rest }:InputPhoneType, ref) => (
     <div className="form-control w-full max-w-xs">
       <span className="label-text capitalize-first">{label}</span>
       <PhoneInput
@@ -30,7 +30,7 @@ const Phone = React.forwardRef(
         }}
         dropdownClass="bg-base-300"
       />{' '}
-      {helperText && <span className="label-text text-info">{helperText}</span>}
+      {helpertext && <span className="label-text text-info">{helpertext}</span>}
       {error && <span className="label-text text-error">{error}</span>}
     </div>
   )

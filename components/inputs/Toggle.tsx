@@ -7,7 +7,7 @@ export interface ToggleType extends InputType {
 
 export type ToggleSizes = 'sm' | 'md' | 'lg'
  const Toggle = React.forwardRef<HTMLInputElement, ToggleType>((props, ref) => {
-   const { label, errors, name, size='md', ...rest } = props;
+   const { label, errors, name, size='md',helpertext, ...rest } = props;
 
    const sizing: Record<ToggleSizes, string> = {
      sm: 'toggle-sm',
@@ -28,7 +28,10 @@ export type ToggleSizes = 'sm' | 'md' | 'lg'
            aria-invalid={errors[name] ? 'true' : 'false'}
          />
        </label>
-       <label>{errors[name] && <span>{errors[name]}</span>}</label>
+       <label>
+         {errors[name] && <span>{errors[name]}</span>}
+         {helpertext && <span className="label-text-alt">{helpertext}</span>}
+       </label>
      </div>
    );
  });

@@ -3,9 +3,16 @@ import React from 'react';
 // import CrossIcon from '../icons/CrossIcon';
 const Modal = ({
   title = 'Modal title',
-  open=false,
+  open = false,
   handleOpen = () => {},
-  children=<></>,
+  children = <></>,
+  onMouseLeave,
+}: {
+  title: string;
+  open: boolean;
+  handleOpen: () => void;
+  children: any;
+  onMouseLeave?: any;
 }) => {
   const modalId = `modal-${new Date().getTime()}-${Math.random()}`;
 
@@ -26,7 +33,10 @@ const Modal = ({
         target?.id === modalId && handleOpen();
       }}
     >
-      <div className="bg-base-100 overflow-auto max-h-full rounded-lg w-full max-w-xl  ">
+      <div
+        onMouseLeave={onMouseLeave}
+        className="bg-base-100 overflow-auto max-h-full rounded-lg w-full max-w-xl  "
+      >
         <header
           className={
             'flex justify-between sticky top-0 bg-base-100 z-10 px-3 py-1'
@@ -42,7 +52,7 @@ const Modal = ({
               handleOpen();
             }}
           >
-            <Icon name='cross' size='md' />
+            <Icon name="cross" size="md" />
             {/* <IoClose /> */}
           </button>
         </header>

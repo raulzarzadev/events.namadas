@@ -20,7 +20,13 @@ describe('localhost:3000 is up', () => {
   it('can create a test event ',()=>{
     cy.get('[name="title"]').type(EVENT_TEST_NAME)
     cy.get('[data-test-id="submit-event-form"]').click();
-    cy.get('[data-test-op="editing-event"]')
+    // cy.get('[data-test-op="new-event"]')
+    cy.get('[data-test-id="submit-event-form"]').contains('loading', {
+      matchCase: false,
+    });
+    cy.get('[data-test-id="submit-event-form"]').contains('saved', {
+      matchCase: false,
+    });
   })
 
   it('can edit test event',()=>{

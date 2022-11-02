@@ -77,7 +77,7 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
           <h4 className="font-bold text-lg text-center">Event Links</h4>
           <div className="flex  w-full justify-around my-5">
             {links?.map((link) => (
-              <EventLinkInfo link={link} />
+              <EventLinkInfo key={link.url} link={link} />
             ))}
           </div>
         </div>

@@ -92,7 +92,7 @@ const {user, handleLogin, handleLogout}=useAuth()
                     <Link href={'/publish-event'}>
                       <a
                         className="justify-between"
-                        data-test-id="new-event-link"
+                        data-test-id="publish-event-link"
                       >
                         Publish event
                         <span className="badge">New</span>

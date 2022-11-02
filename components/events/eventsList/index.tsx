@@ -4,7 +4,7 @@ import useEvents from 'hooks/useEvents';
 const EventsList = () => {
 
   const { userEvents } = useEvents({});
-  const handleSuscribeTo=(id:string)=>{
+  const handleSubscribeTo=(id:string)=>{
     return ''
   }
   return (
@@ -17,7 +17,7 @@ const EventsList = () => {
               size='sm'
               event={event}
               key={event?.id}
-              onSuscribe={handleSuscribeTo}
+              onSubscribe={handleSubscribeTo}
             />
           ))}
         </div>

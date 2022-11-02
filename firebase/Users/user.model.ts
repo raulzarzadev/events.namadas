@@ -3,11 +3,11 @@ import { Base } from 'firebase/Base.model';
 export interface User extends Base {
   photoURL: any;
   image: any;
-  name?: string|null;
+  name?: string | null;
   email: string;
   isCoach?: boolean;
   displayName?: string;
-  alias?: string|null;
+  alias?: string | null;
   images: Image[];
   contact?: {
     email: string | null;
@@ -31,9 +31,10 @@ export interface User extends Base {
     isAthlete?: boolean;
   };
   companyInfo?: {
-    email?: string|null;
-    phone?: string|null;
+    email?: string | null;
+    phone?: string | null;
     resume?: string | null;
+    isVisible?:boolean | null
   };
 }
 

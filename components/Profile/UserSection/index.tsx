@@ -40,7 +40,6 @@ export default function UserSection({ user }: { user: User }) {
     images,
     companyInfo,
   } = user;
-  console.log(user);
 
   interface Option {
     label: string;

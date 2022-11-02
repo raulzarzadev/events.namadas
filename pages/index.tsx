@@ -5,16 +5,16 @@ import useEvents from 'hooks/useEvents';
 const Home: NextPage = () => {
   const { events: inProgress } = useEvents({ getByStatus: 'IN_PROGRESS' });
   const { events: activeEvents } = useEvents({ getByStatus: 'ACTIVE' });
-  const { events: plaingEvents } = useEvents({ getByStatus: 'PLANING' });
+  const { events: planingEvents } = useEvents({ getByStatus: 'PLANING' });
   const { events: finishedEvents } = useEvents({ getByStatus: 'FINISHED' });
-  // console.log(plaingEvents);
+  // console.log(planingEvents);
   return (
     <div className="px-2">
       {/* <Hero /> */}
       {/* <EventsFilter /> */}
       <EventsRow title="Events in progress now " events={inProgress} />
-      <EventsRow title="Upcomming events " events={activeEvents} />
-      <EventsRow title="Planing events" events={plaingEvents} />
+      <EventsRow title="Upcoming events " events={activeEvents} />
+      <EventsRow title="Planing events" events={planingEvents} />
       <EventsRow title="Past events" events={finishedEvents} />
     </div>
   );

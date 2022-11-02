@@ -15,7 +15,7 @@ const Phone = React.forwardRef(
     <div className="form-control w-full max-w-xs">
       <span className="label-text capitalize-first">{label}</span>
       <PhoneInput
-        forwardRef={ref}
+        // forwardRef={ref}
         localization={es}
         onChange={(value: any, _data: any, _event: any) => onChange(value)}
         defaultMask=".. .... .. .."

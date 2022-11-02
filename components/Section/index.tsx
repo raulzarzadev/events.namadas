@@ -1,4 +1,5 @@
 import Icon from '@comps/Icon';
+import { useEffect } from 'react';
 import { useState } from 'react';
 
 export default function Section({
@@ -11,7 +12,7 @@ export default function Section({
 }:any) {
   
   const [show, setShow] = useState(open || false);
-  useState(() => {
+  useEffect(() => {
     setShow(open)
   }, [open]);
 

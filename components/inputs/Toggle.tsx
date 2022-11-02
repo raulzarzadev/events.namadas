@@ -2,12 +2,12 @@ import React from "react";
 import { InputType } from ".";
 
 export interface ToggleType extends InputType {
-  size:ToggleSizes
+  size?:ToggleSizes
 }
 
 export type ToggleSizes = 'sm' | 'md' | 'lg'
  const Toggle = React.forwardRef<HTMLInputElement, ToggleType>((props, ref) => {
-   const { label, errors, name, size, ...rest } = props;
+   const { label, errors, name, size='md', ...rest } = props;
 
    const sizing: Record<ToggleSizes, string> = {
      sm: 'toggle-sm',

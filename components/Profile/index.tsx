@@ -7,6 +7,7 @@ import UserSection from "./UserSection";
 function Profile() {
   const { userEvents } = useEvents({});
   const {user}=useAuth()
+  if(!user) return <>Loading ...</>
   // console.log(user)
   return (
     <div className="sm:p-4">

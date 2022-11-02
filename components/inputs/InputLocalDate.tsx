@@ -1,9 +1,13 @@
 import React from "react";
 import { InputType } from ".";
 
- const InputLocalDate = React.forwardRef<HTMLInputElement, InputType>(
+export interface InputLocalDateType extends Omit<InputType, 'size' >{
+
+}
+
+ const InputLocalDate = React.forwardRef<HTMLInputElement, InputLocalDateType>(
    (props, ref) => {
-     const { label, errors, name, type='date', ...rest } = props;
+     const { label, errors, name, type = 'date', ...rest } = props;
      return (
        <div className="form-control w-full ">
          <label className="label">{label}</label>

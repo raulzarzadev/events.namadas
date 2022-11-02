@@ -1,14 +1,6 @@
-// import { updateUser } from '@/firebase/users';
-// import { dateFormat } from '@/utils/dates';
-// import ButtonSave from '@comps/Inputs/Button/ButtonSave';
-// import Phone from '@comps/Inputs/Phone';
-// import TextInput from '@comps/Inputs/TextInput';
-// import Toggle from '@comps/Inputs/Toggle';
-// import Section from '@comps/Section';
-// import { useForm } from 'react-hook-form';
 
 import { Text, Toggle } from '@comps/inputs';
-import InputFiles from '@comps/inputs/inputFiles_V2';
+import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2';
 import Phone from '@comps/inputs/Phone';
 import RadioInput from '@comps/inputs/Radio';
 import Textarea from '@comps/inputs/Textarea';
@@ -18,14 +10,18 @@ import { User } from '@firebase/Users/user.model';
 import { useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 
-const PROFILE_TYPES = [
+interface ProfileType {
+  label: string;
+  name: 'isAthlete' | 'isCompany';
+}
+const PROFILE_TYPES:ProfileType[] = [
   { name: 'isAthlete', label: 'Athlete' },
   //{ name: 'isCoach', label: 'Coach' },
   //{ name: 'isTutor', label: 'Father or tutor' },
   { name: 'isCompany', label: 'Events Agency' },
 ];
 
-export default function UserForm({ user }) {
+export default function UserForm({ user }:{user:User}) {
   const {
     register,
     handleSubmit,
@@ -40,8 +36,8 @@ export default function UserForm({ user }) {
     },
   });
 
-  const onSubmit = (form: User) => {
-    updateUser(form?.id, form).then((res) => console.log(`User updated`, res));
+  const onSubmit = (form: any) => {
+    form?.id ? updateUser(form?.id, form).then((res) => console.log(`User updated`, res)):console.error('no user id')
   };
 
   const formValues = watch()
@@ -64,6 +60,7 @@ export default function UserForm({ user }) {
           <button className="btn btn-primary ">Save</button>
         </div>
         <InputFiles
+        fieldName='userImages'
           label="Add more images "
           images={formValues?.images}
           setImages={handleSetImages}
@@ -75,13 +72,13 @@ export default function UserForm({ user }) {
             placeholder="Name"
             errors={errors}
             //  error={errors.name.message}
-            {...register('name', { value: watch('name') || null })}
+            {...register('name', { value: formValues?.name || '' })}
           />
           <Text
             label={'Alias (optional)'}
             placeholder="Alias (optional)"
             //  error={errors.name.message}
-            {...register('alias', { value: watch('alias') || null })}
+            {...register('alias', { value: formValues.alias|| null })}
             errors={errors}
           />
           <Text
@@ -89,7 +86,7 @@ export default function UserForm({ user }) {
             type="date"
             //  error={errors.name.message}
             {...register('birth', {
-              value: myFormatDate(watch('birth'), 'yyyy-MM-dd') || null,
+              value: myFormatDate(formValues.birth, 'yyyy-MM-dd') || '',
             })}
             errors={errors}
           />
@@ -97,7 +94,7 @@ export default function UserForm({ user }) {
             <span className="text-xl font-bold">Type of profile </span>
             <div className="flex w-full justify-evenly">
               {PROFILE_TYPES.map(
-                ({ name, label }: { name: string; label: string }) => {
+                ({ name, label }: ProfileType) => {
                   return (
                     <label
                       key={name}
@@ -142,12 +139,12 @@ export default function UserForm({ user }) {
             placeholder="Email (recommended)"
             // onChange={(e) => console.log(e.target.value)}
             //  error={errors.name.message}
-            {...register('email', { value: formValues.email || null })}
+            {...register('email', { value: formValues?.email || '' })}
             errors={errors}
             helperText="You can not change this option"
           />
         </Section>
-        {formValues.profileType.isCompany && (
+        {formValues?.profileType?.isCompany && (
           <>
             <Section title="Company information" open>
               <Textarea
@@ -187,7 +184,7 @@ export default function UserForm({ user }) {
             </Section>
           </>
         )}
-        {formValues.profileType.isAthlete && (
+        {formValues?.profileType?.isAthlete && (
           <>
             <Section title="Medic information " indent={false}>
               <Text

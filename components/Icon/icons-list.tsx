@@ -13,6 +13,7 @@ import { TiFilter } from 'react-icons/ti';
 import { TiEdit } from 'react-icons/ti';
 import { TiTrash } from 'react-icons/ti';
 
+
 //https://react-icons.github.io/react-icons/icons?name=cg
 import { CgGym } from 'react-icons/cg';
 
@@ -40,6 +41,8 @@ import { SiWhatsapp } from 'react-icons/si';
 
 //https://react-icons.github.io/react-icons/icons?name=md
 import {
+  MdLocationOff,
+  MdLocationOn,
   MdOutlineEmergency,
   MdOutlineEvent,
   MdOutlineMoreVert,
@@ -115,7 +118,9 @@ const ICON_LIST = {
   coments: FaRegComment,
   heartFill: FaHeart,
   share: BsShareFill,
-} as const
+  location: MdLocationOn,
+  hideLocation: MdLocationOff,
+} as const;
 
 export type IconName = keyof typeof ICON_LIST;
 export type ReactIconElement = typeof ICON_LIST[IconName];

@@ -14,14 +14,14 @@ const useGeolocation = () => {
     }
   };
 
-  const getLocation = (cb) => {
+  const getLocation = (cb:CallableFunction) => {
     if (navigator.geolocation) {
       const options = {
         enableHighAccuracy: true,
         timeout: 5000,
         maximumAge: 0,
       };
-      function error(err) {
+      function error(err:any) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
       }
 
@@ -40,9 +40,6 @@ const useGeolocation = () => {
     }
   };
 
-  // const [position, setPosition] = useState(null);
-
-  console.log(geolocation);
   
   return {geolocation, askForLocation}
 };

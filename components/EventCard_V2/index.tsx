@@ -1,11 +1,12 @@
 import DateComponent from '@comps/DateComponent';
+import RatingInput from '@comps/inputs/RatingInput';
 import Modal from '@comps/modal';
 import RangeDate from '@comps/RangeDate';
 import { Event } from '@firebase/Events/event.model';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import myFormatDate, { fromNow } from 'utils/myFormatDate';
+import  { fromNow } from 'utils/myFormatDate';
 export interface EventType extends Event {}
 
 const EventCard = ({
@@ -73,9 +74,9 @@ const EventCard = ({
             ) : (
               <DateComponent date={event.date} format="dd MMMM yy" />
             )}
+          </p>
 
             <EventModalInfo event={event} />
-          </p>
         </div>
       </Modal>
     </>
@@ -84,42 +85,13 @@ const EventCard = ({
 
 const EventModalInfo = ({ event }: { event: EventType }) => {
   const { id, resume, links } = event;
+
   return (
     <div className="">
       <p>{fromNow(event.date, { addSuffix: true })}</p>
       <div className="w-full text-sm truncate text-center">
         <div className="flex w-full justify-between ">
-          <div className="flex w-full justify-center items-center">
-            <div className="rating rating-sm">
-              <input
-                type="radio"
-                name="rating-6"
-                className="mask mask-star-2 bg-orange-400"
-              />
-              <input
-                type="radio"
-                name="rating-6"
-                className="mask mask-star-2 bg-orange-400"
-                checked
-              />
-              <input
-                type="radio"
-                name="rating-6"
-                className="mask mask-star-2 bg-orange-400"
-              />
-              <input
-                type="radio"
-                name="rating-6"
-                className="mask mask-star-2 bg-orange-400"
-              />
-              <input
-                type="radio"
-                name="rating-6"
-                className="mask mask-star-2 bg-orange-400"
-              />
-            </div>
-            <span className="text-xs align-bottom ">(250)</span>
-          </div>
+         <RatingInput/>
           <Link href={`/events/${id}`}>
             <button className="btn btn-outline btn-circle">Go</button>
           </Link>

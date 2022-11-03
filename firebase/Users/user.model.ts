@@ -30,12 +30,15 @@ export interface User extends Base {
     isCompany?: boolean;
     isAthlete?: boolean;
   };
-  companyInfo?: {
-    email?: string | null;
+  companyInfo?: CompanyInfo;
+}
+
+export interface CompanyInfo{
+   email?: string | null;
     phone?: string | null;
     resume?: string | null;
     isVisible?:boolean | null
-  };
+    name:string
 }
 
 interface Image {

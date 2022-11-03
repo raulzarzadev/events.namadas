@@ -2,12 +2,12 @@ import Icon from '@comps/Icon';
 import useAuth from 'hooks/useAuth';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import GeolocationInput from './Geolocation';
 
 const Nav = () => {
   const { user, handleLogin, handleLogout } = useAuth();
-
+ 
   return (
     <nav className="w-full ">
       <div className="navbar bg-base-100 shadow-md">

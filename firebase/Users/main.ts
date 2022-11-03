@@ -39,6 +39,10 @@ export function authStateChanged(cb: CallableFunction) {
   });
 }
 
+export function getVisibleCompanies() {
+ return usersCRUD.getMany([where('companyInfo.isVisible','==',true)])
+}
+
 export async function googleLogin() {
   const provider = new GoogleAuthProvider();
   signInWithPopup(auth, provider)

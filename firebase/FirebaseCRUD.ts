@@ -27,7 +27,7 @@ import {
 import { db, storage } from '.'
 import { Dates } from 'firebase-dates-util'
 import { es } from 'date-fns/locale'
-
+import  './initialize_persistence'
 
 export const storageRef = (path = '') => ref(storage, path);
 export class FirebaseCRUD {
@@ -70,11 +70,11 @@ export class FirebaseCRUD {
         collectionName,
       });
 
-    //* Validate insede each filter and find if any a the values is invalid
+    //* Validate inside each filter and find if any a the values is invalid
     filters.map((filter) => {
       //* Looks like firebase define a function unsolved if the value of
       if (typeof filter._a === 'function') {
-        return console.error('unvalid data', {
+        return console.error('invalid data', {
           segment: filter.fa.segments[0],
           collectionName,
         });
@@ -85,9 +85,9 @@ export class FirebaseCRUD {
   }
 
   static dateToFirebase(date: string): Timestamp | null {
-    const dateFormated = FirebaseCRUD.transformAnyToDate(date);
-    if (!dateFormated) return null;
-    return Timestamp.fromDate(dateFormated);
+    const dateFormatted = FirebaseCRUD.transformAnyToDate(date);
+    if (!dateFormatted) return null;
+    return Timestamp.fromDate(dateFormatted);
   }
 
   static deepFormatFirebaseDates(
@@ -194,8 +194,8 @@ export class FirebaseCRUD {
 
   static formatResponse = (ok: boolean, type: string, res: any) => {
     if (!ok) throw new Error(type);
-    const formatedType = type.toUpperCase();
-    return { type: formatedType, ok, res };
+    const formattedType = type.toUpperCase();
+    return { type: formattedType, ok, res };
   };
 
   async setDoc(itemId: string, newItem: object) {
@@ -306,6 +306,10 @@ export class FirebaseCRUD {
 
     onSnapshot(q, (querySnapshot) => {
       const res: any[] = [];
+      const source = querySnapshot.metadata.fromCache
+        ? 'local cache'
+        : 'server';
+      console.log('Data came from ' + source);
       querySnapshot.forEach((doc) => {
         res.push(FirebaseCRUD.normalizeDoc(doc));
       });

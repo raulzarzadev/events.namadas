@@ -77,7 +77,6 @@ export default function UserForm({ user }: { user: User }) {
   });
 
   const [formStatus, setFormStatus] = useState(FORM_LABELS.clean);
-  console.log(isDirty)
 
   useEffect(()=>{
     setFormStatus(FORM_LABELS.save)
@@ -115,7 +114,9 @@ export default function UserForm({ user }: { user: User }) {
     <div className="relative">
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="flex justify-end sticky top-8 p-2 bg-base-100 z-10">
-          <button className="btn btn-primary " disabled={formStatus.disabled}>{formStatus.button}</button>
+          <button className="btn btn-primary " disabled={formStatus.disabled}>
+            {formStatus.button}
+          </button>
         </div>
         <InputFiles
           fieldName="userImages"
@@ -189,6 +190,7 @@ export default function UserForm({ user }: { user: User }) {
             value: watch('contact.whatsapp') || null
           })} */
           />
+
           <Text
             disabled
             label={'Email'}
@@ -212,6 +214,16 @@ export default function UserForm({ user }: { user: User }) {
                     ? 'Any can find your company and visit the company profile'
                     : null
                 }
+              />
+              <Text
+                label={'Company name'}
+                placeholder="Company/Agency name"
+                // onChange={(e) => console.log(e.target.value)}
+                //  error={errors.name.message}
+                {...register('companyInfo.name', {
+                  value: formValues?.companyInfo?.name || '',
+                })}
+                errors={errors}
               />
               <Textarea
                 label={'Presentation'}

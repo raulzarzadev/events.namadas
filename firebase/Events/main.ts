@@ -21,7 +21,6 @@ export const listenEvent = (itemId: string, cb: CallableFunction) =>
 
 export const listenUserEvents = (cb: CallableFunction) =>
   eventsCRUD.listenCurrentUserDocs(cb);
-
 export const getEvents = () =>
   eventsCRUD.getMany([where('status', '==', 'ACTIVE')]);
 
@@ -29,4 +28,8 @@ export const getEventsByStatus = (status: Event['status']) => {
   return eventsCRUD.getMany([where('status', '==', status)]);
 };
 
+export const getCompanyEvents = (id:string) =>
+  eventsCRUD.getMany([
+    where('userId', '==', id),
+  ]);
 

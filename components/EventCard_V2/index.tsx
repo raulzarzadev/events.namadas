@@ -91,7 +91,7 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
       <p>{fromNow(event.date, { addSuffix: true })}</p>
       <div className="w-full text-sm truncate text-center">
         <div className="flex w-full justify-between ">
-         <RatingInput/>
+          <RatingInput />
           <Link href={`/events/${id}`}>
             <button className="btn btn-outline btn-circle">Go</button>
           </Link>
@@ -103,7 +103,7 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
           <div className="flex w-full justify-around">
             {links?.map((link) => (
               <div key={link.url}>
-                <Link href={link.url}>
+                <Link href={link.url} target="_blank">
                   <a className="link">{link.label}</a>
                 </Link>
               </div>

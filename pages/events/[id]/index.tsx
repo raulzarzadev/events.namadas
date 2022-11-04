@@ -1,10 +1,8 @@
 import Event from '@comps/events/event';
 import JoinEvent from '@comps/JoinEvent';
 import ModalDelete from '@comps/modal/ModalDelete_v2';
-import { Event as EventType } from '@firebase/Events/event.model';
 import { deleteEvent, getEvent } from '@firebase/Events/main';
 import useAuth from 'hooks/useAuth';
-import useEvents from 'hooks/useEvents';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -63,15 +61,18 @@ const Options = ({ eventId }: { eventId?: string }) => {
       <ModalDelete
         title={'Delete event'}
         handleDelete={handleDeleteEvent}
-        openButtonProps={{ 'data-test-id': 'delete-event-option' }}
+        openButtonProps={{
+          'data-test-id': 'delete-event-option',
+          className:'w-1/4'
+        }}
       />
       <Link href={`/events/${eventId}/edit`}>
-        <button className="btn btn-outline " data-test-id="edit-event">
+        <button className="btn btn-outline w-1/4 " data-test-id="edit-event">
           Edit{' '}
         </button>
       </Link>
       <Link href={`/events/${eventId}/manage`}>
-        <button className="btn btn-outline ">Manage </button>
+        <button className="btn btn-outline w-1/4 ">Manage </button>
       </Link>
     </div>
   );

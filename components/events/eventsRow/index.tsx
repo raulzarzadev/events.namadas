@@ -17,7 +17,7 @@ const EventsRow = ({
   return (
     <div className=" mx-auto">
       <div className="flex items-end ">
-        <h3 className="text-lg  font-bold mt-4 ">{title}</h3>
+        <h3 className="text-lg  font-bold mt-1 ">{title}</h3>
         {subtitle && <span className='mb-1 text-xs mx-1'>{subtitle}</span>}
         {iconName && (
           <span className="mb-1">
@@ -26,7 +26,7 @@ const EventsRow = ({
         )}
       </div>
       <div className="grid ">
-        <div className="flex flex-row gap-2 overflow-x-auto pb-4 h-[185px] ">
+        <div className="flex flex-row gap-2 overflow-x-auto pb-4 h-[165px] ">
           {events?.sort(sortFromNow).map((event) => (
             <EventCard key={event?.id} size="sm" event={event} />
           ))}

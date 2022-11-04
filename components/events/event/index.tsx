@@ -44,15 +44,19 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
           {includeFinishDate ? (
             <RangeDate startAt={date} finishAt={finishAt} />
           ) : (
-            <DateComponent date={date} format='dd MMMM yy' />
+            <DateComponent date={date} format="dd MMMM yy" />
           )}
         </p>
 
         <p className="text-center">{LABELS[swimmingType]}</p>
-        <h4 className="font-bold text-lg text-center">Event resume</h4>
-        <p className=" mx-auto whitespace-pre-line text-center">
-          {resume || 'Event resume'}
-        </p>
+        {resume && (
+          <>
+            <h4 className="font-bold text-lg text-center">Event resume</h4>
+            <p className=" mx-auto whitespace-pre-line text-center">
+              {resume || 'Event resume'}
+            </p>
+          </>
+        )}
 
         {!!subEvents.length && (
           <div>
@@ -73,14 +77,18 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
             )}
           </div>
         )}
-        <div>
-          <h4 className="font-bold text-lg text-center">Event Links</h4>
-          <div className="flex  w-full justify-around my-5">
-            {links?.map((link) => (
-              <EventLinkInfo key={link.url} link={link} />
-            ))}
+
+        {!!links?.length && (
+          <div className='mb-2'>
+            <h4 className="font-bold text-lg text-center">Event Links</h4>
+            <div className="flex  w-full justify-around">
+              {links?.map((link) => (
+                <EventLinkInfo key={link.url} link={link} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
       </div>
     </div>
   );
@@ -88,8 +96,10 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
 
 const EventLinkInfo = ({ link }: { link: EventLink }) => {
   return (
-    <Link href={link?.url}>
-      <a className="link  ">{link.label}</a>
+    <Link href={link?.url} target="_blank">
+      <a className="link w-1/3 text-center " target={'_blank'}>
+        {link.label}
+      </a>
     </Link>
   );
 };

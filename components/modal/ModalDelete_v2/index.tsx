@@ -3,7 +3,8 @@ import { useState } from 'react';
 import Modal from '..';
 type StatusModalDelete = 'DELETE' | 'LOADING' | 'ERROR' | 'DELETED';
 export interface OpenButtonProps {
-  "data-test-id"?:string
+  'data-test-id'?: string;
+  className?:string 
 }
 interface ModalDeleteType {
   title: string;
@@ -29,20 +30,21 @@ const ModalDelete = ({
     DELETED: 'Deleted successfully',
   };
   return (
-    <div>
+    <>
       <button
         onClick={(e) => {
           e.preventDefault();
           handleOpen();
         }}
         {...openButtonProps}
+        className={`flex justify-evenly btn btn-outline border-error ${openButtonProps?.className}`}
       >
-        <div className="flex justify-evenly btn btn-outline border-error ">
           <span className="text-error">
             <Icon name="delete" />{' '}
           </span>
+          <span>
           Delete
-        </div>
+          </span>
       </button>
       <Modal title={title} open={open} handleOpen={handleOpen}>
         <div>
@@ -76,7 +78,7 @@ const ModalDelete = ({
           </div>
         </div>
       </Modal>
-    </div>
+    </>
   );
 };
 

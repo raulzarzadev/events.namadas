@@ -16,7 +16,7 @@ export const setUser = (itemId: string, newItem: object) =>
 
 export const createUser = (newItem: any) => usersCRUD.create(newItem);
 
-export const updateUser = (itemId: string, newItem: User) =>
+export const updateUser = (itemId: string, newItem: Partial<User>) =>
   usersCRUD.update(itemId, newItem);
 
 export const deleteUser = (itemId: string) => usersCRUD.delete(itemId);

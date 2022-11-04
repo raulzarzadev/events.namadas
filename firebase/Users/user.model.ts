@@ -39,6 +39,7 @@ export interface CompanyInfo{
     resume?: string | null;
     isVisible?:boolean | null
     name:string
+    images?:Image[]
 }
 
 interface Image {

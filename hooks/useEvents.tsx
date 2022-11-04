@@ -10,9 +10,13 @@ interface UseEvenType  {
   allEvents?: boolean;
   getByStatus?: Event["status"] | undefined
 }
-function useEvents({ eventId, getByStatus }: UseEvenType) {
+function useEvents(props?: UseEvenType) {
   // const dispatch = useDispatch();
  //  const event = useSelector(selectEventState);
+  const eventId=props?.eventId
+  const allEvents=props?.allEvents
+  const getByStatus=props?.getByStatus
+  
   const { user } = useAuth();
 
   const [userEvents, setUserEvents] = useState([]);

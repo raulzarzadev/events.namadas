@@ -1,25 +1,27 @@
-import EventsRow from "@comps/events/eventsRow";
-import PaymentsHistory from "@comps/PaymentsHistory";
-import useAuth from "hooks/useAuth";
-import useEvents from "hooks/useEvents";
-import UserSection from "./UserSection";
+
+import useDevice from "hooks/useDevice";
+import { useEffect } from "react";
+import DesktopDashboard from "./DesktopDashboard";
+import MobileDashboard from "./MobileDashboard";
 
 function Profile() {
-  const { userEvents } = useEvents({});
-  const {user}=useAuth()
-  if(!user) return <>Loading ...</>
+
+const {isMobile}=useDevice()
+console.log(isMobile)
+  
   // console.log(user)
   return (
-    <div className="sm:p-4">
-      <UserSection user={user} />
-      <div>
-        <PaymentsHistory title="Payments history"/>
-      </div>
-      <div data-test-id="user-events-created">
-        <EventsRow title="My created events" events={userEvents} />
-      </div>
+    <div className="" >
+      {isMobile?
+      <MobileDashboard/>
+    :
+      <DesktopDashboard/>
+    }
+      {/* */}
     </div>
   );
 }
+
+
 
 export default Profile;

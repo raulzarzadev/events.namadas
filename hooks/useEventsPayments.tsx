@@ -44,7 +44,7 @@ function useEventsPayments(props?:UseEventPaymentType) {
   }, []);
 
   const getUserPayment=()=>{
-    return listenUserEventsPayments((res)=>{console.log(res)})
+    return listenUserEventsPayments((res:any)=>{console.log(res)})
   }
 
 

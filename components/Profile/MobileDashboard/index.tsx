@@ -16,7 +16,7 @@ const MobileDashboard = () => {
         selected={selected}
         isCompany={isCompany}
       />
-      {selected === 'user' ? <UserSection user={user} /> : null}
+      {selected === 'user'&& user ? <UserSection user={user} /> : null}
       {selected === 'company' ? (
         <CompanySection companyInfo={user?.companyInfo} isCompany={isCompany} />
       ) : null}

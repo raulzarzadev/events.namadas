@@ -21,8 +21,9 @@ const CompanySection = ({
   if (!companyInfo) return <></>;
   const { email, phone, images = [], resume } = companyInfo;
   const {
-    user: { id: userId },
+    user,
   } = useAuth();
+  const userId=user?.id
   const [_isCompany, _setIsCompany] = useState(isCompany);
   const [buttonVisible, setButtonVisible] = useState(false);
   const handleChange = (checked: boolean) => {
@@ -30,7 +31,8 @@ const CompanySection = ({
     setButtonVisible(true);
   };
   const handleSubmit = () => {
-    updateUser(userId, {
+
+    if(userId) updateUser(userId, {
       profileType: { isCompany: _isCompany },
     })
       .then((res) => {

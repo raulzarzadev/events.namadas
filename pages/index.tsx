@@ -16,7 +16,6 @@ const Home: NextPage = () => {
   const { events: finishedEvents } = useEvents({ getByStatus: 'FINISHED' });
 
   const { companies } = useCompanies();
-  console.log(companies)
   const geolocation = useSelector(selectGeolocationState)
   return (
     <div className="px-2">

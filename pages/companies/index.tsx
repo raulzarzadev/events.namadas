@@ -1,9 +1,14 @@
+import Head from 'next/head';
+
 const Companies = () => {
   return (
-    <div>
-      Companies
-    </div>
+    <>
+      <Head>
+        <title>Events agency</title>
+      </Head>
+      <div>Companies</div>
+    </>
   );
-}
+};
 
 export default Companies;

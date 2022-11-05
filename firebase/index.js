@@ -5,6 +5,7 @@ import { getStorage } from 'firebase/storage'
 
 const firebaseConfig =
   process.env.NEXT_PUBLIC_FIREBASE_CONFIG
+
 const app = initializeApp(JSON.parse(firebaseConfig))
 export const db = getFirestore(app)
 

@@ -21,7 +21,7 @@ const EventPage = () => {
     }
   },[eventId])
 
-  const isOwner = (user && user.id )=== event?.userId
+  const isOwner = (user && user.id ) === event?.userId
   if (event === undefined) return <div>Loading...</div>;
   if (event === null) return <div>This element is not visible...</div>;
 

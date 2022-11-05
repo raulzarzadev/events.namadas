@@ -8,8 +8,6 @@ import { User } from '@firebase/Users/user.model';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-
-
 const FORM_LABELS = {
   error: {
     // error when saving , should be disabled
@@ -49,7 +47,11 @@ const FORM_LABELS = {
   },
 };
 
-export default function CompanyForm({ company }: { company: User['companyInfo'] }) {
+export default function CompanyForm({
+  company,
+}: {
+  company: User['companyInfo'];
+}) {
   const {
     register,
     handleSubmit,
@@ -59,7 +61,7 @@ export default function CompanyForm({ company }: { company: User['companyInfo'] 
     reset,
   } = useForm({
     defaultValues: {
-     ...company
+      ...company,
     },
   });
 
@@ -71,9 +73,10 @@ export default function CompanyForm({ company }: { company: User['companyInfo'] 
 
   const onSubmit = async (form: any) => {
     setFormStatus(FORM_LABELS.loading);
-    console.log(form)
+    console.log(form);
     try {
-      form?.id && (await updateCompany(form?.id, form).then(res => console.log(res)));
+      form?.id &&
+        (await updateCompany(form?.id, form).then((res) => console.log(res)));
       setFormStatus(FORM_LABELS.saved);
       reset(formValues, { keepValues: true });
     } catch (error) {
@@ -93,72 +96,65 @@ export default function CompanyForm({ company }: { company: User['companyInfo'] 
     }
   };
 
-
   return (
-    <div className="relative">
+    <div className="relative my-2 mb-8">
       <form onSubmit={handleSubmit(onSubmit)} className="">
-        <div className="flex justify-end sticky top-8 p-2 bg-base-100 z-10">
+        <div className="flex justify-end sticky top-0 p-2 bg-base-100 z-10">
           <button className="btn btn-primary " disabled={formStatus.disabled}>
             {formStatus.button}
           </button>
         </div>
         <InputFiles
           fieldName={`company/${formValues.name}`}
-          label="Add more images "
+          label="Add some  images about your agency "
           images={formValues?.images}
           setImages={handleSetImages}
         />
-              <Toggle
-                errors={errors}
-                label="Is visible"
-                {...register('isVisible')}
-                helpertext={
-                  formValues?.isVisible
-                    ? 'Any can find your company and visit the company profile'
-                    : null
-                }
-              />
-              <Text
-                label={'Company name'}
-                placeholder="Company/Agency name"
-              
-                {...register('name', {
-                  value: formValues?.name || '',
-                })}
-                errors={errors}
-              />
-              <Textarea
-                label={'Presentation'}
-                placeholder="A small description of your company, there goals and the values can be a good presentation"
-               
-                {...register('resume', {
-                  value: formValues?.resume || null,
-                })}
-                rows={2}
-                errors={errors}
-              />
-              <h2 className="font-bold my-4">Company contacts</h2>
-              <Phone
-                label={' Phone Number '}
-                placeholder="Phone (optional)"
-                //  error={errors.name.message}
-                onChange={(value: any) => {
-                  setValue('phone', value);
-                }}
-                value={formValues?.phone}
-             
-              />
-              <Text
-                label={'Email'}
-                placeholder="Company Email (recommended)"
-                
-                {...register('email', {
-                  value: formValues?.email || null,
-                })}
-                errors={errors}
-              />
-          
-    
+        <Toggle
+          errors={errors}
+          label="Is visible"
+          {...register('isVisible')}
+          helpertext={
+            formValues?.isVisible
+              ? 'Any can find your company and visit the company profile'
+              : null
+          }
+        />
+        <Text
+          label={'Company name'}
+          placeholder="Company/Agency name"
+          {...register('name', {
+            value: formValues?.name || '',
+          })}
+          errors={errors}
+        />
+        <Textarea
+          label={'Presentation'}
+          placeholder="A small description of your company, there goals and the values can be a good presentation"
+          {...register('resume', {
+            value: formValues?.resume || null,
+          })}
+          rows={2}
+          errors={errors}
+        />
+        <h2 className="font-bold my-4">Company contacts</h2>
+        <Phone
+          label={' Phone Number '}
+          placeholder="Phone (optional)"
+          //  error={errors.name.message}
+          onChange={(value: any) => {
+            setValue('phone', value);
+          }}
+          value={formValues?.phone}
+        />
+        <Text
+          label={'Email'}
+          placeholder="Company Email (recommended)"
+          {...register('email', {
+            value: formValues?.email || null,
+          })}
+          errors={errors}
+        />
       </form>
     </div>
   );

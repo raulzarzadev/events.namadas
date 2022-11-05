@@ -65,7 +65,7 @@ const InputFiles = ({
 
   return (
     <div>
-      <label className="pl-1">Add some images</label>
+      <label className="pl-1">{label}</label>
       <div className="grid">
         <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2">
           <div className="w-36 h-36 ">

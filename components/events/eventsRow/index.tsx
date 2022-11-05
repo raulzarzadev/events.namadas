@@ -26,7 +26,7 @@ const EventsRow = ({
         )}
       </div>
       <div className="grid ">
-        <div className="flex flex-row gap-2 overflow-x-auto pb-4 h-[165px] ">
+        <div className="flex flex-row gap-2 overflow-x-auto pb-4 h-[175px] ">
           {events?.sort(sortFromNow).map((event) => (
             <EventCard key={event?.id} size="sm" event={event} />
           ))}

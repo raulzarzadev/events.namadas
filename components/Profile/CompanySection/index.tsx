@@ -1,9 +1,14 @@
+import EventsRow from '@comps/events/eventsRow';
+import CompanyForm from '@comps/forms/CompanyForm';
+import Icon from '@comps/Icon';
 import { Toggle } from '@comps/inputs';
 import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
+import Modal from '@comps/modal';
 import Section from '@comps/Section';
 import { updateUser } from '@firebase/Users/main';
 import { CompanyInfo } from '@firebase/Users/user.model';
 import useAuth from 'hooks/useAuth';
+import useEvents from 'hooks/useEvents';
 import { useState } from 'react';
 
 const CompanySection = ({
@@ -35,20 +40,49 @@ const CompanySection = ({
         setButtonVisible(false);
       });
   };
+  const [openModal, setOpenModal] = useState(false)
+  const handleOpenModal=()=>{
+    setOpenModal(!openModal)
+  }
+  const { userEvents: companyEvents }=useEvents()
   return (
     <div>
       {isCompany ? (
         <div>
+          <div className="w-full flex justify-end">
+            <button
+              className="btn btn-sm flex"
+              onClick={(e) => {
+                handleOpenModal();
+              }}
+            >
+              <span>Edit</span>
+              <Icon name="edit" />
+            </button>
+          </div>
           <div>
             <h4 className="font-bold text-center">Contact: </h4>
             <p className=" text-center">{email || 'sin'}</p>
             <p className=" text-center">{phone || 'sin'}</p>
           </div>
-          <ImagesList images={images} />
+          <div className="grid">
+            <h4 className='text-lg font-bold'>Company Images </h4>
+            <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2 justify-start">
+              <ImagesList  images={images} childrenClassName="w-36 h-36" showDelete={false}/>
+            </div>
+          </div>
+          <EventsRow events={companyEvents} title='Company events'/>
           <div>
             <h4 className="font-bold text-center">Resume:</h4>
             <p className=" text-center whitespace-pre-line">{resume}</p>
           </div>
+          <Modal
+            title="edit company "
+            open={openModal}
+            handleOpen={handleOpenModal}
+          >
+            <CompanyForm company={{ ...companyInfo, id: userId }} />
+          </Modal>
         </div>
       ) : (
         <div>
@@ -56,14 +90,13 @@ const CompanySection = ({
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmit(e.target);
+              handleSubmit();
             }}
           >
             <Toggle
               label="Is a company profile"
-              onChange={({ target: { checked } }) => {
-                handleChange(checked);
-              }}
+              onChange={({ target: { checked } }: any) => handleChange(checked)}
+              name={'isCompany'}
             />
             <button disabled={!buttonVisible} className="btn">
               Save

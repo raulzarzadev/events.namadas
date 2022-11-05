@@ -11,10 +11,12 @@ export interface UseEventPaymentType {
 }
 function useEventsPayments(props?:UseEventPaymentType) {
   const {user}=useAuth()
+
   const eventId:string|undefined = props?.eventId
   const paymentId: string | undefined = props?.paymentId;
   const getUserPayments: boolean | undefined=props?.getUserPayments
   const getEventPayments: boolean | undefined = props?.getEventPayments;
+
   const [userPayments, setUserPayments] = useState<EventPaymentType[] | []>([]);
   const [userEventPayments, setUserEvenPayment]= useState<EventPaymentType[]|[]>([])
   const [payment, setPayment]=useState<EventPaymentType|null|undefined>(undefined)
@@ -41,8 +43,18 @@ function useEventsPayments(props?:UseEventPaymentType) {
     if (user&&getUserPayments) listenUserEventsPayments(setUserPayments);
   }, []);
 
+  const getUserPayment=()=>{
+    return listenUserEventsPayments((res)=>{console.log(res)})
+  }
 
-  return { userPayments, userEventPayments, payment , eventPayments };
+
+  return {
+    userPayments,
+    userEventPayments,
+    payment,
+    eventPayments,
+    getUserPayment,
+  };
 }
 
 export default useEventsPayments;

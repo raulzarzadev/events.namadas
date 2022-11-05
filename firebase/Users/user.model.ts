@@ -40,6 +40,7 @@ export interface CompanyInfo{
     isVisible?:boolean | null
     name:string
     images?:Image[]
+    id?:string
 }
 
 interface Image {

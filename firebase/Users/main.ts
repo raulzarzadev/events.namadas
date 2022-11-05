@@ -39,6 +39,8 @@ export function authStateChanged(cb: CallableFunction) {
   });
 }
 
+
+
 export function getVisibleCompanies() {
  return usersCRUD.getMany([where('companyInfo.isVisible','==',true)])
 }
@@ -71,3 +73,6 @@ export async function googleLogin() {
 export function logout() {
   return signOut(auth);
 }
+
+
+export const updateCompany=(companyId:string,companyInfo:User['companyInfo'])=>usersCRUD.update(companyId,{companyInfo})

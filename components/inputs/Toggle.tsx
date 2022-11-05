@@ -3,6 +3,7 @@ import { InputType } from ".";
 
 export interface ToggleType extends InputType {
   size?:ToggleSizes
+  onChange?:any
 }
 
 export type ToggleSizes = 'sm' | 'md' | 'lg'

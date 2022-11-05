@@ -65,7 +65,10 @@ export default function UserSection({ user }: { user: User }) {
     <>
       {/* <Section title={'Personal Information '}> */}
       <div className="grid">
-        <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2">
+        <div>
+          <h3 className="font-bold text-lg">User images</h3>
+        </div>
+        <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2 justify-start">
           <ImagesList
             showDelete={false}
             // label="Add more images "
@@ -177,9 +180,6 @@ export default function UserSection({ user }: { user: User }) {
         </>
       )}
       {/* </Section> */}
-      <div>
-        <h3 className="font-bold ">Gallery</h3>
-      </div>
     </>
   );
 }

@@ -200,6 +200,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
               errors={errors}
               formValues={formValues}
               control={control}
+              event={event}
             />
           )}
 

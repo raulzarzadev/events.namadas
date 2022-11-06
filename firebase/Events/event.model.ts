@@ -24,16 +24,31 @@ export interface Event extends Base {
   prices?:Price[]
 }
 export interface Price {
-  id:string,
-  eventId?:string
-  title:string
-  description?:string
-  image?:string
+  id: string;
+  eventId?: string;
+  title: string;
+  description?: string;
+  image?: string;
   // price:number
-  amount:number
-  discount?:number
-  finishAt?:DateType
-  startAt?:DateType
+  amount: number;
+  discount?: number;
+  finishAt?: DateType;
+  startAt?: DateType;
+  event: Partial<
+    Pick<
+      Event,
+      | 'date'
+      | 'id'
+      | 'eventType'
+      | 'title'
+      | 'finishAt'
+      | 'subscriptionsOptions'
+      | 'address'
+      | 'images'
+      | 'userId'
+      | 'includeFinishDate'
+    >
+  >;
 }
 export interface EventLink {
   label:string

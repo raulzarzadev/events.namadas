@@ -1,32 +1,47 @@
-import { Text } from "@comps/inputs";
-import { useFieldArray } from "react-hook-form";
-import FormSection from "./FormSection";
+import { Text, Toggle } from '@comps/inputs';
+import {  Controller, RegisterOptions, useFieldArray, UseFormRegister } from 'react-hook-form';
+import FormSection from './FormSection';
 import { v4 as uidGenerator } from 'uuid';
-import { Price } from "@firebase/Events/event.model";
-
+import { Price } from '@firebase/Events/event.model';
+import InputLocalDate from '@comps/inputs/InputLocalDate';
+export interface PricesSection {
+  register: UseFormRegister<any>;
+  errors: any;
+  formValues: any;
+  control: any;
+  event: any;
+}
 const PricesSection = ({
-  register, errors, formValues, control
-}:any) => {
-   const {
-     fields: priceFields,
-     append: appendPrice,
-     remove: removePrice,
-   } = useFieldArray({
-     control, // control props comes from useForm (optional: if you are using FormContext)
-     name: 'prices', // unique name for your Field Array,
-   });
+  register,
+  errors,
+  formValues,
+  control,
+  event,
+}: PricesSection) => {
+  const {
+    fields: priceFields,
+    append: appendPrice,
+    remove: removePrice,
+  } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormContext)
+    name: 'prices', // unique name for your Field Array,
+  });
 
-   const handleAddPrice = () => {
-     const uuid = uidGenerator().replace('-', '').slice(0, 20);
-     const appendNewPrice: Price = {
-       id: uuid,
-       eventId: formValues?.id,
-       amount: 0,
-       title: `Price ${(formValues.prices?.length || 0) + 1}`,
-       description: 'Description price',
-     };
-     appendPrice(appendNewPrice);
-   };
+  const handleAddPrice = () => {
+    const uuid = uidGenerator().replace('-', '').slice(0, 20);
+    const appendNewPrice: Price = {
+      event: {
+        id: event.id,
+      },
+      id: uuid,
+      eventId: formValues?.id,
+      amount: 0,
+      title: `Price ${(formValues.prices?.length || 0) + 1}`,
+      description: 'Description price',
+    };
+    appendPrice(appendNewPrice);
+  };
+  console.log(formValues)
   return (
     <div>
       <FormSection title="Prices">
@@ -43,6 +58,44 @@ const PricesSection = ({
               >
                 Delete
               </button>
+              Expires
+              <Controller
+                control={control}
+                name="expires"
+                render={({
+                  field: { onChange, onBlur, value, name,  ref },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                  formState,
+                }) => (
+                  <Toggle
+                    onBlur={onBlur} // notify when input is touched
+                    onChange={onChange} // send value to hook form
+                    checked={value}
+                    ref={ref} 
+                    name={name}   
+                    label='Prices expire?'
+                                   />
+                )}
+              />
+             
+              {formValues.expires ? (
+                <div className="w-full flex flex-col">
+                  <InputLocalDate
+                    {...register(`expires.${index}.startAt`)}
+                    label={'Finish at'}
+                    
+                    // name={`subEvents.${index}.title`}
+                    errors={errors}
+
+                  />
+                  <InputLocalDate
+                    {...register(`expires.${index}.finishAt`)}
+                    label={'Starts at'}
+                    // name={`subEvents.${index}.title`}
+                    errors={errors}
+                  />
+                </div>
+              ) : null}
               <Text
                 {...register(`prices.${index}.title`)}
                 label={'Title'}
@@ -72,13 +125,13 @@ const PricesSection = ({
                 handleAddPrice();
               }}
             >
-              Add a price
+              Add price
             </button>
           </div>
         </div>
       </FormSection>
     </div>
   );
-}
+};
 
 export default PricesSection;

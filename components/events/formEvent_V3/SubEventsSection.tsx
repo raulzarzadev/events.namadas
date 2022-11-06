@@ -113,7 +113,6 @@ const OpenWaterSubEvents = ({control, formValues , register, errors}:any) => {
                 // name={`subEvents.${index}.title`}
                 errors={errors}
               />
-
               <Text
                 {...register(`subEvents.${index}.distance`)}
                 label={'Distance (m)'}

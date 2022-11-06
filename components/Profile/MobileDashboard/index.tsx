@@ -4,29 +4,30 @@ import CompanySection from '../CompanySection';
 import UserEvents from '../UserEvents';
 import UserSection from '../UserSection';
 
-
 const MobileDashboard = () => {
-  const {user}=useAuth()
+  const { user } = useAuth();
   const [selected, setSelected] = useState<MenuLinks>('user');
-  const isCompany = user?.profileType?.isCompany
+  const isCompany = user?.profileType?.isCompany;
   return (
-    <div>
-      <MobileMenu
-        setSelected={setSelected}
-        selected={selected}
-        isCompany={isCompany}
-      />
-      {selected === 'user'&& user ? <UserSection user={user} /> : null}
+    <div className='relative'>
+      <div className="sticky top-0 z-20 bg-base-100">
+        <MobileMenu
+          setSelected={setSelected}
+          selected={selected}
+          isCompany={isCompany}
+        />
+      </div>
+      {selected === 'user' && user ? <UserSection user={user} /> : null}
       {selected === 'company' ? (
         <CompanySection companyInfo={user?.companyInfo} isCompany={isCompany} />
       ) : null}
-      {selected==='events'?<UserEvents />:null}
+      {selected === 'events' ? <UserEvents /> : null}
     </div>
   );
 };
 
-type MenuLinks = 'user'| 'company'| 'events' | 'config'
-const MobileMenu = ({ setSelected, selected , isCompany}:any) => {
+type MenuLinks = 'user' | 'company' | 'events' | 'config';
+const MobileMenu = ({ setSelected, selected, isCompany }: any) => {
   return (
     <div>
       <menu className=" mx-auto flex overflow-x-auto p-2 h-14 ">
@@ -38,18 +39,17 @@ const MobileMenu = ({ setSelected, selected , isCompany}:any) => {
               selected={selected === 'user'}
             />
           </li>
-         
-            <>
-              <li className="w-36 ">
-                <MenuLink
-                  onClick={() => setSelected('company')}
-                  label="Company"
-                  selected={selected === 'company'}
-                />
-              </li>
-             
-            </>
-         
+
+          <>
+            <li className="w-36 ">
+              <MenuLink
+                onClick={() => setSelected('company')}
+                label="Company"
+                selected={selected === 'company'}
+              />
+            </li>
+          </>
+
           <li className="w-36 ">
             <MenuLink
               onClick={() => setSelected('events')}
@@ -69,10 +69,10 @@ const MobileMenu = ({ setSelected, selected , isCompany}:any) => {
     </div>
   );
 };
-const MenuLink = ({ label='link', selected=false , ...rest}) => {
+const MenuLink = ({ label = 'link', selected = false, ...rest }) => {
   return (
     <>
-      <a {...rest} >
+      <a {...rest}>
         {label}
         {selected && <div className="border-b-4" />}
       </a>

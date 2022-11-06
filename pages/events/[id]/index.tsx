@@ -1,3 +1,4 @@
+import Breadcrumb from '@comps/Breadcrumb';
 import Event from '@comps/events/event';
 import JoinEvent from '@comps/JoinEvent';
 import ModalDelete from '@comps/modal/ModalDelete_v2';
@@ -57,7 +58,7 @@ const Options = ({ eventId }: { eventId?: string }) => {
       max-w-lg 
       mx-auto 
       p-2"
-    >
+      >
       <ModalDelete
         title={'Delete event'}
         handleDelete={handleDeleteEvent}
@@ -65,7 +66,7 @@ const Options = ({ eventId }: { eventId?: string }) => {
           'data-test-id': 'delete-event-option',
           className:'w-1/4'
         }}
-      />
+        />
       <Link href={`/events/${eventId}/edit`}>
         <button className="btn btn-outline w-1/4 " data-test-id="edit-event">
           Edit{' '}

@@ -7,7 +7,6 @@ import MobileDashboard from "./MobileDashboard";
 function Profile() {
 
 const {isMobile}=useDevice()
-console.log(isMobile)
   
   // console.log(user)
   return (
@@ -17,7 +16,6 @@ console.log(isMobile)
     :
       <DesktopDashboard/>
     }
-      {/* */}
     </div>
   );
 }

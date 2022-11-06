@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { getVisibleCompanies } from '@firebase/Users/main';
 import CompaniesRow from '@comps/CompaniesRow';
 import useCompanies from 'hooks/useCompanies';
+import Breadcrumb from '@comps/Breadcrumb';
 
 
 const Home: NextPage = () => {

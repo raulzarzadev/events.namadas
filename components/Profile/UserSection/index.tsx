@@ -65,6 +65,17 @@ export default function UserSection({ user }: { user: User }) {
     <>
       {/* <Section title={'Personal Information '}> */}
       <div className="grid">
+        <div className="flex justify-end">
+          <button
+            className="btn btn-info btn-sm"
+            onClick={() => handleOpenEditUser()}
+          >
+            <span>
+              <Icon name="edit" />
+            </span>
+            Edit
+          </button>
+        </div>
         <div>
           <h3 className="font-bold text-lg">User images</h3>
         </div>
@@ -80,17 +91,7 @@ export default function UserSection({ user }: { user: User }) {
           />
         </div>
       </div>
-      <div className="flex justify-end">
-        <button
-          className="btn btn-info btn-sm"
-          onClick={() => handleOpenEditUser()}
-        >
-          <span>
-            <Icon name="edit" />
-          </span>
-          Edit
-        </button>
-      </div>
+
       {image && (
         <div className="flex justify-center my-2">
           <div className="avatar">

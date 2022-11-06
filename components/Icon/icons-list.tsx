@@ -65,6 +65,7 @@ import { RiFileCopyLine, RiFileCopyFill } from 'react-icons/ri';
 // ALL ICONS SHOULD BE OUTLINE
 
 import {
+  BsCart4,
   BsFillEyeFill,
   BsFillEyeSlashFill,
   BsHeart,
@@ -74,6 +75,7 @@ import React from 'react';
 
 
 const ICON_LIST = {
+  cart:BsCart4,
   signin: FaSignInAlt,
   'color-google': FcGoogle,
   emergency: MdOutlineEmergency,

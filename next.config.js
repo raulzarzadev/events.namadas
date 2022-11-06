@@ -12,8 +12,17 @@ const nextConfig = withPWA({
       'lh3.googleusercontent.com',
       'firebasestorage.googleapis.com'
     ]
-  }
+  },
   // put other next js options here
+  async redirects () {
+    return [
+      {
+        source: '/events',
+        destination: '/',
+        permanent: true
+      }
+    ]
+  }
 })
 
 module.exports = nextConfig

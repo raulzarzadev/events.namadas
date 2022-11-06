@@ -54,25 +54,7 @@ const PriceCard = ({
           </div>
         </div>
       </div>
-      <Modal
-        title={`Be part of ${price?.title}`}
-        open={openModal}
-        handleOpen={handleOpenModal}
-      >
-        <div className="grid place-content-center gap-2">
-          <button className="btn  btn-sm " disabled>
-            Add to cart
-          </button>
-          <Link
-            href={{
-              pathname: '/events/[id]/payment/[priceId]/checkout',
-              query: { priceId: price?.id, id: price?.eventId },
-            }}
-          >
-            <button className="btn  btn-sm ">Pay now</button>
-          </Link>
-        </div>
-      </Modal>
+    
     </>
   );
 };

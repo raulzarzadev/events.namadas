@@ -21,6 +21,7 @@ events.nadamas.app
   - [ ] create events whit geolocation
   - [ ] find events about current geolocation
   - [ ] search events by chosen geolocation
+  - [ ] create location event prop
 
 - [ ] company
 

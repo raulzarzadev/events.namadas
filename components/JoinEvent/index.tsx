@@ -1,3 +1,4 @@
+import NotLoginModal from '@comps/modal/NotLoginModal';
 import PriceCard from '@comps/PriceCard_v2';
 import { Event, Price } from '@firebase/Events/event.model';
 import { addItemToUserCart, createCart } from '@firebase/UserCart/main';
@@ -6,6 +7,7 @@ import useAuth from 'hooks/useAuth';
 import useEvents from 'hooks/useEvents';
 import useEventsPayments from 'hooks/useEventsPayments';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 const JoinEvent = ({ event }: { event: Event }) => {
   const { userEventPayments } = useEventsPayments({ eventId: event?.id });
@@ -16,8 +18,18 @@ const JoinEvent = ({ event }: { event: Event }) => {
     return !!prod;
   };
 
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const handleOpenLoginModal = () => {
+    setOpenLoginModal(!openLoginModal);
+  };
+
   const handleAddToCart = async ({ price }: { price: Price }) => {
-    if (userCart.id) {
+    if (!user?.id) {
+      handleOpenLoginModal();
+      return;
+    }
+
+    if (userCart?.id) {
       addItemToUserCart(userCart?.id, price).then((res) => console.log(res));
     } else {
       createCart({
@@ -28,6 +40,7 @@ const JoinEvent = ({ event }: { event: Event }) => {
 
   return (
     <div>
+      <NotLoginModal open={openLoginModal} handleOpen={handleOpenLoginModal} />
       <h2 className="text-2xl font-bold text-center">Be part of this event</h2>
       <div className="flex flex-wrap justify-center  ">
         {!event?.prices?.length ? (

@@ -1,4 +1,5 @@
 import Icon from '@comps/Icon';
+import NotLoginModal from '@comps/modal/NotLoginModal';
 import useAuth from 'hooks/useAuth';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -33,13 +34,14 @@ const Nav = () => {
             </a>
           </Link>
           {!user && (
-            <div>
+            <div className="relative">
               <button
                 data-test-id="navbar-button-login"
                 className="btn btn-primary"
                 onClick={() => {
                   handleLogin();
                 }}
+                id="navbar-button-login"
               >
                 Login
               </button>

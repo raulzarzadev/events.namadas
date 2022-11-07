@@ -1,17 +1,17 @@
-import { Base } from '@firebase/Base.model'
+import { Base } from '@firebase/Base.model';
 import { User } from '@firebase/Users/user.model';
 
-type  DateType = string | number | Date | undefined;
+type DateType = string | number | Date | undefined;
 export interface Event extends Base {
-  finishAt?: DateType|null;
-  link?:string,
+  finishAt?: DateType | null;
+  link?: string;
   sport: string;
   eventType: string;
   date: DateType;
   title: string;
   // finishDate: string;
   address: string;
-  includeFinishDate: string;
+  includeFinishDate: boolean;
   swimmingType: SwimmingTypes;
   subEvents: SubEvent[];
   resume: string;
@@ -20,8 +20,8 @@ export interface Event extends Base {
   status: 'PLANING' | 'ACTIVE' | 'IN_PROGRESS' | 'FINISHED';
   subscriptionsOptions?: SubscriptionsOptions;
   subscriptions: EventSubscription[];
-  links?:EventLink[]
-  prices?:Price[]
+  links?: EventLink[];
+  prices?: Price[];
 }
 export interface Price {
   id: string;
@@ -32,12 +32,13 @@ export interface Price {
   // price:number
   amount: number;
   discount?: number;
-  validFrom:DateType
-  expiresAt:DateType
+  validFrom: DateType;
+  expiresAt: DateType;
   event: PriceEventData;
 }
 
-export interface PriceEventData extends Partial<
+export interface PriceEventData
+  extends Partial<
     Pick<
       Event,
       | 'date'
@@ -51,13 +52,13 @@ export interface PriceEventData extends Partial<
       | 'userId'
       | 'includeFinishDate'
     >
-  >{
-    createdBy:User['id']
-  }
+  > {
+  createdBy: User['id'];
+}
 export interface EventLink {
-  label:string
-  url:string
-  image?:string
+  label: string;
+  url: string;
+  image?: string;
 }
 
 export interface SubscriptionsOptions {
@@ -67,24 +68,23 @@ export interface SubscriptionsOptions {
 }
 
 export interface EventSubscription {
-  userId:User['id']
-  createdAt:DateType
-
+  userId: User['id'];
+  createdAt: DateType;
 }
 
-export type SwimmingTypes = "openWater" | "25m" | "50m" |'swimmingPool'
+export type SwimmingTypes = 'openWater' | '25m' | '50m' | 'swimmingPool';
 
 export interface EventImage {
-  src:string
-  alt:string
-  url?:string
-  text?:string
+  src: string;
+  alt: string;
+  url?: string;
+  text?: string;
 }
-export interface SubEvent{
-  distance:string | number
-  title?:string,
-  comments?:string
-  date?:string
-  style:string
-  image?:string
+export interface SubEvent {
+  distance: string | number;
+  title?: string;
+  comments?: string;
+  date?: string;
+  style: string;
+  image?: string;
 }

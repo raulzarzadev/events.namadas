@@ -34,7 +34,10 @@ export interface Price {
   discount?: number;
   validFrom:DateType
   expiresAt:DateType
-  event: Partial<
+  event: PriceEventData;
+}
+
+export interface PriceEventData extends Partial<
     Pick<
       Event,
       | 'date'
@@ -48,8 +51,9 @@ export interface Price {
       | 'userId'
       | 'includeFinishDate'
     >
-  >;
-}
+  >{
+    createdBy:User['id']
+  }
 export interface EventLink {
   label:string
   url:string

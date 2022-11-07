@@ -21,7 +21,7 @@ const Breadcrumb = () => {
     <div>
       <div className="text-sm breadcrumbs">
         <ul>
-         {crumbs.map(crumb=><Crumb href={crumb.route} label={crumb.label}/>)}
+         {crumbs.map(crumb=><Crumb href={crumb.route} label={crumb.label} key={crumb.route}/>)}
         </ul>
       </div>
     </div>

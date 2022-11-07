@@ -32,8 +32,8 @@ export interface Price {
   // price:number
   amount: number;
   discount?: number;
-  finishAt?: DateType;
-  startAt?: DateType;
+  validFrom:DateType
+  expiresAt:DateType
   event: Partial<
     Pick<
       Event,

@@ -94,7 +94,8 @@ export class FirebaseCRUD {
     object: any,
     target: 'timestamp' | 'number' | 'date' | 'fieldDate'
   ) {
-    return Dates.deepFormatObjectDates(object, target);
+    return Dates.deepFormatObjectDates(object, target,{includeFields:['expireAt',
+'validFrom']});
   }
 
   static deleteFile = async ({ url }: { url: string }) => {

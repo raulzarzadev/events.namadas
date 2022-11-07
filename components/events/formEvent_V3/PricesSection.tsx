@@ -1,9 +1,15 @@
 import { Text, Toggle } from '@comps/inputs';
-import {  Controller, RegisterOptions, useFieldArray, UseFormRegister } from 'react-hook-form';
+import {
+  Controller,
+  RegisterOptions,
+  useFieldArray,
+  UseFormRegister,
+} from 'react-hook-form';
 import FormSection from './FormSection';
 import { v4 as uidGenerator } from 'uuid';
 import { Price } from '@firebase/Events/event.model';
 import InputLocalDate from '@comps/inputs/InputLocalDate';
+import myFormatDate from 'utils/myFormatDate';
 export interface PricesSection {
   register: UseFormRegister<any>;
   errors: any;
@@ -41,7 +47,7 @@ const PricesSection = ({
     };
     appendPrice(appendNewPrice);
   };
-  console.log(formValues)
+  console.log(formValues);
   return (
     <div>
       <FormSection title="Prices">
@@ -58,44 +64,7 @@ const PricesSection = ({
               >
                 Delete
               </button>
-              Expires
-              <Controller
-                control={control}
-                name="expires"
-                render={({
-                  field: { onChange, onBlur, value, name,  ref },
-                  fieldState: { invalid, isTouched, isDirty, error },
-                  formState,
-                }) => (
-                  <Toggle
-                    onBlur={onBlur} // notify when input is touched
-                    onChange={onChange} // send value to hook form
-                    checked={value}
-                    ref={ref} 
-                    name={name}   
-                    label='Prices expire?'
-                                   />
-                )}
-              />
-             
-              {formValues.expires ? (
-                <div className="w-full flex flex-col">
-                  <InputLocalDate
-                    {...register(`expires.${index}.startAt`)}
-                    label={'Finish at'}
-                    
-                    // name={`subEvents.${index}.title`}
-                    errors={errors}
 
-                  />
-                  <InputLocalDate
-                    {...register(`expires.${index}.finishAt`)}
-                    label={'Starts at'}
-                    // name={`subEvents.${index}.title`}
-                    errors={errors}
-                  />
-                </div>
-              ) : null}
               <Text
                 {...register(`prices.${index}.title`)}
                 label={'Title'}
@@ -109,12 +78,49 @@ const PricesSection = ({
                 errors={errors}
               />
               <Text
-                {...register(`prices.${index}.amount`)}
+                {...register(`prices.${index}.amount`, { valueAsNumber: true })}
                 label={'Price'}
                 type="number"
                 // name={`subEvents.${index}.title`}
                 errors={errors}
               />
+              <div className="w-full my-4 ">
+                <h4 className="font-bold">Dates valid for this prices</h4>
+                <div className="w-full flex flex-col sm:flex-row items-end">
+                  <Controller
+                    control={control}
+                    name={`prices.${index}.validFrom`}
+                    defaultValue={myFormatDate(new Date(), 'datetime')}
+                    render={({
+                      field,
+                      fieldState: { invalid, isTouched, isDirty, error },
+                      formState,
+                    }) => (
+                      <InputLocalDate
+                        label="Valid from"
+                        {...field}
+                        value={myFormatDate(field.value, 'datetime')}
+                      />
+                    )}
+                  />
+                  <Controller
+                    control={control}
+                    name={`prices.${index}.expireAt`}
+                    defaultValue={myFormatDate(formValues.date, 'datetime')}
+                    render={({
+                      field,
+                      fieldState: { invalid, isTouched, isDirty, error },
+                      formState,
+                    }) => (
+                      <InputLocalDate
+                        label="Expire at"
+                        {...field}
+                        value={myFormatDate(field.value, 'datetime')}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
             </div>
           ))}
           <div className="w-full flex justify-center my-2">

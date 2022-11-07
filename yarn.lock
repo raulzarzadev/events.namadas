@@ -3815,10 +3815,10 @@ firebase-admin@^11.2.0:
     "@google-cloud/firestore" "^6.4.0"
     "@google-cloud/storage" "^6.5.2"
 
-firebase-dates-util@^0.4.9:
-  version "0.4.9"
-  resolved "https://registry.npmjs.org/firebase-dates-util/-/firebase-dates-util-0.4.9.tgz"
-  integrity sha512-QZFMAmOiCuh85bBO2l2qGQ5FlT07jqXuMtNGEQJWcraDXmAYRBK9hfUQ91gaai7hpXkZ+wfJD+mLEgtNMhFNdQ==
+firebase-dates-util@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/firebase-dates-util/-/firebase-dates-util-0.5.0.tgz#11cc1ecbc1a83887f1cf257d55409f62e4339db1"
+  integrity sha512-jZFz1ot3GL42UGWy64QhkSjhAh4rFd9YXZwjggO/rVj0tGGeHhNCvBmE/DHSeWg/JFFYCttA+VyP3xG5lkhY1Q==
   dependencies:
     date-fns "^2.28.0"
     dotenv "^16.0.1"

@@ -2,19 +2,19 @@ import React from "react";
 import { InputType } from ".";
 
 export interface InputLocalDateType extends Omit<InputType, 'size' >{
-
+  value:string
 }
 
  const InputLocalDate = React.forwardRef<HTMLInputElement, InputLocalDateType>(
    (props, ref) => {
-     const { label, errors, name, type = 'date', ...rest } = props;
+     const { label, errors={}, name, type = 'date', ...rest } = props;
      return (
-       <div className="form-control w-full ">
+       <div className="form-control w-fit mx-auto ">
          <label className="label">{label}</label>
          <input
            type={'datetime-local'}
            name={name}
-           className="input  input-bordered"
+           className="input  input-bordered "
            ref={ref}
            aria-invalid={errors[name] ? 'true' : 'false'}
            {...rest}

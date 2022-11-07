@@ -31,7 +31,6 @@ import  './initialize_persistence'
 
 export const storageRef = (path = '') => ref(storage, path);
 export class FirebaseCRUD {
-
   constructor(private collectionName: string = '') {}
 
   static format = (
@@ -64,7 +63,7 @@ export class FirebaseCRUD {
   };
 
   static validateFilters(filters: any[], collectionName: string) {
-    if (!filters) return console.error('Should have filters implentade');
+    if (!filters) return console.error('Should have filters implanted');
     if (!Array.isArray(filters))
       return console.error('filter is not an array', {
         collectionName,
@@ -94,8 +93,9 @@ export class FirebaseCRUD {
     object: any,
     target: 'timestamp' | 'number' | 'date' | 'fieldDate'
   ) {
-    return Dates.deepFormatObjectDates(object, target,{includeFields:['expireAt',
-'validFrom']});
+    return Dates.deepFormatObjectDates(object, target, {
+      includeFields: ['expireAt', 'validFrom'],
+    });
   }
 
   static deleteFile = async ({ url }: { url: string }) => {
@@ -111,7 +111,10 @@ export class FirebaseCRUD {
     // });
   };
 
-  static uploadFileAsync = async ({ file, fieldName = '' }: UploadFileAsync) => {
+  static uploadFileAsync = async ({
+    file,
+    fieldName = '',
+  }: UploadFileAsync) => {
     const uuid = uidGenerator();
     const imageRef = storageRef(`${fieldName}/${uuid}`);
     // console.log('uploading')
@@ -262,6 +265,24 @@ export class FirebaseCRUD {
       .catch((err) => console.error(err));
   }
 
+  async getOne(filters: any[]) {
+    /**
+     * * get all documents in a collection implementing filters
+     * @param filters: where(itemField,'==','value')
+     */
+    FirebaseCRUD.validateFilters(filters, this.collectionName);
+    const q: Query = query(collection(db, this.collectionName), ...filters);
+
+    const querySnapshot = await getDocs(q);
+    const res: any[] = [];
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      res.push(FirebaseCRUD.normalizeDoc(doc));
+    });
+    return res[0];
+  }
+
   async get(itemId: string) {
     /**
      * get a single document from the collection
@@ -271,6 +292,7 @@ export class FirebaseCRUD {
     const docSnap = await getDoc(ref);
     return FirebaseCRUD.normalizeDoc(docSnap);
   }
+
   async getMany(filters: any[]) {
     /**
      * * get all documents in a collection implementing filters
@@ -293,8 +315,17 @@ export class FirebaseCRUD {
     if (!itemId) return console.error('invalid value', { itemId });
     const q = doc(db, this.collectionName, itemId);
     onSnapshot(q, (doc) => {
+    FirebaseCRUD.showDataFrom(doc, this.collectionName);
+
       cb(FirebaseCRUD.normalizeDoc(doc));
     });
+  }
+
+  static showDataFrom (querySnapshot:any, collection:string){
+    const source = querySnapshot.metadata.fromCache ? 'local cache' : 'server';
+    console.log(
+      'Data came from ' + source + ' collection ' + collection
+    );
   }
 
   async listenDocs(filters: any, cb: CallableFunction) {
@@ -303,17 +334,17 @@ export class FirebaseCRUD {
      * @param filters: where(itemField,'==','value')
      */
     FirebaseCRUD.validateFilters(filters, this.collectionName);
+    console.log(filters);
     const q = query(collection(db, this.collectionName), ...filters);
 
     onSnapshot(q, (querySnapshot) => {
       const res: any[] = [];
-      const source = querySnapshot.metadata.fromCache
-        ? 'local cache'
-        : 'server';
-      console.log('Data came from ' + source);
+    FirebaseCRUD.showDataFrom(querySnapshot, this.collectionName)
+
       querySnapshot.forEach((doc) => {
         res.push(FirebaseCRUD.normalizeDoc(doc));
       });
+
       cb(res);
     });
   }
@@ -323,8 +354,7 @@ export class FirebaseCRUD {
     this.listenDocs([where('userId', '==', userId)], cb);
   }
 
-  async listenCurrentUserDocsFilter(filters: any=[], cb: CallableFunction) {
-   
+  async listenCurrentUserDocsFilter(filters: any = [], cb: CallableFunction) {
     const userId = getAuth().currentUser?.uid;
     this.listenDocs([where('userId', '==', userId), ...filters], cb);
   }

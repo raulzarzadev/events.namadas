@@ -1,7 +1,9 @@
 import { getUser, getVisibleCompanies } from '@firebase/Users/main';
 import { useEffect, useState } from 'react';
+import useAuth from './useAuth';
 
 const useCompanies = () => {
+  const { user } = useAuth();
   const [companies, setCompanies] = useState<any>([]);
   // console.log(planingEvents);
   const formatUserAsCompany = ({
@@ -24,10 +26,12 @@ const useCompanies = () => {
       updatedAt,
     };
   };
+
   useEffect(() => {
-    getVisibleCompanies().then((companies) => {
-      setCompanies(companies.map((company) => formatUserAsCompany(company)));
-    });
+    if (user)
+      getVisibleCompanies().then((companies) => {
+        setCompanies(companies.map((company) => formatUserAsCompany(company)));
+      });
   }, []);
 
   const getCompany = async (id: string) => {

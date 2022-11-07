@@ -12,13 +12,13 @@ const EventsRow = ({
   events: EventType[];
   title: string;
   iconName?: IconName;
-  subtitle?:string;
+  subtitle?: string;
 }) => {
   return (
     <div className=" mx-auto">
       <div className="flex items-end ">
         <h3 className="text-lg  font-bold mt-1 ">{title}</h3>
-        {subtitle && <span className='mb-1 text-xs mx-1'>{subtitle}</span>}
+        {subtitle && <span className="mb-1 text-xs mx-1">{subtitle}</span>}
         {iconName && (
           <span className="mb-1">
             <Icon name={iconName} />
@@ -26,11 +26,13 @@ const EventsRow = ({
         )}
       </div>
       <div className="grid ">
-        <div className="flex flex-row gap-2 overflow-x-auto pb-4 h-[175px] ">
-          {events?.sort(sortFromNow).map((event) => (
-            <EventCard key={event?.id} size="sm" event={event} />
-          ))}
-        </div>
+        {!!events.length && (
+          <div className="flex flex-row gap-2 overflow-x-auto pb-4 h-[175px] ">
+            {events?.sort(sortFromNow).map((event) => (
+              <EventCard key={event?.id} size="sm" event={event} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

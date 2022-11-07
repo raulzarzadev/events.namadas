@@ -12,10 +12,9 @@ const JoinEvent = ({ event }: { event: Event }) => {
   const { user, userCart } = useAuth();
 
   const alreadyPaid = (priceId: Price['id']): boolean => {
-  const prod=userCart?.products.find((item:any)=>item?.id===priceId)
-  return !!prod
-  console.log(prod)
-  }
+    const prod = userCart?.products.find((item: any) => item?.id === priceId);
+    return !!prod;
+  };
 
   const handleAddToCart = async ({ price }: { price: Price }) => {
     if (userCart.id) {
@@ -26,8 +25,6 @@ const JoinEvent = ({ event }: { event: Event }) => {
       }).then((res) => console.log(res));
     }
   };
-
-  console.log(userCart.products)
 
   return (
     <div>

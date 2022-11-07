@@ -3,11 +3,11 @@ import {
   uploadBytesResumable,
   getDownloadURL,
   deleteObject,
-  uploadBytes
-} from 'firebase/storage'
-import { getAuth } from 'firebase/auth'
-import { format as fnsFormat } from 'date-fns'
-import { v4 as uidGenerator } from 'uuid'
+  uploadBytes,
+} from 'firebase/storage';
+import { getAuth } from 'firebase/auth';
+import { format as fnsFormat } from 'date-fns';
+import { v4 as uidGenerator } from 'uuid';
 
 import {
   addDoc,
@@ -22,12 +22,12 @@ import {
   setDoc,
   Timestamp,
   updateDoc,
-  where
-} from 'firebase/firestore'
-import { db, storage } from '.'
-import { Dates } from 'firebase-dates-util'
-import { es } from 'date-fns/locale'
-import  './initialize_persistence'
+  where,
+} from 'firebase/firestore';
+import { db, storage } from '.';
+import { Dates } from 'firebase-dates-util';
+import { es } from 'date-fns/locale';
+import './initialize_persistence';
 
 export const storageRef = (path = '') => ref(storage, path);
 export class FirebaseCRUD {
@@ -315,17 +315,15 @@ export class FirebaseCRUD {
     if (!itemId) return console.error('invalid value', { itemId });
     const q = doc(db, this.collectionName, itemId);
     onSnapshot(q, (doc) => {
-    FirebaseCRUD.showDataFrom(doc, this.collectionName);
+      // FirebaseCRUD.showDataFrom(doc, this.collectionName);
 
       cb(FirebaseCRUD.normalizeDoc(doc));
     });
   }
 
-  static showDataFrom (querySnapshot:any, collection:string){
+  static showDataFrom(querySnapshot: any, collection: string) {
     const source = querySnapshot.metadata.fromCache ? 'local cache' : 'server';
-    console.log(
-      'Data came from ' + source + ' collection ' + collection
-    );
+    console.log('Data came from ' + source + ' collection ' + collection);
   }
 
   async listenDocs(filters: any, cb: CallableFunction) {
@@ -339,7 +337,7 @@ export class FirebaseCRUD {
 
     onSnapshot(q, (querySnapshot) => {
       const res: any[] = [];
-    FirebaseCRUD.showDataFrom(querySnapshot, this.collectionName)
+      // FirebaseCRUD.showDataFrom(querySnapshot, this.collectionName)
 
       querySnapshot.forEach((doc) => {
         res.push(FirebaseCRUD.normalizeDoc(doc));

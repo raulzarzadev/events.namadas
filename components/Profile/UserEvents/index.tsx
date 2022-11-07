@@ -19,7 +19,7 @@ console.log(upcomingEvents);
       <p className="text-center">Events where you, as athlete has been</p>
       <div className="grid ">
         <div className="flex flex-row gap-2 overflow-x-auto pb-4 min-h-[115px] ">
-          {upcomingEvents?.sort(sortFromNow)?.map((payment) => (
+          {upcomingEvents?.sort(sortFromNow)?.map((payment:any) => (
             <PaymentCard key={payment?.id} size="sm" payment={payment} />
           ))}
         </div>

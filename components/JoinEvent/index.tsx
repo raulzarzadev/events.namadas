@@ -12,13 +12,13 @@ const JoinEvent = ({ event }: { event: Event }) => {
   const { user, userCart } = useAuth();
 
   const alreadyPaid = (priceId: Price['id']): boolean => {
-  const prod=userCart?.products.find((item)=>item.id===priceId)
+  const prod=userCart?.products.find((item:any)=>item?.id===priceId)
   return !!prod
   console.log(prod)
   }
 
   const handleAddToCart = async ({ price }: { price: Price }) => {
-    if (userCart) {
+    if (userCart.id) {
       addItemToUserCart(userCart?.id, price).then((res) => console.log(res));
     } else {
       createCart({
@@ -45,7 +45,7 @@ const JoinEvent = ({ event }: { event: Event }) => {
               price={price}
               alreadyInCart={alreadyPaid(price.id)}
               alreadyPaid={false}
-              handleAddToCart={() => handleAddToCart({ price, event })}
+              handleAddToCart={() => handleAddToCart({ price })}
               handlePayNow={function (): void {
                 throw new Error('Function not implemented.');
               }}

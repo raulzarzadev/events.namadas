@@ -1,4 +1,5 @@
 import { listenUserCarts } from '@firebase/UserCart/main';
+import { UserCart } from '@firebase/UserCart/UserCart.model';
 import { authStateChanged, googleLogin, logout } from '@firebase/Users/main';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -9,7 +10,7 @@ function useAuth() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { user, authState } = useSelector(selectAuthState);
-  const [userCart, setUserCart] = useState({products:[]});
+  const [userCart, setUserCart] = useState<UserCart>({products:[]});
   const handleLogin = () => {
     googleLogin();
   };

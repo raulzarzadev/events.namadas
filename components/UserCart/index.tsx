@@ -1,4 +1,5 @@
 import { Price } from "@firebase/Events/event.model";
+import { CartProduct } from "@firebase/UserCart/UserCart.model";
 import useAuth from "hooks/useAuth";
 
 const UserCart = () => {
@@ -6,14 +7,10 @@ const UserCart = () => {
   return (
     <div>
       <div className="grid grid-cols-1 gap-2 p-2">
-        {userCart.products.map((item: Price,i) => (
+        {userCart.products.map((item: CartProduct, i) => (
           <div key={`${item.id}+${i}`}>
-            <h4>
-            {item.title}
-            </h4>
-            <p>
-            </p>
-
+            <h4>{item.title}</h4>
+            <p></p>
           </div>
         ))}
       </div>

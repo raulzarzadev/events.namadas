@@ -55,7 +55,25 @@ const JoinEvent = ({ event }: { event: Event }) => {
               price={price}
               alreadyInCart={alreadyPaid(price.id)}
               alreadyPaid={false}
-              handleAddToCart={() => handleAddToCart({ price })}
+              handleAddToCart={() =>
+                handleAddToCart({
+                  price: {
+                    ...price,
+                    event: {
+                      eventType: event.eventType,
+                      createdBy: event.userId,
+                      date: event.date,
+                      includeFinishDate: event.includeFinishDate,
+                      finishAt: event.finishAt,
+                      address: event.address,
+                      id: event.id,
+                      images: event.images,
+                      subscriptionsOptions: event.subscriptionsOptions,
+                      title: event.title,
+                    },
+                  },
+                })
+              }
               handlePayNow={function (): void {
                 throw new Error('Function not implemented.');
               }}

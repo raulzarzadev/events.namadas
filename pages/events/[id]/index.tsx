@@ -13,28 +13,27 @@ const EventPage = () => {
     query: { id: eventId },
   } = useRouter();
 
-  const {user} =useAuth()
+  const { user } = useAuth();
 
   const [event, setEvent] = useState<any>(undefined);
-  useEffect(()=>{
-    if(eventId){
-      getEvent(`${eventId}`).then(res=>setEvent(res))
+  useEffect(() => {
+    if (eventId) {
+      getEvent(`${eventId}`).then((res) => setEvent(res));
     }
-  },[eventId])
+  }, [eventId]);
 
-  const isOwner = (user && user.id ) === event?.userId
+  const isOwner = (user && user.id) === event?.userId;
   if (event === undefined) return <div>Loading...</div>;
   if (event === null) return <div>This element is not visible...</div>;
 
   return (
     <div>
       <Event event={event} />
-      <JoinEvent event={event}/>
+      <JoinEvent event={event} />
       {isOwner && <Options eventId={`${eventId}`} />}
     </div>
   );
 };
-
 
 const Options = ({ eventId }: { eventId?: string }) => {
   // const event = useSelector(selectEventState);
@@ -58,15 +57,15 @@ const Options = ({ eventId }: { eventId?: string }) => {
       max-w-lg 
       mx-auto 
       p-2"
-      >
+    >
       <ModalDelete
         title={'Delete event'}
         handleDelete={handleDeleteEvent}
         openButtonProps={{
           'data-test-id': 'delete-event-option',
-          className:'w-1/4'
         }}
-        />
+        buttonLabel={''}
+      />
       <Link href={`/events/${eventId}/edit`}>
         <button className="btn btn-outline w-1/4 " data-test-id="edit-event">
           Edit{' '}

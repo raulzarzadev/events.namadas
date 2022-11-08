@@ -4,18 +4,20 @@ import Modal from '..';
 type StatusModalDelete = 'DELETE' | 'LOADING' | 'ERROR' | 'DELETED';
 export interface OpenButtonProps {
   'data-test-id'?: string;
-  className?:string 
+  className?: string;
 }
 interface ModalDeleteType {
   title: string;
   handleDelete: () => void;
-  openButtonProps?:OpenButtonProps;
+  openButtonProps?: OpenButtonProps;
+  buttonLabel: string;
 }
 
 const ModalDelete = ({
   title,
   handleDelete = () => {},
   openButtonProps,
+  buttonLabel = 'Delete',
 }: ModalDeleteType) => {
   const [status, setStatus] = useState<StatusModalDelete>('DELETE');
   const [open, setOpen] = useState(false);
@@ -37,14 +39,15 @@ const ModalDelete = ({
           handleOpen();
         }}
         {...openButtonProps}
-        className={`flex justify-evenly btn btn-outline border-error ${openButtonProps?.className}`}
+        className={` ${
+          openButtonProps?.className ||
+          ' flex justify-evenly btn btn-outline border-error '
+        }`}
       >
-          <span className="text-error">
-            <Icon name="delete" />{' '}
-          </span>
-          <span>
-          Delete
-          </span>
+        <span className="text-error">
+          <Icon name="delete" />{' '}
+        </span>
+        {buttonLabel && <span>{buttonLabel}</span>}
       </button>
       <Modal title={title} open={open} handleOpen={handleOpen}>
         <div>

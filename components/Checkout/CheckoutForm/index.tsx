@@ -7,16 +7,22 @@ import {
 import { useRouter } from 'next/router';
 import { createEventPayment } from '@firebase/EventPayments/main';
 const URL_BASE = 'http://localhost:3000';
-export default function CheckoutForm() {
-  const {query:{id:eventId,priceId}} = useRouter()
+export default function CheckoutForm({
+  disabled = false,
+}: {
+  disabled?: boolean;
+}) {
+  const {
+    query: { id: eventId, priceId },
+  } = useRouter();
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = React.useState<string|undefined>(undefined);
+  const [message, setMessage] = React.useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
-  
+
   const REDIRECT_TO = `${URL_BASE}/events/${eventId}/payment/${priceId}/processing`;
-  console.log(REDIRECT_TO)
+
   React.useEffect(() => {
     if (!stripe) {
       return;
@@ -48,7 +54,7 @@ export default function CheckoutForm() {
     });
   }, [stripe]);
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -58,21 +64,21 @@ export default function CheckoutForm() {
     }
 
     setIsLoading(true);
-    
-    
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: REDIRECT_TO,
       },
-    })
+    });
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
+
     if (error.type === 'card_error' || error.type === 'validation_error') {
       setMessage(error?.message);
     } else {
@@ -88,10 +94,10 @@ export default function CheckoutForm() {
       onSubmit={handleSubmit}
       className=" mx-auto max-w-md"
     >
-      <PaymentElement id="payment-element" className="max-w-md"  />
+      <PaymentElement id="payment-element" className="max-w-md" />
       <div className="justify-center flex my-4 flex-col ">
         <button
-          disabled={isLoading || !stripe || !elements}
+          disabled={isLoading || !stripe || !elements || disabled}
           id="submit"
           className="btn btn-primary w-full"
         >

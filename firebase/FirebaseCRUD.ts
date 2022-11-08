@@ -290,6 +290,8 @@ export class FirebaseCRUD {
      */
     const ref = doc(db, this.collectionName, itemId);
     const docSnap = await getDoc(ref);
+    // FirebaseCRUD.showDataFrom(docSnap, this.collectionName);
+
     return FirebaseCRUD.normalizeDoc(docSnap);
   }
 

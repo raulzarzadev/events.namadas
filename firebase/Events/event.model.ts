@@ -35,6 +35,7 @@ export interface Price {
   validFrom: DateType;
   expiresAt: DateType;
   event: PriceEventData;
+  invalidPrice?: boolean;
 }
 
 export interface PriceEventData

@@ -38,10 +38,10 @@ const PricesSection = ({
     const appendNewPrice: Price = {
       event: {
         id: event.id,
-        date:event.date,
-        eventType:event.eventType,
-        title:event.title,
-        createdBy:event.userId
+        date: event.date,
+        eventType: event.eventType,
+        title: event.title,
+        createdBy: event.userId,
       },
       id: uuid,
       eventId: formValues?.id,
@@ -95,6 +95,7 @@ const PricesSection = ({
                   <Controller
                     control={control}
                     name={`prices.${index}.validFrom`}
+                    defaultValue={myFormatDate(new Date(), 'datetime')}
                     render={({
                       field,
                       fieldState: { invalid, isTouched, isDirty, error },
@@ -110,6 +111,7 @@ const PricesSection = ({
                   <Controller
                     control={control}
                     name={`prices.${index}.expireAt`}
+                    defaultValue={myFormatDate(new Date(), 'datetime')}
                     render={({
                       field,
                       fieldState: { invalid, isTouched, isDirty, error },
@@ -118,7 +120,7 @@ const PricesSection = ({
                       <InputLocalDate
                         label="Expire at"
                         {...field}
-                        value={myFormatDate(field.value, 'datetime')}
+                        value={myFormatDate(formValues.date, 'datetime')}
                       />
                     )}
                   />

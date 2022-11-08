@@ -29,14 +29,18 @@ events.nadamas.app
   - [ ] allow to get companies
 
 - [ ] events
+
   - [ ] get events
   - [ ] limit get events
   - [ ] organize past event by dates // status
 
+- [ ] set getServerProps on pages
+  - [ ] home
+
 ### progress
 
 - [ ] user cart
-  - [ ] validate if product stills available
+  - [ ] validate if product stills available when move to checkout page
 
 ### Done ✓
 

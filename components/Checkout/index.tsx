@@ -27,7 +27,9 @@ const Checkout = ({
         body: JSON.stringify({ items }),
       })
         .then((res) => res.json())
-        .then((data) => setClientSecret(data.clientSecret));
+        .then((data) => {
+          setClientSecret(data.clientSecret);
+        });
     }
   }, [items]);
 

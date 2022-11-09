@@ -334,7 +334,6 @@ export class FirebaseCRUD {
      * @param filters: where(itemField,'==','value')
      */
     FirebaseCRUD.validateFilters(filters, this.collectionName);
-    console.log(filters);
     const q = query(collection(db, this.collectionName), ...filters);
 
     onSnapshot(q, (querySnapshot) => {

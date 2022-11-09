@@ -19,12 +19,9 @@ const OrderSummary = ({ items = [] }: { items: CartProduct[] }) => {
     setTotal(calculateOrderAmount(items));
   });
 
-  const handleDeleteItem = (itemId: Price['id']) => {
-    const originalItem = products.find((prod) => prod.id === itemId);
-    if (cartId && originalItem) {
-      removeItemToUserCart(cartId, originalItem).then((res) =>
-        console.log(res)
-      );
+  const handleDeleteItem = (item: CartProduct) => {
+    if (cartId) {
+      removeItemToUserCart(cartId, item).then((res) => console.log(res));
     }
   };
 
@@ -55,7 +52,7 @@ const OrderSummary = ({ items = [] }: { items: CartProduct[] }) => {
                 <div className="flex w-full justify-end ">
                   <ModalDelete
                     title={'Remove item from cart'}
-                    handleDelete={() => handleDeleteItem(item?.id)}
+                    handleDelete={() => handleDeleteItem(item)}
                     buttonLabel=""
                     openButtonProps={{
                       className: 'btn btn-ghost btn-sm btn-circle',

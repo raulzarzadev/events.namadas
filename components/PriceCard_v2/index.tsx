@@ -5,10 +5,10 @@ import { useState } from 'react';
 
 export interface PriceCard {
   price: Price;
-  alreadyInCart:boolean
-  alreadyPaid:boolean
-  handleAddToCart:()=>void
-  handlePayNow:()=>void
+  alreadyInCart: boolean;
+  alreadyPaid: boolean;
+  handleAddToCart: () => void;
+  handlePayNow: () => void;
 }
 const PriceCard = ({
   price,
@@ -17,7 +17,6 @@ const PriceCard = ({
   handleAddToCart,
   handlePayNow,
 }: PriceCard) => {
-
   return (
     <>
       <div className="group  rounded-lg bg-base-200 shadow-lg w-full h-full  cursor-pointer active:shadow-none border-2 border-transparent hover:border-base-content ">
@@ -46,7 +45,7 @@ const PriceCard = ({
               </div>
               <div className="w-1/2 text-center items-center justify-center flex ">
                 <button
-                  disabled={alreadyPaid}
+                  disabled={true}
                   onClick={() => handlePayNow()}
                   className="w-full h-full btn rounded-none rounded-br-lg text-xs"
                 >

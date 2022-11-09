@@ -1,4 +1,3 @@
-import { Price } from '@firebase/Events/event.model';
 import { CartProduct } from '@firebase/UserCart/UserCart.model';
 
 // This is your test secret API key.

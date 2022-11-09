@@ -11,6 +11,7 @@ export const validateItemsStillValid = async (
     },
     []
   );
+
   const eventsPromises = eventsIds?.map((eventId) => {
     return getEvent(eventId);
   });
@@ -20,14 +21,16 @@ export const validateItemsStillValid = async (
   const itemsValidated = items.map((item) => {
     let invalidPrice = false;
     const event: any = events.find((event) => event?.id === item.eventId);
-    const priceStillExist = event?.prices?.find(
+
+    const updatedPrice = event?.prices?.find(
       (price: any) => price.id === item.id
     );
-    if (priceStillExist) {
-      return { ...item, invalidPrice };
+
+    if (updatedPrice) {
+      // this will guaranty that the price to pay is the latests
+      return { ...updatedPrice, id: item.id, invalidPrice }; // Id is necessary for delete from cart
     }
-    return { ...item, invalidPrice: true };
+    return { ...updatedPrice, id: item.id, invalidPrice: true }; // Id is necessary for delete from cart
   });
-  // console.log(itemsValidated);
   return itemsValidated;
 };

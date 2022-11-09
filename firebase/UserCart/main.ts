@@ -1,3 +1,4 @@
+import { getEvent } from '@firebase/Events/main';
 import { arrayRemove, arrayUnion, where } from 'firebase/firestore';
 import { auth } from '..';
 import { FirebaseCRUD } from '../FirebaseCRUD';
@@ -24,10 +25,21 @@ export const listenUserCarts = (cb: CallableFunction) => {
   userCartsCRUD.listenDocs([where('userId', '==', userId)], cb);
 };
 
-
-export const addItemToUserCart = (cartId: string, item: CartProduct) =>
-  userCartsCRUD.update(cartId, { products: arrayUnion({...item, added:{date:new Date().getTime()}}) });
-
-export const removeItemToUserCart = (cartId: string, item: CartProduct) => {
-  return userCartsCRUD.update(cartId, { products: arrayRemove(item) });
+export const addItemToUserCart = (cartId: string, item: CartProduct) => {
+  return userCartsCRUD.update(cartId, {
+    products: arrayUnion({ ...item, added: { date: new Date().getTime() } }),
+  });
+};
+export const removeItemToUserCart = async (
+  cartId: string,
+  item: CartProduct
+) => {
+  const originalCartPrice = await getCart(cartId).then(
+    ({ products }: any) => products.find((price: any) => price.id === item.id)
+    // products.find((price) => price.id === item.id)
+    //  res.prices.find((price) => price.id === item.id)
+  );
+  return userCartsCRUD.update(cartId, {
+    products: arrayRemove(originalCartPrice),
+  });
 };

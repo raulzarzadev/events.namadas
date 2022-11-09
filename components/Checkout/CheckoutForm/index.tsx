@@ -15,6 +15,7 @@ export default function CheckoutForm({
   const {
     query: { id: eventId, priceId },
   } = useRouter();
+
   const stripe = useStripe();
   const elements = useElements();
 

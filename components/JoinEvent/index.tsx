@@ -4,9 +4,7 @@ import { Event, Price } from '@firebase/Events/event.model';
 import { addItemToUserCart, createCart } from '@firebase/UserCart/main';
 
 import useAuth from 'hooks/useAuth';
-import useEvents from 'hooks/useEvents';
 import useEventsPayments from 'hooks/useEventsPayments';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const JoinEvent = ({ event }: { event: Event }) => {
@@ -67,7 +65,7 @@ const JoinEvent = ({ event }: { event: Event }) => {
                       finishAt: event.finishAt,
                       address: event.address,
                       id: event.id,
-                      images: event.images,
+                      images: event.images || [],
                       subscriptionsOptions: event.subscriptionsOptions,
                       title: event.title,
                     },

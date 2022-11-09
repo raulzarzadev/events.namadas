@@ -15,13 +15,6 @@ const EventPage = ({ event }: { event: any }) => {
 
   const { user } = useAuth();
 
-  // const [event, setEvent] = useState<any>(undefined);
-  // useEffect(() => {
-  //   if (eventId) {
-  //     getEvent(`${eventId}`).then((res) => setEvent(res));
-  //   }
-  // }, [eventId]);
-
   const isOwner = (user && user.id) === event?.userId;
   if (event === undefined) return <div>Loading...</div>;
   if (event === null) return <div>This element is not visible...</div>;
@@ -78,8 +71,7 @@ const Options = ({ eventId }: { eventId?: string }) => {
   );
 };
 
-export async function getServerSideProps(context) {
-  const params = context.params.id;
+export async function getServerSideProps(context: any) {
   const eventId = context.params.id;
   const event = await getEvent(eventId);
   return {

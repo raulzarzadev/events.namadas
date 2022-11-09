@@ -22,15 +22,15 @@ export const validateItemsStillValid = async (
     let invalidPrice = false;
     const event: any = events.find((event) => event?.id === item.eventId);
 
-    const updatedPrice = event?.prices?.find(
+    const latestPrice = event?.prices?.find(
       (price: any) => price.id === item.id
     );
 
-    if (updatedPrice) {
+    if (latestPrice) {
       // this will guaranty that the price to pay is the latests
-      return { ...updatedPrice, id: item.id, invalidPrice }; // Id is necessary for delete from cart
+      return { ...latestPrice, id: item.id, invalidPrice }; // Id is necessary for delete from cart
     }
-    return { ...updatedPrice, id: item.id, invalidPrice: true }; // Id is necessary for delete from cart
+    return { ...latestPrice, id: item.id, invalidPrice: true }; // Id is necessary for delete from cart
   });
   return itemsValidated;
 };

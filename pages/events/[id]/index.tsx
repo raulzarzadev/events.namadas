@@ -8,19 +8,19 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-const EventPage = () => {
+const EventPage = ({ event }: { event: any }) => {
   const {
     query: { id: eventId },
   } = useRouter();
 
   const { user } = useAuth();
 
-  const [event, setEvent] = useState<any>(undefined);
-  useEffect(() => {
-    if (eventId) {
-      getEvent(`${eventId}`).then((res) => setEvent(res));
-    }
-  }, [eventId]);
+  // const [event, setEvent] = useState<any>(undefined);
+  // useEffect(() => {
+  //   if (eventId) {
+  //     getEvent(`${eventId}`).then((res) => setEvent(res));
+  //   }
+  // }, [eventId]);
 
   const isOwner = (user && user.id) === event?.userId;
   if (event === undefined) return <div>Loading...</div>;
@@ -77,5 +77,16 @@ const Options = ({ eventId }: { eventId?: string }) => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const params = context.params.id;
+  const eventId = context.params.id;
+  const event = await getEvent(eventId);
+  return {
+    props: {
+      event,
+    },
+  };
+}
 
 export default EventPage;

@@ -1,5 +1,7 @@
 import Icon from '@comps/Icon';
 import React from 'react';
+import { useId } from 'react';
+
 // import CrossIcon from '../icons/CrossIcon';
 const Modal = ({
   title = 'Modal title',
@@ -16,7 +18,7 @@ const Modal = ({
   onMouseLeave?: any;
   size?: 'full' | 'half';
 }) => {
-  const modalId = `modal-${new Date().getTime()}-${Math.random()}`;
+  const modalId = useId();
   const sizing = {
     full: 'w-full',
     half: 'w-1/2',

@@ -6,7 +6,7 @@ import { Event } from '@firebase/Events/event.model';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import  { fromNow } from 'utils/myFormatDate';
+import { fromNow } from 'utils/myFormatDate';
 export interface EventType extends Event {}
 
 const EventCard = ({
@@ -76,7 +76,7 @@ const EventCard = ({
             )}
           </p>
 
-            <EventModalInfo event={event} />
+          <EventModalInfo event={event} />
         </div>
       </Modal>
     </>
@@ -117,16 +117,6 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
           <p>{resume}</p>
         </div>
       )}
-    </div>
-  );
-};
-
-const EventInfo = ({ when }: { when?: string }) => {
-  return (
-    <div className="">
-      <div className="w-full text-sm truncate text-center">
-        <label className=" ">{when}</label>
-      </div>
     </div>
   );
 };

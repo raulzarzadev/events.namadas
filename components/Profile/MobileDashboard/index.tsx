@@ -9,8 +9,8 @@ const MobileDashboard = () => {
   const [selected, setSelected] = useState<MenuLinks>('user');
   const isCompany = user?.profileType?.isCompany;
   return (
-    <div className='relative'>
-      <div className="sticky top-0 z-20 bg-base-100">
+    <div className="relative max-w-xl mx-auto">
+      <div className="sticky top-0 z-20 bg-base-100 ">
         <MobileMenu
           setSelected={setSelected}
           selected={selected}

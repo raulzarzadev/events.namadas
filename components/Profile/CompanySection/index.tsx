@@ -19,11 +19,9 @@ const CompanySection = ({
   companyInfo?: CompanyInfo;
 }) => {
   if (!companyInfo) return <></>;
-  const { email, phone, images = [], resume } = companyInfo;
-  const {
-    user,
-  } = useAuth();
-  const userId=user?.id
+  const { email, phone, images = [], resume, name } = companyInfo;
+  const { user } = useAuth();
+  const userId = user?.id;
   const [_isCompany, _setIsCompany] = useState(isCompany);
   const [buttonVisible, setButtonVisible] = useState(false);
   const handleChange = (checked: boolean) => {
@@ -31,22 +29,22 @@ const CompanySection = ({
     setButtonVisible(true);
   };
   const handleSubmit = () => {
-
-    if(userId) updateUser(userId, {
-      profileType: { isCompany: _isCompany },
-    })
-      .then((res) => {
-        console.log(res);
+    if (userId)
+      updateUser(userId, {
+        profileType: { isCompany: _isCompany },
       })
-      .finally(() => {
-        setButtonVisible(false);
-      });
+        .then((res) => {
+          console.log(res);
+        })
+        .finally(() => {
+          setButtonVisible(false);
+        });
   };
-  const [openModal, setOpenModal] = useState(false)
-  const handleOpenModal=()=>{
-    setOpenModal(!openModal)
-  }
-  const { userEvents: companyEvents }=useEvents()
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => {
+    setOpenModal(!openModal);
+  };
+  const { userEvents: companyEvents } = useEvents();
   return (
     <div>
       {isCompany ? (
@@ -62,22 +60,27 @@ const CompanySection = ({
               <Icon name="edit" />
             </button>
           </div>
+          <h2 className="font-bold text-center">{name}</h2>
           <div>
             <h4 className="font-bold text-center">Contact: </h4>
             <p className=" text-center">{email || 'sin'}</p>
             <p className=" text-center">{phone || 'sin'}</p>
           </div>
           <div className="grid">
-            <h4 className='text-lg font-bold'>Company Images </h4>
+            <h4 className="text-lg font-bold">Company Images </h4>
             <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2 justify-start">
-              <ImagesList  images={images} childrenClassName="w-36 h-36" showDelete={false}/>
+              <ImagesList
+                images={images}
+                childrenClassName="w-36 h-36"
+                showDelete={false}
+              />
             </div>
           </div>
-          <EventsRow events={companyEvents} title='Company events'/>
           <div>
             <h4 className="font-bold text-center">Resume:</h4>
             <p className=" text-center whitespace-pre-line">{resume}</p>
           </div>
+          <EventsRow events={companyEvents} title="Company events" />
           <Modal
             title="edit company "
             open={openModal}

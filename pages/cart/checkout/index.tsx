@@ -3,7 +3,7 @@ import OrderSummary from '@comps/Checkout/OrderSummary';
 import { CartProduct } from '@firebase/UserCart/UserCart.model';
 import useAuth from 'hooks/useAuth';
 import { useEffect, useState } from 'react';
-import { validateItemsStillValid } from '../../utils/validateItemsStillValid';
+import { validateItemsStillValid } from '../../../utils/validateItemsStillValid';
 
 const CheckoutPage = () => {
   const { userCart } = useAuth();

@@ -10,7 +10,7 @@ const UserEvents = () => {
   }, []);
 
   const [upcomingEvents, setUpcomingEvents] = useState([]);
-  console.log(upcomingEvents);
+  // console.log(upcomingEvents);
   return (
     <div>
       <p className="text-left font-bold mt-4">

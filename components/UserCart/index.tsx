@@ -21,7 +21,7 @@ const UserCart = () => {
         <button
           className="btn btn-accent"
           onClick={() => {
-            router.push('/checkout');
+            router.push('/cart/checkout');
           }}
         >
           Checkout

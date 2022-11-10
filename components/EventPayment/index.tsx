@@ -7,32 +7,33 @@ import {
 } from '@firebase/EventPayments/main';
 import { Price } from '@firebase/Events/event.model';
 import useEvents from 'hooks/useEvents';
+import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import myFormatDate from 'utils/myFormatDate';
 
-interface LabelOptions {
-  label: string;
-}
-const LABELS: Record<string, LabelOptions> = {
-  VALID: {
-    label: 'Successful payment',
-  },
-  WAITING: {
-    label: 'Waiting for the confirmation',
-  },
-  PAID_OUT: {
-    label: 'Payment Confirmed',
-  },
-};
+// interface LabelOptions {
+//   label: string;
+// }
+// const LABELS: Record<string, LabelOptions> = {
+//   VALID: {
+//     label: 'Successful payment',
+//   },
+//   WAITING: {
+//     label: 'Waiting for the confirmation',
+//   },
+//   PAID_OUT: {
+//     label: 'Payment Confirmed',
+//   },
+// };
 
-const PAYMENT_STATUS = {
-  VALID: 'VALID',
-  WAITING: 'WAITING',
-  PAID_OUT: 'PAID_OUT',
-  INVALID: 'INVALID',
-};
+// const PAYMENT_STATUS = {
+//   VALID: 'VALID',
+//   WAITING: 'WAITING',
+//   PAID_OUT: 'PAID_OUT',
+//   INVALID: 'INVALID',
+// };
 
 const EventPayment = () => {
   const {
@@ -94,11 +95,11 @@ const EventPayment = () => {
   return (
     <div>
       <h1 className="text-xl font-bold text-center">{event?.title}</h1>
-      <div className='text-center'>
+      <div className="text-center">
         {event?.includeFinishDate ? (
           <RangeDate startAt={event.date} finishAt={event.finishAt} />
         ) : (
-          <DateComponent date={event?.date} format='dd MMMM yy' />
+          <DateComponent date={event?.date} format="dd MMMM yy" />
         )}
       </div>
       <div className="text-center">{/* payment status  */}</div>
@@ -130,6 +131,6 @@ const EventPayment = () => {
   );
 };
 
-type DateType = string | number | Date | undefined;
+// type DateType = string | number | Date | undefined;
 
 export default EventPayment;

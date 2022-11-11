@@ -22,7 +22,6 @@ export async function getServerSideProps () {
 
 const Home: NextPage = (props: any) => {
   const events = props?.events;
-  console.log(events)
   //const { events } = useEvents({ getAllEvents: true });
   const pastEvents: Event[] = [...events].filter((event) => isPastEvent(event));
   const activeEvents: Event[] = [...events].filter(

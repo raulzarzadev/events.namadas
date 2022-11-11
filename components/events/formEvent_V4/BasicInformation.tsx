@@ -28,6 +28,14 @@ const BasicInformation = ({ register, errors, formValues, control }: any) => {
           errors={errors}
           type="text"
         />
+        <Textarea
+          {...register('announcement')}
+          name="announcement"
+          label="Full event announcement"
+          errors={errors}
+          type="text"
+          rows={10}
+        />
       </FormSection>
     </div>
   );

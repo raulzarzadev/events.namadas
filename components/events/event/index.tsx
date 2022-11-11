@@ -53,7 +53,7 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
         {resume && (
           <>
             <h4 className="font-bold text-lg text-center">Event resume</h4>
-            <p className=" mx-auto whitespace-pre-line text-center">
+            <p className=" mx-auto whitespace-pre-line">
               {resume || 'Event resume'}
             </p>
           </>

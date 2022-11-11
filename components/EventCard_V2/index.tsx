@@ -1,13 +1,15 @@
 import DateComponent from '@comps/DateComponent';
+import EventOptions from '@comps/events/event/EventOptions';
 import RatingInput from '@comps/inputs/RatingInput';
 import Modal from '@comps/modal';
 import RangeDate from '@comps/RangeDate';
 import { Event } from '@firebase/Events/event.model';
+import useAuth from 'hooks/useAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { fromNow } from 'utils/myFormatDate';
-export interface EventType extends Event {}
+export interface EventType extends Event { }
 
 const EventCard = ({
   event,
@@ -85,7 +87,8 @@ const EventCard = ({
 
 const EventModalInfo = ({ event }: { event: EventType }) => {
   const { id, resume, links } = event;
-
+  const { user } = useAuth()
+  const isOwner = (user && user.id) === event?.userId;
   return (
     <div className="">
       <p>{fromNow(event.date, { addSuffix: true })}</p>
@@ -117,6 +120,8 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
           <p>{resume}</p>
         </div>
       )}
+      {isOwner &&
+        <div><EventOptions eventId={id || ''} config={{ deleteRedirectTo: '/profile' }} /></div>}
     </div>
   );
 };

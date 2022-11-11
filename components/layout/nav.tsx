@@ -73,17 +73,7 @@ const Nav = () => {
                       <a className="justify-between">Profile</a>
                     </Link>
                   </li>
-                  <li>
-                    <Link href={'/publish-event'}>
-                      <a
-                        className="justify-between"
-                        data-test-id="publish-event-link"
-                      >
-                        Publish event
-                        <span className="badge">New</span>
-                      </a>
-                    </Link>
-                  </li>
+
                   <li>
                     <Link href={'/new-event'}>
                       <a

@@ -9,7 +9,7 @@ export interface PreviewImageType {
   image?: string;
   previewSize?: Sizes;
   uploading?: boolean;
-  handleDelete?: (imageUrl: string) => void;
+  handleDelete?: () => void;
   showOrigin?: boolean;
   showDelete?: boolean
 }
@@ -88,7 +88,7 @@ const PreviewImage = ({
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        handleDelete && handleDelete(image);
+                        handleDelete && handleDelete();
                       }}
                     >
                       Delete image

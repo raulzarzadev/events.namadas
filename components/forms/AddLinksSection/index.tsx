@@ -1,10 +1,24 @@
 import FormSection from '@comps/events/formEvent_V3/FormSection';
 import Icon from '@comps/Icon';
 import { Text } from '@comps/inputs';
+import InputFile from '@comps/inputs/InputFile';
 import { EventLink } from '@firebase/Events/event.model';
+import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
 import { useFieldArray } from 'react-hook-form';
 
-const AddLinksSection = ({ control, formValues, register, errors }: any) => {
+const AddLinksSection = ({
+  control,
+  formValues,
+  register,
+  errors,
+  setValue,
+}: {
+  control: any;
+  formValues: any;
+  register: any;
+  errors: any;
+  setValue: any
+}) => {
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: 'links', // unique name for your Field Array,
@@ -17,15 +31,35 @@ const AddLinksSection = ({ control, formValues, register, errors }: any) => {
     };
     append(appendNewEvent);
   };
+  const handleChangeInputFile = async (e: any) => {
+    const files = e.target.files
+    const fieldName = e.target.name
+    const imageUploaded = await FirebaseCRUD.uploadFileAsync({
+      file: files[0],
+      fieldName
+    });
+    setValue(fieldName, imageUploaded.url)
+    return imageUploaded.url
+  }
+
+  const handleDeleteImage = (imageUrl: string, fieldName: string) => {
+    console.log(imageUrl)
+    FirebaseCRUD.deleteFile({ url: imageUrl }).then((res) => {
+      console.log(res)
+      setValue(fieldName, null)
+    })
+    return {}
+  }
+  console.log(formValues.links)
   return (
     <FormSection title="Links related">
-      <div className="grid ">
+      <div className="grid  ">
         {fields.map((field, index) => (
-          <div key={field.id} className="  ">
-            <div className="sm:flex items-end gap-1 max-w-full  grid">
+          <div key={field.id} className=" my-2   bg-base-300 p-2 rounded-lg">
+            <div className=" items-end gap-2 max-w-full grid">
               <Text
                 {...register(`links.${index}.label`)}
-                label={'Label'}
+                label={'Link label'}
                 errors={errors}
                 placeholder="Link label"
               />
@@ -36,6 +70,7 @@ const AddLinksSection = ({ control, formValues, register, errors }: any) => {
                 errors={errors}
                 placeholder="https://example.com"
               />
+              <InputFile name={`links.${index}.image`} handleChange={handleChangeInputFile} handleDelete={handleDeleteImage} label='Add an image' defaultImage={formValues.links[index].image} />
               <button
                 type="button"
                 className="btn btn-outline btn-square btn-error mb-0  mx-auto "

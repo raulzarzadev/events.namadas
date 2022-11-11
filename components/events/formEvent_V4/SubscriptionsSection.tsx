@@ -1,10 +1,14 @@
-import { InputDate, Text } from "@comps/inputs";
-import { Controller } from "react-hook-form";
-import myFormatDate from "utils/myFormatDate";
-import FormSection from "./FormSection";
+import { InputDate, Text } from '@comps/inputs';
+import { Controller } from 'react-hook-form';
+import myFormatDate from 'utils/myFormatDate';
+import FormSection from './FormSection';
 
-const Subscriptions = ({ register, errors, formValues, control }: any) => {
-
+const SubscriptionsSection = ({
+  register,
+  errors,
+  formValues,
+  control,
+}: any) => {
   return (
     <div>
       <FormSection title="Subscriptions options">
@@ -51,7 +55,7 @@ const Subscriptions = ({ register, errors, formValues, control }: any) => {
                   type={'date'}
                   {...rest}
                   // defaultValue={myFormatDate(formValues.date, 'inputDate')}
-                  value={myFormatDate(value,'inputDate')}
+                  value={myFormatDate(value, 'inputDate')}
                 />
               </div>
             )}
@@ -62,4 +66,4 @@ const Subscriptions = ({ register, errors, formValues, control }: any) => {
   );
 };
 
-export default Subscriptions;
+export default SubscriptionsSection;

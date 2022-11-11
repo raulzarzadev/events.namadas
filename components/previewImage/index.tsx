@@ -3,15 +3,15 @@ import Modal from '@comps/modal';
 import Image from 'next/image';
 import { useState } from 'react';
 
-type Sizes = 'sm'|'md'|'lg'|'xl'| 'full'
+type Sizes = 'sm' | 'md' | 'lg' | 'xl' | 'full'
 export interface PreviewImageType {
   label?: null | string;
   image?: string;
   previewSize?: Sizes;
   uploading?: boolean;
-  handleDelete?: () => void;
+  handleDelete?: (imageUrl: string) => void;
   showOrigin?: boolean;
-  showDelete?:boolean
+  showDelete?: boolean
 }
 
 const PreviewImage = ({
@@ -20,9 +20,9 @@ const PreviewImage = ({
   previewSize = 'md',
   uploading,
   handleDelete,
-  showDelete=true,
+  showDelete = true,
   showOrigin = false,
-}:PreviewImageType) => {
+}: PreviewImageType) => {
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(!openModal);
   const size = {
@@ -30,7 +30,7 @@ const PreviewImage = ({
     md: 'w-12',
     lg: 'w-24',
     xl: 'w-32',
-  full: 'w-full',
+    full: 'w-full',
   };
 
   const [openDelete, setOpenDelete] = useState(false);
@@ -59,7 +59,7 @@ const PreviewImage = ({
             onClick={handleOpenModal}
           >
             <Image src={image} layout="fill" objectFit="cover" />
-            {showDelete  && (
+            {showDelete && (
               <div className="absolute right-0 ">
                 <button
                   className=" hover:text-error text-white "
@@ -88,7 +88,7 @@ const PreviewImage = ({
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                       handleDelete && handleDelete();
+                        handleDelete && handleDelete(image);
                       }}
                     >
                       Delete image

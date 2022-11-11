@@ -16,6 +16,7 @@ export interface PricesSection {
   formValues: any;
   control: any;
   event: any;
+  disabled?: boolean;
 }
 const PricesSection = ({
   register,
@@ -23,6 +24,7 @@ const PricesSection = ({
   formValues,
   control,
   event,
+  disabled,
 }: PricesSection) => {
   const {
     fields: priceFields,
@@ -130,6 +132,7 @@ const PricesSection = ({
           ))}
           <div className="w-full flex justify-center my-2">
             <button
+              disabled={disabled}
               className="btn btn-md "
               onClick={(e) => {
                 e.preventDefault();

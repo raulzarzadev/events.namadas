@@ -8,7 +8,7 @@ interface InputFilesType {
   setImages: (images: Image[], setImagesOps?: SetImagesOps) => void;
   images?: Image[];
   disabled?: boolean;
-  fieldName:string
+  fieldName: string
 }
 interface Image {
   url?: string | undefined;
@@ -87,25 +87,24 @@ const InputFiles = ({
   );
 };
 interface InputFile {
-  disabled?:boolean
-  handleChange:(props:any)=>{}
-  label:string
+  disabled?: boolean
+  handleChange: (props: any) => {}
+  label: string
 }
-const SquareInputFile=({disabled, handleChange, label}:InputFile)=>{
+const SquareInputFile = ({ disabled, handleChange, label }: InputFile) => {
   // TODO add label to accessibility
   return (
     <label>
       <div
-        className={`h-full w-full hover:border-dotted  hover:border-white flex justify-center items-center rounded-sm relative cursor-pointer border-dashed border-2  ${
-          disabled && 'opacity-30 cursor-wait '
-        }`}
+        className={`h-full w-full hover:border-dotted  hover:border-white flex justify-center items-center rounded-sm relative cursor-pointer border-dashed border-2  ${disabled && 'opacity-30 cursor-wait '
+          }`}
       >
         <div className="absolute text-[110px] transform -translate-y-2">
           +
         </div>
         <input
           disabled={disabled}
-          accept=".jpg,.png,.jpeg, .webp"
+          accept=".jpg, .png, .jpeg, .webp"
           onChange={handleChange}
           className="hidden"
           type={'file'}

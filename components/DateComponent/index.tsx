@@ -8,7 +8,7 @@ const DateComponent = ({
   date?: DateType;
   format?: string;
 }) => {
-  if(!date) return <></>
+  if (!date) return <></>
   return <span>{myFormatDate(date, format)}</span>;
 };
 

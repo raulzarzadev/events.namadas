@@ -1,5 +1,6 @@
 import AddLinksSection from '@comps/forms/AddLinksSection';
 import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2';
+import StepperForm from '@comps/events/formEvent_V4/StepperForm';
 import { Event } from '@firebase/Events/event.model';
 import { createEvent, deleteEvent, updateEvent } from '@firebase/Events/main';
 import Head from 'next/head';
@@ -11,12 +12,13 @@ import BasicInformation from './BasicInformation';
 import EventDates from './EventDates';
 import PricesSection from './PricesSection';
 import SubEventsSection from './SubEventsSection';
-import Subscriptions from './Subscriptions';
+import SubscriptionsSection from './SubscriptionsSection';
 
 const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const eventAlreadyExist = event?.id;
   const router = useRouter();
   const currentDate = new Date().getTime();
+
   const defaultValues: Partial<Event> = {
     date: myFormatDate(currentDate, 'datetime'),
     finishAt: myFormatDate(currentDate, 'datetime'),
@@ -27,6 +29,9 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       limit: 0,
     },
   };
+
+
+
   const {
     register,
     handleSubmit,
@@ -44,30 +49,30 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     setFormStatus(FORM_LABELS.loading);
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            setFormStatus(FORM_LABELS.error);
-            console.error(err);
-          })
-          .finally(() => {
-            setFormStatus(FORM_LABELS.saved);
-          })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          setFormStatus(FORM_LABELS.error);
+          console.error(err);
+        })
+        .finally(() => {
+          setFormStatus(FORM_LABELS.saved);
+        })
       : createEvent(data)
-          .then((res) => {
-            if (res?.ok) {
-              router.push(`/events/${res.res.id}/edit`);
-            }
-            console.log(res);
-          })
-          .catch((err) => {
-            setFormStatus(FORM_LABELS.error);
-            console.error(err);
-          })
-          .finally(() => {
-            setFormStatus(FORM_LABELS.saved);
-          });
+        .then((res) => {
+          if (res?.ok) {
+            router.push(`/events/${res.res.id}/edit`);
+          }
+          console.log(res);
+        })
+        .catch((err) => {
+          setFormStatus(FORM_LABELS.error);
+          console.error(err);
+        })
+        .finally(() => {
+          setFormStatus(FORM_LABELS.saved);
+        });
   };
 
   const FORM_LABELS = {
@@ -130,6 +135,114 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
 
   // console.log(formValues)
 
+  const isAnOutsideEvent = formValues.status === 'OUTSIDE'; // this is when te event is organized by others and this event is just republished in nadamas.
+
+  const STEPS = [
+    {
+      label: 'Information',
+      Component: (
+        <BasicInformation
+          register={register}
+          errors={errors}
+          formValues={formValues}
+          control={control}
+        />
+      ),
+    },
+    {
+      label: 'Dates',
+      Component: (
+        <EventDates
+          register={register}
+          errors={errors}
+          formValues={formValues}
+          control={control}
+        />
+      ),
+    },
+    {
+      label: 'Type',
+      Component: (
+        <SubEventsSection
+          register={register}
+          errors={errors}
+          formValues={formValues}
+          control={control}
+          setValue={setValue}
+          hideSubEvents={isAnOutsideEvent}
+        />
+      ),
+    },
+    {
+      label: 'Prices',
+      Component: (
+        <>
+          {isAnOutsideEvent ? (
+            <div className="max-w-sm mx-auto text-center my-4">
+              This option is disabled since the event is organized outside of
+              nadamas
+            </div>
+          ) : (
+            <PricesSection
+              disabled={isAnOutsideEvent}
+              register={register}
+              errors={errors}
+              formValues={formValues}
+              control={control}
+              event={event}
+            />
+          )}
+        </>
+      ),
+    },
+    {
+      label: 'Registry',
+      Component: (
+        <>
+          {isAnOutsideEvent ? (
+            <div className="max-w-sm mx-auto text-center my-4">
+              This option is disabled since the event is organized outside of
+              nadamas
+            </div>
+          ) : (
+            <SubscriptionsSection
+              register={register}
+              errors={errors}
+              formValues={formValues}
+              control={control}
+            />
+          )}
+        </>
+      ),
+    },
+    {
+      label: 'Related ',
+      Component: (
+        <>
+          <AddLinksSection
+            register={register}
+            errors={errors}
+            formValues={formValues}
+            control={control}
+            setValue={setValue}
+          />
+        </>
+      ),
+    },
+    {
+      label: 'Media',
+      Component: (
+        <InputFiles
+          fieldName="eventImage"
+          label="Add some images "
+          images={formValues?.images}
+          setImages={handleSetImages}
+        // disabled={disabled}
+        />
+      ),
+    },
+  ];
+
   return (
     <div className="relative">
       <Head>
@@ -145,74 +258,17 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
         onSubmit={handleSubmit((data: any) => onSubmit(data))}
         data-test-id="event-form"
         data-test-op={eventAlreadyExist ? 'editing-event' : 'new-event'}
+        className={'mb-24 max-w-lg mx-auto px-1'}
       >
-        <div className="grid mx-auto gap-2 max-w-md  mb-20">
-          {eventAlreadyExist && (
-            <InputFiles
-              fieldName="eventImage"
-              label="Add more images "
-              images={formValues?.images}
-              setImages={handleSetImages}
-              // disabled={disabled}
-            />
-          )}
-
-          <BasicInformation
-            register={register}
-            errors={errors}
-            formValues={formValues}
-            control={control}
-          />
-
-          <EventDates
-            register={register}
-            errors={errors}
-            formValues={formValues}
-            control={control}
-          />
-
-          <AddLinksSection
-            control={control}
-            errors={errors}
-            register={register}
-            formValues={formValues}
-          />
-
-          <Subscriptions
-            register={register}
-            errors={errors}
-            formValues={formValues}
-            control={control}
-          />
-
-          {eventAlreadyExist && (
-            <SubEventsSection
-              register={register}
-              errors={errors}
-              formValues={formValues}
-              control={control}
-              setValue={setValue}
-            />
-          )}
-          {eventAlreadyExist && (
-            <PricesSection
-              register={register}
-              errors={errors}
-              formValues={formValues}
-              control={control}
-              event={event}
-            />
-          )}
-
-          <div className="flex justify-around fixed w-full bottom-0 bg-base-200 p-2 border-t-4 border-t-base-100 left-0 right-0">
-            <button
-              className="btn btn-primary"
-              data-test-id="submit-event-form"
-              disabled={formStatus.disabled}
-            >
-              {formStatus.button}
-            </button>
-          </div>
+        <StepperForm steps={STEPS} />
+        <div className="flex justify-around fixed w-full bottom-0 bg-base-200 p-2 border-t-4 border-t-base-100 left-0 right-0">
+          <button
+            className="btn btn-primary"
+            data-test-id="submit-event-form"
+            disabled={formStatus.disabled}
+          >
+            {formStatus.button}
+          </button>
         </div>
       </form>
     </div>

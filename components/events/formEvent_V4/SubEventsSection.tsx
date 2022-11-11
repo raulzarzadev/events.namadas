@@ -12,6 +12,8 @@ const EVENT_TYPE_OPTIONS = [
   { name: 'swimmingPool', label: 'Swimming Pool' },
   { name: 'openWater', label: 'Open water' },
   { name: 'socialEvent', label: 'Social event' },
+  { name: 'triathlon', label: 'Triathlon' },
+  { name: 'cycling', label: 'Cycling' },
   // { name: '50m', label: '50m swimming pool' },
   // { name: '250m', label: '25m swimming pool' },
   // '50m':'50m swimming pool'
@@ -24,13 +26,19 @@ const SubEventsSection = ({
   formValues,
   control,
   setValue,
-}: any) => {
-  
-
+  hideSubEvents,
+}: {
+  register: any;
+  errors: any;
+  formValues: any;
+  control: any;
+  setValue: any;
+  hideSubEvents: boolean;
+}) => {
   const isOpenWater = formValues?.swimmingType === 'openWater';
   const isSwimmingPool = formValues?.swimmingType === 'swimmingPool';
 
-  const EVENT_TYPE_COMPONENT:Record<Event['eventType'],ReactNode> = {
+  const EVENT_TYPE_COMPONENT: Record<Event['eventType'], ReactNode> = {
     swimmingPool: (
       <PickerSwimmingTests
         setTests={(tests) => setValue('subEvents', tests)}
@@ -54,10 +62,11 @@ const SubEventsSection = ({
       />
     ),
   };
+
   return (
     <div>
-      <FormSection title="Sub events">
-        <div className="flex justify-around">
+      <FormSection title="Event Type">
+        <div className="flex justify-around flex-wrap">
           {EVENT_TYPE_OPTIONS.map(
             ({ name, label }: { name: string; label: string }) => {
               return (
@@ -71,12 +80,17 @@ const SubEventsSection = ({
             }
           )}
         </div>
-        {EVENT_TYPE_COMPONENT[formValues?.eventType]}
+        {!hideSubEvents && (
+          <>
+            <h4 className="text-lg font-bold">Sub events</h4>
+            {EVENT_TYPE_COMPONENT[formValues?.eventType]}
+          </>
+        )}
       </FormSection>
     </div>
   );
 };
-const OpenWaterSubEvents = ({control, formValues , register, errors}:any) => {
+const OpenWaterSubEvents = ({ control, formValues, register, errors }: any) => {
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: 'subEvents', // unique name for your Field Array,

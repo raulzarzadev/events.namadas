@@ -1,6 +1,7 @@
 import Carousel from '@comps/carousel';
 import DateComponent from '@comps/DateComponent';
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
+import PreviewImage from '@comps/previewImage';
 import RangeDate from '@comps/RangeDate';
 import { Event, EventLink, SubEvent } from '@firebase/Events/event.model';
 import Link from 'next/link';
@@ -81,7 +82,7 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
         {!!links?.length && (
           <div className='mb-2'>
             <h4 className="font-bold text-lg text-center">Event Links</h4>
-            <div className="flex  w-full justify-around">
+            <div className="flex  w-full justify-around flex-wrap">
               {links?.map((link) => (
                 <EventLinkInfo key={link.url} link={link} />
               ))}
@@ -96,11 +97,16 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
 
 const EventLinkInfo = ({ link }: { link: EventLink }) => {
   return (
-    <Link href={link?.url} target="_blank">
-      <a className="link w-1/3 text-center " target={'_blank'}>
-        {link.label}
-      </a>
-    </Link>
+    <div className='my-4'>
+      {link.image &&
+        <PreviewImage image={link.image} showDelete={false} />
+      }
+      <Link href={link?.url} target="_blank">
+        <a className="link w-1/3 text-center " target={'_blank'}>
+          {link.label}
+        </a>
+      </Link>
+    </div>
   );
 };
 

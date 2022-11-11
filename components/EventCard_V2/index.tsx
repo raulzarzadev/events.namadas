@@ -91,7 +91,7 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
   const isOwner = (user && user.id) === event?.userId;
   return (
     <div className="">
-      <p>{fromNow(event.date, { addSuffix: true })}</p>
+      <p>{event.date ? fromNow(event?.date, { addSuffix: true }) : ''}</p>
       <div className="w-full text-sm truncate text-center">
         <div className="flex w-full justify-between ">
           <RatingInput />
@@ -103,9 +103,9 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
       {!!links?.length && (
         <div>
           <span className="text-xs">visit</span>
-          <div className="flex w-full justify-around">
+          <div className="flex w-full justify-around flex-wrap">
             {links?.map((link) => (
-              <div key={link.url}>
+              <div key={link.url} className='my-2'>
                 <Link href={link.url} target="_blank">
                   <a className="link">{link.label}</a>
                 </Link>

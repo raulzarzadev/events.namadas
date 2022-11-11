@@ -50,7 +50,6 @@ const AddLinksSection = ({
     })
     return {}
   }
-  console.log(formValues.links)
   return (
     <FormSection title="Links related">
       <div className="grid  ">

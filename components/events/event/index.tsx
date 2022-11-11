@@ -23,6 +23,7 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
     includeFinishDate,
     finishAt,
     id: eventId,
+    announcement,
     links,
   } = event;
 
@@ -49,6 +50,9 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
           )}
         </p>
 
+
+
+
         <p className="text-center">{LABELS[swimmingType]}</p>
         {resume && (
           <>
@@ -58,6 +62,15 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
             </p>
           </>
         )}
+
+        {announcement && <div className='text-center'>
+          <Link href={`${eventId}/announcement`}>
+            <a className='link text-center mx-auto'>
+              Read full announcement
+            </a>
+
+          </Link>
+        </div>}
 
         {!!subEvents.length && (
           <div>

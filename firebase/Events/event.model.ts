@@ -22,6 +22,7 @@ export interface Event extends Base {
   subscriptions: EventSubscription[];
   links?: EventLink[];
   prices?: Price[];
+  announcement?: string;
 }
 export interface Price {
   id: string;

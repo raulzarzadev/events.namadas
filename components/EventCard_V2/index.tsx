@@ -1,4 +1,5 @@
 import DateComponent from '@comps/DateComponent';
+import { EventLinkInfo } from '@comps/events/event';
 import EventOptions from '@comps/events/event/EventOptions';
 import RatingInput from '@comps/inputs/RatingInput';
 import Modal from '@comps/modal';
@@ -91,35 +92,38 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
   const isOwner = (user && user.id) === event?.userId;
   return (
     <div className="">
-      <p>{event.date ? fromNow(event?.date, { addSuffix: true }) : ''}</p>
+      <p className='text-center'>{event.date ? fromNow(event?.date, { addSuffix: true }) : ''}</p>
       <div className="w-full text-sm truncate text-center">
         <div className="flex w-full justify-between ">
-          <RatingInput />
+          {/* <RatingInput /> */}
+          <span>
+
+          </span>
           <Link href={`/events/${id}`}>
             <button className="btn btn-outline btn-circle">Go</button>
           </Link>
         </div>
       </div>
+      {resume && (
+        <div>
+          <span className="text-xs">Resume</span>
+          <p>{resume}</p>
+          <div className='text-center'>
+            <Link href={`/events/${event.id}/announcement`}><a className='link'>Read full announcement</a></Link>
+          </div>
+        </div>
+      )}
       {!!links?.length && (
         <div>
-          <span className="text-xs">visit</span>
+          <span className="font-bold ">Some related links</span>
           <div className="flex w-full justify-around flex-wrap">
             {links?.map((link) => (
-              <div key={link.url} className='my-2'>
-                <Link href={link.url} target="_blank">
-                  <a className="link">{link.label}</a>
-                </Link>
-              </div>
+              <EventLinkInfo link={link} key={link.url} />
             ))}
           </div>
         </div>
       )}
-      {resume && (
-        <div>
-          <span className="text-xs">Description</span>
-          <p>{resume}</p>
-        </div>
-      )}
+
       {isOwner &&
         <div><EventOptions eventId={id || ''} config={{ deleteRedirectTo: '/profile' }} /></div>}
     </div>

@@ -71,7 +71,7 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
               <PickerSwimmingTests tests={subEvents} disabled />
             ) : (
               <div className="grid gap-2 p-1">
-                {subEvents?.map((sub: SubEvent, i) => (
+                {subEvents?.sort(sortByDate).map((sub: SubEvent, i) => (
                   <SubEvent key={`${sub.title}-${i}`} subEvent={sub} />
                 ))}
               </div>
@@ -95,6 +95,12 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
   );
 };
 
+const sortByDate = (a: any, b: any) => {
+  if (a.date > b.date) return 1
+  if (a.date < b.date) return -1
+  return 0
+}
+
 const EventLinkInfo = ({ link }: { link: EventLink }) => {
   return (
     <div className='my-4'>
@@ -113,10 +119,9 @@ const EventLinkInfo = ({ link }: { link: EventLink }) => {
 const SubEvent = ({ subEvent }: { subEvent: SubEvent }) => {
   const { title, comments, distance, date, style } = subEvent;
   return (
-    <div className="border p-1">
+    <div className=" p-1">
       <div className="flex w-full justify-between">
-        <h3 className="w-1/3 ">{title || style}</h3>
-        <span className="w-1/3 text-center">{distance}</span>
+        <h3 className="w-2/3 font-bold">{title || style}</h3>
         <span className="w-1/3 text-end">
           {date && myFormatDate(date, 'dd MMM HH:mm')}
         </span>

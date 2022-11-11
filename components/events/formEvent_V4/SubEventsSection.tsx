@@ -4,7 +4,7 @@ import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
 import RadioInput from '@comps/inputs/Radio';
 import { Event, SubEvent } from '@firebase/Events/event.model';
 import { ReactNode } from 'react';
-import { useFieldArray } from 'react-hook-form';
+import { Controller, useFieldArray } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 import FormSection from './FormSection';
 
@@ -55,6 +55,14 @@ const SubEventsSection = ({
     ),
     socialEvent: (
       <SocialSubEvent
+        control={control}
+        formValues={formValues}
+        register={register}
+        errors={errors}
+      />
+    ),
+    triathlon: (
+      <TriathlonSubEvent
         control={control}
         formValues={formValues}
         register={register}
@@ -233,4 +241,86 @@ const SocialSubEvent = ({ control, formValues, register, errors }: any) => {
     </div>
   );
 };
+
+const TriathlonSubEvent = ({ control, formValues, register, errors }: any) => {
+  const { fields, append, remove } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormContext)
+    name: 'subEvents', // unique name for your Field Array,
+  });
+  const handleAddSubEvent = () => {
+    const appendNewEvent: SubEvent = {
+      title: `event ${formValues?.subEvents?.length + 1}`,
+      distance: '',
+      comments: '',
+      date: myFormatDate(formValues.date, 'datetime'),
+      style: '',
+    };
+    append(appendNewEvent);
+  };
+  return (
+    <div>
+      <div>
+        <div className="grid gap-4">
+          {fields.map((field, index) => (
+            <div
+              key={field.id}
+              className="flex items-end flex-col bg-base-200 py-4 "
+            >
+              <button
+                type="button"
+                className="btn btn-outline btn-error btn-xs"
+                onClick={() => remove(index)}
+              >
+                Delete
+              </button>
+              <Controller
+                control={control}
+                name={`subEvents.${index}.date`}
+                defaultValue={myFormatDate(new Date(), 'datetime')}
+                render={({
+                  field,
+                  fieldState: { invalid, isTouched, isDirty, error },
+                  formState,
+                }) => (
+                  <InputLocalDate
+                    label="Date"
+                    {...field}
+                    value={myFormatDate(formValues.subEvents[index].date, 'datetime')}
+                  />
+                )}
+              />
+              <Text
+                {...register(`subEvents.${index}.title`)}
+                label={'Title'}
+                // name={`subEvents.${index}.title`}
+                errors={errors}
+              />
+
+
+
+              <Text
+                {...register(`subEvents.${index}.comments`)}
+                label={'Comments'}
+                // name={`subEvents.${index}.title`}
+                errors={errors}
+              />
+            </div>
+          ))}
+          <div className="w-full flex justify-center my-2">
+            <button
+              className="btn btn-md "
+              onClick={(e) => {
+                e.preventDefault();
+                handleAddSubEvent();
+              }}
+            >
+              Add a event
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default SubEventsSection;

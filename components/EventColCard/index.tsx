@@ -8,8 +8,8 @@ import { Event } from '@firebase/Events/event.model';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import  { fromNow } from 'utils/myFormatDate';
-export interface EventType extends Event {}
+import { fromNow } from 'utils/myFormatDate';
+export interface EventType extends Event { }
 
 const EventColCard = ({
   event,
@@ -175,6 +175,7 @@ const UpcomingLabel = ({
     PLANING: 'Coming soon',
     IN_PROGRESS: 'In progress',
     FINISHED: 'Finished',
+    OUTSIDE: 'Outside'
   };
   return (
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">

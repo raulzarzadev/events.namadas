@@ -4,7 +4,7 @@ export interface ImagesListType {
   images: Image[] | any[];
   childrenClassName?: string;
   onDeleteImage?: (url: string) => void;
-  showDelete?:boolean
+  showDelete?: boolean
 }
 
 interface Image {
@@ -17,7 +17,7 @@ const ImagesList = ({
   images = [],
   childrenClassName: childrenClassName,
   onDeleteImage,
-  showDelete=true,
+  showDelete = true,
 }: ImagesListType) => {
   const handleOpenDelete = async (url: string | undefined) => {
     if (!url) return console.log('no valid url');
@@ -32,9 +32,7 @@ const ImagesList = ({
             showDelete={showDelete}
             uploading={uploading}
             previewSize="full"
-            handleDelete={() => {
-              handleOpenDelete(url);
-            }}
+            handleDelete={() => handleOpenDelete(url)}
           />
         </div>
       ))}

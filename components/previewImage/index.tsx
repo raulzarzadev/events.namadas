@@ -9,7 +9,7 @@ export interface PreviewImageType {
   image?: string;
   previewSize?: Sizes;
   uploading?: boolean;
-  handleDelete?: () => void;
+  handleDelete?: () => {};
   showOrigin?: boolean;
   showDelete?: boolean
 }

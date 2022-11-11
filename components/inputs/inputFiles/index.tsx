@@ -24,7 +24,7 @@ const InputFiles = React.forwardRef(
       imagesUploaded,
       onDeleteImage,
       defaultImages,
-      onLoading = () => {},
+      onLoading = () => { },
       disabled,
     }: InputFilesType,
     ref
@@ -42,7 +42,7 @@ const InputFiles = React.forwardRef(
       );
 
       const uploadingFiles = [...files].map(async (file) => {
-        const imageUploaded = await FirebaseCRUD.uploadFileAsync({file,  fieldName:'EventImages'});
+        const imageUploaded = await FirebaseCRUD.uploadFileAsync({ file, fieldName: 'EventImages' });
         return imageUploaded;
       });
 
@@ -69,9 +69,8 @@ const InputFiles = React.forwardRef(
       <div>
         <label>
           <div
-            className={`h-12 w-full hover:border-dotted  hover:border-white flex justify-center items-center rounded-lg relative cursor-pointer border-dashed border-2  ${
-              disabled && 'opacity-30 cursor-wait '
-            }`}
+            className={`h-12 w-full hover:border-dotted  hover:border-white flex justify-center items-center rounded-lg relative cursor-pointer border-dashed border-2  ${disabled && 'opacity-30 cursor-wait '
+              }`}
           >
             <div className="absolute ">{label}</div>
             <input
@@ -93,9 +92,7 @@ const InputFiles = React.forwardRef(
                   image={url}
                   uploading={uploading}
                   previewSize="full"
-                  handleDelete={() => {
-                    handleOpenDelete(url);
-                  }}
+                  handleDelete={() => handleOpenDelete(url)}
                 />
               </div>
             ))}

@@ -1,5 +1,5 @@
 import AddLinksSection from '@comps/forms/AddLinksSection';
-import {  Text } from '@comps/inputs';
+import { Text } from '@comps/inputs';
 import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2';
 import { Event, EventLink } from '@firebase/Events/event.model';
 import { createEvent } from '@firebase/Events/main';
@@ -8,7 +8,7 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 
 const PublishEvent = () => {
-  const defaultValues:Pick<Event, 'title'|'date' | 'status' | 'images' | 'links'>={
+  const defaultValues: Pick<Event, 'title' | 'date' | 'status' | 'images' | 'links'> = {
     date: new Date().getTime(),
     status: 'ACTIVE',
     images: [],
@@ -29,23 +29,23 @@ const PublishEvent = () => {
     defaultValues
   });
   const formValues = watch()
-  const onSubmit = (data:any) => {
-    createEvent(data).then(({res}:any) => {
+  const onSubmit = (data: any) => {
+    createEvent(data).then(({ res }: any) => {
       router.push(`/events/${res.id}/edit`)
     })
   };
 
 
 
-    const handleSetImages = (images: any[], setImagesOps?: SetImagesOps) => {
-     // if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading);
-      if (images.length) {
-        setValue('images', images);
-        handleSubmit((props: any) => {
-          onSubmit(props);
-        })();
-      }
-    };
+  const handleSetImages = (images: any[], setImagesOps?: SetImagesOps) => {
+    // if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading);
+    if (images.length) {
+      setValue('images', images);
+      handleSubmit((props: any) => {
+        onSubmit(props);
+      })();
+    }
+  };
 
 
   return (
@@ -78,7 +78,7 @@ const PublishEvent = () => {
           />
           <Text label="Event title" errors={errors} {...register('title')} />
           {/* <Text label="Link" errors={errors} {...register('link')} /> */}
-          <AddLinksSection control={control} errors={errors} register={register} formValues={formValues}/>
+          <AddLinksSection control={control} errors={errors} register={register} formValues={formValues} setValue={setValue} />
           <button className="btn btn-primary">Save</button>
         </form>
       </div>

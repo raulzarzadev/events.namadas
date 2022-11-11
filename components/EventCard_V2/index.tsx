@@ -148,6 +148,7 @@ const UpcomingLabel = ({
     PLANING: 'Coming soon',
     IN_PROGRESS: 'In progress',
     FINISHED: 'Finished',
+    OUTSIDE: 'Outside '
   };
   return (
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">

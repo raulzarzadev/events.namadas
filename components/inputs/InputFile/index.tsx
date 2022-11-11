@@ -18,7 +18,7 @@ const InputFile = ({ disabled, handleChange, label, handleDelete, name = 'inputF
   const [uploading, setUploading] = useState(false)
   return (<>
 
-    <PreviewImage image={previewImage || defaultImage} previewSize='xl' handleDelete={(url) => handleDelete(url, name)} uploading={uploading} />
+    <PreviewImage image={previewImage || defaultImage} previewSize='xl' handleDelete={() => handleDelete(previewImage || defaultImage, name)} uploading={uploading} />
     <div className="form-control mx-auto">
 
       <label className="label">

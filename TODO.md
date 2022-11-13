@@ -25,7 +25,14 @@ events.nadamas.app
   - [ ] limit get events
   - [ ] create events out side if nadamas
 - location
+- [ ] Display grid in form images
+- [ ] Add images grid to event modal
+- [ ] Add event gallery
+- [ ] if want registration should accept therms. 
+- [ ] if want add prices should receive registrations
+- [x] add triathlon sub events 
 
+ 
 ### progress
 
 - [ ] create events out side of events nadamas easier and add props

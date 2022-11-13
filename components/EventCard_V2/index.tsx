@@ -1,6 +1,7 @@
 import DateComponent from '@comps/DateComponent';
 import { EventLinkInfo } from '@comps/events/event';
 import EventOptions from '@comps/events/event/EventOptions';
+import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
 import RatingInput from '@comps/inputs/RatingInput';
 import Modal from '@comps/modal';
 import RangeDate from '@comps/RangeDate';
@@ -67,17 +68,7 @@ const EventCard = ({
             )}
             <UpcomingLabel status={status} />
           </figure>
-          <p className="text-center">
-            {includeFinishDate ? (
-              <RangeDate
-                finishAt={event.finishAt}
-                startAt={event.date}
-                format="dd MMMM"
-              />
-            ) : (
-              <DateComponent date={event.date} format="dd MMMM yy" />
-            )}
-          </p>
+
 
           <EventModalInfo event={event} />
         </div>
@@ -87,18 +78,32 @@ const EventCard = ({
 };
 
 const EventModalInfo = ({ event }: { event: EventType }) => {
-  const { id, resume, links } = event;
+  const { id, resume, links, images, includeFinishDate } = event;
   const { user } = useAuth()
   const isOwner = (user && user.id) === event?.userId;
   return (
     <div className="">
+      {isOwner &&
+        <div>
+          <EventOptions eventId={id || ''} config={{ deleteRedirectTo: '/profile' }} />
+        </div>
+      }
+      <p className="text-center">
+        {includeFinishDate ? (
+          <RangeDate
+            finishAt={event.finishAt}
+            startAt={event.date}
+            format="dd MMMM"
+          />
+        ) : (
+          <DateComponent date={event.date} format="dd MMMM yy" />
+        )}
+      </p>
       <p className='text-center'>{event.date ? fromNow(event?.date, { addSuffix: true }) : ''}</p>
       <div className="w-full text-sm truncate text-center">
         <div className="flex w-full justify-between ">
           {/* <RatingInput /> */}
-          <span>
-
-          </span>
+          <span></span>
           <Link href={`/events/${id}`}>
             <button className="btn btn-outline btn-circle">Go</button>
           </Link>
@@ -124,9 +129,16 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
         </div>
       )}
 
-      {isOwner &&
-        <div><EventOptions eventId={id || ''} config={{ deleteRedirectTo: '/profile' }} /></div>}
+
+      <div className="grid grid-cols-3 sm:grid-cols-4 ">
+        <ImagesList
+          images={images}
+          childrenClassName={'w-full h-full '}
+          showDelete={false}
+        />
+      </div>
     </div>
+
   );
 };
 

@@ -1,5 +1,6 @@
 import Carousel from '@comps/carousel';
 import DateComponent from '@comps/DateComponent';
+import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
 import PreviewImage from '@comps/previewImage';
 import RangeDate from '@comps/RangeDate';
@@ -102,6 +103,9 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
             </div>
           </div>
         )}
+        <div className='grid grid-cols-3 sm:grid-cols-4'>
+          <ImagesList images={images} />
+        </div>
 
       </div>
     </div>

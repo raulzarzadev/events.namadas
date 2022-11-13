@@ -11,14 +11,13 @@ import myFormatDate from 'utils/myFormatDate';
 import BasicInformation from './BasicInformation';
 import EventDates from './EventDates';
 import PricesSection from './PricesSection';
-import SubEventsSection from './SubEventsSection';
 import SubscriptionsSection from './SubscriptionsSection';
+import SubEventsSection from './SubEventSection_v2.tsx';
 
 const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const eventAlreadyExist = event?.id;
   const router = useRouter();
   const currentDate = new Date().getTime();
-
   const defaultValues: Partial<Event> = {
     date: myFormatDate(currentDate, 'datetime'),
     finishAt: myFormatDate(currentDate, 'datetime'),
@@ -29,8 +28,6 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       limit: 0,
     },
   };
-
-
 
   const {
     register,
@@ -49,30 +46,30 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     setFormStatus(FORM_LABELS.loading);
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          setFormStatus(FORM_LABELS.error);
-          console.error(err);
-        })
-        .finally(() => {
-          setFormStatus(FORM_LABELS.saved);
-        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            setFormStatus(FORM_LABELS.error);
+            console.error(err);
+          })
+          .finally(() => {
+            setFormStatus(FORM_LABELS.saved);
+          })
       : createEvent(data)
-        .then((res) => {
-          if (res?.ok) {
-            router.push(`/events/${res.res.id}/edit`);
-          }
-          console.log(res);
-        })
-        .catch((err) => {
-          setFormStatus(FORM_LABELS.error);
-          console.error(err);
-        })
-        .finally(() => {
-          setFormStatus(FORM_LABELS.saved);
-        });
+          .then((res) => {
+            if (res?.ok) {
+              router.push(`/events/${res.res.id}/edit`);
+            }
+            console.log(res);
+          })
+          .catch((err) => {
+            setFormStatus(FORM_LABELS.error);
+            console.error(err);
+          })
+          .finally(() => {
+            setFormStatus(FORM_LABELS.saved);
+          });
   };
 
   const FORM_LABELS = {
@@ -237,7 +234,8 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
           label="Add some images "
           images={formValues?.images}
           setImages={handleSetImages}
-        // disabled={disabled}
+          displayAs="grid"
+          // disabled={disabled}
         />
       ),
     },

@@ -1,11 +1,23 @@
 import Icon from '@comps/Icon';
-import { ReactNode, useState } from 'react';
+import { GetServerSidePropsContext } from 'next';
+import { useRouter } from 'next/router';
+import { ReactNode, useEffect, useState } from 'react';
 
 export interface Step {
   label: string;
   Component: ReactNode;
 }
-const StepperForm = ({ steps }: { steps: Step[] }) => {
+
+const StepperForm = ({ steps }: { steps: Step[]; query: any }) => {
+  const router = useRouter();
+  const preselectStep = parseInt(`${router.query.step}`);
+  const [stepSelected, setStepSelected] = useState(preselectStep || 0);
+
+  useEffect(() => {
+    const { id } = router.query;
+    router.push({ query: { step: stepSelected, id } });
+  }, [stepSelected]);
+
   const handlePrev = () => {
     setStepSelected((state) => (state > 0 ? state - 1 : state));
   };
@@ -13,8 +25,6 @@ const StepperForm = ({ steps }: { steps: Step[] }) => {
   const handleNext = () => {
     setStepSelected((state) => (state < steps.length - 1 ? state + 1 : state));
   };
-
-  const [stepSelected, setStepSelected] = useState(0);
 
   return (
     <div className="relative ">

@@ -18,9 +18,9 @@ const EventPage = ({ event }: { event: any }) => {
 
   return (
     <div>
+      {isOwner && <EventOptions eventId={`${eventId}`} />}
       <Event event={event} />
       <JoinEvent event={event} />
-      {isOwner && <EventOptions eventId={`${eventId}`} />}
     </div>
   );
 };

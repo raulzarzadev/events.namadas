@@ -55,6 +55,15 @@ const AddLinksSection = ({
       <div className="grid  ">
         {fields.map((field, index) => (
           <div key={field.id} className=" my-2   bg-base-300 p-2 rounded-lg">
+            <div className='flex justify-end w-full '>
+              <button
+                type="button"
+                className="btn btn-outline btn-square btn-error mb-0  "
+                onClick={() => remove(index)}
+              >
+                <Icon name="delete" />
+              </button>
+            </div>
             <div className=" items-end gap-2 max-w-full grid">
               <Text
                 {...register(`links.${index}.label`)}
@@ -70,13 +79,7 @@ const AddLinksSection = ({
                 placeholder="https://example.com"
               />
               <InputFile name={`links.${index}.image`} handleChange={handleChangeInputFile} handleDelete={handleDeleteImage} label='Add an image' defaultImage={formValues.links[index].image} />
-              <button
-                type="button"
-                className="btn btn-outline btn-square btn-error mb-0  mx-auto "
-                onClick={() => remove(index)}
-              >
-                <Icon name="delete" />
-              </button>
+
             </div>
           </div>
         ))}

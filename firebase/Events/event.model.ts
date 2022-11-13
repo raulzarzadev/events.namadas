@@ -86,6 +86,8 @@ export interface SubEvent {
   distance: string | number;
   title?: string;
   comments?: string;
+  description?: string;
+  finishAt?: any;
   date?: string;
   style: string;
   image?: string;

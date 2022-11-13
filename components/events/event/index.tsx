@@ -1,5 +1,6 @@
 import Carousel from '@comps/carousel';
 import DateComponent from '@comps/DateComponent';
+import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
 import PreviewImage from '@comps/previewImage';
 import RangeDate from '@comps/RangeDate';
@@ -93,7 +94,7 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
         )}
 
         {!!links?.length && (
-          <div className='mb-2'>
+          <div className='mb-2 '>
             <h4 className="font-bold text-lg text-center">Event Links</h4>
             <div className="flex  w-full justify-around flex-wrap">
               {links?.map((link) => (
@@ -102,6 +103,9 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
             </div>
           </div>
         )}
+        <div className='grid grid-cols-3 sm:grid-cols-4'>
+          <ImagesList images={images} />
+        </div>
 
       </div>
     </div>
@@ -114,9 +118,9 @@ const sortByDate = (a: any, b: any) => {
   return 0
 }
 
-const EventLinkInfo = ({ link }: { link: EventLink }) => {
+export const EventLinkInfo = ({ link }: { link: EventLink }) => {
   return (
-    <div className='my-4'>
+    <div className='my-4 p-2'>
       {link.image &&
         <PreviewImage image={link.image} showDelete={false} />
       }

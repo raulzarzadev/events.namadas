@@ -1,5 +1,7 @@
 import DateComponent from '@comps/DateComponent';
+import { EventLinkInfo } from '@comps/events/event';
 import EventOptions from '@comps/events/event/EventOptions';
+import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
 import RatingInput from '@comps/inputs/RatingInput';
 import Modal from '@comps/modal';
 import RangeDate from '@comps/RangeDate';
@@ -66,17 +68,7 @@ const EventCard = ({
             )}
             <UpcomingLabel status={status} />
           </figure>
-          <p className="text-center">
-            {includeFinishDate ? (
-              <RangeDate
-                finishAt={event.finishAt}
-                startAt={event.date}
-                format="dd MMMM"
-              />
-            ) : (
-              <DateComponent date={event.date} format="dd MMMM yy" />
-            )}
-          </p>
+
 
           <EventModalInfo event={event} />
         </div>
@@ -86,43 +78,67 @@ const EventCard = ({
 };
 
 const EventModalInfo = ({ event }: { event: EventType }) => {
-  const { id, resume, links } = event;
+  const { id, resume, links, images, includeFinishDate } = event;
   const { user } = useAuth()
   const isOwner = (user && user.id) === event?.userId;
   return (
     <div className="">
-      <p>{event.date ? fromNow(event?.date, { addSuffix: true }) : ''}</p>
+      {isOwner &&
+        <div>
+          <EventOptions eventId={id || ''} config={{ deleteRedirectTo: '/profile' }} />
+        </div>
+      }
+      <p className="text-center">
+        {includeFinishDate ? (
+          <RangeDate
+            finishAt={event.finishAt}
+            startAt={event.date}
+            format="dd MMMM"
+          />
+        ) : (
+          <DateComponent date={event.date} format="dd MMMM yy" />
+        )}
+      </p>
+      <p className='text-center'>{event.date ? fromNow(event?.date, { addSuffix: true }) : ''}</p>
       <div className="w-full text-sm truncate text-center">
         <div className="flex w-full justify-between ">
-          <RatingInput />
+          {/* <RatingInput /> */}
+          <span></span>
           <Link href={`/events/${id}`}>
             <button className="btn btn-outline btn-circle">Go</button>
           </Link>
         </div>
       </div>
+      {resume && (
+        <div>
+          <span className="text-xs">Resume</span>
+          <p>{resume}</p>
+          <div className='text-center'>
+            <Link href={`/events/${event.id}/announcement`}><a className='link'>Read full announcement</a></Link>
+          </div>
+        </div>
+      )}
       {!!links?.length && (
         <div>
-          <span className="text-xs">visit</span>
+          <span className="font-bold ">Some related links</span>
           <div className="flex w-full justify-around flex-wrap">
             {links?.map((link) => (
-              <div key={link.url} className='my-2'>
-                <Link href={link.url} target="_blank">
-                  <a className="link">{link.label}</a>
-                </Link>
-              </div>
+              <EventLinkInfo link={link} key={link.url} />
             ))}
           </div>
         </div>
       )}
-      {resume && (
-        <div>
-          <span className="text-xs">Description</span>
-          <p>{resume}</p>
-        </div>
-      )}
-      {isOwner &&
-        <div><EventOptions eventId={id || ''} config={{ deleteRedirectTo: '/profile' }} /></div>}
+
+
+      <div className="grid grid-cols-3 sm:grid-cols-4 ">
+        <ImagesList
+          images={images}
+          childrenClassName={'w-full h-full '}
+          showDelete={false}
+        />
+      </div>
     </div>
+
   );
 };
 

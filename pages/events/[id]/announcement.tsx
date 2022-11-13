@@ -12,7 +12,7 @@ const Announcement = ({ event }: { event: Event }) => {
   const announcement = event.announcement
   return (
     <div className="max-w-lg mx-auto">
-      <p className="whitespace-pre-line">
+      <p className="whitespace-pre-line truncate">
         {announcement}
       </p>
       announcement

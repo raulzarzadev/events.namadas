@@ -67,6 +67,8 @@ export interface SubscriptionsOptions {
   limit: number;
   startAt: DateType;
   finishAt: DateType;
+  acceptSubscriptions: boolean;
+  acceptTerms: boolean;
 }
 
 export interface EventSubscription {

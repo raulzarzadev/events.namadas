@@ -13,6 +13,7 @@ import EventDates from './EventDates';
 import PricesSection from './PricesSection';
 import SubscriptionsSection from './SubscriptionsSection';
 import SubEventsSection from './SubEventSection_v2.tsx';
+import { Toggle } from '@comps/inputs';
 
 const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const eventAlreadyExist = event?.id;
@@ -134,7 +135,9 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   // console.log(formValues)
 
   const isAnOutsideEvent = formValues.status === 'OUTSIDE'; // this is when te event is organized by others and this event is just republished in nadamas.
-
+  const acceptSubscriptions =
+    formValues.subscriptionsOptions?.acceptSubscriptions;
+  const acceptTerms = formValues.subscriptionsOptions?.acceptTerms;
   const STEPS = [
     {
       label: 'Information',
@@ -172,47 +175,95 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       ),
     },
     {
-      label: 'Prices',
+      label: 'Participants',
+      helperText: 'Esta seccion esta deshabilitada por ahora',
       Component: (
         <>
-          {isAnOutsideEvent ? (
-            <div className="max-w-sm mx-auto text-center my-4">
-              This option is disabled since the event is organized outside of
-              nadamas
-            </div>
-          ) : (
-            <PricesSection
-              disabled={isAnOutsideEvent}
-              register={register}
-              errors={errors}
-              formValues={formValues}
-              control={control}
-              event={event}
+          <div>
+            <Toggle
+              disabled={!acceptTerms}
+              label="Organizar evento"
+              {...register('subscriptionsOptions.acceptSubscriptions')}
             />
+          </div>
+          {acceptSubscriptions ? (
+            <>
+              <SubscriptionsSection
+                register={register}
+                errors={errors}
+                formValues={formValues}
+                control={control}
+              />
+              <PricesSection
+                disabled={isAnOutsideEvent}
+                register={register}
+                errors={errors}
+                formValues={formValues}
+                control={control}
+                event={event}
+              />
+            </>
+          ) : (
+            <>
+              <div className="flex items-center">
+                <input
+                  disabled
+                  type={'checkbox'}
+                  className="checkbox m-2"
+                  {...register('subscriptionsOptions.acceptTerms')}
+                />
+                <p>
+                  Aceptar terminos y condiciones para organizar un evento en
+                  nadamas
+                </p>
+              </div>
+            </>
           )}
         </>
       ),
     },
-    {
-      label: 'Registry',
-      Component: (
-        <>
-          {isAnOutsideEvent ? (
-            <div className="max-w-sm mx-auto text-center my-4">
-              This option is disabled since the event is organized outside of
-              nadamas
-            </div>
-          ) : (
-            <SubscriptionsSection
-              register={register}
-              errors={errors}
-              formValues={formValues}
-              control={control}
-            />
-          )}
-        </>
-      ),
-    },
+    // {
+    //   label: 'Prices',
+    //   Component: (
+    //     <>
+    //       {isAnOutsideEvent ? (
+    //         <div className="max-w-sm mx-auto text-center my-4">
+    //           This option is disabled since the event is organized outside of
+    //           nadamas
+    //         </div>
+    //       ) : (
+    //         <PricesSection
+    //           disabled={isAnOutsideEvent}
+    //           register={register}
+    //           errors={errors}
+    //           formValues={formValues}
+    //           control={control}
+    //           event={event}
+    //         />
+    //       )}
+    //     </>
+    //   ),
+    // },
+    // {
+    //   label: 'Registry',
+    //   Component: (
+    //     <>
+    //       {isAnOutsideEvent ? (
+    //         <div className="max-w-sm mx-auto text-center my-4">
+    //           This option is disabled since the event is organized outside of
+    //           nadamas
+    //         </div>
+    //       ) : (
+    //         <SubscriptionsSection
+    //           register={register}
+    //           errors={errors}
+    //           formValues={formValues}
+    //           control={control}
+    //         />
+    //       )}
+    //     </>
+    //   ),
+    // },
     {
       label: 'Related ',
       helperText: `Add some links to help users find more information about others

@@ -47,7 +47,11 @@ const Home: NextPage = (props: any) => {
     multi: 'Multideporte',
     triathlon: 'Triatlón',
     sprint: 'Triatlón Sprint',
+    mountain: 'Trail',
+    run: 'Carrera',
   };
+  console.log(labelGroups);
+
   return (
     <div className="px-2">
       <EventsRow title="Upcoming events " events={activeEvents} />

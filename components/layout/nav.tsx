@@ -86,7 +86,20 @@ const Nav = () => {
                     </Link>
                   </li>
                   <li>
-                    <button className="border" onClick={() => handleLogout()}>
+                    <Link href={'https://nadamas.app'}>
+                      <a
+                        className="justify-between"
+                        data-test-id="new-event-link"
+                      >
+                        nadamas
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      className="border border-error btn-sm"
+                      onClick={() => handleLogout()}
+                    >
                       Logout
                     </button>
                   </li>

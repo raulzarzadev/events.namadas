@@ -86,7 +86,7 @@ const InputFiles = ({
           </div>
         )}
         {displayAs === 'grid' && (
-          <div className="grid grid-cols-3 sm:grid-cols-4 ">
+          <div className="grid grid-cols-3 sm:grid-cols-4 h-36 ">
             <div className="w-full h-full">
               <SquareInputFile
                 disabled={disabled}

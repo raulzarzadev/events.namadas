@@ -47,10 +47,10 @@ const Home: NextPage = (props: any) => {
     multi: 'Multideporte',
     triathlon: 'Triatlón',
     sprint: 'Triatlón Sprint',
-    mountain: 'Trail',
+    mountain: 'Montaña',
     run: 'Carrera',
+    bike: 'Bicicleta',
   };
-  console.log(labelGroups);
 
   return (
     <div className="px-2">

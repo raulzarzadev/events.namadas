@@ -8,7 +8,7 @@ const EventTypeForm = ({ setValue, formValues }: any) => {
     sports: ['swim', 'run', 'bike', 'multi'],
     swim: ['pool', 'openWater', 'lake', 'river'],
     bike: ['route', 'mountain', 'gravel', 'city'],
-    run: ['tracking', 'soft', 'road', 'mountain'],
+    run: ['soft', 'road', 'mountain', 'city'],
     multi: ['duathlon', 'triathlon', 'pentathlon '],
     triathlon: ['super-sprint', 'sprint', 'olympic', '70.30', 'iron-man'],
     pool: ['-25m', '25m', '50m', '+50m'],

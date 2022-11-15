@@ -91,7 +91,7 @@ const Nav = () => {
                         className="justify-between"
                         data-test-id="new-event-link"
                       >
-                        nadamas
+                        nadamas App
                       </a>
                     </Link>
                   </li>

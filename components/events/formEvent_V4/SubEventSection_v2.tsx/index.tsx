@@ -22,7 +22,11 @@ const SubEventsSection = ({
     <div>
       <FormSection title="Classify event">
         <div className="flex justify-around flex-wrap">
-          <EventTypeForm register={register} setValue={setValue} />
+          <EventTypeForm
+            formValues={formValues}
+            register={register}
+            setValue={setValue}
+          />
         </div>
         {!hideSubEvents && (
           <>

@@ -3,7 +3,7 @@ import Modal from '@comps/modal';
 import Image from 'next/image';
 import { useState } from 'react';
 
-type Sizes = 'sm' | 'md' | 'lg' | 'xl' | 'full'
+type Sizes = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 export interface PreviewImageType {
   label?: null | string;
   image?: string;
@@ -11,7 +11,7 @@ export interface PreviewImageType {
   uploading?: boolean;
   handleDelete?: () => {};
   showOrigin?: boolean;
-  showDelete?: boolean
+  showDelete?: boolean;
 }
 
 const PreviewImage = ({
@@ -58,7 +58,14 @@ const PreviewImage = ({
             `}
             onClick={handleOpenModal}
           >
-            <Image src={image} layout="fill" objectFit="cover" />
+            <Image
+              src={image}
+              layout="fill"
+              objectFit="cover"
+              quality="1"
+              placeholder="blur"
+              blurDataURL={image}
+            />
             {showDelete && (
               <div className="absolute right-0 ">
                 <button
@@ -101,7 +108,12 @@ const PreviewImage = ({
           <Modal title="Image" open={openModal} handleOpen={handleOpenModal}>
             <>
               <div className="relative w-full aspect-square mx-auto ">
-                <Image src={image} layout="fill" objectFit="contain" />
+                <Image
+                  src={image}
+                  layout="fill"
+                  objectFit="contain"
+                  quality={'100'}
+                />
               </div>
               {showOrigin && (
                 <a href={image} target={'_blank'}>

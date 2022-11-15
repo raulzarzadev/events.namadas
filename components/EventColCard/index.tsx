@@ -9,7 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { fromNow } from 'utils/myFormatDate';
-export interface EventType extends Event { }
+export interface EventType extends Event {}
 
 const EventColCard = ({
   event,
@@ -47,7 +47,10 @@ const EventColCard = ({
             </div>
           </div>
           <div className="">
-            <button className='btn btn-square btn-xs btn-ghost ' onClick={() => handleOpenModal()}>
+            <button
+              className="btn btn-square btn-xs btn-ghost "
+              onClick={() => handleOpenModal()}
+            >
               <Icon name="down" />
             </button>
           </div>
@@ -175,7 +178,8 @@ const UpcomingLabel = ({
     PLANING: 'Coming soon',
     IN_PROGRESS: 'In progress',
     FINISHED: 'Finished',
-    OUTSIDE: 'Outside'
+    OUTSIDE: 'Outside',
+    HIDDEN: 'Hidden',
   };
   return (
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">

@@ -170,7 +170,7 @@ const SubEventFields = ({
                     label="Finish at"
                     {...field}
                     value={myFormatDate(
-                      formValues?.subEvents[subEventIndex].date,
+                      formValues?.subEvents[subEventIndex].finishAt,
                       'datetime'
                     )}
                   />

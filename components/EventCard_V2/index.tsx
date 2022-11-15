@@ -11,7 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { fromNow } from 'utils/myFormatDate';
-export interface EventType extends Event { }
+export interface EventType extends Event {}
 
 const EventCard = ({
   event,
@@ -69,7 +69,6 @@ const EventCard = ({
             <UpcomingLabel status={status} />
           </figure>
 
-
           <EventModalInfo event={event} />
         </div>
       </Modal>
@@ -79,15 +78,18 @@ const EventCard = ({
 
 const EventModalInfo = ({ event }: { event: EventType }) => {
   const { id, resume, links, images, includeFinishDate } = event;
-  const { user } = useAuth()
+  const { user } = useAuth();
   const isOwner = (user && user.id) === event?.userId;
   return (
     <div className="">
-      {isOwner &&
+      {isOwner && (
         <div>
-          <EventOptions eventId={id || ''} config={{ deleteRedirectTo: '/profile' }} />
+          <EventOptions
+            eventId={id || ''}
+            config={{ deleteRedirectTo: '/profile' }}
+          />
         </div>
-      }
+      )}
       <p className="text-center">
         {includeFinishDate ? (
           <RangeDate
@@ -99,7 +101,9 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
           <DateComponent date={event.date} format="dd MMMM yy" />
         )}
       </p>
-      <p className='text-center'>{event.date ? fromNow(event?.date, { addSuffix: true }) : ''}</p>
+      <p className="text-center">
+        {event.date ? fromNow(event?.date, { addSuffix: true }) : ''}
+      </p>
       <div className="w-full text-sm truncate text-center">
         <div className="flex w-full justify-between ">
           {/* <RatingInput /> */}
@@ -113,8 +117,10 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
         <div>
           <span className="text-xs">Resume</span>
           <p>{resume}</p>
-          <div className='text-center'>
-            <Link href={`/events/${event.id}/announcement`}><a className='link'>Read full announcement</a></Link>
+          <div className="text-center">
+            <Link href={`/events/${event.id}/announcement`}>
+              <a className="link">Read full announcement</a>
+            </Link>
           </div>
         </div>
       )}
@@ -129,7 +135,6 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
         </div>
       )}
 
-
       <div className="grid grid-cols-3 sm:grid-cols-4 ">
         <ImagesList
           images={images}
@@ -138,7 +143,6 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
         />
       </div>
     </div>
-
   );
 };
 
@@ -164,7 +168,8 @@ const UpcomingLabel = ({
     PLANING: 'Coming soon',
     IN_PROGRESS: 'In progress',
     FINISHED: 'Finished',
-    OUTSIDE: 'Outside '
+    OUTSIDE: 'Outside',
+    HIDDEN: 'Hidden',
   };
   return (
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">

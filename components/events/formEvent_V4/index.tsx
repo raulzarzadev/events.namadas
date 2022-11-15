@@ -22,11 +22,13 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const defaultValues: Partial<Event> = {
     date: myFormatDate(currentDate, 'datetime'),
     finishAt: myFormatDate(currentDate, 'datetime'),
-    status: 'PLANING',
+    status: 'HIDDEN',
     subscriptionsOptions: {
       finishAt: myFormatDate(currentDate, 'inputDate'),
       startAt: myFormatDate(currentDate, 'inputDate'),
       limit: 0,
+      acceptSubscriptions: false,
+      acceptTerms: false,
     },
   };
 
@@ -43,7 +45,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
 
   const formValues = watch();
   const onSubmit = (data: Event) => {
-    console.log(data);
+    // console.log(data);
     setFormStatus(FORM_LABELS.loading);
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)

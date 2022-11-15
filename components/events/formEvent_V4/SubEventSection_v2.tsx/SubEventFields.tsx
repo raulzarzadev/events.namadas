@@ -5,7 +5,6 @@ import Textarea from '@comps/inputs/Textarea';
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
-import { FormFields } from '../SubEventsSection';
 
 const SubEventFields = ({
   register,
@@ -27,12 +26,8 @@ const SubEventFields = ({
   setValue: any;
 }) => {
   const subEventValues = formValues?.subEvents[subEventIndex];
-  const _defaultFormFields = Object.keys(subEventValues);
-  const [subEventFields, setEventFields] = useState(_defaultFormFields);
 
-  console.log({ subEventValues, _defaultFormFields });
-
-  const FIELDS: Record<FormFields, any> = {
+  const FIELDS = {
     title: (
       <Text
         {...register(`subEvents.${subEventIndex}.title`)}
@@ -56,64 +51,70 @@ const SubEventFields = ({
         errors={errors}
       />
     ),
-    date: (
-      <Controller
-        control={control}
-        name={`subEvents.${subEventIndex}.date`}
-        defaultValue={myFormatDate(new Date(), 'datetime')}
-        render={({
-          field,
-          fieldState: { invalid, isTouched, isDirty, error },
-          formState,
-        }) => (
-          <InputLocalDate
-            label="Date"
-            {...field}
-            value={myFormatDate(
-              formValues?.subEvents[subEventIndex].date,
-              'datetime'
-            )}
-          />
-        )}
-      />
-    ),
-    finishAt: (
-      <Controller
-        control={control}
-        name={`subEvents.${subEventIndex}.finishAt`}
-        defaultValue={myFormatDate(new Date(), 'datetime')}
-        render={({
-          field,
-          fieldState: { invalid, isTouched, isDirty, error },
-          formState,
-        }) => (
-          <InputLocalDate
-            label="Finish at"
-            {...field}
-            value={myFormatDate(
-              formValues?.subEvents[subEventIndex].date,
-              'datetime'
-            )}
-          />
-        )}
-      />
-    ),
-    description: (
-      <Textarea
-        {...register(`subEvents.${subEventIndex}.description`)}
-        label={'Date time'}
-        errors={errors}
-      />
-    ),
-    comments: (
-      <Text
-        {...register(`subEvents.${subEventIndex}.comments`)}
-        label={'Comments'}
-        errors={errors}
-      />
-    ),
-  };
+    // date: (
+    //   <Controller
+    //     control={control}
+    //     name={`subEvents.${subEventIndex}.date`}
+    //     defaultValue={myFormatDate(new Date(), 'datetime')}
+    //     render={({
+    //       field,
+    //       fieldState: { invalid, isTouched, isDirty, error },
+    //       formState,
+    //     }) => (
+    //       <InputLocalDate
+    //         label="Date"
+    //         {...field}
+    //         value={myFormatDate(
+    //           formValues?.subEvents[subEventIndex].date,
+    //           'datetime'
+    //         )}
+    //       />
+    //     )}
+    //   />
+    // ),
+    // finishAt: (
+    //   <Controller
+    //     control={control}
+    //     name={`subEvents.${subEventIndex}.finishAt`}
+    //     defaultValue={myFormatDate(new Date(), 'datetime')}
+    //     render={({
+    //       field,
+    //       fieldState: { invalid, isTouched, isDirty, error },
+    //       formState,
+    //     }) => (
+    //       <InputLocalDate
+    //         label="Finish at"
+    //         {...field}
+    //         value={myFormatDate(
+    //           formValues?.subEvents[subEventIndex].date,
+    //           'datetime'
+    //         )}
+    //       />
+    //     )}
+    //   />
+    // ),
+    // description: (
+    //   <Textarea
+    //     {...register(`subEvents.${subEventIndex}.description`)}
+    //     label={'Description'}
+    //     errors={errors}
+    //   />
+    // ),
+    // comments: (
+    //   <Text
+    //     {...register(`subEvents.${subEventIndex}.comments`)}
+    //     label={'Comments'}
+    //     errors={errors}
+    //   />
+    // ),
+  } as const;
+
+  type FormFields = keyof typeof FIELDS;
+
+  const _defaultFormFields = [...Object.keys(subEventValues)];
   const subEventFieldsOptions = Object.keys(FIELDS);
+
+  const [subEventFields, setEventFields] = useState(_defaultFormFields);
 
   const handleSetFields = ({ target: { name, checked } }) => {
     if (!checked) {
@@ -128,6 +129,7 @@ const SubEventFields = ({
       setEventFields([...subEventFields, name]);
     }
   };
+  // console.log({ subEventFields });
 
   return (
     <div className="my-2 bg-base-300 py-2">
@@ -165,7 +167,7 @@ const SubEventFields = ({
         })}
       </div>
       <div className=" ">
-        {subEventFields?.map((fieldName) => (
+        {subEventFields?.map((fieldName: FormFields) => (
           <div key={subEventIndex}>{FIELDS[fieldName]}</div>
         ))}
       </div>

@@ -6,9 +6,10 @@ import { ReactNode, useEffect, useState } from 'react';
 export interface Step {
   label: string;
   Component: ReactNode;
+  helperText: string;
 }
 
-const StepperForm = ({ steps }: { steps: Step[]; query: any }) => {
+const StepperForm = ({ steps }: { steps: Step[] }) => {
   const router = useRouter();
   const preselectStep = parseInt(`${router.query.step}`);
   const [stepSelected, setStepSelected] = useState(preselectStep || 0);
@@ -79,6 +80,13 @@ const StepperForm = ({ steps }: { steps: Step[]; query: any }) => {
           <Icon name="rigth-arrow" />
         </button>
       </div>
+      {steps[stepSelected]?.helperText && (
+        <div className="bg-info px-2 rounded-lg m-2">
+          <span className="text-xs text-info-content ">
+            {steps[stepSelected]?.helperText}
+          </span>
+        </div>
+      )}
       {steps[stepSelected].Component}
     </div>
   );

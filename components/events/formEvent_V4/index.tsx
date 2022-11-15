@@ -42,7 +42,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
 
   const formValues = watch();
   const onSubmit = (data: Event) => {
-    // console.log(data);
+    console.log(data);
     setFormStatus(FORM_LABELS.loading);
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)
@@ -129,6 +129,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       })();
     }
   };
+  // console.log({ errors });
 
   // console.log(formValues)
 
@@ -158,7 +159,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       ),
     },
     {
-      label: 'Type',
+      label: 'Classify',
       Component: (
         <SubEventsSection
           register={register}
@@ -214,6 +215,8 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     },
     {
       label: 'Related ',
+      helperText: `Add some links to help users find more information about others
+        events, sponsors and social media`,
       Component: (
         <>
           <AddLinksSection

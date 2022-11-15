@@ -17,7 +17,7 @@ const AddLinksSection = ({
   formValues: any;
   register: any;
   errors: any;
-  setValue: any
+  setValue: any;
 }) => {
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
@@ -32,30 +32,30 @@ const AddLinksSection = ({
     append(appendNewEvent);
   };
   const handleChangeInputFile = async (e: any) => {
-    const files = e.target.files
-    const fieldName = e.target.name
+    const files = e.target.files;
+    const fieldName = e.target.name;
     const imageUploaded = await FirebaseCRUD.uploadFileAsync({
       file: files[0],
-      fieldName
+      fieldName,
     });
-    setValue(fieldName, imageUploaded.url)
-    return imageUploaded.url
-  }
+    setValue(fieldName, imageUploaded.url);
+    return imageUploaded.url;
+  };
 
   const handleDeleteImage = (imageUrl: string, fieldName: string) => {
-    console.log(imageUrl)
+    console.log(imageUrl);
     FirebaseCRUD.deleteFile({ url: imageUrl }).then((res) => {
-      console.log(res)
-      setValue(fieldName, null)
-    })
-    return {}
-  }
+      console.log(res);
+      setValue(fieldName, null);
+    });
+    return {};
+  };
   return (
     <FormSection title="Links related">
       <div className="grid  ">
         {fields.map((field, index) => (
           <div key={field.id} className=" my-2   bg-base-300 p-2 rounded-lg">
-            <div className='flex justify-end w-full '>
+            <div className="flex justify-end w-full ">
               <button
                 type="button"
                 className="btn btn-outline btn-square btn-error mb-0  "
@@ -78,8 +78,13 @@ const AddLinksSection = ({
                 errors={errors}
                 placeholder="https://example.com"
               />
-              <InputFile name={`links.${index}.image`} handleChange={handleChangeInputFile} handleDelete={handleDeleteImage} label='Add an image' defaultImage={formValues.links[index].image} />
-
+              <InputFile
+                name={`links.${index}.image`}
+                handleChange={handleChangeInputFile}
+                handleDelete={handleDeleteImage}
+                label="Add an image"
+                defaultImage={formValues.links[index].image}
+              />
             </div>
           </div>
         ))}

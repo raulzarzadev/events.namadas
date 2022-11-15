@@ -1,7 +1,7 @@
 import { SubEvent } from '@firebase/Events/event.model';
 import { useFieldArray } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
-import SubEventFields from './SubEventFields';
+import SubEventFields from './SubEventFields_v2';
 
 const SubEventForm = ({
   control,

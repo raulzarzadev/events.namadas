@@ -16,7 +16,7 @@ const EventTypeForm = ({ setValue }: any) => {
   ];
 
   const sports = ['swim', 'run', 'bike', 'multi'];
-  const sport_variant = {
+  const sport_variant: Record<string, string[]> = {
     type: ['sports'],
     sports: ['swim', 'run', 'bike', 'multi'],
     swim: ['pool', 'openWater'],
@@ -28,8 +28,8 @@ const EventTypeForm = ({ setValue }: any) => {
     openWater: ['sea', 'lake', 'river'],
   };
 
-  const [sportType, setSportType] = useState(['type']);
-  const handleChange = ({ target: { name } }) => {
+  const [sportType, setSportType] = useState<string[]>(['type']);
+  const handleChange = ({ target: { name } }: any) => {
     setSportType([...sportType, name]);
   };
   const handleRemoveType = (type: string) => {
@@ -66,7 +66,6 @@ const EventTypeForm = ({ setValue }: any) => {
               <RadioInput
                 key={sport}
                 label={sport}
-                // {...register('eventType')}
                 value={sport}
                 name={sport}
                 onChange={handleChange}

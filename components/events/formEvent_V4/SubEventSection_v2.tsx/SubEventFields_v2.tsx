@@ -49,7 +49,7 @@ const SubEventFields = ({
   const _defaultFormFields = Object.keys(subEventValues);
   const [subEventFields, setEventFields] = useState(_defaultFormFields);
 
-  const handleSetFields = ({ target: { name, checked } }) => {
+  const handleSetFields = ({ target: { name, checked } }: any) => {
     if (!checked) {
       const removeValue = { ...subEventValues };
       delete removeValue[name];

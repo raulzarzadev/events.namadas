@@ -1,7 +1,6 @@
 import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import ImagesGrid from './imagesGrid';
 import ImagesList from './imagesList';
 
 interface InputFilesType {
@@ -9,8 +8,8 @@ interface InputFilesType {
   setImages: (images: Image[], setImagesOps?: SetImagesOps) => void;
   images?: Image[];
   disabled?: boolean;
-  fieldName: string,
-  displayAs?: 'row' | 'grid'
+  fieldName: string;
+  displayAs?: 'row' | 'grid';
 }
 interface Image {
   url?: string | undefined;
@@ -70,7 +69,7 @@ const InputFiles = ({
     <div>
       <label className="pl-1">{label}</label>
       <div className="grid">
-        {displayAs === 'row' &&
+        {displayAs === 'row' && (
           <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2">
             <div className="w-36 h-36 ">
               <SquareInputFile
@@ -85,8 +84,8 @@ const InputFiles = ({
               onDeleteImage={handleDeleteImage}
             />
           </div>
-        }
-        {displayAs === 'grid' &&
+        )}
+        {displayAs === 'grid' && (
           <div className="grid grid-cols-3 sm:grid-cols-4 ">
             <div className="w-full h-full">
               <SquareInputFile
@@ -101,27 +100,26 @@ const InputFiles = ({
               onDeleteImage={handleDeleteImage}
             />
           </div>
-        }
+        )}
       </div>
     </div>
   );
 };
 interface InputFile {
-  disabled?: boolean
-  handleChange: (props: any) => {}
-  label: string
+  disabled?: boolean;
+  handleChange: (props: any) => {};
+  label: string;
 }
 const SquareInputFile = ({ disabled, handleChange, label }: InputFile) => {
   // TODO add label to accessibility
   return (
     <label>
       <div
-        className={`h-full w-full hover:border-dotted  hover:border-white flex justify-center items-center rounded-sm relative cursor-pointer border-dashed border-2  ${disabled && 'opacity-30 cursor-wait '
-          }`}
+        className={`h-full w-full hover:border-dotted  hover:border-white flex justify-center items-center rounded-sm relative cursor-pointer border-dashed border-2  ${
+          disabled && 'opacity-30 cursor-wait '
+        }`}
       >
-        <div className="absolute text-[110px] transform -translate-y-2">
-          +
-        </div>
+        <div className="absolute text-[110px] transform -translate-y-2">+</div>
         <input
           disabled={disabled}
           accept=".jpg, .png, .jpeg, .webp"
@@ -133,5 +131,5 @@ const SquareInputFile = ({ disabled, handleChange, label }: InputFile) => {
       </div>
     </label>
   );
-}
+};
 export default InputFiles;

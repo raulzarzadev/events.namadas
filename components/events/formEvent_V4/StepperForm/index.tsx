@@ -6,7 +6,7 @@ import { ReactNode, useEffect, useState } from 'react';
 export interface Step {
   label: string;
   Component: ReactNode;
-  helperText: string;
+  helperText?: string;
 }
 
 const StepperForm = ({ steps }: { steps: Step[] }) => {

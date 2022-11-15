@@ -2,9 +2,10 @@ import React from 'react';
 import { InputType } from '.';
 interface RadioInput extends Omit<InputType, 'size'> {
   value: string;
+  onChange: any;
 }
 const RadioInput = React.forwardRef<HTMLInputElement, RadioInput>(
-  ({ label, ...props }, ref) => {
+  ({ label, onChange, ...props }, ref) => {
     return (
       <div className="form-control">
         <label className="label cursor-pointer flex flex-col">
@@ -15,6 +16,7 @@ const RadioInput = React.forwardRef<HTMLInputElement, RadioInput>(
             ref={ref}
             type="radio"
             className="radio checked:bg-info"
+            onChange={onChange}
             {...props}
           />
         </label>

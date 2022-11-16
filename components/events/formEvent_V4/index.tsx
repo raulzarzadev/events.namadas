@@ -183,6 +183,20 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       Component: (
         <>
           <div>
+            <div className="flex items-center">
+              <input
+                disabled
+                type={'checkbox'}
+                className="checkbox m-2"
+                {...register('subscriptionsOptions.acceptTerms', {
+                  value: false,
+                })}
+              />
+              <p>
+                Aceptar terminos y condiciones para organizar un evento en
+                nadamas
+              </p>
+            </div>
             <Toggle
               disabled={!acceptTerms}
               label="Organizar evento"
@@ -209,22 +223,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
               />
             </>
           ) : (
-            <>
-              <div className="flex items-center">
-                <input
-                  // disabled
-                  type={'checkbox'}
-                  className="checkbox m-2"
-                  {...register('subscriptionsOptions.acceptTerms', {
-                    value: false,
-                  })}
-                />
-                <p>
-                  Aceptar terminos y condiciones para organizar un evento en
-                  nadamas
-                </p>
-              </div>
-            </>
+            <></>
           )}
         </>
       ),

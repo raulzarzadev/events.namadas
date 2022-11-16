@@ -301,7 +301,6 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       ),
     },
   ];
-  console.log(formValues.subscriptionsOptions);
   return (
     <div className="relative">
       <Head>

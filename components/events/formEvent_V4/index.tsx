@@ -209,7 +209,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
             <>
               <div className="flex items-center">
                 <input
-                  disabled
+                  // disabled
                   type={'checkbox'}
                   className="checkbox m-2"
                   {...register('subscriptionsOptions.acceptTerms')}

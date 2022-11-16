@@ -39,6 +39,7 @@ const JoinEvent = ({ event }: { event: Event }) => {
   return (
     <div>
       <NotLoginModal open={openLoginModal} handleOpen={handleOpenLoginModal} />
+
       <h2 className="text-2xl font-bold text-center">Be part of this event</h2>
       <div className="flex flex-wrap justify-center  ">
         {!event?.prices?.length ? (

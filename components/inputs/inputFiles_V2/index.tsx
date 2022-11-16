@@ -1,3 +1,4 @@
+import PreviewImage from '@comps/previewImage';
 import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -68,43 +69,83 @@ const InputFiles = ({
   return (
     <div>
       <label className="pl-1">{label}</label>
-      <div className="grid">
-        {displayAs === 'row' && (
-          <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2">
-            <div className="w-36 h-36 ">
+      {displayAs === 'grid' && (
+        <div className={`grid grid-cols-3`}>
+          <div className="aspect-square ">
+            <SquareInputFile
+              disabled={disabled}
+              handleChange={handleChange}
+              label={label}
+            />
+          </div>
+          <>
+            {[...images, ...uploadingImages]?.map(({ url, uploading }, i) => (
+              <div key={`${url}-${i}`} className={` aspect-square `}>
+                <PreviewImage
+                  image={url}
+                  uploading={uploading}
+                  previewSize="full"
+                  //  handleDelete={() => handleOpenDelete(url)}
+                />
+              </div>
+            ))}
+          </>
+        </div>
+      )}
+      {displayAs === 'row' && (
+        <div className={`flex overflow-auto p-2`}>
+          <div className="flex ">
+            <div className="aspect-square w-36">
               <SquareInputFile
                 disabled={disabled}
                 handleChange={handleChange}
                 label={label}
               />
             </div>
-            <ImagesList
-              images={[...images, ...uploadingImages]}
-              childrenClassName={'w-36 h-36  '}
-              onDeleteImage={handleDeleteImage}
-            />
+            <>
+              {[...images, ...uploadingImages]?.map(({ url, uploading }, i) => (
+                <div key={`${url}-${i}`} className={` aspect-square w-36`}>
+                  <PreviewImage
+                    image={url}
+                    uploading={uploading}
+                    previewSize="full"
+                    //  handleDelete={() => handleOpenDelete(url)}
+                  />
+                </div>
+              ))}
+            </>
           </div>
-        )}
-        {displayAs === 'grid' && (
-          <div className="grid grid-cols-3 sm:grid-cols-4 h-full ">
-            <div className="w-full h-full">
-              <SquareInputFile
-                disabled={disabled}
-                handleChange={handleChange}
-                label={label}
-              />
-            </div>
-            <ImagesList
-              images={[...images, ...uploadingImages]}
-              childrenClassName={'w-full h-full '}
-              onDeleteImage={handleDeleteImage}
-            />
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
+
+// <div className="grid grid-cols-3 sm:grid-cols-4 h-full ">
+
+//             <ImagesList
+//               images={[...images, ...uploadingImages]}
+//               childrenClassName={'w-full h-full '}
+//               onDeleteImage={handleDeleteImage}
+//             />
+//           </div>
+
+{
+  /* <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2">
+  <div className="w-36 h-36 ">
+    <SquareInputFile
+      disabled={disabled}
+      handleChange={handleChange}
+      label={label}
+    />
+  </div>
+  <ImagesList
+    images={[...images, ...uploadingImages]}
+    childrenClassName={'w-36 h-36  '}
+    onDeleteImage={handleDeleteImage}
+  />
+</div>; */
+}
 interface InputFile {
   disabled?: boolean;
   handleChange: (props: any) => {};

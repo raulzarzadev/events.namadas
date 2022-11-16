@@ -294,7 +294,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
           label="Add some images "
           images={formValues?.images}
           setImages={handleSetImages}
-          displayAs="grid"
+          displayAs="row"
           // disabled={disabled}
         />
       ),

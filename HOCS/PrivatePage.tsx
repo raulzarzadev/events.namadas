@@ -4,14 +4,17 @@ import { selectAuthState } from 'store/slices/authSlice';
 
 function PrivatePage(props: { children: any }) {
   const { user } = useSelector(selectAuthState);
-  const router = useRouter();
 
+  const router = useRouter();
   if (user === undefined) {
+    console.log('user undefined');
     return <div>Loading ... </div>;
   }
   if (user === null) {
+    console.log('user null');
     router.push('/');
   }
+  console.log('user ', !!user);
   return <>{props.children}</>;
 }
 

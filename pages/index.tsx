@@ -56,7 +56,11 @@ const Home: NextPage = (props: any) => {
     <div className="px-2">
       <EventsRow title="Upcoming events " events={activeEvents} />
       {Object.entries(labelGroups).map(([category, events]: any) => (
-        <EventsRow title={labels_es[category]} events={events} />
+        <EventsRow
+          key={`${category}`}
+          title={labels_es[category]}
+          events={events}
+        />
       ))}
       <EventsRow title="Past events" events={pastEvents} />
     </div>

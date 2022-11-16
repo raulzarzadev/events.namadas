@@ -1,35 +1,44 @@
-import EventsRow from "@comps/events/eventsRow";
-import ImagesList from "@comps/inputs/inputFiles_V2/imagesList";
-import { getCompanyEvents } from "@firebase/Events/main";
-import useAuth from "hooks/useAuth";
-import useCompanies from "hooks/useCompanies";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import EventsRow from '@comps/events/eventsRow';
+import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
+import { getCompanyEvents } from '@firebase/Events/main';
+import useAuth from 'hooks/useAuth';
+import useCompanies from 'hooks/useCompanies';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const CompanyDetails = () => {
-  const {user}=useAuth()
-  const {query:{id}, push}=useRouter()
-  const {getCompany}=useCompanies()
-  const [company, setCompany]=useState<any>(undefined)
-  const [companyEvents, setCompanyEvents]=useState(undefined)
-  
-  useEffect(()=>{
-    if(id){
+  const { user } = useAuth();
+  const {
+    query: { id },
+    push,
+  } = useRouter();
+  const { getCompany } = useCompanies();
+  const [company, setCompany] = useState<any>(undefined);
+  const [companyEvents, setCompanyEvents] = useState(undefined);
+
+  useEffect(() => {
+    if (id) {
       getCompany(`${id}`).then(setCompany);
       getCompanyEvents(`${id}`).then((events: any) => setCompanyEvents(events));
     }
-  },[id])
+  }, [id]);
 
-  if (company === undefined || companyEvents===undefined) return <div>Loading ...</div>;
-  const {companyInfo, images}=company
-  console.log(company)
-  const isOwner = id === user?.id
+  if (company === undefined || companyEvents === undefined)
+    return <div>Loading ...</div>;
+  const { companyInfo, images } = company;
+  // console.log(company)
+  const isOwner = id === user?.id;
   return (
     <div>
       <div>
         {isOwner ? (
           <div className="flex w-full justify-center my-4">
-            <button className="btn btn-outline" onClick={()=>push(`/companies/${id}/edit`)}>edit</button>
+            <button
+              className="btn btn-outline"
+              onClick={() => push(`/companies/${id}/edit`)}
+            >
+              edit
+            </button>
           </div>
         ) : null}
       </div>
@@ -54,6 +63,6 @@ const CompanyDetails = () => {
       </div>
     </div>
   );
-}
+};
 
 export default CompanyDetails;

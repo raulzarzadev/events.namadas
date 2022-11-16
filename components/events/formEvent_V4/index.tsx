@@ -140,6 +140,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const acceptSubscriptions =
     formValues.subscriptionsOptions?.acceptSubscriptions;
   const acceptTerms = formValues.subscriptionsOptions?.acceptTerms;
+
   const STEPS = [
     {
       label: 'Information',
@@ -185,7 +186,9 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
             <Toggle
               disabled={!acceptTerms}
               label="Organizar evento"
-              {...register('subscriptionsOptions.acceptSubscriptions')}
+              {...register('subscriptionsOptions.acceptSubscriptions', {
+                value: false,
+              })}
             />
           </div>
           {acceptSubscriptions ? (
@@ -212,7 +215,9 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
                   // disabled
                   type={'checkbox'}
                   className="checkbox m-2"
-                  {...register('subscriptionsOptions.acceptTerms')}
+                  {...register('subscriptionsOptions.acceptTerms', {
+                    value: false,
+                  })}
                 />
                 <p>
                   Aceptar terminos y condiciones para organizar un evento en
@@ -296,7 +301,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       ),
     },
   ];
-
+  console.log(formValues.subscriptionsOptions);
   return (
     <div className="relative">
       <Head>

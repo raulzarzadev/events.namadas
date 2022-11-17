@@ -50,18 +50,35 @@ const Home: NextPage = (props: any) => {
     mountain: 'Montaña',
     run: 'Carrera',
     bike: 'Bicicleta',
+    '25m': 'Piscina semi olimpica 25m ',
+    '50m': 'Piscina olimpica 50m ',
+    pool: 'En pisicna',
+    route: 'Bici de ruta',
   };
-
+  const CATEGORIES = [
+    'triathlon',
+    'bike',
+    'mountain',
+    'swim',
+    'openWater',
+    'pool',
+  ];
   return (
     <div className="px-2">
       <EventsRow title="Upcoming events " events={activeEvents} />
-      {Object.entries(labelGroups).map(([category, events]: any) => (
-        <EventsRow
-          key={`${category}`}
-          title={labels_es[category]}
-          events={events}
-        />
-      ))}
+      {CATEGORIES.map((category) => {
+        return (
+          <>
+            {labelGroups[category]?.length && (
+              <EventsRow
+                key={`${category}`}
+                title={labels_es[category]}
+                events={labelGroups[category]}
+              />
+            )}
+          </>
+        );
+      })}
       <EventsRow title="Past events" events={pastEvents} />
     </div>
   );

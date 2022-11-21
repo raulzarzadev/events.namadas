@@ -31,7 +31,7 @@ const HomeEvents = ({ events }: { events: Event[] }) => {
     );
   };
   const omitPatsEvent = (events: Event[]) =>
-    events.filter((event) => event?.date > new Date().getTime());
+    events.filter((event) => (event?.date || 0) > new Date().getTime());
 
   const eventsByLabels = groupEventsByLabels(omitPatsEvent(events));
   const eventsByDate = groupByDate(events);

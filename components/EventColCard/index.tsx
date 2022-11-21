@@ -180,6 +180,7 @@ const UpcomingLabel = ({
     FINISHED: 'Finished',
     OUTSIDE: 'Outside',
     HIDDEN: 'Hidden',
+    POSTPONED: 'Postponed',
   };
   return (
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">

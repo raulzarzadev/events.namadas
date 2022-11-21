@@ -50,10 +50,16 @@ const EventCard = ({
               layout="fill"
             />
           )}
-          <UpcomingLabel status={status} />
+          <div className="absolute bottom-0 right-1/2 translate-x-1/2">
+            <EventLabel event={event} />
+          </div>
         </figure>
         <p className="text-center">
-          {fromNow(event.date, { addSuffix: true })}
+          <span>
+            {['FINISHED', 'ACTIVE', 'IN_PROGRESS'].includes(status) &&
+              fromNow(event.date, { addSuffix: true })}
+          </span>
+          <span>{event.status === 'POSTPONED' && 'Event Postponed'}</span>
         </p>
       </a>
       <Modal title={`${title}`} open={openModal} handleOpen={handleOpenModal}>
@@ -66,7 +72,6 @@ const EventCard = ({
                 layout="fill"
               />
             )}
-            <UpcomingLabel status={status} />
           </figure>
 
           <EventModalInfo event={event} />
@@ -156,30 +161,47 @@ const EventTitle = ({ title }: { title?: string }) => {
   );
 };
 
-const UpcomingLabel = ({
-  status = 'PLANING',
-  fromNow,
-}: {
-  status: Event['status'];
-  fromNow?: string;
-}) => {
-  const STATUS_LABEL: Record<Event['status'], string> = {
-    ACTIVE: 'Upcoming',
-    PLANING: 'Coming soon',
-    IN_PROGRESS: 'In progress',
-    FINISHED: 'Finished',
-    OUTSIDE: 'Outside',
-    HIDDEN: 'Hidden',
-  };
-  return (
-    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
-      <div className="flex justify-center">
-        <label className="bg-red-600 font-bold rounded-t-md p-1 pb-0 text-sm whitespace-nowrap">
-          {STATUS_LABEL[status]} {fromNow && `in ${fromNow}`}
-        </label>
+const EventLabel = ({ event }: { event: Event }) => {
+  const currentTime = new Date().getTime();
+  const LABELS = {
+    postponed: (
+      <div className="bg-warning px-2 rounded-t-lg">
+        <label className="text-base-100 text-sm font-bold">Postponed</label>
       </div>
-    </div>
-  );
+    ),
+    upcoming: (
+      <div className="bg-success px-2 rounded-t-lg">
+        <label className="text-base-100 text-sm font-bold">Upcoming</label>
+      </div>
+    ),
+    inCourse: (
+      <div className="bg-info px-2 rounded-t-lg">
+        <label className="text-base-100 text-sm font-bold">In course</label>
+      </div>
+    ),
+    finished: (
+      <div className="bg-error px-2 rounded-t-lg">
+        <label className="text-base-100 text-sm font-bold">Finished</label>
+      </div>
+    ),
+    null: <></>,
+  } as const;
+  type EventLabel = keyof typeof LABELS;
+
+  const status = (): EventLabel => {
+    if (event.status === 'POSTPONED') return 'postponed';
+    if ((event?.date || 0) < currentTime) return 'finished';
+    if ((event?.date || 0) > currentTime) return 'upcoming';
+    if (
+      event.includeFinishDate &&
+      (event?.date || 0) > currentTime &&
+      (event?.finishAt || 0) > currentTime
+    )
+      return 'inCourse';
+    return 'null';
+  };
+
+  return LABELS[status()];
 };
 
 export default EventCard;

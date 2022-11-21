@@ -2,7 +2,8 @@ import type { NextPage } from 'next';
 import EventsRow from '@comps/events/eventsRow';
 import useEvents from 'hooks/useEvents';
 import { Event } from '@firebase/Events/event.model';
-import { getEvents } from '@firebase/Events/main';
+import { getPublicEvents } from '@firebase/Events/main';
+import HomeEvents from '@comps/events/homeEvents';
 
 const isPastEvent = (event: any): boolean => {
   const currentDate = new Date().getTime();
@@ -12,7 +13,7 @@ const isPastEvent = (event: any): boolean => {
 };
 
 export async function getServerSideProps() {
-  const events = await getEvents();
+  const events = await getPublicEvents();
   return {
     props: { events }, // will be passed to the page component as props
   };
@@ -21,65 +22,10 @@ export async function getServerSideProps() {
 const Home: NextPage = (props: any) => {
   const events = props?.events;
   //const { events } = useEvents({ getAllEvents: true });
-  const pastEvents: Event[] = [...events].filter((event) => isPastEvent(event));
-  const activeEvents: Event[] = [...events].filter(
-    (event) =>
-      (event.status === 'ACTIVE' || event.status === 'OUTSIDE') &&
-      !isPastEvent(event)
-  );
 
-  const labelGroups = events.reduce((prev: any, curr: any) => {
-    curr?.labels?.forEach((label: string) => {
-      if (prev[label]) {
-        prev[label] = [...prev[label], curr];
-      } else {
-        prev[label] = [curr];
-      }
-    });
-    return { ...prev };
-  }, {});
-
-  const labels_es: Record<string, string> = {
-    swim: 'Natación',
-    sports: 'Deportes',
-    openWater: 'Aguas abiertas',
-    sea: 'Natación en el mar',
-    multi: 'Multideporte',
-    triathlon: 'Triatlón',
-    sprint: 'Triatlón Sprint',
-    mountain: 'Montaña',
-    run: 'Carrera',
-    bike: 'Bicicleta',
-    '25m': 'Piscina semi olimpica 25m ',
-    '50m': 'Piscina olimpica 50m ',
-    pool: 'En pisicna',
-    route: 'Bici de ruta',
-  };
-  const CATEGORIES = [
-    'triathlon',
-    'bike',
-    'mountain',
-    'swim',
-    'openWater',
-    'pool',
-  ];
   return (
     <div className="px-2">
-      <EventsRow title="Upcoming events " events={activeEvents} />
-      {CATEGORIES.map((category) => {
-        return (
-          <>
-            {labelGroups[category]?.length && (
-              <EventsRow
-                key={`${category}`}
-                title={labels_es[category]}
-                events={labelGroups[category]}
-              />
-            )}
-          </>
-        );
-      })}
-      <EventsRow title="Past events" events={pastEvents} />
+      <HomeEvents events={events} />
     </div>
   );
 };

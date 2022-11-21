@@ -8,6 +8,11 @@ const EVENT_STATUS_OPTIONS = [
   // },
   //{ name: 'PLANING', label: 'Planing', helperText: 'Is not visible yet' },
   {
+    name: 'POSTPONED',
+    label: 'Postponed ',
+    helperText: 'This event postponed. Wait for more info',
+  },
+  {
     name: 'HIDDEN',
     label: 'Hidden',
     helperText: 'This event is just visible for you ',

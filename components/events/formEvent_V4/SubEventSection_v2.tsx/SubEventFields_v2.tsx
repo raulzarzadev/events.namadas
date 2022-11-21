@@ -13,7 +13,8 @@ export type FormFields =
   | 'finishAt'
   | 'comments'
   | 'style'
-  | 'price';
+  | 'price'
+  | 'distance';
 
 const SubEventFields = ({
   register,
@@ -44,6 +45,7 @@ const SubEventFields = ({
     'comments',
     'style',
     'price',
+    'distance',
   ];
 
   const _defaultFormFields = Object.keys(subEventValues);
@@ -155,6 +157,7 @@ const SubEventFields = ({
               />
             )}
           </div>
+
           <div className="w-full">
             {subEventFields.includes('finishAt') && (
               <Controller
@@ -179,6 +182,13 @@ const SubEventFields = ({
             )}
           </div>
         </div>
+        {subEventFields.includes('distance') && (
+          <Text
+            {...register(`subEvents.${subEventIndex}.distance`)}
+            label={'Distance'}
+            errors={errors}
+          />
+        )}
 
         {subEventFields.includes('description') && (
           <Textarea

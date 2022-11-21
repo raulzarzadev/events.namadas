@@ -51,9 +51,6 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
           )}
         </p>
 
-
-
-
         <p className="text-center">{LABELS[swimmingType]}</p>
         {resume && (
           <>
@@ -64,14 +61,13 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
           </>
         )}
 
-        {announcement && <div className='text-center'>
-          <Link href={`${eventId}/announcement`}>
-            <a className='link text-center mx-auto'>
-              Read full announcement
-            </a>
-
-          </Link>
-        </div>}
+        {announcement && (
+          <div className="text-center">
+            <Link href={`${eventId}/announcement`}>
+              <a className="link text-center mx-auto">Read full announcement</a>
+            </Link>
+          </div>
+        )}
 
         {!!subEvents.length && (
           <div>
@@ -94,7 +90,7 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
         )}
 
         {!!links?.length && (
-          <div className='mb-2 '>
+          <div className="mb-2 ">
             <h4 className="font-bold text-lg text-center">Event Links</h4>
             <div className="flex  w-full justify-around flex-wrap">
               {links?.map((link) => (
@@ -103,27 +99,24 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
             </div>
           </div>
         )}
-        <div className='grid grid-cols-3 sm:grid-cols-4'>
+        <div className="grid grid-cols-3 sm:grid-cols-4">
           <ImagesList images={images} />
         </div>
-
       </div>
     </div>
   );
 };
 
 const sortByDate = (a: any, b: any) => {
-  if (a.date > b.date) return 1
-  if (a.date < b.date) return -1
-  return 0
-}
+  if (a.date > b.date) return 1;
+  if (a.date < b.date) return -1;
+  return 0;
+};
 
 export const EventLinkInfo = ({ link }: { link: EventLink }) => {
   return (
-    <div className='my-4 p-2'>
-      {link.image &&
-        <PreviewImage image={link.image} showDelete={false} />
-      }
+    <div className="my-4 p-2">
+      {link.image && <PreviewImage image={link.image} showDelete={false} />}
       <Link href={link?.url} target="_blank">
         <a className="link w-1/3 text-center " target={'_blank'}>
           {link.label}

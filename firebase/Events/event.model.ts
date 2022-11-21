@@ -3,6 +3,7 @@ import { User } from '@firebase/Users/user.model';
 
 type DateType = string | number | Date | undefined;
 export interface Event extends Base {
+  labels: string[];
   finishAt?: DateType | null;
   link?: string;
   sport: string;
@@ -23,7 +24,8 @@ export interface Event extends Base {
     | 'IN_PROGRESS'
     | 'FINISHED'
     | 'OUTSIDE'
-    | 'HIDDEN';
+    | 'HIDDEN'
+    | 'POSTPONED';
   subscriptionsOptions?: SubscriptionsOptions;
   subscriptions: EventSubscription[];
   links?: EventLink[];

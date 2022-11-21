@@ -24,12 +24,12 @@ export const listenUserEvents = (cb: CallableFunction) =>
 export const getEvents = () =>
   eventsCRUD.getMany([where('status', '==', 'ACTIVE')]);
 
+export const getPublicEvents = () =>
+  eventsCRUD.getMany([where('status', '!=', 'HIDDEN')]);
+
 export const getEventsByStatus = (status: Event['status']) => {
   return eventsCRUD.getMany([where('status', '==', status)]);
 };
 
-export const getCompanyEvents = (id:string) =>
-  eventsCRUD.getMany([
-    where('userId', '==', id),
-  ]);
-
+export const getCompanyEvents = (id: string) =>
+  eventsCRUD.getMany([where('userId', '==', id)]);

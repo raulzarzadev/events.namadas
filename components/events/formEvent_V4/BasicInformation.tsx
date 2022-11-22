@@ -1,3 +1,4 @@
+import PickerLocation from '@comps/GoogleMaps/PickerLocation';
 import { Text } from '@comps/inputs';
 import Textarea from '@comps/inputs/Textarea';
 import EventStatus from './EventStatus';
@@ -21,6 +22,7 @@ const BasicInformation = ({ register, errors, formValues, control }: any) => {
           label=" Address / Location"
           errors={errors}
         />
+        <PickerLocation />
         <Textarea
           {...register('resume')}
           name="resume"

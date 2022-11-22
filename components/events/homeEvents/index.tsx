@@ -35,13 +35,14 @@ const HomeEvents = ({ events }: { events: Event[] }) => {
 
   const eventsByLabels = groupEventsByLabels(omitPatsEvent(events));
   const eventsByDate = groupByDate(events);
+
   return (
     <div>
       {Object.entries(eventsByDate).map(([key, events]: any) => (
-        <EventsRow title={key} events={events} />
+        <EventsRow key={key} title={key} events={events} />
       ))}
       {Object.entries(eventsByLabels).map(([key, events]: any) => (
-        <EventsRow title={key} events={events} />
+        <EventsRow key={key} title={key} events={events} />
       ))}
     </div>
   );

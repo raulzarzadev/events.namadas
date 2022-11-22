@@ -1,7 +1,4 @@
 import type { NextPage } from 'next';
-import EventsRow from '@comps/events/eventsRow';
-import useEvents from 'hooks/useEvents';
-import { Event } from '@firebase/Events/event.model';
 import { getPublicEvents } from '@firebase/Events/main';
 import HomeEvents from '@comps/events/homeEvents';
 

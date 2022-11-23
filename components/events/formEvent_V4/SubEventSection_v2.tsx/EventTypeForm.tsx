@@ -42,8 +42,8 @@ const EventTypeForm = ({ setValue, formValues }: any) => {
   }, [sportType]);
 
   return (
-    <div>
-      <div className="flex flex-wrap w-full justify-around">
+    <div className=" w-full">
+      <div className="flex flex-wrap w-full justify-around ">
         {sportType.includes('social') ||
           sportType.includes('sports') ||
           EVENTS_VARIANTS.type.map((variant) => (
@@ -55,6 +55,25 @@ const EventTypeForm = ({ setValue, formValues }: any) => {
               onChange={handleChange}
             />
           ))}
+        <div className="flex flex-wrap w-full justify-around">
+          {sportType.map((type) => (
+            <div
+              key={type}
+              className="flex m-1 border rounded-full px-2 items-center shadow-md "
+            >
+              {type}
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleRemoveType(type);
+                }}
+              >
+                <Icon name="cross" size="xs" />
+              </button>
+            </div>
+          ))}
+        </div>
+
         {EVENTS_VARIANTS?.[sportType[sportType.length - 1]]?.map(
           (sport: string) => {
             return (
@@ -69,36 +88,6 @@ const EventTypeForm = ({ setValue, formValues }: any) => {
           }
         )}
       </div>
-      <div className="flex flex-wrap w-full justify-around">
-        {sportType.map((type) => (
-          <div className="flex m-1 border rounded-full px-2 items-center shadow-md ">
-            {type}
-
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleRemoveType(type);
-              }}
-            >
-              <Icon name="cross" size="xs" />
-            </button>
-          </div>
-        ))}
-      </div>
-      {/* <div className="flex">
-        {EVENT_TYPE_OPTIONS.map(
-          ({ name, label }: { name: string; label: string }) => {
-            return (
-              <RadioInput
-                key={name}
-                label={label}
-                {...register('eventType')}
-                value={name}
-              />
-            );
-          }
-        )}
-      </div> */}
     </div>
   );
 };

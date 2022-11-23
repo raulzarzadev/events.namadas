@@ -33,7 +33,7 @@ const BasicInformation = ({
             <span className="label-text">Location</span>
           </label>
           <PickerLocation
-            className="mx-auto h-56 aspect-square"
+            className="mx-auto h-56 aspect-video"
             setLocation={(location) => setValue('location', location)}
             location={formValues?.location}
           />

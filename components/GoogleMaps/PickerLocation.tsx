@@ -55,6 +55,7 @@ function Map({
         onDragEnd={() => {
           const lat = map.getCenter().lat();
           const lng = map.getCenter().lng();
+          console.log({ lat, lng });
           setLocation && setLocation({ lat, lng });
         }}
       >

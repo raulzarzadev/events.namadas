@@ -21,7 +21,7 @@ const useGeolocation = () => {
   const getLocation = (cb: CallableFunction) => {
     if (navigator.geolocation) {
       const options = {
-        enableHighAccuracy: false,
+        //  enableHighAccuracy: false,
         timeout: 5000,
         maximumAge: 0,
       };
@@ -49,21 +49,23 @@ const useGeolocation = () => {
     l2: Coordinates,
     options?: CalculateDistanceBetweenOptions
   ) => {
-    const latLngA = new google.maps.LatLng(l1?.lat, l1?.lng);
-    const latLngB = new google.maps.LatLng(l2?.lat, l2?.lng);
-    // const unit = options?.unit === 'm' ? 10000 : 1000;
+    const defaultUnit: CalculateDistanceBetweenOptions['unit'] = 'k';
+    const unit = options?.unit || defaultUnit;
+
     const unities = {
-      m: 1000,
-      k: 100,
+      m: 100,
+      k: 1000,
     };
-    if (google) {
+    if (window.google) {
+      const latLngA = new google.maps.LatLng(l1?.lat, l1?.lng);
+      const latLngB = new google.maps.LatLng(l2?.lat, l2?.lng);
       const distance =
         google.maps.geometry.spherical.computeDistanceBetween(
           latLngA,
           latLngB
-        ) / unities[options?.unit || 'm'];
-      console.log(distance);
+        ) / unities[unit];
       return distance.toFixed(2);
+    } else {
     }
   };
 

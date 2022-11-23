@@ -7,6 +7,7 @@ import RangeDate from '@comps/RangeDate';
 import { Event, EventLink, SubEvent } from '@firebase/Events/event.model';
 import Link from 'next/link';
 import myFormatDate from 'utils/myFormatDate';
+import EventDetailsHeader from './EventDetails/EventDetailsHeader';
 
 const Event = ({ event }: { event: Event | null | undefined }) => {
   //const { userEventPayments } = useEventsPayments({ eventId:event?.id });
@@ -43,13 +44,7 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
         <h1 className="text-center font-bold text-2xl">
           {title || 'Event title'}
         </h1>
-        <p className="text-center my-2">
-          {includeFinishDate ? (
-            <RangeDate startAt={date} finishAt={finishAt} />
-          ) : (
-            <DateComponent date={date} format="dd MMMM yy" />
-          )}
-        </p>
+        <EventDetailsHeader event={event} />
 
         <p className="text-center">{LABELS[swimmingType]}</p>
         {resume && (

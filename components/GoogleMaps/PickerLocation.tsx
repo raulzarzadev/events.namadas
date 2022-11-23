@@ -62,11 +62,10 @@ function Map({
 
   const onPlaceChanged = () => {
     if (autocomplete !== null) {
+      // @ts-ignore
       const place = autocomplete?.getPlace()?.geometry;
-      console.log(place);
       const lat = place?.location.lat();
       const lng = place?.location.lng();
-      console.log({ lat, lng });
       setLocation && setLocation({ lat, lng });
     } else {
       console.log('Autocomplete is not loaded yet!');

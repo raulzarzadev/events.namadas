@@ -18,7 +18,6 @@ const DistanceFromUser = ({ location }: { location?: Coordinates }) => {
       </div>
     );
   const dist = distanceBetween(userLocation, location, { unit: 'k' });
-  console.log(dist);
   return (
     <div className="text-center">
       <span>{dist} km away</span>

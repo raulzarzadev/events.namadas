@@ -41,7 +41,7 @@ const useGeolocation = () => {
         options
       );
     } else {
-      console.error('error ');
+      console.error('error no geolocation');
     }
   };
 
@@ -68,6 +68,7 @@ const useGeolocation = () => {
 
       return distance.toFixed(2);
     } else {
+      console.log('error ');
       // console.error("could't ");
     }
   };

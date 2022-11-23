@@ -1,6 +1,5 @@
-import { createSlice, Dispatch } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { AppState } from "..";
+import { createSlice } from '@reduxjs/toolkit';
+import { AppState } from '..';
 
 export interface GeolocationState {
   geolocation: any;
@@ -10,14 +9,13 @@ const initialState: GeolocationState = {
   geolocation: null,
 };
 
-
 export const geolocationSlice = createSlice({
-  name: "geolocation",
+  name: 'geolocation',
   initialState,
   reducers: {
-    setLocation: (state,action) => {
-      console.log(action.payload)
-      state.geolocation=action.payload
+    setLocation: (state, action) => {
+      console.log(action.payload);
+      state.geolocation = action.payload;
       // state.location=state.location
     },
   },
@@ -25,6 +23,7 @@ export const geolocationSlice = createSlice({
 
 // Actions creators are generated for each case reducer function
 export const { setLocation } = geolocationSlice.actions;
-export const selectGeolocationState = (state: AppState) => state.geolocation.geolocation;
+export const selectGeolocationState = (state: AppState) =>
+  state.geolocation.geolocation;
 
 export default geolocationSlice.reducer;

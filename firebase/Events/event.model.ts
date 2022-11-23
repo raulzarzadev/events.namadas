@@ -31,7 +31,15 @@ export interface Event extends Base {
   links?: EventLink[];
   prices?: Price[];
   announcement?: string;
+  location?: Coordinates;
 }
+
+export interface Coordinates {
+  lat: number;
+  lng: number;
+  accuracy?: number;
+}
+
 export interface Price {
   id: string;
   eventId?: string;

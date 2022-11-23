@@ -44,6 +44,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         {/* ---- pwa default theme ----- */}
 
         <meta name="theme-color" content="#fff" />
+        <script
+          type="text/javascript"
+          src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"
+        ></script>
       </Head>
       <Component {...pageProps} />
     </Layout>

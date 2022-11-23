@@ -43,8 +43,8 @@ const EventType = ({
   formValues: any;
 }) => {
   return (
-    <div>
-      <h4 className="font-bold text-lg">Current event status</h4>
+    <div className="form-control">
+      <span className="label-text">Event status</span>
       <div className="flex justify-around flex-grow flex-wrap">
         {EVENT_STATUS_OPTIONS.map(
           ({ name, label }: { name: string; label: string }) => {

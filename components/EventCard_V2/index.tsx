@@ -1,15 +1,19 @@
 import DateComponent from '@comps/DateComponent';
 import { EventLinkInfo } from '@comps/events/event';
 import EventOptions from '@comps/events/event/EventOptions';
+import GeolocationInput from '@comps/inputs/GeolocationInput';
 import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
 import RatingInput from '@comps/inputs/RatingInput';
 import Modal from '@comps/modal';
 import RangeDate from '@comps/RangeDate';
-import { Event } from '@firebase/Events/event.model';
+import { Coordinates, Event } from '@firebase/Events/event.model';
 import useAuth from 'hooks/useAuth';
+import useGeolocation from 'hooks/useGeolocation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectGeolocationState } from 'store/slices/geolocationSlice';
 import { fromNow } from 'utils/myFormatDate';
 export interface EventType extends Event {}
 
@@ -21,15 +25,7 @@ const EventCard = ({
   event: EventType;
   onSubscribe?: (id: string) => {};
 }) => {
-  const {
-    title,
-    id,
-    images = [],
-    status,
-    date,
-    includeFinishDate,
-    finishAt,
-  } = event;
+  const { title, id, images = [], status } = event;
   const firsImage = images?.[0];
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => {
@@ -63,26 +59,29 @@ const EventCard = ({
         </p>
       </a>
       <Modal title={`${title}`} open={openModal} handleOpen={handleOpenModal}>
-        <div className="w-full mx-auto">
-          <figure className="relative  w-full h-[165px]  ">
-            {firsImage && (
-              <Image
-                src={firsImage?.url || firsImage?.src}
-                objectFit="cover"
-                layout="fill"
-              />
-            )}
-          </figure>
+        {openModal && (
+          <div className="w-full mx-auto">
+            <figure className="relative  w-full h-[165px]  ">
+              {firsImage && (
+                <Image
+                  src={firsImage?.url || firsImage?.src}
+                  objectFit="cover"
+                  layout="fill"
+                />
+              )}
+            </figure>
 
-          <EventModalInfo event={event} />
-        </div>
+            <EventModalInfo event={event} />
+          </div>
+        )}
       </Modal>
     </>
   );
 };
 
 const EventModalInfo = ({ event }: { event: EventType }) => {
-  const { id, resume, links, images, includeFinishDate } = event;
+  const { id, resume, links, images, includeFinishDate, address, location } =
+    event;
   const { user } = useAuth();
   const isOwner = (user && user.id) === event?.userId;
   return (
@@ -109,6 +108,8 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
       <p className="text-center">
         {event.date ? fromNow(event?.date, { addSuffix: true }) : ''}
       </p>
+      {address && <p className="text-center">{address}</p>}
+      <DistanceFromUser location={location} />
       <div className="w-full text-sm truncate text-center">
         <div className="flex w-full justify-between ">
           {/* <RatingInput /> */}
@@ -139,7 +140,6 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
           </div>
         </div>
       )}
-
       <div className="grid grid-cols-3 sm:grid-cols-4 ">
         <ImagesList
           images={images}
@@ -147,6 +147,28 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
           showDelete={false}
         />
       </div>
+    </div>
+  );
+};
+
+const DistanceFromUser = ({ location }: { location: Coordinates }) => {
+  const { geolocation: userLocation, distanceBetween } = useGeolocation();
+  if (!location) return <div>This event doesn't have location</div>;
+  if (!userLocation)
+    return (
+      <div className="group text-center relative">
+        <span className="group-hover:block hidden absolute -top-2 w-1/2 right-0 bg-info text-info-content rounded-lg shadow-md">
+          Activate your geolocation to calculate distance to this event
+        </span>
+        <div className="flex justify-center w-full">
+          <GeolocationInput />
+        </div>
+      </div>
+    );
+  const dist = distanceBetween(userLocation, location);
+  return (
+    <div className="text-center">
+      <span>{dist} km</span>
     </div>
   );
 };

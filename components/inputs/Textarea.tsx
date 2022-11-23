@@ -2,15 +2,15 @@ import React from 'react';
 import { InputType } from '.';
 
 interface TextareaType extends InputType {
-  rows?:number 
+  rows?: number;
 }
 
-const Textarea = React.forwardRef<HTMLTextAreaElement , TextareaType>(
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaType>(
   (props, ref) => {
-    const { label, errors, name = '', type, rows=5 } = props;
+    const { label, errors, name = '', type, rows = 5 } = props;
     return (
       <div className="form-control w-full ">
-        <label className="label ">{label}</label>
+        <label className="label-text ">{label}</label>
         <textarea
           type={type}
           className="textarea input-bordered resize-none"

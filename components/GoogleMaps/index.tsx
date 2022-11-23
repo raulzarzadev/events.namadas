@@ -1,5 +1,5 @@
 const GoogleMaps = () => {
-  return <div>Enter</div>;
+  return <div></div>;
 };
 
 export default GoogleMaps;

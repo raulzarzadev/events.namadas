@@ -4,10 +4,16 @@ import Textarea from '@comps/inputs/Textarea';
 import EventStatus from './EventStatus';
 import FormSection from './FormSection';
 
-const BasicInformation = ({ register, errors, formValues, control }: any) => {
+const BasicInformation = ({
+  register,
+  errors,
+  formValues,
+  control,
+  setValue,
+}: any) => {
   return (
     <div>
-      <FormSection title="Basic information">
+      <FormSection title="Basic information ">
         <EventStatus register={register} formValues={formValues} />
         <Text
           {...register('title', { required: true })}
@@ -19,10 +25,19 @@ const BasicInformation = ({ register, errors, formValues, control }: any) => {
         <Text
           {...register('address')}
           name="address"
-          label=" Address / Location"
+          label="Place Name / Address"
           errors={errors}
         />
-        <PickerLocation />
+        <div className="form-control">
+          <label className="">
+            <span className="label-text">Location</span>
+          </label>
+          <PickerLocation
+            className="mx-auto h-56 aspect-square"
+            setLocation={(location) => setValue('location', location)}
+            location={formValues?.location}
+          />
+        </div>
         <Textarea
           {...register('resume')}
           name="resume"

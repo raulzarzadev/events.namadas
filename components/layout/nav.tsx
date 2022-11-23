@@ -4,7 +4,7 @@ import useAuth from 'hooks/useAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
-import GeolocationInput from './Geolocation';
+import GeolocationInput from '../inputs/GeolocationInput';
 
 const Nav = () => {
   const {

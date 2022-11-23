@@ -3,7 +3,6 @@ import { EventLinkInfo } from '@comps/events/event';
 import EventOptions from '@comps/events/event/EventOptions';
 import GeolocationInput from '@comps/inputs/GeolocationInput';
 import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
-import RatingInput from '@comps/inputs/RatingInput';
 import Modal from '@comps/modal';
 import RangeDate from '@comps/RangeDate';
 import { Coordinates, Event } from '@firebase/Events/event.model';
@@ -12,8 +11,6 @@ import useGeolocation from 'hooks/useGeolocation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectGeolocationState } from 'store/slices/geolocationSlice';
 import { fromNow } from 'utils/myFormatDate';
 export interface EventType extends Event {}
 

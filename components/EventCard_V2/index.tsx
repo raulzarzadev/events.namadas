@@ -148,7 +148,7 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
   );
 };
 
-const DistanceFromUser = ({ location }: { location: Coordinates }) => {
+const DistanceFromUser = ({ location }: { location?: Coordinates }) => {
   const { geolocation: userLocation, distanceBetween } = useGeolocation();
   if (!location) return <div>This event doesn't have location</div>;
   if (!userLocation)

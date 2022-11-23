@@ -44,30 +44,30 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     setFormStatus(FORM_LABELS.loading);
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          setFormStatus(FORM_LABELS.error);
-          console.error(err);
-        })
-        .finally(() => {
-          setFormStatus(FORM_LABELS.saved);
-        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            setFormStatus(FORM_LABELS.error);
+            console.error(err);
+          })
+          .finally(() => {
+            setFormStatus(FORM_LABELS.saved);
+          })
       : createEvent(data)
-        .then((res) => {
-          if (res?.ok) {
-            router.push(`/events/${res.res.id}/edit`);
-          }
-          console.log(res);
-        })
-        .catch((err) => {
-          setFormStatus(FORM_LABELS.error);
-          console.error(err);
-        })
-        .finally(() => {
-          setFormStatus(FORM_LABELS.saved);
-        });
+          .then((res) => {
+            if (res?.ok) {
+              router.push(`/events/${res.res.id}/edit`);
+            }
+            console.log(res);
+          })
+          .catch((err) => {
+            setFormStatus(FORM_LABELS.error);
+            console.error(err);
+          })
+          .finally(() => {
+            setFormStatus(FORM_LABELS.saved);
+          });
   };
 
   const FORM_LABELS = {
@@ -153,7 +153,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
               label="Add more images "
               images={formValues?.images}
               setImages={handleSetImages}
-            // disabled={disabled}
+              // disabled={disabled}
             />
           )}
 

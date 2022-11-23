@@ -134,7 +134,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   };
   // console.log({ errors });
 
-  // console.log(formValues)
+  console.log(formValues);
 
   const isAnOutsideEvent = formValues.status === 'OUTSIDE'; // this is when te event is organized by others and this event is just republished in nadamas.
   const acceptSubscriptions =

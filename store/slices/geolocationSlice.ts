@@ -14,7 +14,6 @@ export const geolocationSlice = createSlice({
   initialState,
   reducers: {
     setLocation: (state, action) => {
-      console.log(action.payload);
       state.geolocation = action.payload;
       // state.location=state.location
     },

@@ -2,13 +2,6 @@ import type { NextPage } from 'next';
 import { getPublicEvents } from '@firebase/Events/main';
 import HomeEvents from '@comps/events/homeEvents';
 
-const isPastEvent = (event: any): boolean => {
-  const currentDate = new Date().getTime();
-  return event.includeFinishDate
-    ? event?.finishAt < currentDate
-    : event?.date < currentDate;
-};
-
 export async function getServerSideProps() {
   const events = await getPublicEvents();
   return {
@@ -18,7 +11,6 @@ export async function getServerSideProps() {
 
 const Home: NextPage = (props: any) => {
   const events = props?.events;
-  //const { events } = useEvents({ getAllEvents: true });
 
   return (
     <div className="px-2">

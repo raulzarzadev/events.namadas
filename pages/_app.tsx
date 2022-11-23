@@ -45,6 +45,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         {/* ---- pwa default theme ----- */}
 
         <meta name="theme-color" content="#fff" />
+
+        {/* ---- scripts ----- */}
         <Script
           async
           defer

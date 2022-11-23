@@ -15,7 +15,7 @@ const EventsRow = ({
   subtitle?: string;
 }) => {
   return (
-    <div className=" mx-auto">
+    <div className=" mx-auto w-full ">
       <div className="flex items-end ">
         <h3 className="text-lg  font-bold mt-1 ">{title}</h3>
         {subtitle && <span className="mb-1 text-xs mx-1">{subtitle}</span>}
@@ -27,7 +27,7 @@ const EventsRow = ({
       </div>
       <div className="grid ">
         {!!events.length && (
-          <div className="flex flex-row gap-2 overflow-x-auto pb-4 h-[185px] ">
+          <div className="flex flex-row gap-2 overflow-x-auto  h-[175px] ">
             {events?.sort(sortFromNow).map((event, i) => (
               <EventCard key={event?.id} size="sm" event={event} />
             ))}

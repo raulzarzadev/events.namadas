@@ -36,13 +36,26 @@ const HomeEvents = ({ events }: { events: Event[] }) => {
   const eventsByLabels = groupEventsByLabels(omitPatsEvent(events));
   const eventsByDate = groupByDate(events);
 
+  const ROWS_TITLES: Record<string, string> = {
+    upcoming: 'Proximamente ⏰',
+    sports: 'Todos los Deportes 🏅',
+    past: 'Ultimos ⌛️',
+    bike: 'Bicicleta 🚵',
+    mountain: 'Montaña 🏔️',
+    run: 'Correr 🏃',
+    route: 'Bici de Ruta 🚴',
+    city: 'En ciudad 🏢',
+    multi: 'Multideporte 🏊‍♀️ 🚴‍♀️🏃‍♀️',
+    triathlon: 'Triatlón 🏊‍♀️ 🚴‍♀️🏃‍♀️',
+    'valle-man': 'ValleMan 🏊‍♀️ 🏊‍♀️ 🏊‍♀️ 🚴‍♀️🚴‍♀️🚴‍♀️🏃‍♀️🏃‍♀️🏃‍♀️',
+  };
   return (
-    <div>
+    <div className="grid gap-4">
       {Object.entries(eventsByDate).map(([key, events]: any) => (
-        <EventsRow key={key} title={key} events={events} />
+        <EventsRow key={key} title={ROWS_TITLES[key]} events={events} />
       ))}
       {Object.entries(eventsByLabels).map(([key, events]: any) => (
-        <EventsRow key={key} title={key} events={events} />
+        <EventsRow key={key} title={ROWS_TITLES[key]} events={events} />
       ))}
     </div>
   );

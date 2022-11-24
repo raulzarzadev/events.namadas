@@ -1,9 +1,8 @@
 import Icon from '@comps/Icon';
-import NotLoginModal from '@comps/modal/NotLoginModal';
 import useAuth from 'hooks/useAuth';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React from 'react';
 import GeolocationInput from '../inputs/GeolocationInput';
 
 const Nav = () => {
@@ -23,7 +22,7 @@ const Nav = () => {
           </Link>
         </div>
         <div className="navbar-end">
-          <Link href={'/cart'}>
+          {/* <Link href={'/cart'}>
             <a className="btn btn-ghost btn-circle btn-sm mx-2 indicator">
               <Icon name="cart" />
               {products.length ? (
@@ -32,20 +31,27 @@ const Nav = () => {
                 </span>
               ) : null}
             </a>
-          </Link>
+          </Link> */}
           {!user && (
-            <div className="relative">
-              <button
-                data-test-id="navbar-button-login"
-                className="btn btn-primary"
-                onClick={() => {
-                  handleLogin();
-                }}
-                id="navbar-button-login"
-              >
-                Login
-              </button>
-            </div>
+            <>
+              <div className="mx-4">
+                <Link href={'/FAQs'}>
+                  <a className="link">FAQs</a>
+                </Link>
+              </div>
+              <div className="relative">
+                <button
+                  data-test-id="navbar-button-login"
+                  className="btn btn-primary"
+                  onClick={() => {
+                    handleLogin();
+                  }}
+                  id="navbar-button-login"
+                >
+                  Login
+                </button>
+              </div>
+            </>
           )}
           {user && (
             <>

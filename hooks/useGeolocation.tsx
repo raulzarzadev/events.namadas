@@ -1,5 +1,4 @@
 import { Coordinates } from '@firebase/Events/event.model';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectGeolocationState,

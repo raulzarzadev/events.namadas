@@ -15,6 +15,7 @@ const GOOGLE_MAP_LIBRARIES: (
   | 'localContext'
   | 'visualization'
 )[] = ['places'];
+
 export default function PickerLocation({
   className,
   setLocation,

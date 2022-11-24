@@ -37,9 +37,9 @@ const HomeEvents = ({ events }: { events: Event[] }) => {
   const eventsByDate = groupByDate(events);
 
   const ROWS_TITLES: Record<string, string> = {
-    upcoming: 'Proximamente ⏰',
+    upcoming: 'Próximamente ⏰',
     sports: 'Todos los Deportes 🏅',
-    past: 'Ultimos ⌛️',
+    past: 'Pasados ⌛️',
     bike: 'Bicicleta 🚵',
     mountain: 'Montaña 🏔️',
     run: 'Correr 🏃',

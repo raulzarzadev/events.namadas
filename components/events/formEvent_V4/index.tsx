@@ -2,7 +2,7 @@ import AddLinksSection from '@comps/forms/AddLinksSection';
 import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2';
 import StepperForm from '@comps/events/formEvent_V4/StepperForm';
 import { Event } from '@firebase/Events/event.model';
-import { createEvent, deleteEvent, updateEvent } from '@firebase/Events/main';
+import { createEvent, updateEvent } from '@firebase/Events/main';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -134,7 +134,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   };
   // console.log({ errors });
 
-  console.log(formValues);
+  // console.log(formValues);
 
   const isAnOutsideEvent = formValues.status === 'OUTSIDE'; // this is when te event is organized by others and this event is just republished in nadamas.
   const acceptSubscriptions =

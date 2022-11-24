@@ -16,11 +16,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthState, setAuthState } from 'store/slices/authSlice';
 
 function useAuth() {
-  const router = useRouter();
   const dispatch = useDispatch();
   const { user, authState } = useSelector(selectAuthState);
   const [userCart, setUserCart] = useState<UserCart>({ products: [] });
-  const [cartId, setCartId] = useState('');
   const handleLogin = () => {
     googleLogin();
   };
@@ -38,8 +36,9 @@ function useAuth() {
   useEffect(() => {
     if (user?.id) {
       getOneCart(user?.id).then((res) => {
-        setCartId(res?.id);
-        listenCart(res?.id, setUserCart);
+        if (res) {
+          listenCart(res?.id, setUserCart);
+        }
       });
     }
   }, [user]);

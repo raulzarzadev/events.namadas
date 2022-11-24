@@ -8,7 +8,6 @@ import {
 const useGeolocation = () => {
   const dispatch = useDispatch();
   const geolocation = useSelector(selectGeolocationState);
-
   const askForLocation = (askFor: boolean) => {
     if (askFor) {
       getLocation((res: any) => dispatch(setLocation(res)));
@@ -21,11 +20,12 @@ const useGeolocation = () => {
   const getLocation = (cb: CallableFunction) => {
     if (navigator.geolocation) {
       const options = {
-        //  enableHighAccuracy: false,
-        timeout: 5000,
-        maximumAge: 0,
+        enableHighAccuracy: false,
+        timeout: 3000,
+        maximumAge: Infinity,
       };
-      function error(err: any) {
+      function onError(err: any) {
+        console.log(err);
         console.warn(`ERROR(${err.code}): ${err.message}`);
       }
 
@@ -36,11 +36,11 @@ const useGeolocation = () => {
             lng: coords.longitude,
             accuracy: coords.accuracy,
           }),
-        error,
+        onError,
         options
       );
     } else {
-      console.error('error no geolocation');
+      console.warn('error no geolocation');
     }
   };
 
@@ -53,23 +53,27 @@ const useGeolocation = () => {
     const unit = options?.unit || defaultUnit;
 
     const unities = {
-      m: 100,
-      k: 1000,
+      m: 1000,
+      k: 1,
     };
-    if (window.google) {
-      const latLngA = new window.google.maps.LatLng(l1?.lat, l1?.lng);
-      const latLngB = new window.google.maps.LatLng(l2?.lat, l2?.lng);
-      const distance =
-        window.google?.maps?.geometry?.spherical?.computeDistanceBetween(
-          latLngA,
-          latLngB
-        ) / unities[unit];
 
-      return distance.toFixed(2);
-    } else {
-      console.log('error ');
-      // console.error("could't ");
+    function distance(lat1: number, lon1: number, lat2: number, lon2: number) {
+      var p = 0.017453292519943295; // Math.PI / 180
+      var c = Math.cos;
+      var a =
+        0.5 -
+        c((lat2 - lat1) * p) / 2 +
+        (c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))) / 2;
+
+      return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
     }
+
+    const dist = distance(l1.lat, l1.lng, l2.lat, l2.lng);
+
+    // transform to unit and set 2 digits
+    const formatDistance = (dist * unities[unit]).toFixed(2);
+
+    return formatDistance;
   };
 
   return { geolocation, askForLocation, distanceBetween };

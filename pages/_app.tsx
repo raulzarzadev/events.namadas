@@ -47,11 +47,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#fff" />
 
         {/* ---- scripts ----- */}
-        <Script
-          async
-          defer
-          src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"
-        />
       </Head>
       <Component {...pageProps} />
     </Layout>

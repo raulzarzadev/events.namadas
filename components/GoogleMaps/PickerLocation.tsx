@@ -2,7 +2,6 @@ import { useCallback, useMemo, useState } from 'react';
 import { Autocomplete, GoogleMap, useLoadScript } from '@react-google-maps/api';
 import Icon from '@comps/Icon';
 import useGeolocation from 'hooks/useGeolocation';
-import { Coordinates } from '@firebase/Events/event.model';
 interface PickerLocationType {
   className: string;
   setLocation?: ({ lat, lng }: { lat: number; lng: number }) => void;
@@ -38,10 +37,9 @@ function Map({
   location,
 }: PickerLocationType) {
   const { geolocation: userLocation } = useGeolocation();
-
   const center = useMemo(
     () => location || userLocation || { lat: 24, lng: -110.36 },
-    [location]
+    [location, userLocation]
   );
 
   const [map, setMap] = useState<any>(null);
@@ -53,7 +51,7 @@ function Map({
   const [autocomplete, setAutocomplete] = useState(null);
 
   const onLoadAutocomplete = useCallback((autocomplete: any) => {
-    console.log(autocomplete);
+    // console.log(autocomplete);
     setAutocomplete(autocomplete);
   }, []);
 
@@ -82,7 +80,7 @@ function Map({
         >
           <input
             type="text"
-            placeholder="Find the location"
+            placeholder="Find a location"
             className="input input-bordered mx-auto"
             // style={{
             //   boxSizing: `border-box`,

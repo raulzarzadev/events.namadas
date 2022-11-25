@@ -1,7 +1,7 @@
 import FormSection from '@comps/events/formEvent_V3/FormSection';
 import Icon from '@comps/Icon';
 import { Text } from '@comps/inputs';
-import InputFile from '@comps/inputs/InputFile';
+import InputImage from '@comps/inputs/InputImage';
 import { EventLink } from '@firebase/Events/event.model';
 import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
 import { useFieldArray } from 'react-hook-form';
@@ -31,12 +31,12 @@ const AddLinksSection = ({
     };
     append(appendNewEvent);
   };
-  const handleChangeInputFile = async (e: any) => {
+  const handleChangeInputImage = async (e: any) => {
     const files = e.target.files;
     const fieldName = e.target.name;
     const imageUploaded = await FirebaseCRUD.uploadFileAsync({
       file: files[0],
-      fieldName,
+      fieldName: `events/${formValues?.id}/links`,
     });
     setValue(fieldName, imageUploaded.url);
     return imageUploaded.url;
@@ -50,6 +50,7 @@ const AddLinksSection = ({
     });
     return {};
   };
+  console.log(formValues);
   return (
     <FormSection title="Links related">
       <div className="grid  ">
@@ -78,9 +79,10 @@ const AddLinksSection = ({
                 errors={errors}
                 placeholder="https://example.com"
               />
-              <InputFile
+
+              <InputImage
                 name={`links.${index}.image`}
-                handleChange={handleChangeInputFile}
+                handleChange={handleChangeInputImage}
                 handleDelete={handleDeleteImage}
                 label="Add an image"
                 defaultImage={formValues.links[index].image}

@@ -73,7 +73,10 @@ function Map({
 
   return (
     <div className="relative ">
-      <div className="flex justify-center w-full">
+      <div className="form-control">
+        <label className="">
+          <span className="label-text">Location</span>
+        </label>
         <Autocomplete
           onLoad={onLoadAutocomplete}
           onPlaceChanged={onPlaceChanged}
@@ -81,7 +84,7 @@ function Map({
           <input
             type="text"
             placeholder="Find a location"
-            className="input input-bordered mx-auto"
+            className="input input-bordered mx-auto w-full mb-2"
             // style={{
             //   boxSizing: `border-box`,
             //   border: `1px solid transparent`,

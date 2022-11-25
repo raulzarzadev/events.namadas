@@ -48,7 +48,7 @@ const HomeEvents = ({ events }: { events: Event[] }) => {
     multi: 'Multideporte 🏊‍♀️ 🚴‍♀️🏃‍♀️',
     triathlon: 'Triatlón 🏊‍♀️ 🚴‍♀️🏃‍♀️',
     'valle-man': 'ValleMan 🏊‍♀️ 🏊‍♀️ 🏊‍♀️ 🚴‍♀️🚴‍♀️🚴‍♀️🏃‍♀️🏃‍♀️🏃‍♀️',
-    swim: 'Natación 🏊2',
+    swim: 'Natación 🏊',
     sea: 'En el mal 🌊🏊‍♀️',
     openWater: 'Aguas abiertas 🏊🏊‍♀️',
   };

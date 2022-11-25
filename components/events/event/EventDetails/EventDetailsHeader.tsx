@@ -34,7 +34,22 @@ const EventDetailsHeader = ({ event }: { event: Event }) => {
       <p className="text-center">
         {event.date ? fromNow(event?.date, { addSuffix: true }) : ''}
       </p>
-      {address && <p className="text-center">{address}</p>}
+      {address && (
+        <p className="text-center">
+          {location?.address || address}
+          <a
+            target={'_blank'}
+            href={`https://maps.google.com/?${
+              location?.address
+                ? `q=${location.address}`
+                : `ll=${location?.lat},${location?.lng}`
+            }`}
+            className="link"
+          >
+            {' map '}
+          </a>
+        </p>
+      )}
       <DistanceFromUser location={location} />
     </div>
   );

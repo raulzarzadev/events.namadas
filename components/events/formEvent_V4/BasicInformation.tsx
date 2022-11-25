@@ -1,5 +1,6 @@
 import PickerLocation from '@comps/GoogleMaps/PickerLocation';
 import { Text } from '@comps/inputs';
+import InputFile from '@comps/inputs/InputFile';
 import Textarea from '@comps/inputs/Textarea';
 import { Coordinates } from '@firebase/Events/event.model';
 import EventStatus from './EventStatus';
@@ -52,6 +53,14 @@ const BasicInformation = ({
           errors={errors}
           type="text"
           rows={10}
+        />
+        <InputFile
+          file={formValues.announcementPDF}
+          setFile={(file) => {
+            setValue('announcementPDF', file);
+          }}
+          label={'Upload announcement pdf'}
+          // name={'announcementPDF'}
         />
       </FormSection>
     </div>

@@ -38,6 +38,7 @@ export interface Coordinates {
   lat: number;
   lng: number;
   accuracy?: number;
+  address?: string;
 }
 
 export interface Price {

@@ -17,7 +17,7 @@ const Home: NextPage = (props: any) => {
     <div className="px-2">
       <div className="text-center">
         <Link href={'/new-event'}>
-          <a>Add event by free</a>
+          <a className="btn btn-sm btn-primary my-2">Add event for free</a>
         </Link>
       </div>
       <HomeEvents events={events} />

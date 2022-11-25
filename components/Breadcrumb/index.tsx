@@ -1,5 +1,4 @@
 import Icon from '@comps/Icon';
-import { IconName } from '@comps/Icon/icons-list';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -17,13 +16,19 @@ const Breadcrumb = () => {
       return [...prev, { route: accumulatedRoute, label: curr }];
     }, []);
   };
+
   const crumbs = getCrumbs(router.asPath);
+
   return (
-    <div>
+    <div className="">
       <div className="text-sm breadcrumbs">
         <ul>
           {crumbs.map((crumb) => (
-            <Crumb href={crumb.route} label={crumb.label} key={crumb.route} />
+            <Crumb
+              href={crumb?.route}
+              label={crumb?.label}
+              key={crumb?.route}
+            />
           ))}
         </ul>
       </div>
@@ -31,22 +36,12 @@ const Breadcrumb = () => {
   );
 };
 
-const Crumb = ({
-  label,
-  iconName,
-  href = '/',
-}: {
-  label: string;
-  iconName?: IconName;
-  href: string;
-}) => {
+const Crumb = ({ label, href = '/' }: { label: string; href: string }) => {
   return (
     <li>
       <Link href={href}>
         <a className="max-w-[80px] truncate ">
-          {iconName && <Icon name={iconName} />}
-
-          {label}
+          {label === 'home' ? <Icon name="home" /> : label}
         </a>
       </Link>
     </li>

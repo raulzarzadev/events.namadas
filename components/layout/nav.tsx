@@ -1,4 +1,3 @@
-import Icon from '@comps/Icon';
 import useAuth from 'hooks/useAuth';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,13 +31,13 @@ const Nav = () => {
               ) : null}
             </a>
           </Link> */}
+          <div className="mx-4">
+            <Link href={'/FAQs'}>
+              <a className="link">FAQs</a>
+            </Link>
+          </div>
           {!user && (
             <>
-              <div className="mx-4">
-                <Link href={'/FAQs'}>
-                  <a className="link">FAQs</a>
-                </Link>
-              </div>
               <div className="relative">
                 <button
                   data-test-id="navbar-button-login"

@@ -2,10 +2,11 @@ import { useCallback, useMemo, useState } from 'react';
 import { Autocomplete, GoogleMap, useLoadScript } from '@react-google-maps/api';
 import Icon from '@comps/Icon';
 import useGeolocation from 'hooks/useGeolocation';
+import { Coordinates } from '@firebase/Events/event.model';
 interface PickerLocationType {
   className: string;
-  setLocation?: ({ lat, lng }: { lat: number; lng: number }) => void;
-  location?: { lat: number; lng: number };
+  setLocation?: (location: Coordinates) => void;
+  location?: Coordinates;
 }
 const GOOGLE_MAP_LIBRARIES: (
   | 'places'
@@ -62,10 +63,11 @@ function Map({
   const onPlaceChanged = () => {
     if (autocomplete !== null) {
       // @ts-ignore
-      const place = autocomplete?.getPlace()?.geometry;
-      const lat = place?.location.lat();
-      const lng = place?.location.lng();
-      setLocation && setLocation({ lat, lng });
+      const place = autocomplete?.getPlace();
+      const lat = place?.geometry?.location.lat();
+      const lng = place?.geometry?.location.lng();
+      const address = place?.formatted_address;
+      setLocation && setLocation({ lat, lng, address });
     } else {
       console.log('Autocomplete is not loaded yet!');
     }
@@ -85,6 +87,7 @@ function Map({
             type="text"
             placeholder="Find a location"
             className="input input-bordered mx-auto w-full mb-2"
+            defaultValue={location?.address}
             // style={{
             //   boxSizing: `border-box`,
             //   border: `1px solid transparent`,

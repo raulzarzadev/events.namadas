@@ -1,9 +1,10 @@
+import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
 import { useState } from 'react';
 import PreviewFile from './PreviewFile';
 
 export interface InputFileType {
   disabled?: boolean;
-  setFile: (file: string) => Promise<string>;
+  setFile: (file: string | null) => Promise<string>;
   file: string;
   label: string;
   // name: string;
@@ -22,15 +23,23 @@ const InputFile = ({
 }: InputFileType) => {
   const [previewFile, setPreviewFile] = useState<string | undefined>(file);
   const [uploading, setUploading] = useState(false);
-
-  const handleDelete = (urlFile: string) => {
-    console.log('delete');
+  const fieldName = 'eventsPdf';
+  const handleDelete = async (urlFile: string) => {
+    setFile(null);
+    return await FirebaseCRUD.deleteFile({ url: urlFile }).then((res) =>
+      console.log(res)
+    );
   };
 
   const handleChange = async (e: any): Promise<string> => {
     console.log('change');
-
-    return '';
+    const files = e.target.files;
+    const imageUploaded = await FirebaseCRUD.uploadFileAsync({
+      file: files[0],
+      fieldName: fieldName,
+    });
+    const urlFile = imageUploaded.url;
+    return urlFile;
   };
 
   return (
@@ -46,11 +55,13 @@ const InputFile = ({
           <span className="label-text">{label}</span>
         </label>
         <input
-          // name={name}
           onChange={(e) => {
             setUploading(true);
             handleChange(e)
-              .then((res) => setPreviewFile(res))
+              .then((res) => {
+                setPreviewFile(res);
+                setFile(res);
+              })
               .finally(() => setUploading(false));
           }}
           type="file"

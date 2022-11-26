@@ -57,9 +57,9 @@ const BasicInformation = ({
         <InputFile
           file={formValues.announcementPDF}
           setFile={(file) => {
-            setValue('announcementPDF', file);
+            return setValue('announcementPDF', file);
           }}
-          label={'Upload announcement pdf'}
+          label={'Upload a PDF'}
           // name={'announcementPDF'}
         />
       </FormSection>

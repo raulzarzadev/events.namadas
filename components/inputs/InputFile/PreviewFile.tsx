@@ -1,5 +1,7 @@
 import Icon from '@comps/Icon';
 import Modal from '@comps/modal';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export interface PreviewFileType {
@@ -23,7 +25,7 @@ const PreviewFile = ({
   previewSize = 'md',
   handleDelete,
   uploading,
-  showDelete,
+  showDelete = true,
 }: PreviewFileType) => {
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(!openModal);
@@ -42,60 +44,66 @@ const PreviewFile = ({
           <div
             className={`
             ${sizes[previewSize]}
-            relative 
-             aspect-square
+             relative 
              mx-auto
              opacity-60 
-            hover:opacity-100
+             hover:opacity-100
              shadow-lg 
              cursor-pointer
+             text-center
             `}
             onClick={handleOpenModal}
           >
-            {showDelete && (
-              <div className="absolute right-0 ">
-                <button
-                  className=" hover:text-error text-white "
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleOpenDelete();
-                  }}
-                >
-                  <Icon name="delete" />
-                </button>
-                <Modal
-                  open={openDelete}
-                  handleOpen={handleOpenDelete}
-                  title="Delete file"
-                >
-                  <div className="flex w-full justify-around">
+            <span className="">
+              You can see and download
+              <span className="flex justify-center">
+                <Link href={file}>
+                  <a target="_blank" className="link">
+                    {' here '}
+                  </a>
+                </Link>
+                <span className="mx-2">or</span>
+                {showDelete && (
+                  <span className=" right-0 ">
                     <button
-                      className="btn btn-outline"
-                      onClick={() => setOpenDelete(false)}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="btn btn-error"
+                      className=" hover:text-error text-white link mx-2"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        handleDelete && handleDelete();
+                        handleOpenDelete();
                       }}
                     >
-                      Delete file
+                      {'  delete '}
                     </button>
-                  </div>
-                </Modal>
-              </div>
-            )}
+                    <Modal
+                      open={openDelete}
+                      handleOpen={handleOpenDelete}
+                      title="Delete file"
+                    >
+                      <div className="flex w-full justify-around">
+                        <button
+                          className="btn btn-outline"
+                          onClick={() => setOpenDelete(false)}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="btn btn-error"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleDelete && handleDelete();
+                          }}
+                        >
+                          Delete file
+                        </button>
+                      </div>
+                    </Modal>
+                  </span>
+                )}
+              </span>
+            </span>
           </div>
-          <Modal title="file" open={openModal} handleOpen={handleOpenModal}>
-            <>
-              <div className="relative w-full aspect-square mx-auto "></div>
-            </>
-          </Modal>
         </>
       )}
     </div>

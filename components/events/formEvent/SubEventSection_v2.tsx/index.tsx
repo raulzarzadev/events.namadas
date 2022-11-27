@@ -1,23 +1,18 @@
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
+import { useFormContext } from 'react-hook-form';
 import FormSection from '../FormSection';
 import EventTypeForm from './EventTypeForm';
 import SubEventForm from './SubEventForm';
+const SubEventsSection = ({ hideSubEvents }: { hideSubEvents?: boolean }) => {
+  const {
+    register,
+    setValue,
+    control,
+    formState: { errors },
+    watch,
+  } = useFormContext();
+  const formValues = watch();
 
-const SubEventsSection = ({
-  register,
-  errors,
-  formValues,
-  control,
-  setValue,
-  hideSubEvents,
-}: {
-  register: any;
-  errors: any;
-  formValues: any;
-  control: any;
-  setValue: any;
-  hideSubEvents: boolean;
-}) => {
   return (
     <div>
       <FormSection title="Classify event">

@@ -3,6 +3,7 @@ import {
   Controller,
   RegisterOptions,
   useFieldArray,
+  useFormContext,
   UseFormRegister,
 } from 'react-hook-form';
 import FormSection from './FormSection';
@@ -11,21 +12,17 @@ import { Price } from '@firebase/Events/event.model';
 import InputLocalDate from '@comps/inputs/InputLocalDate';
 import myFormatDate from 'utils/myFormatDate';
 export interface PricesSection {
-  register: UseFormRegister<any>;
-  errors: any;
-  formValues: any;
-  control: any;
-  event: any;
   disabled?: boolean;
 }
-const PricesSection = ({
-  register,
-  errors,
-  formValues,
-  control,
-  event,
-  disabled,
-}: PricesSection) => {
+const PricesSection = ({ disabled }: PricesSection) => {
+  const {
+    register,
+    formState: { errors },
+    watch,
+    control,
+  } = useFormContext();
+  const formValues = watch();
+  const event = formValues;
   const {
     fields: priceFields,
     append: appendPrice,

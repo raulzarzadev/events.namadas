@@ -1,10 +1,16 @@
 import { InputDate, Toggle } from '@comps/inputs';
-import { Controller, UseFormRegister } from 'react-hook-form';
+import { Controller, useFormContext, UseFormRegister } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 import FormSection from './FormSection';
 
-const EventDates = ({ register, errors, formValues, control }:any) => {
- 
+const EventDates = () => {
+  const {
+    register,
+    control,
+    formState: { errors },
+    watch,
+  } = useFormContext();
+  const formValues = watch();
   return (
     <div>
       <FormSection title="Event dates">
@@ -25,7 +31,7 @@ const EventDates = ({ register, errors, formValues, control }:any) => {
                   className="input  input-bordered"
                   type={'datetime-local'}
                   {...rest}
-                 value={myFormatDate(value,'datetime')}
+                  value={myFormatDate(value, 'datetime')}
                 />
               </div>
             )}
@@ -42,7 +48,7 @@ const EventDates = ({ register, errors, formValues, control }:any) => {
                     className="input  input-bordered"
                     type={'datetime-local'}
                     {...rest}
-                    value={myFormatDate(value,'datetime')}
+                    value={myFormatDate(value, 'datetime')}
                   />
                 </div>
               )}

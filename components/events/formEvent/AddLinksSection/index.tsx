@@ -1,10 +1,10 @@
-import FormSection from '@comps/events/formEvent_V3/FormSection';
 import Icon from '@comps/Icon';
 import { Text } from '@comps/inputs';
 import InputImage from '@comps/inputs/InputImage';
 import { EventLink } from '@firebase/Events/event.model';
 import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import FormSection from '../FormSection';
 
 const AddLinksSection = () => {
   const {

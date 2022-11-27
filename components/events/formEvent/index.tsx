@@ -1,126 +1,225 @@
-import { Text, Toggle, InputDate } from '@comps/inputs';
-import Chip from '@comps/inputs/Chip';
-import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest';
-import RadioInput from '@comps/inputs/Radio';
-import Select from '@comps/inputs/Select';
+import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2';
 import { Event } from '@firebase/Events/event.model';
-import { createEvent } from '@firebase/Events/main';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { createEvent, updateEvent } from '@firebase/Events/main';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useForm, FormProvider, useFormContext } from 'react-hook-form';
+import myFormatDate from 'utils/myFormatDate';
 
-const FormEvent = () => {
+import { Toggle } from '@comps/inputs';
+import SubEventsSection from './SubEventSection_v2.tsx';
+import EventDates from './EventDates';
+import SubscriptionsSection from './SubscriptionsSection';
+import PricesSection from './PricesSection';
+import StepperForm from './StepperForm';
+import BasicInformation from './BasicInformation';
+import ParticipantsSection from './ParticipantsSection';
+import AddLinksSection from './AddLinksSection';
+
+const FormEvent = ({ event }: { event?: Partial<Event> }) => {
+  const eventAlreadyExist = event?.id;
+  const router = useRouter();
+  const currentDate = new Date().getTime();
+  const defaultValues: Partial<Event> = {
+    date: myFormatDate(currentDate, 'datetime'),
+    finishAt: myFormatDate(currentDate, 'datetime'),
+    status: 'HIDDEN',
+    subscriptionsOptions: {
+      finishAt: myFormatDate(currentDate, 'inputDate'),
+      startAt: myFormatDate(currentDate, 'inputDate'),
+      limit: 0,
+      acceptSubscriptions: false,
+      acceptTerms: false,
+    },
+  };
+
+  const methods = useForm({
+    defaultValues: event ? { ...defaultValues, ...event } : defaultValues,
+  });
+
   const {
     register,
     handleSubmit,
     watch,
+    control,
     setValue,
     formState: { errors },
-  } = useForm();
-  const onSubmit = (data: any) => {
-    createEvent(data)
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err));
-    console.log(data);
+  } = methods;
+
+  const hardSubmit = () => {
+    console.log('hard submit');
+    setFormStatus(FORM_LABELS.loading);
+    handleSubmit((props: any) => {
+      console.log('submit');
+      onSubmit(props);
+    })();
   };
 
-  const formResults = watch();
+  const formValues = watch();
+  const onSubmit = (data: Event) => {
+    // console.log(data);
+    setFormStatus(FORM_LABELS.loading);
+    event?.id // eventAlreadyExist
+      ? updateEvent(event?.id, data)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            setFormStatus(FORM_LABELS.error);
+            console.error(err);
+          })
+          .finally(() => {
+            setFormStatus(FORM_LABELS.saved);
+          })
+      : createEvent(data)
+          .then((res) => {
+            if (res?.ok) {
+              router.push(`/events/${res.res.id}/edit`);
+            }
+            console.log(res);
+          })
+          .catch((err) => {
+            setFormStatus(FORM_LABELS.error);
+            console.error(err);
+          })
+          .finally(() => {
+            setFormStatus(FORM_LABELS.saved);
+          });
+  };
 
-  const includeFinishDate = formResults?.includeFinishDate;
-  const isSportType = formResults?.eventType === 'sportEvent';
-  const isSwimmingEvent =
-    formResults?.eventType === 'sportEvent' &&
-    formResults?.sport === 'swimming';
-  const isOpenWater =
-    isSwimmingEvent && formResults?.swimmingType === 'openWater';
-  const isSwimmingPool =
-    isSwimmingEvent &&
-    (formResults.swimmingType === '25m' || formResults.swimmingType === '50m');
+  const FORM_LABELS = {
+    error: {
+      // error when saving , should be disabled
+      title: '',
+      button: 'Error',
+      disabled: true,
+    },
+    save: {
+      // ready to save if event is new, should be active
+      title: 'Create new event',
+      button: 'Save',
+      disabled: false,
+    },
+    loading: {
+      //  should be disabled
+      title: '',
+      button: 'Loading',
+      disabled: true,
+    },
+    saved: {
+      // successfully saved , should be active
+      title: '',
+      button: 'Saved',
+      disabled: false,
+    },
+    edit: {
+      // event exist form labels should change, should be active
+      title: 'Edit event',
+      button: 'Edit',
+      disabled: false,
+    },
+    clean: {
+      // no modifications and button should be disabled
+      title: '',
+      button: 'Saved',
+      disabled: true,
+    },
+  };
+
+  useEffect(() => {
+    if (eventAlreadyExist) {
+      setFormStatus(FORM_LABELS?.edit);
+    } else {
+      setFormStatus(FORM_LABELS.save);
+    }
+  }, []);
+
+  const [formStatus, setFormStatus] = useState(FORM_LABELS.clean);
+  const handleSetImages = (images: any[], setImagesOps?: SetImagesOps) => {
+    if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading);
+    if (images.length) {
+      setValue('images', images);
+      hardSubmit();
+    }
+  };
+  // console.log({ errors });
+
+  // console.log(formValues);
+
+  const STEPS = [
+    {
+      label: 'Information',
+      Component: <BasicInformation hardSubmit={hardSubmit} />,
+    },
+    {
+      label: 'Dates',
+      Component: <EventDates />,
+    },
+    {
+      label: 'Classify',
+      Component: <SubEventsSection />,
+    },
+    {
+      label: 'Participants',
+      helperText: 'Esta seccion esta deshabilitada por ahora',
+      Component: <ParticipantsSection />,
+    },
+    {
+      label: 'Related ',
+      helperText: `Add some links to help users find more information about others
+        events, sponsors and social media`,
+      Component: (
+        <>
+          <AddLinksSection />
+        </>
+      ),
+    },
+    {
+      label: 'Media',
+      Component: (
+        <InputFiles
+          fieldName="eventImage"
+          label="Add some images "
+          images={formValues?.images}
+          setImages={handleSetImages}
+          displayAs="row"
+          // disabled={disabled}
+        />
+      ),
+    },
+  ];
 
   return (
-    <div>
-      <h2 className="text-xl font-bold text-center my-4">Create an event</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid mx-auto gap-2 max-w-md  ">
-          <Text
-            {...register('title')}
-            name="title"
-            label="Title"
-            errors={errors}
-            type="text"
-          />
-
-          <InputDate
-            {...register('date')}
-            name="date"
-            label="Date"
-            errors={errors}
-            type="date"
-          />
-          <Toggle
-            label={'Include finish date'}
-            {...register('includeFinishDate')}
-            name="includeFinishDate"
-            errors={errors}
-          />
-          {includeFinishDate && (
-            <InputDate
-              {...register('finishDate')}
-              name="finishDate"
-              label="Finish date"
-              errors={errors}
-              type="date"
-            />
-          )}
-          <Text
-            {...register('address')}
-            name="address"
-            label=" Address / Location"
-            errors={errors}
-          />
-          <h4>Choose type of event</h4>
-          <div className="flex justify-around">
-            <RadioInput
-              label="Open water"
-              {...register('swimmingType')}
-              value="openWater"
-            />
-            <RadioInput
-              label="25mts Pool"
-              {...register('swimmingType')}
-              value="25m"
-            />
-            <RadioInput
-              label="50mts Pool"
-              {...register('swimmingType')}
-              value="50m"
-            />
+    <div className="relative">
+      <Head>
+        <title>{formStatus.title}</title>
+      </Head>
+      <h2 className="text-xl font-bold text-center mt-4 whitespace-pre-wrap">
+        {formValues?.title}
+      </h2>
+      <p className="text-center mb-4">
+        {formStatus?.title || 'Create new event'}
+      </p>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={handleSubmit((data: any) => onSubmit(data))}
+          data-test-id="event-form"
+          data-test-op={eventAlreadyExist ? 'editing-event' : 'new-event'}
+          className={'mb-24 max-w-lg mx-auto px-1'}
+        >
+          <StepperForm steps={STEPS} />
+          <div className="flex justify-around fixed w-full bottom-0 bg-base-200 p-2 border-t-4 border-t-base-100 left-0 right-0">
+            <button
+              className="btn btn-primary"
+              data-test-id="submit-event-form"
+              disabled={formStatus.disabled}
+            >
+              {formStatus.button}
+            </button>
           </div>
-          {/*
-           {isSwimmingPool && <PickerSwimmingTests />}
-          {isOpenWater && (
-            <div className='text-center'>
-              <div className='flex'>
-              <Text 
-              label='Label'
-              errors={errors}
-              {register}
-              />
-
-              <Text
-                type="number"
-                label={'Custom distance (mts)'}
-                {...register('distance')}
-                errors={errors}
-                />
-                </div>
-              <button className='btn btn-sm btn-outline' >Add distance</button>
-            </div>
-          )} */}
-          <div>
-            <button className="btn btn-primary w-full">Guardar </button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </FormProvider>
     </div>
   );
 };

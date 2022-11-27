@@ -35,7 +35,7 @@ const EVENT_STATUS_OPTIONS = [
     helperText: 'Event had finished, you should enable a results route',
   },
 ];
-const EventType = ({
+const EventStatusForm = ({
   register,
   formValues,
 }: {
@@ -72,4 +72,4 @@ const EventType = ({
   );
 };
 
-export default EventType;
+export default EventStatusForm;

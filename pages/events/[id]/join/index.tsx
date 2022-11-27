@@ -1,19 +1,14 @@
-import JoinEvent from "@comps/JoinEvent";
-import Head from "next/head";
+import Head from 'next/head';
 
-const Join  = () => {
+const Join = () => {
   return (
     <>
-    <Head>
-      <title>
-        Join 
-      </title>
-    </Head>
-    <div>
-    {/* <JoinEvent /> */}
-    </div>
+      <Head>
+        <title>Join</title>
+      </Head>
+      <div>{/* <JoinEvent /> */}</div>
     </>
   );
-}
+};
 
 export default Join;

@@ -1,9 +1,7 @@
 import FormEvent from '@comps/events/FormEvent';
 import { Event } from '@firebase/Events/event.model';
 import { getEvent } from '@firebase/Events/main';
-import useEvents from 'hooks/useEvents';
 import { GetServerSidePropsContext } from 'next';
-import { useRouter } from 'next/router';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const eventId = context?.params?.id || '';

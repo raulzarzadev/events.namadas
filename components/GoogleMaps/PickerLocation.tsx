@@ -7,6 +7,7 @@ interface PickerLocationType {
   className: string;
   setLocation?: (location: Coordinates) => void;
   location?: Coordinates;
+  disabled?: boolean;
 }
 const GOOGLE_MAP_LIBRARIES: (
   | 'places'
@@ -17,7 +18,8 @@ const GOOGLE_MAP_LIBRARIES: (
 )[] = ['places'];
 
 export default function PickerLocation({
-  className,
+  disabled,
+  className = 'h-10',
   setLocation,
   location,
 }: PickerLocationType) {
@@ -28,14 +30,20 @@ export default function PickerLocation({
 
   if (!isLoaded) return <div>Loading...</div>;
   return (
-    <Map className={className} setLocation={setLocation} location={location} />
+    <Map
+      className={className}
+      setLocation={setLocation}
+      location={location}
+      disabled={disabled}
+    />
   );
 }
 
 function Map({
-  className = 'h-10',
+  className,
   setLocation,
   location,
+  disabled,
 }: PickerLocationType) {
   const { geolocation: userLocation } = useGeolocation();
   const center = useMemo(
@@ -79,37 +87,39 @@ function Map({
         <label className="">
           <span className="label-text">Location</span>
         </label>
-        <Autocomplete
-          onLoad={onLoadAutocomplete}
-          onPlaceChanged={onPlaceChanged}
-        >
-          <input
-            type="text"
-            placeholder="Find a location"
-            className="input input-bordered mx-auto w-full mb-2"
-            defaultValue={location?.address}
-            // style={{
-            //   boxSizing: `border-box`,
-            //   border: `1px solid transparent`,
-            //   width: `240px`,
-            //   height: `32px`,
-            //   padding: `0 12px`,
-            //   borderRadius: `3px`,
-            //   boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-            //   fontSize: `14px`,
-            //   outline: `none`,
-            //   textOverflow: `ellipses`,
-            //   position: 'absolute',
-            //   left: '50%',
-            //   marginLeft: '-120px',
-            // }}
-          />
-        </Autocomplete>
+        {!disabled && (
+          <Autocomplete
+            onLoad={onLoadAutocomplete}
+            onPlaceChanged={onPlaceChanged}
+          >
+            <input
+              type="text"
+              placeholder="Find a location"
+              className="input input-bordered mx-auto w-full mb-2"
+              defaultValue={location?.address}
+              // style={{
+              //   boxSizing: `border-box`,
+              //   border: `1px solid transparent`,
+              //   width: `240px`,
+              //   height: `32px`,
+              //   padding: `0 12px`,
+              //   borderRadius: `3px`,
+              //   boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+              //   fontSize: `14px`,
+              //   outline: `none`,
+              //   textOverflow: `ellipses`,
+              //   position: 'absolute',
+              //   left: '50%',
+              //   marginLeft: '-120px',
+              // }}
+            />
+          </Autocomplete>
+        )}
       </div>
       <GoogleMap
         zoom={10}
         center={center}
-        mapContainerClassName={`${className}`}
+        mapContainerClassName={` ${className} `}
         onLoad={onLoad}
         onUnmount={onUnmount}
         onDragEnd={() => {

@@ -4,20 +4,30 @@ import InputFile from '@comps/inputs/InputFile';
 import Textarea from '@comps/inputs/Textarea';
 import { Coordinates } from '@firebase/Events/event.model';
 import { useFormContext } from 'react-hook-form';
+import { UseFormReturnHardSubmit } from '.';
 import EventStatusForm from './EventStatusForm';
 import FormSection from './FormSection';
+import EventTypeForm from './SubEventSection_v2.tsx/EventTypeForm';
 
-const BasicInformation = ({ hardSubmit }: { hardSubmit: () => void }) => {
+const BasicInformation = () => {
   const {
     register,
     formState: { errors },
     setValue,
     watch,
-  } = useFormContext();
+    hardSubmit,
+  }: UseFormReturnHardSubmit = useFormContext();
   const formValues = watch();
   return (
     <div>
       <FormSection title="Basic information ">
+        <div className="flex justify-around flex-wrap">
+          <EventTypeForm
+            formValues={formValues}
+            register={register}
+            setValue={setValue}
+          />
+        </div>
         <EventStatusForm register={register} formValues={formValues} />
         <Text
           {...register('title', { required: true })}
@@ -59,7 +69,7 @@ const BasicInformation = ({ hardSubmit }: { hardSubmit: () => void }) => {
           setFile={(file) => {
             console.log({ file });
             setValue('announcementPDF', file);
-            hardSubmit();
+            hardSubmit && hardSubmit();
           }}
           label={'Upload a PDF'}
           // name={'announcementPDF'}

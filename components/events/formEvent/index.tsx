@@ -4,19 +4,25 @@ import { createEvent, updateEvent } from '@firebase/Events/main';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useForm, FormProvider, useFormContext } from 'react-hook-form';
+import {
+  useForm,
+  FormProvider,
+  UseFormReturn,
+  FieldValues,
+} from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 
-import { Toggle } from '@comps/inputs';
 import SubEventsSection from './SubEventSection_v2.tsx';
 import EventDates from './EventDates';
-import SubscriptionsSection from './SubscriptionsSection';
-import PricesSection from './PricesSection';
 import StepperForm from './StepperForm';
 import BasicInformation from './BasicInformation';
 import ParticipantsSection from './ParticipantsSection';
 import AddLinksSection from './AddLinksSection';
 
+export interface UseFormReturnHardSubmit
+  extends UseFormReturn<FieldValues, any> {
+  hardSubmit?: () => void;
+}
 const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const eventAlreadyExist = event?.id;
   const router = useRouter();
@@ -38,14 +44,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     defaultValues: event ? { ...defaultValues, ...event } : defaultValues,
   });
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    control,
-    setValue,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit, watch, setValue }: UseFormReturnHardSubmit = methods;
 
   const hardSubmit = () => {
     console.log('hard submit');
@@ -136,6 +135,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   }, []);
 
   const [formStatus, setFormStatus] = useState(FORM_LABELS.clean);
+
   const handleSetImages = (images: any[], setImagesOps?: SetImagesOps) => {
     if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading);
     if (images.length) {
@@ -150,14 +150,14 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const STEPS = [
     {
       label: 'Information',
-      Component: <BasicInformation hardSubmit={hardSubmit} />,
+      Component: <BasicInformation />,
     },
     {
       label: 'Dates',
       Component: <EventDates />,
     },
     {
-      label: 'Classify',
+      label: 'Sub Events',
       Component: <SubEventsSection />,
     },
     {
@@ -201,7 +201,8 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       <p className="text-center mb-4">
         {formStatus?.title || 'Create new event'}
       </p>
-      <FormProvider {...methods}>
+      {/* @ts-ignore */}
+      <FormProvider {...methods} hardSubmit={hardSubmit}>
         <form
           onSubmit={handleSubmit((data: any) => onSubmit(data))}
           data-test-id="event-form"

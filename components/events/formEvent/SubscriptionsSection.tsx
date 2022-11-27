@@ -1,10 +1,16 @@
 import { InputDate, Text } from '@comps/inputs';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 import FormSection from './FormSection';
 
 const SubscriptionsSection = () => {
-  const { register, errors, formValues, control } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+    control,
+    watch,
+  } = useFormContext();
+  const formValues = watch();
   return (
     <div>
       <FormSection title="Subscriptions options">

@@ -4,8 +4,14 @@ import myFormatDate from 'utils/myFormatDate';
 import SubEventFields from './SubEventFields_v2';
 
 const SubEventForm = () => {
-  const { control, watch } = useFormContext();
-  const formValues = watch();
+  const {
+    control,
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
+
   const {
     fields: subEvents,
     append,
@@ -14,6 +20,8 @@ const SubEventForm = () => {
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: 'subEvents', // unique name for your Field Array,
   });
+
+  const formValues = watch();
 
   const handleAddSubEvent = () => {
     const appendNewEvent: Partial<SubEvent> = {
@@ -37,7 +45,6 @@ const SubEventForm = () => {
               handleRemoveSubEvent={() => {
                 remove(index);
               }}
-              //  defaultFormFields={defaultFormFields}
               index={index}
             />
           ))}

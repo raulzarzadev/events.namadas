@@ -43,6 +43,7 @@ const EventTypeForm = ({ setValue, formValues }: any) => {
 
   return (
     <div className=" w-full">
+      <h3 className="text-sm">Classify</h3>
       <div className="flex flex-wrap w-full justify-around ">
         {sportType.includes('social') ||
           sportType.includes('sports') ||

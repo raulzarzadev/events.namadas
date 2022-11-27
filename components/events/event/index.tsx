@@ -4,7 +4,7 @@ import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
 import PreviewImage from '@comps/previewImage';
 import { Event, EventLink, SubEvent } from '@firebase/Events/event.model';
 import Link from 'next/link';
-import { SubEventInfo } from '../FormEvent/SubEventSection_v2/SubEventFields_v2';
+import SubEventInfo from '../FormEvent/SubEventSection_v2/SubEventInfo';
 import EventDetailsHeader from './EventDetails/EventDetailsHeader';
 
 const Event = ({ event }: { event: Event | null | undefined }) => {
@@ -123,22 +123,5 @@ export const EventLinkInfo = ({ link }: { link: EventLink }) => {
     </div>
   );
 };
-
-// const SubEvent = ({ subEvent }: { subEvent: SubEvent }) => {
-//   const { title, comments, distance, date, style } = subEvent;
-//   return (
-//     <div className=" p-1">
-//       <div className="flex w-full justify-between">
-//         <h3 className="w-2/3 font-bold">{title || style}</h3>
-//         <span className="w-1/3 text-end">
-//           {date && myFormatDate(date, 'dd MMM HH:mm')}
-//         </span>
-//       </div>
-//       <div>
-//         <p>{comments}</p>
-//       </div>
-//     </div>
-//   );
-// };
 
 export default Event;

@@ -1,6 +1,5 @@
 import ModalDelete from '@comps/modal/ModalDelete_v2';
 import PreviewImage from '@comps/previewImage';
-import { Price } from '@firebase/Events/event.model';
 import { removeItemToUserCart } from '@firebase/UserCart/main';
 import { CartProduct } from '@firebase/UserCart/UserCart.model';
 import useAuth from 'hooks/useAuth';

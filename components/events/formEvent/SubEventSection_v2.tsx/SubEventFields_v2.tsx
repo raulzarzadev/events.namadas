@@ -273,7 +273,7 @@ const SubEventFields = ({
   );
 };
 
-const SubEventInfo = ({
+export const SubEventInfo = ({
   subEvent,
   index,
   handleEdit,
@@ -302,18 +302,20 @@ const SubEventInfo = ({
   };
 
   return (
-    <div>
+    <div className="p-1 bg-base-200 rounded-lg">
       <div className="text-end pr-2">
-        <button
-          type="button"
-          className="btn btn-outline btn-square btn-sm btn-info mb-0  "
-          onClick={(e) => {
-            e.preventDefault();
-            handleEdit();
-          }}
-        >
-          <Icon name="edit" />
-        </button>
+        {handleEdit && (
+          <button
+            type="button"
+            className="btn btn-outline btn-square btn-sm btn-info mb-0  "
+            onClick={(e) => {
+              e.preventDefault();
+              handleEdit();
+            }}
+          >
+            <Icon name="edit" />
+          </button>
+        )}
       </div>
       <div className="flex w-full justify-between items-center">
         <div>

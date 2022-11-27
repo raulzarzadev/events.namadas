@@ -7,6 +7,7 @@ import RangeDate from '@comps/RangeDate';
 import { Event, EventLink, SubEvent } from '@firebase/Events/event.model';
 import Link from 'next/link';
 import myFormatDate from 'utils/myFormatDate';
+import { SubEventInfo } from '../FormEvent/SubEventSection_v2.tsx/SubEventFields_v2';
 import EventDetailsHeader from './EventDetails/EventDetailsHeader';
 
 const Event = ({ event }: { event: Event | null | undefined }) => {
@@ -76,8 +77,13 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
               <PickerSwimmingTests tests={subEvents} disabled />
             ) : (
               <div className="grid gap-2 p-1">
-                {subEvents?.sort(sortByDate).map((sub: SubEvent, i) => (
-                  <SubEvent key={`${sub.title}-${i}`} subEvent={sub} />
+                {subEvents?.sort(sortByDate).map((subEvent: SubEvent, i) => (
+                  <SubEventInfo
+                    key={`${subEvent.title}-${i}`}
+                    subEvent={subEvent}
+                    index={i}
+                    handleEdit={undefined}
+                  />
                 ))}
               </div>
             )}
@@ -121,21 +127,21 @@ export const EventLinkInfo = ({ link }: { link: EventLink }) => {
   );
 };
 
-const SubEvent = ({ subEvent }: { subEvent: SubEvent }) => {
-  const { title, comments, distance, date, style } = subEvent;
-  return (
-    <div className=" p-1">
-      <div className="flex w-full justify-between">
-        <h3 className="w-2/3 font-bold">{title || style}</h3>
-        <span className="w-1/3 text-end">
-          {date && myFormatDate(date, 'dd MMM HH:mm')}
-        </span>
-      </div>
-      <div>
-        <p>{comments}</p>
-      </div>
-    </div>
-  );
-};
+// const SubEvent = ({ subEvent }: { subEvent: SubEvent }) => {
+//   const { title, comments, distance, date, style } = subEvent;
+//   return (
+//     <div className=" p-1">
+//       <div className="flex w-full justify-between">
+//         <h3 className="w-2/3 font-bold">{title || style}</h3>
+//         <span className="w-1/3 text-end">
+//           {date && myFormatDate(date, 'dd MMM HH:mm')}
+//         </span>
+//       </div>
+//       <div>
+//         <p>{comments}</p>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default Event;

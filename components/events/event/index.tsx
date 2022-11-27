@@ -4,7 +4,7 @@ import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
 import PreviewImage from '@comps/previewImage';
 import { Event, EventLink, SubEvent } from '@firebase/Events/event.model';
 import Link from 'next/link';
-import { SubEventInfo } from '../FormEvent/SubEventSection_v2.tsx/SubEventFields_v2';
+import { SubEventInfo } from '../FormEvent/SubEventSection_v2/SubEventFields_v2';
 import EventDetailsHeader from './EventDetails/EventDetailsHeader';
 
 const Event = ({ event }: { event: Event | null | undefined }) => {

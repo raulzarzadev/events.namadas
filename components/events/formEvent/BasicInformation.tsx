@@ -7,7 +7,7 @@ import { useFormContext } from 'react-hook-form';
 import { UseFormReturnHardSubmit } from '.';
 import EventStatusForm from './EventStatusForm';
 import FormSection from './FormSection';
-import EventTypeForm from './SubEventSection_v2.tsx/EventTypeForm';
+import EventTypeForm from './SubEventSection_v2/EventTypeForm';
 
 const BasicInformation = () => {
   const {

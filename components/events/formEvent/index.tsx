@@ -12,7 +12,7 @@ import {
 } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 
-import SubEventsSection from './SubEventSection_v2.tsx';
+import SubEventsSection from './SubEventSection_v2';
 import EventDates from './EventDates';
 import StepperForm from './StepperForm';
 import BasicInformation from './BasicInformation';

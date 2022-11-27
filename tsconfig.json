@@ -16,10 +16,17 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@comps/*":["components/*"],
-      "@firebase/*":["firebase/*"]
+      "@comps/*": ["components/*"],
+      "@firebase/*": ["firebase/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "components/events/FormEvent/SubEventSection_v2"
+  ],
   "exclude": ["node_modules"]
 }

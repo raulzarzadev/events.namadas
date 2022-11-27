@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 export interface PreviewFileType {
-  file?: string;
+  file?: string | null;
   previewSize: PreviewFIleSizes;
   handleDelete?: any;
   uploading?: boolean;

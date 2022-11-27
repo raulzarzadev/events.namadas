@@ -4,25 +4,24 @@ import { Text } from '@comps/inputs';
 import InputImage from '@comps/inputs/InputImage';
 import { EventLink } from '@firebase/Events/event.model';
 import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
-const AddLinksSection = ({
-  control,
-  formValues,
-  register,
-  errors,
-  setValue,
-}: {
-  control: any;
-  formValues: any;
-  register: any;
-  errors: any;
-  setValue: any;
-}) => {
+const AddLinksSection = () => {
+  const {
+    register,
+    formState: { errors },
+    control,
+    watch,
+    setValue,
+  } = useFormContext();
+
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: 'links', // unique name for your Field Array,
   });
+
+  const formValues = watch();
+
   const handleAddSubEvent = () => {
     const appendNewEvent: EventLink = {
       label: `link ${formValues?.links?.length + 1}`,
@@ -50,7 +49,7 @@ const AddLinksSection = ({
     });
     return {};
   };
-  console.log(formValues);
+  // console.log(formValues);
   return (
     <FormSection title="Links related">
       <div className="grid  ">

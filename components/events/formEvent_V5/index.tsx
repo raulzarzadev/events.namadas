@@ -6,7 +6,7 @@ import { createEvent, updateEvent } from '@firebase/Events/main';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider, useFormContext } from 'react-hook-form';
 import myFormatDate from 'utils/myFormatDate';
 import BasicInformation from './BasicInformation';
 import EventDates from './EventDates';
@@ -32,6 +32,10 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     },
   };
 
+  const methods = useForm({
+    defaultValues: event ? { ...defaultValues, ...event } : defaultValues,
+  });
+
   const {
     register,
     handleSubmit,
@@ -39,9 +43,16 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     control,
     setValue,
     formState: { errors },
-  } = useForm({
-    defaultValues: event ? { ...defaultValues, ...event } : defaultValues,
-  });
+  } = methods;
+
+  const hardSubmit = () => {
+    console.log('hard submit');
+    setFormStatus(FORM_LABELS.loading);
+    handleSubmit((props: any) => {
+      console.log('submit');
+      onSubmit(props);
+    })();
+  };
 
   const formValues = watch();
   const onSubmit = (data: Event) => {
@@ -127,14 +138,12 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading);
     if (images.length) {
       setValue('images', images);
-      handleSubmit((props: any) => {
-        onSubmit(props);
-      })();
+      hardSubmit();
     }
   };
   // console.log({ errors });
 
-  console.log(formValues);
+  // console.log(formValues);
 
   const isAnOutsideEvent = formValues.status === 'OUTSIDE'; // this is when te event is organized by others and this event is just republished in nadamas.
   const acceptSubscriptions =
@@ -151,6 +160,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
           formValues={formValues}
           control={control}
           setValue={setValue}
+          hardSubmit={hardSubmit}
         />
       ),
     },
@@ -229,48 +239,6 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
         </>
       ),
     },
-    // {
-    //   label: 'Prices',
-    //   Component: (
-    //     <>
-    //       {isAnOutsideEvent ? (
-    //         <div className="max-w-sm mx-auto text-center my-4">
-    //           This option is disabled since the event is organized outside of
-    //           nadamas
-    //         </div>
-    //       ) : (
-    //         <PricesSection
-    //           disabled={isAnOutsideEvent}
-    //           register={register}
-    //           errors={errors}
-    //           formValues={formValues}
-    //           control={control}
-    //           event={event}
-    //         />
-    //       )}
-    //     </>
-    //   ),
-    // },
-    // {
-    //   label: 'Registry',
-    //   Component: (
-    //     <>
-    //       {isAnOutsideEvent ? (
-    //         <div className="max-w-sm mx-auto text-center my-4">
-    //           This option is disabled since the event is organized outside of
-    //           nadamas
-    //         </div>
-    //       ) : (
-    //         <SubscriptionsSection
-    //           register={register}
-    //           errors={errors}
-    //           formValues={formValues}
-    //           control={control}
-    //         />
-    //       )}
-    //     </>
-    //   ),
-    // },
     {
       label: 'Related ',
       helperText: `Add some links to help users find more information about others
@@ -301,6 +269,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       ),
     },
   ];
+
   return (
     <div className="relative">
       <Head>

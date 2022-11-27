@@ -4,7 +4,7 @@ import PreviewFile from './PreviewFile';
 
 export interface InputFileType {
   disabled?: boolean;
-  setFile: (file: string | null) => Promise<string>;
+  setFile: (file: string | null) => void;
   file: string;
   label: string;
   // name: string;
@@ -21,14 +21,18 @@ const InputFile = ({
   file,
   setFile,
 }: InputFileType) => {
-  const [previewFile, setPreviewFile] = useState<string | undefined>(file);
+  const [previewFile, setPreviewFile] = useState<string | undefined | null>(
+    file
+  );
   const [uploading, setUploading] = useState(false);
   const fieldName = 'eventsPdf';
+
   const handleDelete = async (urlFile: string) => {
-    setFile(null);
-    return await FirebaseCRUD.deleteFile({ url: urlFile }).then((res) =>
-      console.log(res)
-    );
+    return await FirebaseCRUD.deleteFile({ url: urlFile }).then((res) => {
+      console.log(res);
+      setFile(null);
+      setPreviewFile(null);
+    });
   };
 
   const handleChange = async (e: any): Promise<string> => {

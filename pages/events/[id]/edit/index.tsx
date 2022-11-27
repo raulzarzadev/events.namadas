@@ -1,4 +1,4 @@
-import FormEvent from '@comps/events/formEvent_V4';
+import FormEvent from '@comps/events/formEvent_V5';
 import { Event } from '@firebase/Events/event.model';
 import { getEvent } from '@firebase/Events/main';
 import useEvents from 'hooks/useEvents';

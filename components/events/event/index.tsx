@@ -1,12 +1,9 @@
 import Carousel from '@comps/carousel';
-import DateComponent from '@comps/DateComponent';
 import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
 import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
 import PreviewImage from '@comps/previewImage';
-import RangeDate from '@comps/RangeDate';
 import { Event, EventLink, SubEvent } from '@firebase/Events/event.model';
 import Link from 'next/link';
-import myFormatDate from 'utils/myFormatDate';
 import { SubEventInfo } from '../FormEvent/SubEventSection_v2.tsx/SubEventFields_v2';
 import EventDetailsHeader from './EventDetails/EventDetailsHeader';
 

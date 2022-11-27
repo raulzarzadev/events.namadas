@@ -282,7 +282,6 @@ const SubEventInfo = ({
   index: number;
   handleEdit: any;
 }) => {
-  console.log(subEvent);
   const {
     comments,
     date,

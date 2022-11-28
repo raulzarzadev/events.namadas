@@ -1,4 +1,4 @@
-// import FormEvent from '@comps/events/FormEvent'
+import FormEvent from '@comps/events/FormEvent_v2'
 import { Event } from '@firebase/Events/event.model'
 import { getEvent } from '@firebase/Events/main'
 import { GetServerSidePropsContext } from 'next'
@@ -15,7 +15,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 const Edit = (props: { event: Event }) => {
   const event = props.event
   if (!event) return <div>Loading ...</div>
-  return <>{/* <FormEvent event={event} /> */}</>
+  return (
+    <>
+      <FormEvent event={event} />{' '}
+    </>
+  )
 }
 
 export default Edit

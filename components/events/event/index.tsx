@@ -4,11 +4,11 @@ import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2'
 import PreviewImage from '@comps/previewImage'
 import {
   Event as EventType,
-  EventLink,
-  SubEvent
+  EventLink
+  // SubEvent
 } from '@firebase/Events/event.model'
 import Link from 'next/link'
-import SubEventInfo from '../FormEvent/SubEventSection_v2/SubEventInfo'
+// import SubEventInfo from '../FormEvent/SubEventSection_v2/SubEventInfo'
 import EventDetailsHeader from './EventDetails/EventDetailsHeader'
 
 const Event = ({ event }: { event: EventType | null | undefined }) => {
@@ -74,14 +74,14 @@ const Event = ({ event }: { event: EventType | null | undefined }) => {
               <PickerSwimmingTests tests={subEvents} disabled />
             ) : (
               <div className="grid gap-2 p-1">
-                {subEvents?.sort(sortByDate).map((subEvent: SubEvent, i) => (
+                {/* {subEvents?.sort(sortByDate).map((subEvent: SubEvent, i) => (
                   <SubEventInfo
                     key={`${subEvent?.title ?? ''}-${i}`}
                     subEvent={subEvent}
                     index={i}
                     handleEdit={undefined}
                   />
-                ))}
+                ))} */}
               </div>
             )}
           </div>
@@ -105,11 +105,11 @@ const Event = ({ event }: { event: EventType | null | undefined }) => {
   )
 }
 
-const sortByDate = (a: any, b: any) => {
-  if (a.date > b.date) return 1
-  if (a.date < b.date) return -1
-  return 0
-}
+// const sortByDate = (a: any, b: any) => {
+//   if (a.date > b.date) return 1
+//   if (a.date < b.date) return -1
+//   return 0
+// }
 
 export const EventLinkInfo = ({ link }: { link: EventLink }) => {
   return (

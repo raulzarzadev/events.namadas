@@ -4,12 +4,7 @@ import { createEvent, updateEvent } from '@firebase/Events/main'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import {
-  useForm,
-  FormProvider,
-  UseFormReturn,
-  FieldValues
-} from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import myFormatDate from 'utils/myFormatDate'
 
 import SubEventsSection from './SubEventSection_v2'
@@ -19,10 +14,6 @@ import BasicInformation from './BasicInformation'
 import ParticipantsSection from './ParticipantsSection'
 import AddLinksSection from './AddLinksSection'
 
-export interface UseFormReturnHardSubmit
-  extends UseFormReturn<FieldValues, any> {
-  hardSubmit?: () => void
-}
 const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const eventAlreadyExist = event?.id
   const router = useRouter()
@@ -44,7 +35,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     defaultValues: event ? { ...defaultValues, ...event } : defaultValues
   })
 
-  const { handleSubmit, watch, setValue }: UseFormReturnHardSubmit = methods
+  const { handleSubmit, watch, setValue } = methods
 
   const hardSubmit = () => {
     console.log('hard submit')
@@ -202,8 +193,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       <p className="text-center mb-4">
         {formStatus?.title || 'Create new event'}
       </p>
-      {/* @ts-expect-error */}
-      <FormProvider {...methods} hardSubmit={hardSubmit}>
+      <FormProvider {...methods}>
         <form
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={handleSubmit(onSubmit)}

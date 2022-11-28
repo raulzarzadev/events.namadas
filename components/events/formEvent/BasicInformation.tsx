@@ -4,7 +4,7 @@ import InputFile from '@comps/inputs/InputFile'
 import Textarea from '@comps/inputs/Textarea'
 import { Coordinates } from '@firebase/Events/event.model'
 import { useFormContext } from 'react-hook-form'
-import { UseFormReturnHardSubmit } from '.'
+// import { UseFormReturnHardSubmit } from '.'
 import EventStatusForm from './EventStatusForm'
 import FormSection from './FormSection'
 import EventTypeForm from './SubEventSection_v2/EventTypeForm'
@@ -14,9 +14,9 @@ const BasicInformation = () => {
     register,
     formState: { errors },
     setValue,
-    watch,
-    hardSubmit
-  }: UseFormReturnHardSubmit = useFormContext()
+    watch
+  } = useFormContext()
+  const hardSubmit = () => {}
   const formValues = watch()
   return (
     <div>

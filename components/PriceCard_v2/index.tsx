@@ -1,22 +1,19 @@
-import Modal from '@comps/modal';
-import { Event, Price } from '@firebase/Events/event.model';
-import Link from 'next/link';
-import { useState } from 'react';
+import { Price } from '@firebase/Events/event.model'
 
-export interface PriceCard {
-  price: Price;
-  alreadyInCart: boolean;
-  alreadyPaid: boolean;
-  handleAddToCart: () => void;
-  handlePayNow: () => void;
+export interface PriceCardType {
+  price: Price
+  alreadyInCart: boolean
+  alreadyPaid: boolean
+  handleAddToCart: () => void
+  handlePayNow: () => void
 }
 const PriceCard = ({
   price,
   alreadyInCart,
   alreadyPaid,
   handleAddToCart,
-  handlePayNow,
-}: PriceCard) => {
+  handlePayNow
+}: PriceCardType) => {
   return (
     <>
       <div className="group  rounded-lg bg-base-200 shadow-lg w-full h-full  cursor-pointer active:shadow-none border-2 border-transparent hover:border-base-content ">
@@ -57,7 +54,7 @@ const PriceCard = ({
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default PriceCard;
+export default PriceCard

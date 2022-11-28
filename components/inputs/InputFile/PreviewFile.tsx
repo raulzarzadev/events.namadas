@@ -1,43 +1,43 @@
-import Icon from '@comps/Icon';
-import Modal from '@comps/modal';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
+import Modal from '@comps/modal'
+import Link from 'next/link'
+import { useState } from 'react'
 
 export interface PreviewFileType {
-  file?: string | null;
-  previewSize: PreviewFIleSizes;
-  handleDelete?: any;
-  uploading?: boolean;
-  showDelete?: boolean;
+  file?: string | null
+  previewSize: PreviewFIleSizes
+  handleDelete?: any
+  uploading?: boolean
+  showDelete?: boolean
 }
 const sizes = {
   sm: 'w-8',
   md: 'w-12',
   lg: 'w-24',
   xl: 'w-32',
-  full: 'w-full',
-} as const;
+  full: 'w-full'
+} as const
 
-export type PreviewFIleSizes = keyof typeof sizes;
+export type PreviewFIleSizes = keyof typeof sizes
 const PreviewFile = ({
   file,
   previewSize = 'md',
   handleDelete,
   uploading,
-  showDelete = true,
+  showDelete = true
 }: PreviewFileType) => {
-  const [openModal, setOpenModal] = useState(false);
-  const handleOpenModal = () => setOpenModal(!openModal);
+  const [openModal, setOpenModal] = useState(false)
+  const handleOpenModal = () => setOpenModal(!openModal)
 
-  const [openDelete, setOpenDelete] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false)
   const handleOpenDelete = () => {
-    setOpenDelete(!openDelete);
-  };
+    setOpenDelete(!openDelete)
+  }
 
   return (
     <div className="flex flex-col justify-center items-center">
-      {uploading && <progress className="progress progress-primary"></progress>}
+      {!!uploading && (
+        <progress className="progress progress-primary"></progress>
+      )}
       {!file && !uploading && <span className="italic">No file</span>}
       {file && (
         <>
@@ -68,9 +68,9 @@ const PreviewFile = ({
                     <button
                       className=" hover:text-error text-white link mx-2"
                       onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleOpenDelete();
+                        e.preventDefault()
+                        e.stopPropagation()
+                        handleOpenDelete()
                       }}
                     >
                       {'  delete '}
@@ -90,9 +90,9 @@ const PreviewFile = ({
                         <button
                           className="btn btn-error"
                           onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            handleDelete && handleDelete();
+                            e.preventDefault()
+                            e.stopPropagation()
+                            handleDelete && handleDelete()
                           }}
                         >
                           Delete file
@@ -107,6 +107,6 @@ const PreviewFile = ({
         </>
       )}
     </div>
-  );
-};
-export default PreviewFile;
+  )
+}
+export default PreviewFile

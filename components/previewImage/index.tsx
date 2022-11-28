@@ -1,17 +1,17 @@
-import Icon from '@comps/Icon';
-import Modal from '@comps/modal';
-import Image from 'next/image';
-import { useState } from 'react';
+import Icon from '@comps/Icon'
+import Modal from '@comps/modal'
+import Image from 'next/image'
+import { useState } from 'react'
 
-type Sizes = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+type Sizes = 'sm' | 'md' | 'lg' | 'xl' | 'full'
 export interface PreviewImageType {
-  label?: null | string;
-  image?: string;
-  previewSize?: Sizes;
-  uploading?: boolean;
-  handleDelete?: () => {};
-  showOrigin?: boolean;
-  showDelete?: boolean;
+  label?: null | string
+  image?: string
+  previewSize?: Sizes
+  uploading?: boolean
+  handleDelete?: () => {}
+  showOrigin?: boolean
+  showDelete?: boolean
 }
 
 const PreviewImage = ({
@@ -21,22 +21,22 @@ const PreviewImage = ({
   uploading,
   handleDelete,
   showDelete = true,
-  showOrigin = false,
+  showOrigin = false
 }: PreviewImageType) => {
-  const [openModal, setOpenModal] = useState(false);
-  const handleOpenModal = () => setOpenModal(!openModal);
+  const [openModal, setOpenModal] = useState(false)
+  const handleOpenModal = () => setOpenModal(!openModal)
   const size = {
     sm: 'w-8',
     md: 'w-12',
     lg: 'w-24',
     xl: 'w-32',
-    full: 'w-full',
-  };
+    full: 'w-full'
+  }
 
-  const [openDelete, setOpenDelete] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false)
   const handleOpenDelete = () => {
-    setOpenDelete(!openDelete);
-  };
+    setOpenDelete(!openDelete)
+  }
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -71,9 +71,9 @@ const PreviewImage = ({
                 <button
                   className=" hover:text-error text-white "
                   onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleOpenDelete();
+                    e.preventDefault()
+                    e.stopPropagation()
+                    handleOpenDelete()
                   }}
                 >
                   <Icon name="delete" />
@@ -93,9 +93,9 @@ const PreviewImage = ({
                     <button
                       className="btn btn-error"
                       onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleDelete && handleDelete();
+                        e.preventDefault()
+                        e.stopPropagation()
+                        handleDelete && handleDelete()
                       }}
                     >
                       Delete image
@@ -116,7 +116,7 @@ const PreviewImage = ({
                 />
               </div>
               {showOrigin && (
-                <a href={image} target={'_blank'}>
+                <a href={image} target={'_blank'} rel="noreferrer">
                   {image}
                 </a>
               )}
@@ -125,7 +125,7 @@ const PreviewImage = ({
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default PreviewImage;
+export default PreviewImage

@@ -1,9 +1,9 @@
-import DateComponent from "@comps/DateComponent";
-import { EventPaymentType } from "@firebase/EventPayments/eventPayment.model";
+import DateComponent from '@comps/DateComponent'
+import { EventPaymentType } from '@firebase/EventPayments/eventPayment.model'
 export interface PaymentTableType {
   eventPayments: EventPaymentType[]
 }
-const PaymentsTable = ({eventPayments}:PaymentTableType) => {
+const PaymentsTable = ({ eventPayments }: PaymentTableType) => {
   return (
     <div className="bg-base-200 p-2 my-4 max-w-2xl mx-auto rounded-lg">
       <h4 className="text-xl font-bold ">
@@ -49,7 +49,7 @@ const PaymentsTable = ({eventPayments}:PaymentTableType) => {
         </table>
       </div>
     </div>
-  );
+  )
 }
 
-export default PaymentsTable;
+export default PaymentsTable

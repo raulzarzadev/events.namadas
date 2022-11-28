@@ -1,10 +1,10 @@
-import React from 'react';
-import { InputType } from '.';
-interface RadioInput extends Omit<InputType, 'size'> {
-  value: string;
-  onChange: any;
+import React from 'react'
+import { InputType } from '.'
+interface RadioInputType extends Omit<InputType, 'size'> {
+  value: string
+  onChange: any
 }
-const RadioInput = React.forwardRef<HTMLInputElement, RadioInput>(
+const RadioInput = React.forwardRef<HTMLInputElement, RadioInputType>(
   ({ label, onChange, ...props }, ref) => {
     return (
       <div className="form-control">
@@ -21,8 +21,10 @@ const RadioInput = React.forwardRef<HTMLInputElement, RadioInput>(
           />
         </label>
       </div>
-    );
+    )
   }
-);
+)
 
-export default RadioInput;
+RadioInput.displayName = 'RadioInput'
+
+export default RadioInput

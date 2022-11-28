@@ -1,9 +1,9 @@
-import Icon from '@comps/Icon';
-import useAuth from 'hooks/useAuth';
-import Modal from '..';
+import Icon from '@comps/Icon'
+import useAuth from 'hooks/useAuth'
+import Modal from '..'
 
 const NotLoginModal = ({ open, handleOpen }: any) => {
-  const { handleLogin } = useAuth();
+  const { handleLogin } = useAuth()
   return (
     <>
       <Modal title={'Login'} open={open} handleOpen={handleOpen} size="half">
@@ -12,7 +12,7 @@ const NotLoginModal = ({ open, handleOpen }: any) => {
           <button
             className="btn btn-primary my-4"
             onClick={() => {
-              handleLogin();
+              handleLogin()
             }}
           >
             <span className="mr-2">Login with google</span>
@@ -22,7 +22,7 @@ const NotLoginModal = ({ open, handleOpen }: any) => {
         </div>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default NotLoginModal;
+export default NotLoginModal

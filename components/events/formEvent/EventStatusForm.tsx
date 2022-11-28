@@ -1,4 +1,4 @@
-import RadioInput from '@comps/inputs/Radio';
+import RadioInput from '@comps/inputs/Radio'
 
 const EVENT_STATUS_OPTIONS = [
   // {
@@ -6,41 +6,41 @@ const EVENT_STATUS_OPTIONS = [
   //   label: 'Outside',
   //   helperText: 'This event is organized outside of nadamas',
   // },
-  //{ name: 'PLANING', label: 'Planing', helperText: 'Is not visible yet' },
+  // { name: 'PLANING', label: 'Planing', helperText: 'Is not visible yet' },
   {
     name: 'POSTPONED',
     label: 'Postponed ',
-    helperText: 'This event postponed. Wait for more info',
+    helperText: 'This event postponed. Wait for more info'
   },
   {
     name: 'HIDDEN',
     label: 'Hidden',
-    helperText: 'This event is just visible for you ',
+    helperText: 'This event is just visible for you '
   },
   {
     name: 'ACTIVE',
     label: 'Active',
-    helperText: 'Is visible and people can search it',
+    helperText: 'Is visible and people can search it'
   },
   // { name: 'PAUSED', label: 'Paused' },
   // { name: 'CANCELED', label: 'Canceled' },
   {
     name: 'IN_PROGRESS',
     label: 'In progress',
-    helperText: 'Is happening in this moment. you should stop subscription ',
+    helperText: 'Is happening in this moment. you should stop subscription '
   },
   {
     name: 'FINISHED',
     label: 'Finished',
-    helperText: 'Event had finished, you should enable a results route',
-  },
-];
+    helperText: 'Event had finished, you should enable a results route'
+  }
+]
 const EventStatusForm = ({
   register,
-  formValues,
+  formValues
 }: {
-  register: any;
-  formValues: any;
+  register: any
+  formValues: any
 }) => {
   return (
     <div className="form-control">
@@ -55,7 +55,7 @@ const EventStatusForm = ({
                 {...register('status')}
                 value={name}
               />
-            );
+            )
           }
         )}
       </div>
@@ -69,7 +69,7 @@ const EventStatusForm = ({
         </span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EventStatusForm;
+export default EventStatusForm

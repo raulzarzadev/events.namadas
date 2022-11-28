@@ -1,79 +1,69 @@
-import React from 'react';
-import {
-  PaymentElement,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
-import { useRouter } from 'next/router';
-import { createEventPayment } from '@firebase/EventPayments/main';
-const URL_BASE = 'http://localhost:3000';
+import React from 'react'
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
+const URL_BASE = 'http://localhost:3000'
 export default function CheckoutForm({
-  disabled = false,
+  disabled = false
 }: {
-  disabled?: boolean;
+  disabled?: boolean
 }) {
-  const {
-    query: { id: eventId, priceId },
-  } = useRouter();
+  const stripe = useStripe()
+  const elements = useElements()
 
-  const stripe = useStripe();
-  const elements = useElements();
+  const [message, setMessage] = React.useState<string | undefined>(undefined)
+  const [isLoading, setIsLoading] = React.useState(false)
 
-  const [message, setMessage] = React.useState<string | undefined>(undefined);
-  const [isLoading, setIsLoading] = React.useState(false);
-
-  const REDIRECT_TO = `${URL_BASE}/cart/checkout/valid`;
+  const REDIRECT_TO = `${URL_BASE}/cart/checkout/valid`
 
   React.useEffect(() => {
     if (!stripe) {
-      return;
+      return
     }
 
     const clientSecret = new URLSearchParams(window.location.search).get(
       'payment_intent_client_secret'
-    );
+    )
 
     if (!clientSecret) {
-      return;
+      return
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent?.status) {
         case 'succeeded':
-          setMessage('Payment succeeded!');
-          break;
+          setMessage('Payment succeeded!')
+          break
         case 'processing':
-          setMessage('Your payment is processing.');
-          break;
+          setMessage('Your payment is processing.')
+          break
         case 'requires_payment_method':
-          setMessage('Your payment was not successful, please try again.');
-          break;
+          setMessage('Your payment was not successful, please try again.')
+          break
         default:
-          setMessage('Something went wrong.');
-          break;
+          setMessage('Something went wrong.')
+          break
       }
-    });
-  }, [stripe]);
+    })
+  }, [stripe])
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
-      return;
+      return
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
 
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
 
-        return_url: REDIRECT_TO,
-      },
-    });
+        return_url: REDIRECT_TO
+      }
+    })
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
@@ -82,18 +72,20 @@ export default function CheckoutForm({
     // redirected to the `return_url`.
 
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error?.message);
+      setMessage(error?.message)
     } else {
-      setMessage('An unexpected error occurred.');
+      setMessage('An unexpected error occurred.')
     }
 
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   return (
     <form
       id="payment-form"
-      onSubmit={handleSubmit}
+      onSubmit={(e) => {
+        handleSubmit(e)
+      }}
       className=" mx-auto max-w-md"
     >
       <PaymentElement id="payment-element" className="max-w-md" />
@@ -119,5 +111,5 @@ export default function CheckoutForm({
         )}
       </div>
     </form>
-  );
+  )
 }

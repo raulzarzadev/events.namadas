@@ -95,7 +95,7 @@ const PreviewImage = ({
                       onClick={(e) => {
                         e.preventDefault()
                         e.stopPropagation()
-                        handleDelete && handleDelete()
+                        handleDelete?.()
                       }}
                     >
                       Delete image

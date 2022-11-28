@@ -1,16 +1,16 @@
-import { InputDate, Toggle } from '@comps/inputs';
-import { Controller, useFormContext, UseFormRegister } from 'react-hook-form';
-import myFormatDate from 'utils/myFormatDate';
-import FormSection from './FormSection';
+import { Toggle } from '@comps/inputs'
+import { Controller, useFormContext } from 'react-hook-form'
+import myFormatDate from 'utils/myFormatDate'
+import FormSection from './FormSection'
 
 const EventDates = () => {
   const {
     register,
     control,
     formState: { errors },
-    watch,
-  } = useFormContext();
-  const formValues = watch();
+    watch
+  } = useFormContext()
+  const formValues = watch()
   return (
     <div>
       <FormSection title="Event dates">
@@ -57,7 +57,7 @@ const EventDates = () => {
         </div>
       </FormSection>
     </div>
-  );
-};
+  )
+}
 
-export default EventDates;
+export default EventDates

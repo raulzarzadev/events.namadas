@@ -1,8 +1,8 @@
-import Breadcrumb from '@comps/Breadcrumb';
-import React from 'react';
-import Nav from './nav';
+import Breadcrumb from '@comps/Breadcrumb'
+import React from 'react'
+import Nav from './nav'
 export interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 function Layout({ children }: LayoutProps) {
   return (
@@ -13,7 +13,7 @@ function Layout({ children }: LayoutProps) {
       </div>
       <main>{children}</main>
     </div>
-  );
+  )
 }
 
-export default Layout;
+export default Layout

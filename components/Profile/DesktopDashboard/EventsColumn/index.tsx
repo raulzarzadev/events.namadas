@@ -1,16 +1,16 @@
-import EventColCard from "@comps/EventColCard";
-import { Event } from "@firebase/Events/event.model";
+import EventColCard from '@comps/EventColCard'
+import { Event } from '@firebase/Events/event.model'
 
-const EventsColumn = ({events}:{events?:Event[]}) => {
+const EventsColumn = ({ events }: { events?: Event[] }) => {
   return (
     <div className="flex flex-col">
       {events?.map((event) => (
-        <div key={event.id} className='mb-2 bg-base-200'>
+        <div key={event.id} className="mb-2 bg-base-200">
           <EventColCard event={event} />
         </div>
       ))}
     </div>
-  );
+  )
 }
 
-export default EventsColumn;
+export default EventsColumn

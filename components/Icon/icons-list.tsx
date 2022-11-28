@@ -1,21 +1,7 @@
-import { AiOutlineSave } from 'react-icons/ai';
-import { AiOutlineRight } from 'react-icons/ai';
-import { AiOutlineLeft } from 'react-icons/ai';
+import { AiOutlineSave, AiOutlineRight, AiOutlineLeft } from 'react-icons/ai'
 
-import { TiDocumentText } from 'react-icons/ti';
-import { TiCogOutline } from 'react-icons/ti';
-import { TiPhoneOutline } from 'react-icons/ti';
-import { TiTimes } from 'react-icons/ti';
-import { TiPlusOutline } from 'react-icons/ti';
-import { TiMinusOutline } from 'react-icons/ti';
-import { TiInfoLarge } from 'react-icons/ti';
-import { TiFilter } from 'react-icons/ti';
-import { TiEdit } from 'react-icons/ti';
-import { TiTrash } from 'react-icons/ti';
-
-
-//https://react-icons.github.io/react-icons/icons?name=cg
-import { CgGym } from 'react-icons/cg';
+// https://react-icons.github.io/react-icons/icons?name=cg
+import { CgGym } from 'react-icons/cg'
 
 // https://react-icons.github.io/react-icons/icons?name=ti
 import {
@@ -34,48 +20,47 @@ import {
   TiUserDelete,
   TiWiFi,
   TiZoom,
-} from 'react-icons/ti';
+  TiDocumentText,
+  TiCogOutline,
+  TiTimes,
+  TiPlusOutline,
+  TiMinusOutline,
+  TiInfoLarge,
+  TiFilter,
+  TiEdit,
+  TiTrash
+} from 'react-icons/ti'
 
 // https://react-icons.github.io/react-icons/icons?name=si
-import { SiWhatsapp } from 'react-icons/si';
+import { SiWhatsapp } from 'react-icons/si'
 
-//https://react-icons.github.io/react-icons/icons?name=md
+// https://react-icons.github.io/react-icons/icons?name=md
 import {
   MdLocationOff,
   MdLocationOn,
   MdOutlineEmergency,
   MdOutlineEvent,
   MdOutlineMoreVert,
-  MdOutlinePhoneForwarded,
-  MdWorkspacesOutline,
-} from 'react-icons/md';
+  MdOutlinePhoneForwarded
+} from 'react-icons/md'
 
-//react-icons.github.io/react-icons/icons?name=fc
-import { FcGoogle } from 'react-icons/fc';
+// react-icons.github.io/react-icons/icons?name=fc
+import { FcGoogle } from 'react-icons/fc'
 
-import {
-  FaComments,
-  FaRegComment,
-  FaSignInAlt,
-  FaRegHeart,
-  FaHeart,
-} from 'react-icons/fa';
+import { FaRegComment, FaSignInAlt, FaRegHeart, FaHeart } from 'react-icons/fa'
 
-import { RiFileCopyLine, RiFileCopyFill } from 'react-icons/ri';
+import { RiFileCopyLine, RiFileCopyFill } from 'react-icons/ri'
 // ALL ICONS SHOULD BE OUTLINE
 
 import {
   BsCart4,
   BsFillEyeFill,
   BsFillEyeSlashFill,
-  BsHeart,
-  BsShareFill,
-} from 'react-icons/bs';
-import React from 'react';
-
+  BsShareFill
+} from 'react-icons/bs'
 
 const ICON_LIST = {
-  cart:BsCart4,
+  cart: BsCart4,
   signin: FaSignInAlt,
   'color-google': FcGoogle,
   emergency: MdOutlineEmergency,
@@ -121,57 +106,10 @@ const ICON_LIST = {
   heartFill: FaHeart,
   share: BsShareFill,
   location: MdLocationOn,
-  hideLocation: MdLocationOff,
-} as const;
+  hideLocation: MdLocationOff
+} as const
 
-export type IconName = keyof typeof ICON_LIST;
-export type ReactIconElement = typeof ICON_LIST[IconName];
+export type IconName = keyof typeof ICON_LIST
+export type ReactIconElement = typeof ICON_LIST[IconName]
 
-// export const ICONS = {
-//   heart: 'heart',
-//   heartFill: 'heartFill',
-//   coments: 'coments',
-//   openEye: 'openEye',
-//   closeEye: 'closeEye',
-//   signin: 'signin',
-//   'color-google': 'color-google',
-//   emergency: 'emergency',
-//   email: 'email',
-//   whatsapp: 'whatsapp',
-//   save: 'save',
-//   'rigth-arrow': 'rigth-arrow',
-//   'left-arrow': 'left-arrow',
-//   document: 'document',
-//   gear: 'gear',
-//   phone: 'phone',
-//   cross: 'cross',
-//   plus: 'plus',
-//   minus: 'minus',
-//   info: 'info',
-//   filter: 'filter',
-//   edit: 'edit',
-//   trash: 'trash',
-//   delete: 'delete',
-//   down: 'down',
-//   up: 'up',
-//   back: 'back',
-//   forward: 'forward',
-//   home: 'home',
-//   group: 'group',
-//   user: 'user',
-//   wifi: 'wifi',
-//   done: 'done',
-//   addUser: 'addUser',
-//   removeUser: 'removeUser',
-//   search: 'search',
-//   right: 'right',
-//   left: 'left',
-//   dots: 'dots',
-//   workout: 'workout',
-//   event: 'event',
-//   copy: 'copy',
-//   copyFill: 'copyFill',
-//   share: 'share',
-// };
-
-export default ICON_LIST;
+export default ICON_LIST

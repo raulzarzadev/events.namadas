@@ -1,10 +1,10 @@
-import OrderSummary from '@comps/Checkout/OrderSummary';
-import useAuth from 'hooks/useAuth';
-import { useRouter } from 'next/router';
+import OrderSummary from '@comps/Checkout/OrderSummary'
+import useAuth from 'hooks/useAuth'
+import { useRouter } from 'next/router'
 
 const UserCart = () => {
-  const { userCart } = useAuth();
-  const router = useRouter();
+  const { userCart } = useAuth()
+  const router = useRouter()
 
   return (
     <div>
@@ -21,14 +21,14 @@ const UserCart = () => {
         <button
           className="btn btn-accent"
           onClick={() => {
-            router.push('/cart/checkout');
+            router.push('/cart/checkout')
           }}
         >
           Checkout
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UserCart;
+export default UserCart

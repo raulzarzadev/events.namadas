@@ -1,6 +1,6 @@
-import Icon from '@comps/Icon';
-import RadioInput from '@comps/inputs/Radio';
-import { useEffect, useState } from 'react';
+import Icon from '@comps/Icon'
+import RadioInput from '@comps/inputs/Radio'
+import { useEffect, useState } from 'react'
 
 const EventTypeForm = ({ setValue, formValues }: any) => {
   const EVENTS_VARIANTS: Record<string, string[]> = {
@@ -16,30 +16,28 @@ const EventTypeForm = ({ setValue, formValues }: any) => {
       'olympic',
       '70.30',
       'iron-man',
-      'valle-man',
+      'valle-man'
     ],
     pool: ['-25m', '25m', '50m', '+50m'],
     openWater: ['sea', 'lake', 'river', 'cruce'],
-    social: ['public', 'private'],
-  };
+    social: ['public', 'private']
+  }
 
-  const [sportType, setSportType] = useState<string[]>(
-    formValues?.labels || []
-  );
+  const [sportType, setSportType] = useState<string[]>(formValues?.labels || [])
 
   const handleChange = ({ target: { name } }: any) => {
-    setSportType([...sportType, name]);
-  };
+    setSportType([...sportType, name])
+  }
 
   const handleRemoveType = (type: string) => {
-    const indexOfType = sportType.indexOf(type);
-    const res = sportType.slice(0, indexOfType);
-    setSportType(res);
-  };
+    const indexOfType = sportType.indexOf(type)
+    const res = sportType.slice(0, indexOfType)
+    setSportType(res)
+  }
 
   useEffect(() => {
-    setValue('labels', sportType);
-  }, [sportType]);
+    setValue('labels', sportType)
+  }, [sportType])
 
   return (
     <div className=" w-full">
@@ -65,8 +63,8 @@ const EventTypeForm = ({ setValue, formValues }: any) => {
               {type}
               <button
                 onClick={(e) => {
-                  e.preventDefault();
-                  handleRemoveType(type);
+                  e.preventDefault()
+                  handleRemoveType(type)
                 }}
               >
                 <Icon name="cross" size="xs" />
@@ -85,12 +83,12 @@ const EventTypeForm = ({ setValue, formValues }: any) => {
                 name={sport}
                 onChange={handleChange}
               />
-            );
+            )
           }
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EventTypeForm;
+export default EventTypeForm

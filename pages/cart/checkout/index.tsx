@@ -1,19 +1,19 @@
-import Checkout from '@comps/Checkout';
-import OrderSummary from '@comps/Checkout/OrderSummary';
-import { CartProduct } from '@firebase/UserCart/UserCart.model';
-import useAuth from 'hooks/useAuth';
-import { useEffect, useState } from 'react';
-import { validateItemsStillValid } from '../../../utils/validateItemsStillValid';
+import Checkout from '@comps/Checkout'
+import OrderSummary from '@comps/Checkout/OrderSummary'
+import { CartProduct } from '@firebase/UserCart/UserCart.model'
+import useAuth from 'hooks/useAuth'
+import { useEffect, useState } from 'react'
+import { validateItemsStillValid } from '../../../utils/validateItemsStillValid'
 
 const CheckoutPage = () => {
-  const { userCart } = useAuth();
-  const [items, setItems] = useState<CartProduct[]>([]);
+  const { userCart } = useAuth()
+  const [items, setItems] = useState<CartProduct[]>([])
 
   useEffect(() => {
     validateItemsStillValid(userCart.products).then((res: CartProduct[]) =>
       setItems(res)
-    );
-  }, [userCart.products]);
+    )
+  }, [userCart.products])
 
   return (
     <div>
@@ -23,7 +23,7 @@ const CheckoutPage = () => {
         disabled={!!items.find((item) => !!item?.invalidPrice)}
       />
     </div>
-  );
-};
+  )
+}
 
-export default CheckoutPage;
+export default CheckoutPage

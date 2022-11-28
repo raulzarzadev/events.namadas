@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import Head from 'next/head'
 
 const Join = () => {
   return (
@@ -8,7 +8,7 @@ const Join = () => {
       </Head>
       <div>{/* <JoinEvent /> */}</div>
     </>
-  );
-};
+  )
+}
 
-export default Join;
+export default Join

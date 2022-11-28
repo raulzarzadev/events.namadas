@@ -1,21 +1,21 @@
-import DateComponent from '@comps/DateComponent';
-import DistanceFromUser from '@comps/DistanceFromUser';
-import RangeDate from '@comps/RangeDate';
-import { Event } from '@firebase/Events/event.model';
-import useAuth from 'hooks/useAuth';
-import { fromNow } from 'utils/myFormatDate';
-import EventOptions from '../EventOptions';
+import DateComponent from '@comps/DateComponent'
+import DistanceFromUser from '@comps/DistanceFromUser'
+import RangeDate from '@comps/RangeDate'
+import { Event } from '@firebase/Events/event.model'
+import useAuth from 'hooks/useAuth'
+import { fromNow } from 'utils/myFormatDate'
+import EventOptions from '../EventOptions'
 
 const EventDetailsHeader = ({ event }: { event: Event }) => {
-  const { id, includeFinishDate, address, location } = event;
-  const { user } = useAuth();
-  const isOwner = (user && user.id) === event?.userId;
+  const { id, includeFinishDate, address, location } = event
+  const { user } = useAuth()
+  const isOwner = user?.id === event?.userId
   return (
     <div>
       {isOwner && (
         <div>
           <EventOptions
-            eventId={id || ''}
+            eventId={id ?? ''}
             config={{ deleteRedirectTo: '/profile' }}
           />
         </div>
@@ -36,15 +36,16 @@ const EventDetailsHeader = ({ event }: { event: Event }) => {
       </p>
       {address && (
         <p className="text-center">
-          {location?.address || address}
+          {location?.address ?? address}
           <a
             target={'_blank'}
             href={`https://maps.google.com/?${
               location?.address
                 ? `q=${location.address}`
-                : `ll=${location?.lat},${location?.lng}`
+                : `ll=${location?.lat ?? 0},${location?.lng ?? 0}`
             }`}
             className="link"
+            rel="noreferrer"
           >
             {' map '}
           </a>
@@ -52,7 +53,7 @@ const EventDetailsHeader = ({ event }: { event: Event }) => {
       )}
       <DistanceFromUser location={location} />
     </div>
-  );
-};
+  )
+}
 
-export default EventDetailsHeader;
+export default EventDetailsHeader

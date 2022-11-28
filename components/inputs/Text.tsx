@@ -1,15 +1,8 @@
-import React from 'react';
-import { InputType } from '.';
+import React from 'react'
+import { InputType } from '.'
 export interface TextType extends Omit<InputType, 'size'> {}
 const Text = React.forwardRef<HTMLInputElement, TextType>((props, ref) => {
-  const {
-    label,
-    errors,
-    name = '',
-    type,
-    placeholder = '',
-    helpertext = '',
-  } = props;
+  const { label, errors, name = '', type, helpertext = '' } = props
   return (
     <div className="form-control w-full ">
       <label className="label-text ">{label}</label>
@@ -23,7 +16,7 @@ const Text = React.forwardRef<HTMLInputElement, TextType>((props, ref) => {
 
       <label
         className={`label label-text-alt ${
-          !(errors[name] || helpertext) && 'hidden'
+          !(errors[name] || helpertext) ? 'hidden' : ''
         }`}
       >
         {errors[name] && (
@@ -32,7 +25,8 @@ const Text = React.forwardRef<HTMLInputElement, TextType>((props, ref) => {
         {helpertext && <span className="text-info">{helpertext}</span>}
       </label>
     </div>
-  );
-});
+  )
+})
+Text.displayName = 'Text'
 
-export default Text;
+export default Text

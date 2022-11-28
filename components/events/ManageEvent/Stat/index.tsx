@@ -67,7 +67,7 @@ const EventStats = () => {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default EventStats;
+export default EventStats

@@ -1,31 +1,31 @@
-import Icon from '@comps/Icon';
-import { GetServerSidePropsContext } from 'next';
-import { useRouter } from 'next/router';
-import { ReactNode, useEffect, useState } from 'react';
+import Icon from '@comps/Icon'
+import { useRouter } from 'next/router'
+import { ReactNode, useEffect, useState } from 'react'
 
 export interface Step {
-  label: string;
-  Component: ReactNode;
-  helperText?: string;
+  label: string
+  Component: ReactNode
+  helperText?: string
 }
 
 const StepperForm = ({ steps }: { steps: Step[] }) => {
-  const router = useRouter();
-  const preselectStep = parseInt(`${router.query.step}`);
-  const [stepSelected, setStepSelected] = useState(preselectStep || 0);
+  const router = useRouter()
+  // @ts-expect-error
+  const preselectStep = parseInt(router?.query?.step)
+  const [stepSelected, setStepSelected] = useState(preselectStep || 0)
 
   useEffect(() => {
-    const { id } = router.query;
-    router.push({ query: { step: stepSelected, id } });
-  }, [stepSelected]);
+    const { id } = router.query
+    router.push({ query: { step: stepSelected, id } })
+  }, [stepSelected])
 
   const handlePrev = () => {
-    setStepSelected((state) => (state > 0 ? state - 1 : state));
-  };
+    setStepSelected((state) => (state > 0 ? state - 1 : state))
+  }
 
   const handleNext = () => {
-    setStepSelected((state) => (state < steps.length - 1 ? state + 1 : state));
-  };
+    setStepSelected((state) => (state < steps.length - 1 ? state + 1 : state))
+  }
 
   return (
     <div className="relative ">
@@ -36,8 +36,8 @@ const StepperForm = ({ steps }: { steps: Step[] }) => {
             <li
               key={i}
               onClick={(e) => {
-                e.preventDefault();
-                setStepSelected(i);
+                e.preventDefault()
+                setStepSelected(i)
               }}
               className={`step    
               ${stepSelected >= i ? 'step-primary ' : ''}
@@ -59,8 +59,8 @@ const StepperForm = ({ steps }: { steps: Step[] }) => {
       <div className="flex w-full justify-between">
         <button
           onClick={(e) => {
-            e.preventDefault();
-            handlePrev();
+            e.preventDefault()
+            handlePrev()
           }}
           className="btn  "
           disabled={stepSelected <= 0}
@@ -70,8 +70,8 @@ const StepperForm = ({ steps }: { steps: Step[] }) => {
         </button>
         <button
           onClick={(e) => {
-            e.preventDefault();
-            handleNext();
+            e.preventDefault()
+            handleNext()
           }}
           className="btn "
           disabled={stepSelected >= steps.length - 1}
@@ -89,7 +89,7 @@ const StepperForm = ({ steps }: { steps: Step[] }) => {
       )}
       {steps[stepSelected].Component}
     </div>
-  );
-};
+  )
+}
 
-export default StepperForm;
+export default StepperForm

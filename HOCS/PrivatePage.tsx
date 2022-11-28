@@ -1,12 +1,12 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectAuthState } from 'store/slices/authSlice';
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { selectAuthState } from 'store/slices/authSlice'
 
 function PrivatePage(props: { children: any }) {
-  const { user } = useSelector(selectAuthState);
+  const { user } = useSelector(selectAuthState)
 
-  const router = useRouter();
+  const router = useRouter()
 
   // if (user === undefined) {
   //   console.log('user undefined');
@@ -20,10 +20,10 @@ function PrivatePage(props: { children: any }) {
   useEffect(() => {
     if (!user) {
       setTimeout(() => {
-        router.push('/');
-      }, 2000);
+        router.push('/')
+      }, 2000)
     }
-  }, [user]);
+  }, [user])
 
   if (!user) {
     return (
@@ -31,10 +31,10 @@ function PrivatePage(props: { children: any }) {
         <div>Not login</div>
         <div>Loading ...</div>
       </div>
-    );
+    )
   }
 
-  return <>{props.children}</>;
+  return <>{props.children}</>
 }
 
-export default PrivatePage;
+export default PrivatePage

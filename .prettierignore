@@ -1,3 +1,27 @@
 # Ignore artifacts:
 build
 coverageyar
+node_modules
+.next
+package_lock.json
+postcss.config.js
+**/public/**
+node_modules
+**/.next/**
+**/_next/**
+**/dist/**
+**/__tmp__/**
+lerna.json
+.github
+README.md
+TODO.md
+next-env.d.ts
+next.config.js
+package-lock.json
+package.json
+serviceAccountKey.json
+tailwind.config.js
+tsconfig.json
+.eslintrc.js 
+.prettierrc.json
+.vscode/settings.json

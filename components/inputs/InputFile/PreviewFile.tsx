@@ -92,7 +92,7 @@ const PreviewFile = ({
                           onClick={(e) => {
                             e.preventDefault()
                             e.stopPropagation()
-                            handleDelete && handleDelete()
+                            handleDelete?.()
                           }}
                         >
                           Delete file

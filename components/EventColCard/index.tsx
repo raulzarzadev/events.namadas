@@ -1,38 +1,30 @@
-import DateComponent from '@comps/DateComponent';
-import Icon from '@comps/Icon';
-import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
-import RatingInput from '@comps/inputs/RatingInput';
-import Modal from '@comps/modal';
-import RangeDate from '@comps/RangeDate';
-import { Event } from '@firebase/Events/event.model';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
-import { fromNow } from 'utils/myFormatDate';
+import DateComponent from '@comps/DateComponent'
+import Icon from '@comps/Icon'
+import ImagesList from '@comps/inputs/inputFiles_V2/imagesList'
+import RatingInput from '@comps/inputs/RatingInput'
+import Modal from '@comps/modal'
+import RangeDate from '@comps/RangeDate'
+import { Event } from '@firebase/Events/event.model'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
+import { fromNow } from 'utils/myFormatDate'
 export interface EventType extends Event {}
 
 const EventColCard = ({
-  event,
+  event
 }: {
-  redirect?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  event: EventType;
-  onSubscribe?: (id: string) => {};
+  redirect?: boolean
+  size?: 'sm' | 'md' | 'lg'
+  event: EventType
+  onSubscribe?: (id: string) => {}
 }) => {
-  const {
-    title,
-    id,
-    images = [],
-    status,
-    date,
-    includeFinishDate,
-    finishAt,
-  } = event;
-  const firsImage = images?.[0];
-  const [openModal, setOpenModal] = useState(false);
+  const { title, images = [], status, includeFinishDate } = event
+  const firsImage = images?.[0]
+  const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => {
-    setOpenModal(!openModal);
-  };
+    setOpenModal(!openModal)
+  }
   return (
     <>
       <a className=" transition-all group  w-full ">
@@ -82,7 +74,7 @@ const EventColCard = ({
           <figure className="relative  w-full h-[165px]  ">
             {firsImage && (
               <Image
-                src={firsImage?.url || firsImage?.src}
+                src={firsImage?.url ?? firsImage?.src}
                 objectFit="cover"
                 layout="fill"
               />
@@ -105,11 +97,11 @@ const EventColCard = ({
         </div>
       </Modal>
     </>
-  );
-};
+  )
+}
 
 const EventModalInfo = ({ event }: { event: EventType }) => {
-  const { id, resume, links } = event;
+  const { id, resume, links } = event
 
   return (
     <div className="">
@@ -117,7 +109,7 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
       <div className="w-full text-sm truncate text-center">
         <div className="flex w-full justify-between ">
           <RatingInput />
-          <Link href={`/events/${id}`}>
+          <Link href={`/events/${id ?? ''}`}>
             <button className="btn btn-outline btn-circle">Go</button>
           </Link>
         </div>
@@ -143,35 +135,15 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
         </div>
       )}
     </div>
-  );
-};
-
-const EventInfo = ({ when }: { when?: string }) => {
-  return (
-    <div className="">
-      <div className="w-full text-sm truncate text-center">
-        <label className=" ">{when}</label>
-      </div>
-    </div>
-  );
-};
-
-const EventTitle = ({ title }: { title?: string }) => {
-  return (
-    <div className="">
-      <div className="w-full text-sm truncate text-center">
-        <label className=" ">{title}</label>
-      </div>
-    </div>
-  );
-};
+  )
+}
 
 const UpcomingLabel = ({
   status = 'PLANING',
-  fromNow,
+  fromNow
 }: {
-  status: Event['status'];
-  fromNow?: string;
+  status: Event['status']
+  fromNow?: string
 }) => {
   const STATUS_LABEL: Record<Event['status'], string> = {
     ACTIVE: 'Upcoming',
@@ -180,8 +152,8 @@ const UpcomingLabel = ({
     FINISHED: 'Finished',
     OUTSIDE: 'Outside',
     HIDDEN: 'Hidden',
-    POSTPONED: 'Postponed',
-  };
+    POSTPONED: 'Postponed'
+  }
   return (
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
       <div className="flex justify-center">
@@ -190,7 +162,7 @@ const UpcomingLabel = ({
         </label>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EventColCard;
+export default EventColCard

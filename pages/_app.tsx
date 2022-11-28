@@ -1,9 +1,8 @@
-import '../styles/globals.css';
-import type { AppProps } from 'next/app';
-import { wrapper } from '../store';
-import Layout from '@comps/layout';
-import Head from 'next/head';
-import Script from 'next/script';
+import '../styles/globals.css'
+import type { AppProps } from 'next/app'
+import { wrapper } from '../store'
+import Layout from '@comps/layout'
+import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -50,7 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Component {...pageProps} />
     </Layout>
-  );
+  )
 }
 
-export default wrapper.withRedux(MyApp);
+export default wrapper.withRedux(MyApp)

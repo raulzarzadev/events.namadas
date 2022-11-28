@@ -1,15 +1,15 @@
 export interface StyleType {
-  label: string;
+  label: string
   id: string
   largeLabel: string
 }
 
 export interface DistanceType {
-label:string
-id:string | number
+  label: string
+  id: string | number
 }
 
 export interface TestType {
-  distance: DistanceType['id'],
+  distance: DistanceType['id']
   style: StyleType['id']
 }

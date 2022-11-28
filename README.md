@@ -2,7 +2,7 @@ events.nadamas
 
 events is an app that works together nadamas.app
 
-## we use cypress as e2e test 
+## we use cypress as e2e test
 
 config cypress.env.json with (you should get this in firebase console)
 
@@ -17,9 +17,10 @@ config cypress.env.json with (you should get this in firebase console)
   },
   "userId":""
 ```
-and 
 
-serviceAccountKey.json 
+and
+
+serviceAccountKey.json
 
 ```
   "type": "",
@@ -35,4 +36,3 @@ serviceAccountKey.json
 ```
 
 each element for testing is named as "data-test-id"
-

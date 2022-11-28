@@ -2,47 +2,44 @@ import Icon from '@comps/Icon'
 import { useState } from 'react'
 import Modal from '..'
 export interface ModalDeleteType {
-   handleDelete: (itemId:string)=>void
+  handleDelete: (itemId: string) => void
   deleteSuccessful: () => void
   itemLabel?: string
   itemId?: string
   deleteText: string | null
-  modalTitle:string
-  buttonType :'icon'|'btn'
-  disabled:boolean
+  modalTitle: string
+  buttonType: 'icon' | 'btn'
+  disabled: boolean
 }
-export default function ModalDelete ({
-  handleDelete = ()=>{},
+export default function ModalDelete({
+  handleDelete = () => {},
   deleteSuccessful = () => {},
   itemLabel = 'element',
   itemId = '',
   deleteText = null,
   modalTitle = 'delete element',
   buttonType = 'icon', // icon | btn
-  disabled=false
-}:ModalDeleteType) {
+  disabled = false
+}: ModalDeleteType) {
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(!open)
   }
-  const [loading, setLoading] = useState(false)
   const [buttonLabelModal, setButtonLabelModal] = useState('Delete')
 
   const functionDelete = async () => {
-    setLoading(true)
     setButtonLabelModal('Deleted')
 
     const deleteFunc = async () => {
       try {
         if (handleDelete && typeof handleDelete === 'function') {
-           handleDelete(itemId);
+          handleDelete(itemId)
         } else {
-          console.error('handleDelete is not defined');
+          console.error('handleDelete is not defined')
         }
       } catch (error) {
         console.error(error)
       } finally {
-        setLoading(false)
         setButtonLabelModal('Delete')
         deleteSuccessful()
         setTimeout(() => {
@@ -75,7 +72,7 @@ export default function ModalDelete ({
       )}
       <Modal title={modalTitle} open={open} handleOpen={() => handleOpen()}>
         <div className="text-center whitespace-pre-line">
-          {deleteText ||
+          {deleteText ??
             `¿Are you sure delete this element
            ${itemLabel.toUpperCase()} 
            permanently?`}
@@ -84,7 +81,7 @@ export default function ModalDelete ({
             <button
               className={'btn-outline btn btn-sm'}
               onClick={() => {
-                handleOpen();
+                handleOpen()
               }}
             >
               Cancel
@@ -92,9 +89,9 @@ export default function ModalDelete ({
             <button
               className={'btn-error  btn btn-sm'}
               onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                functionDelete();
+                e.preventDefault()
+                e.stopPropagation()
+                functionDelete()
               }}
             >
               {buttonLabelModal}
@@ -103,5 +100,5 @@ export default function ModalDelete ({
         </div>
       </Modal>
     </div>
-  );
+  )
 }

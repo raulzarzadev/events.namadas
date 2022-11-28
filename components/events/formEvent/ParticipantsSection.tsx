@@ -1,14 +1,14 @@
-import { Toggle } from '@comps/inputs';
-import { useFormContext } from 'react-hook-form';
-import PricesSection from './PricesSection';
-import SubscriptionsSection from './SubscriptionsSection';
+import { Toggle } from '@comps/inputs'
+import { useFormContext } from 'react-hook-form'
+import PricesSection from './PricesSection'
+import SubscriptionsSection from './SubscriptionsSection'
 
 const ParticipantsSection = () => {
-  const { watch, register } = useFormContext();
+  const { watch, register } = useFormContext()
   const {
     acceptSubscriptions,
-    subscriptionsOptions: { acceptTerms },
-  } = watch();
+    subscriptionsOptions: { acceptTerms }
+  } = watch()
   return (
     <div>
       <>
@@ -19,7 +19,7 @@ const ParticipantsSection = () => {
               type={'checkbox'}
               className="checkbox m-2"
               {...register('subscriptionsOptions.acceptTerms', {
-                value: false,
+                value: false
               })}
             />
             <p>
@@ -30,7 +30,7 @@ const ParticipantsSection = () => {
             disabled={!acceptTerms}
             label="Organizar evento"
             {...register('subscriptionsOptions.acceptSubscriptions', {
-              value: false,
+              value: false
             })}
           />
         </div>
@@ -44,7 +44,7 @@ const ParticipantsSection = () => {
         )}
       </>
     </div>
-  );
-};
+  )
+}
 
-export default ParticipantsSection;
+export default ParticipantsSection

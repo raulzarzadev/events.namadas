@@ -1,26 +1,25 @@
-import Modal from '@comps/modal';
-import { Price } from '@firebase/Events/event.model';
-import Link from 'next/link';
-import { useState } from 'react';
+import { Price } from '@firebase/Events/event.model'
+import Link from 'next/link'
+import { useState } from 'react'
 
 const PriceCard = ({
   price,
-  paymentId,
+  paymentId
 }: {
-  price?: Price;
-  alreadyPaid?: string;
-  paymentId?:string;
+  price?: Price
+  alreadyPaid?: string
+  paymentId?: string
 }) => {
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => {
-    setOpenModal(!openModal);
-  };
+    setOpenModal(!openModal)
+  }
   return (
     <>
       <div
         className="group  rounded-lg bg-base-200 shadow-lg w-full h-full  cursor-pointer active:shadow-none border-2 border-transparent hover:border-base-content "
         onClick={() => {
-          !paymentId && handleOpenModal();
+          !paymentId && handleOpenModal()
         }}
       >
         <div className="grid  h-full  ">
@@ -37,7 +36,7 @@ const PriceCard = ({
               <div className="text-center w-full">
                 <span className="grid w-full">
                   <span>
-                    ${parseInt(`${price?.amount || 0}`).toFixed(2)} mxn
+                    ${parseInt(`${price?.amount ?? 0}`).toFixed(2)} mxn
                   </span>
                 </span>
                 <Link href={`/payments/${paymentId}`}>
@@ -48,15 +47,14 @@ const PriceCard = ({
               </div>
             ) : (
               <div className="mt-4 btn group-hover:bg-primary group-active:bg-base-100 w-full">
-                <span>${parseInt(`${price?.amount || 0}`).toFixed(2)} mxn</span>
+                <span>${parseInt(`${price?.amount ?? 0}`).toFixed(2)} mxn</span>
               </div>
             )}
           </div>
         </div>
       </div>
-    
     </>
-  );
-};
+  )
+}
 
-export default PriceCard;
+export default PriceCard

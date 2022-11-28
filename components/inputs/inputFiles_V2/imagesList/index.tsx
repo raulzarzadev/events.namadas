@@ -1,44 +1,42 @@
-import PreviewImage from "@comps/previewImage";
+import PreviewImage from '@comps/previewImage'
 
 export interface ImagesListType {
-  images: Image[] | any[];
-  childrenClassName?: string;
-  onDeleteImage?: (url: string) => void;
+  images: Image[] | any[]
+  childrenClassName?: string
+  onDeleteImage?: (url: string) => void
   showDelete?: boolean
 }
 
 interface Image {
-  url: string;
-  uploading?: boolean;
-
+  url: string
+  uploading?: boolean
 }
 
 const ImagesList = ({
   images = [],
-  childrenClassName: childrenClassName,
+  childrenClassName,
   onDeleteImage,
-  showDelete = true,
+  showDelete = true
 }: ImagesListType) => {
-  const handleOpenDelete = async (url: string | undefined) => {
-    if (!url) return console.log('no valid url');
-    if (onDeleteImage) onDeleteImage(url);
-  };
+  const handleOpenDelete = async (url: Image['url']) => {
+    if (!url) return console.log('no valid url')
+    if (onDeleteImage) onDeleteImage(url)
+  }
   return (
     <>
       {images?.map(({ url, uploading }, i) => (
-        <div key={`${url}-${i}`} className={` ${childrenClassName}  `}>
+        <div key={url} className={` ${childrenClassName ?? ''}  `}>
           <PreviewImage
             image={url}
             showDelete={showDelete}
             uploading={uploading}
             previewSize="full"
-            handleDelete={() => handleOpenDelete(url)}
+            handleDelete={async () => await handleOpenDelete(url)}
           />
         </div>
       ))}
     </>
-  );
-};
+  )
+}
 
-export default ImagesList;
-
+export default ImagesList

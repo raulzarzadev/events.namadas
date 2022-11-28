@@ -1,26 +1,28 @@
 // import Swiper core and required modules
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
 
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
 
-import Image from 'next/image';
-import PreviewImage from '@comps/previewImage';
+import Image from 'next/image'
 
 interface ImageType {
-  src: string;
-  text?: string;
-  url?:string,
-  loading?:boolean
+  src: string
+  text?: string
+  url?: string
+  loading?: boolean
 }
 
-const Carousel = ({ images = [] }: { images?: ImageType[] | [] | undefined}) => {
- 
+const Carousel = ({
+  images = []
+}: {
+  images?: ImageType[] | [] | undefined
+}) => {
   return (
     <div className="">
       <Swiper
@@ -36,15 +38,21 @@ const Carousel = ({ images = [] }: { images?: ImageType[] | [] | undefined}) => 
       >
         {images.map((image, i) => (
           <SwiperSlide key={i} className="">
-            <div className='relative w-full h-72 '>
-              <Image src={image?.src || image?.url || '/images/defaultEventImage.jpeg'} objectFit='cover' layout='fill' />
+            <div className="relative w-full h-72 ">
+              <Image
+                src={
+                  (image?.src || image?.url) ?? '/images/defaultEventImage.jpeg'
+                }
+                objectFit="cover"
+                layout="fill"
+              />
             </div>
             {/* <PreviewImage image={image?.src || image?.url}  previewSize='full'/> */}
           </SwiperSlide>
         ))}
       </Swiper>
     </div>
-  );
-};
+  )
+}
 
-export default Carousel;
+export default Carousel

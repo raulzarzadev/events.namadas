@@ -1,18 +1,18 @@
-import CompanyCard, { CompanyCardType } from '@comps/CompanyCard';
-import Icon from '@comps/Icon';
-import { IconName } from '@comps/Icon/icons-list';
-import { sortFromNow } from 'utils/myFormatDate';
+import CompanyCard, { CompanyCardType } from '@comps/CompanyCard'
+import Icon from '@comps/Icon'
+import { IconName } from '@comps/Icon/icons-list'
+import { sortFromNow } from 'utils/myFormatDate'
 
 const CompaniesRow = ({
   companies,
   title = 'Events',
   iconName,
-  subtitle,
+  subtitle
 }: {
-  companies: CompanyCardType[];
-  title: string;
-  iconName?: IconName;
-  subtitle?: string;
+  companies: CompanyCardType[]
+  title: string
+  iconName?: IconName
+  subtitle?: string
 }) => {
   return (
     <div className=" mx-auto">
@@ -33,7 +33,7 @@ const CompaniesRow = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CompaniesRow;
+export default CompaniesRow

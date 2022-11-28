@@ -1,46 +1,46 @@
-import Icon from '@comps/Icon';
-import { useState } from 'react';
-import Modal from '..';
-type StatusModalDelete = 'DELETE' | 'LOADING' | 'ERROR' | 'DELETED';
+import Icon from '@comps/Icon'
+import { useState } from 'react'
+import Modal from '..'
+type StatusModalDelete = 'DELETE' | 'LOADING' | 'ERROR' | 'DELETED'
 export interface OpenButtonProps {
-  'data-test-id'?: string;
-  className?: string;
+  'data-test-id'?: string
+  className?: string
 }
 interface ModalDeleteType {
-  title: string;
-  handleDelete: () => void;
-  openButtonProps?: OpenButtonProps;
-  buttonLabel: string;
+  title: string
+  handleDelete: () => void
+  openButtonProps?: OpenButtonProps
+  buttonLabel: string
 }
 
 const ModalDelete = ({
   title,
-  handleDelete = () => {},
+  handleDelete,
   openButtonProps,
-  buttonLabel = 'Delete',
+  buttonLabel = 'Delete'
 }: ModalDeleteType) => {
-  const [status, setStatus] = useState<StatusModalDelete>('DELETE');
-  const [open, setOpen] = useState(false);
+  const [status, setStatus] = useState<StatusModalDelete>('DELETE')
+  const [open, setOpen] = useState(false)
   const handleOpen = () => {
-    setOpen(!open);
-  };
+    setOpen(!open)
+  }
 
   const LABELS: Record<StatusModalDelete, string> = {
     DELETE: 'Delete',
     LOADING: 'Deleting',
     ERROR: 'Error',
-    DELETED: 'Deleted successfully',
-  };
+    DELETED: 'Deleted successfully'
+  }
   return (
     <>
       <button
         onClick={(e) => {
-          e.preventDefault();
-          handleOpen();
+          e.preventDefault()
+          handleOpen()
         }}
         {...openButtonProps}
         className={` ${
-          openButtonProps?.className ||
+          openButtonProps?.className ??
           ' flex justify-evenly btn btn-outline border-error '
         }`}
       >
@@ -56,8 +56,8 @@ const ModalDelete = ({
             <button
               className="btn btn-outline"
               onClick={(e) => {
-                e.preventDefault();
-                setOpen(false);
+                e.preventDefault()
+                setOpen(false)
               }}
             >
               Cancel
@@ -66,14 +66,14 @@ const ModalDelete = ({
               data-test-id="delete-modal-delete-button"
               className="btn btn-error"
               onClick={(e) => {
-                e.preventDefault();
-                setStatus('LOADING');
+                e.preventDefault()
+                setStatus('LOADING')
 
-                handleDelete();
+                handleDelete()
 
                 setTimeout(() => {
-                  setStatus('DELETED');
-                }, 300);
+                  setStatus('DELETED')
+                }, 300)
               }}
             >
               {LABELS[status]}
@@ -82,7 +82,7 @@ const ModalDelete = ({
         </div>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default ModalDelete;
+export default ModalDelete

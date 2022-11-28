@@ -1,14 +1,14 @@
-import ManageEvent from "@comps/events/ManageEvent";
-import PrivatePage from "HOCS/PrivatePage";
+import ManageEvent from '@comps/events/ManageEvent'
+import PrivatePage from 'HOCS/PrivatePage'
 
 const Manage = () => {
   return (
     <div>
       <PrivatePage>
-     <ManageEvent />
+        <ManageEvent />
       </PrivatePage>
     </div>
-  );
+  )
 }
 
-export default Manage;
+export default Manage

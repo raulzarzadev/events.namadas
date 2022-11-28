@@ -1,24 +1,32 @@
-import ModalDelete from "@comps/modal/ModalDelete_v2";
-import { deleteEvent } from "@firebase/Events/main";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import ModalDelete from '@comps/modal/ModalDelete_v2'
+import { deleteEvent } from '@firebase/Events/main'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 export interface EventOptionsConfig {
   deleteRedirectTo?: string
 }
-const EventOptions = ({ eventId, config }: { eventId: string, config?: EventOptionsConfig }) => {
-  const router = useRouter();
+const EventOptions = ({
+  eventId,
+  config
+}: {
+  eventId: string
+  config?: EventOptionsConfig
+}) => {
+  const router = useRouter()
   const deleteRedirectTo = config?.deleteRedirectTo
 
-  const handleDeleteEvent = async () => {
+  const handleDeleteEvent = () => {
     // console.log(event?.id);
     if (eventId) {
       deleteEvent(eventId).then((res) => {
         deleteRedirectTo ? router.push(deleteRedirectTo) : router.back()
-        console.log(res);
-      });
+        console.log(res)
+      })
+    } else {
+      console.log('no event id')
     }
-  };
+  }
 
   return (
     <div
@@ -33,7 +41,7 @@ const EventOptions = ({ eventId, config }: { eventId: string, config?: EventOpti
         title={'Delete event'}
         handleDelete={handleDeleteEvent}
         openButtonProps={{
-          'data-test-id': 'delete-event-option',
+          'data-test-id': 'delete-event-option'
         }}
         buttonLabel={''}
       />
@@ -46,9 +54,7 @@ const EventOptions = ({ eventId, config }: { eventId: string, config?: EventOpti
         <button className="btn btn-outline w-1/4 ">Manage </button>
       </Link>
     </div>
-  );
+  )
 }
 
-
-
-export default EventOptions;
+export default EventOptions

@@ -1,57 +1,52 @@
-import { Text, Toggle } from '@comps/inputs';
-import {
-  Controller,
-  RegisterOptions,
-  useFieldArray,
-  useFormContext,
-  UseFormRegister,
-} from 'react-hook-form';
-import FormSection from './FormSection';
-import { v4 as uidGenerator } from 'uuid';
-import { Price } from '@firebase/Events/event.model';
-import InputLocalDate from '@comps/inputs/InputLocalDate';
-import myFormatDate from 'utils/myFormatDate';
-export interface PricesSection {
-  disabled?: boolean;
+import { Text } from '@comps/inputs'
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form'
+import FormSection from './FormSection'
+import { v4 as uidGenerator } from 'uuid'
+import { Price } from '@firebase/Events/event.model'
+import InputLocalDate from '@comps/inputs/InputLocalDate'
+import myFormatDate from 'utils/myFormatDate'
+export interface PricesSectionType {
+  disabled?: boolean
 }
-const PricesSection = ({ disabled }: PricesSection) => {
+const PricesSection = ({ disabled }: PricesSectionType) => {
   const {
     register,
     formState: { errors },
     watch,
-    control,
-  } = useFormContext();
-  const formValues = watch();
-  const event = formValues;
+    control
+  } = useFormContext()
+  const formValues = watch()
+  const event = formValues
   const {
     fields: priceFields,
     append: appendPrice,
-    remove: removePrice,
+    remove: removePrice
   } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
-    name: 'prices', // unique name for your Field Array,
-  });
+    name: 'prices' // unique name for your Field Array,
+  })
 
   const handleAddPrice = () => {
-    const uuid = uidGenerator().replace('-', '').slice(0, 20);
+    const uuid = uidGenerator().replace('-', '').slice(0, 20)
+    const pricesLength = parseInt(formValues.prices?.length ?? 0)
     const appendNewPrice: Price = {
       event: {
         id: event.id,
         date: event.date,
         eventType: event.eventType,
         title: event.title,
-        createdBy: event.userId,
+        createdBy: event.userId
       },
       id: uuid,
       eventId: formValues?.id,
       amount: 0,
-      title: `Price ${(formValues.prices?.length || 0) + 1}`,
+      title: `Price ${pricesLength + 1}`,
       description: 'Description price',
       validFrom: myFormatDate(new Date(), 'datetime'),
-      expiresAt: myFormatDate(formValues.date, 'datetime'),
-    };
-    appendPrice(appendNewPrice);
-  };
+      expiresAt: myFormatDate(formValues.date, 'datetime')
+    }
+    appendPrice(appendNewPrice)
+  }
   return (
     <div>
       <FormSection title="Prices">
@@ -98,7 +93,7 @@ const PricesSection = ({ disabled }: PricesSection) => {
                     render={({
                       field,
                       fieldState: { invalid, isTouched, isDirty, error },
-                      formState,
+                      formState
                     }) => (
                       <InputLocalDate
                         label="Valid from"
@@ -114,7 +109,7 @@ const PricesSection = ({ disabled }: PricesSection) => {
                     render={({
                       field,
                       fieldState: { invalid, isTouched, isDirty, error },
-                      formState,
+                      formState
                     }) => (
                       <InputLocalDate
                         label="Expire at"
@@ -132,8 +127,8 @@ const PricesSection = ({ disabled }: PricesSection) => {
               disabled={disabled}
               className="btn btn-md "
               onClick={(e) => {
-                e.preventDefault();
-                handleAddPrice();
+                e.preventDefault()
+                handleAddPrice()
               }}
             >
               Add price
@@ -142,7 +137,7 @@ const PricesSection = ({ disabled }: PricesSection) => {
         </div>
       </FormSection>
     </div>
-  );
-};
+  )
+}
 
-export default PricesSection;
+export default PricesSection

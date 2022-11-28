@@ -1,40 +1,38 @@
-import NotLoginModal from '@comps/modal/NotLoginModal';
-import PriceCard from '@comps/PriceCard_v2';
-import { Event, Price } from '@firebase/Events/event.model';
-import { addItemToUserCart, createCart } from '@firebase/UserCart/main';
+import NotLoginModal from '@comps/modal/NotLoginModal'
+import PriceCard from '@comps/PriceCard_v2'
+import { Event, Price } from '@firebase/Events/event.model'
+import { addItemToUserCart, createCart } from '@firebase/UserCart/main'
 
-import useAuth from 'hooks/useAuth';
-import useEventsPayments from 'hooks/useEventsPayments';
-import { useState } from 'react';
+import useAuth from 'hooks/useAuth'
+import { useState } from 'react'
 
 const JoinEvent = ({ event }: { event: Event }) => {
-  const { userEventPayments } = useEventsPayments({ eventId: event?.id });
-  const { user, userCart } = useAuth();
+  const { user, userCart } = useAuth()
 
   const alreadyPaid = (priceId: Price['id']): boolean => {
-    const prod = userCart?.products.find((item: any) => item?.id === priceId);
-    return !!prod;
-  };
+    const prod = userCart?.products.find((item: any) => item?.id === priceId)
+    return !!prod
+  }
 
-  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openLoginModal, setOpenLoginModal] = useState(false)
   const handleOpenLoginModal = () => {
-    setOpenLoginModal(!openLoginModal);
-  };
+    setOpenLoginModal(!openLoginModal)
+  }
 
   const handleAddToCart = async ({ price }: { price: Price }) => {
     if (!user?.id) {
-      handleOpenLoginModal();
-      return;
+      handleOpenLoginModal()
+      return
     }
 
     if (userCart?.id) {
-      addItemToUserCart(userCart?.id, price).then((res) => console.log(res));
+      addItemToUserCart(userCart?.id, price).then((res) => console.log(res))
     } else {
       createCart({
-        products: [price],
-      }).then((res) => console.log(res));
+        products: [price]
+      }).then((res) => console.log(res))
     }
-  };
+  }
 
   return (
     <div>
@@ -54,7 +52,7 @@ const JoinEvent = ({ event }: { event: Event }) => {
               price={price}
               alreadyInCart={alreadyPaid(price.id)}
               alreadyPaid={false}
-              handleAddToCart={() =>
+              handleAddToCart={() => {
                 handleAddToCart({
                   price: {
                     ...price,
@@ -68,20 +66,20 @@ const JoinEvent = ({ event }: { event: Event }) => {
                       id: event.id,
                       images: event.images || [],
                       subscriptionsOptions: event.subscriptionsOptions,
-                      title: event.title,
-                    },
-                  },
+                      title: event.title
+                    }
+                  }
                 })
-              }
+              }}
               handlePayNow={function (): void {
-                throw new Error('Function not implemented.');
+                throw new Error('Function not implemented.')
               }}
             />
           </div>
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default JoinEvent;
+export default JoinEvent

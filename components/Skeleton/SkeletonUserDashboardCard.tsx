@@ -1,7 +1,7 @@
-import LoadingImage from "./items/LoadingImage";
-import LoadingText from "./items/LoadingText";
-import LoadingTitle from "./items/LoadingTitle";
-import LoadingUser from "./items/LoadingUser";
+import LoadingImage from './items/LoadingImage'
+import LoadingText from './items/LoadingText'
+import LoadingTitle from './items/LoadingTitle'
+import LoadingUser from './items/LoadingUser'
 
 const SkeletonUserDashboardCard = () => {
   return (
@@ -17,7 +17,7 @@ const SkeletonUserDashboardCard = () => {
       <LoadingUser />
       <span className="sr-only">Loading...</span>
     </div>
-  );
+  )
 }
 
-export default SkeletonUserDashboardCard;
+export default SkeletonUserDashboardCard

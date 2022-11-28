@@ -1,13 +1,13 @@
-import useAuth from 'hooks/useAuth';
-import { useState } from 'react';
-import CompanySection from '../CompanySection';
-import UserEvents from '../UserEvents';
-import UserSection from '../UserSection';
+import useAuth from 'hooks/useAuth'
+import { useState } from 'react'
+import CompanySection from '../CompanySection'
+import UserEvents from '../UserEvents'
+import UserSection from '../UserSection'
 
 const MobileDashboard = () => {
-  const { user } = useAuth();
-  const [selected, setSelected] = useState<MenuLinks>('user');
-  const isCompany = user?.profileType?.isCompany;
+  const { user } = useAuth()
+  const [selected, setSelected] = useState<MenuLinks>('user')
+  const isCompany = user?.profileType?.isCompany
   return (
     <div className="relative max-w-xl mx-auto">
       <div className="sticky top-0 z-20 bg-base-100 ">
@@ -23,10 +23,10 @@ const MobileDashboard = () => {
       ) : null}
       {selected === 'events' ? <UserEvents /> : null}
     </div>
-  );
-};
+  )
+}
 
-type MenuLinks = 'user' | 'company' | 'events' | 'config';
+type MenuLinks = 'user' | 'company' | 'events' | 'config'
 const MobileMenu = ({ setSelected, selected, isCompany }: any) => {
   return (
     <div>
@@ -67,9 +67,16 @@ const MobileMenu = ({ setSelected, selected, isCompany }: any) => {
         </ul>
       </menu>
     </div>
-  );
-};
-const MenuLink = ({ label = 'link', selected = false, ...rest }) => {
+  )
+}
+const MenuLink = ({
+  label,
+  selected,
+  ...rest
+}: {
+  label: string
+  selected: boolean
+}) => {
   return (
     <>
       <a {...rest}>
@@ -77,6 +84,6 @@ const MenuLink = ({ label = 'link', selected = false, ...rest }) => {
         {selected && <div className="border-b-4" />}
       </a>
     </>
-  );
-};
-export default MobileDashboard;
+  )
+}
+export default MobileDashboard

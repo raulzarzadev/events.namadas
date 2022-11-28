@@ -28,16 +28,16 @@ const FAQs = () => {
         `}
       />
     </div>
-  );
-};
+  )
+}
 
-const Question = ({ title = '', text = '' }) => (
+const Question = ({ title, text }: { title: string; text: string }) => (
   <div tabIndex={0} className="collapse">
     <div className="collapse-title text-xl font-medium">{title}</div>
     <div className="collapse-content">
       <p className="whitespace-pre-line">{text}</p>
     </div>
   </div>
-);
+)
 
-export default FAQs;
+export default FAQs

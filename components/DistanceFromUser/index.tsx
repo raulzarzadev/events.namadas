@@ -1,11 +1,13 @@
-import GeolocationInput from '@comps/inputs/GeolocationInput';
-import { Coordinates } from '@firebase/Events/event.model';
-import useGeolocation from 'hooks/useGeolocation';
+import GeolocationInput from '@comps/inputs/GeolocationInput'
+import { Coordinates } from '@firebase/Events/event.model'
+import useGeolocation from 'hooks/useGeolocation'
 
 const DistanceFromUser = ({ location }: { location?: Coordinates }) => {
-  const { geolocation: userLocation, distanceBetween } = useGeolocation();
+  const { geolocation: userLocation, distanceBetween } = useGeolocation()
   if (!location)
-    return <div className="text-center">This event doesn't have location</div>;
+    return (
+      <div className="text-center">{"This event doesn't have location"}</div>
+    )
   if (!userLocation)
     return (
       <div className="group text-center relative">
@@ -16,12 +18,12 @@ const DistanceFromUser = ({ location }: { location?: Coordinates }) => {
           <GeolocationInput />
         </div>
       </div>
-    );
-  const dist = distanceBetween(userLocation, location, { unit: 'k' });
+    )
+  const dist = distanceBetween(userLocation, location, { unit: 'k' })
   return (
     <div className="text-center">
       <span>{dist} km away</span>
     </div>
-  );
-};
-export default DistanceFromUser;
+  )
+}
+export default DistanceFromUser

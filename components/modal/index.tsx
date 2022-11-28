@@ -1,6 +1,5 @@
-import Icon from '@comps/Icon';
-import React from 'react';
-import { useId } from 'react';
+import Icon from '@comps/Icon'
+import React, { useId } from 'react'
 
 // import CrossIcon from '../icons/CrossIcon';
 const Modal = ({
@@ -9,20 +8,20 @@ const Modal = ({
   handleOpen = () => {},
   children = <></>,
   onMouseLeave,
-  size = 'full',
+  size = 'full'
 }: {
-  title: string;
-  open: boolean;
-  handleOpen: () => void;
-  children: any;
-  onMouseLeave?: any;
-  size?: 'full' | 'half';
+  title: string
+  open: boolean
+  handleOpen: () => void
+  children: any
+  onMouseLeave?: any
+  size?: 'full' | 'half'
 }) => {
-  const modalId = useId();
+  const modalId = useId()
   const sizing = {
     full: 'w-full',
-    half: 'w-1/2',
-  };
+    half: 'w-1/2'
+  }
   return (
     <div
       className={`top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black bg-opacity-50 z-20 ${
@@ -35,9 +34,9 @@ const Modal = ({
          * !TODO: if e.preventDefault() is called, the modal will make fails the form inside
          *
          */
-        const target = e.target as HTMLDivElement;
-        e.stopPropagation();
-        target?.id === modalId && handleOpen();
+        const target = e.target as HTMLDivElement
+        e.stopPropagation()
+        target?.id === modalId && handleOpen()
       }}
     >
       <div
@@ -55,8 +54,8 @@ const Modal = ({
           <button
             className={''}
             onClick={(e) => {
-              e.preventDefault();
-              handleOpen();
+              e.preventDefault()
+              handleOpen()
             }}
           >
             <Icon name="cross" size="md" />
@@ -66,7 +65,7 @@ const Modal = ({
         <main className={'pt-5 p-5'}>{children}</main>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal

@@ -1,23 +1,23 @@
-import { InputDate, Text } from '@comps/inputs';
-import { Controller, useFormContext } from 'react-hook-form';
-import myFormatDate from 'utils/myFormatDate';
-import FormSection from './FormSection';
+import { Text } from '@comps/inputs'
+import { Controller, useFormContext } from 'react-hook-form'
+import myFormatDate from 'utils/myFormatDate'
+import FormSection from './FormSection'
 
 const SubscriptionsSection = () => {
   const {
     register,
     formState: { errors },
     control,
-    watch,
-  } = useFormContext();
-  const formValues = watch();
+    watch
+  } = useFormContext()
+  const formValues = watch()
   return (
     <div>
       <FormSection title="Subscriptions options">
         <Text
           {...register('subscriptionsOptions.limit', {
             valueAsNumber: true,
-            value: 0,
+            value: 0
           })}
           name="subscriptionsOptions.limit"
           label="Limited to:"
@@ -65,7 +65,7 @@ const SubscriptionsSection = () => {
         </div>
       </FormSection>
     </div>
-  );
-};
+  )
+}
 
-export default SubscriptionsSection;
+export default SubscriptionsSection

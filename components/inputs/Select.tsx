@@ -1,37 +1,50 @@
-import React from "react";
-import { InputType } from ".";
+import React from 'react'
+import { InputType } from '.'
 
-interface SelectInput extends Omit<InputType, 'type'|'size' >{
+interface SelectInput extends Omit<InputType, 'type' | 'size'> {
   options: SelectOption[]
-  placeholder?:string
+  placeholder?: string
 }
 interface SelectOption {
-  value:string|number,
-  label:string
+  value: string | number
+  label: string
 }
 
- const Select = React.forwardRef<HTMLSelectElement, SelectInput>((props, ref) => {
-   const { label, errors, name, options, placeholder='Select an option',...rest } = props;
-   return (
-     <div className="form-control w-full ">
-       <label className="label">{label}</label>
-       <select
-         // type={type}
-         name={name}
-         className="input  input-bordered"
-         ref={ref}
-         aria-invalid={errors[name] ? 'true' : 'false'}
-         {...rest}
-         defaultValue=''
-       >
-         {placeholder&& <option value={''}>{placeholder}</option>}
-         {options.map((option) => (
-           <option key={option.value} value={option.value}>{option.label}</option>
-         ))}
-       </select>
-       <label>{errors[name] && <span>{errors[name]}</span>}</label>
-     </div>
-   );
- });
+const Select = React.forwardRef<HTMLSelectElement, SelectInput>(
+  (props, ref) => {
+    const {
+      label,
+      errors,
+      name,
+      options,
+      placeholder = 'Select an option',
+      ...rest
+    } = props
+    return (
+      <div className="form-control w-full ">
+        <label className="label">{label}</label>
+        <select
+          // type={type}
+          name={name}
+          className="input  input-bordered"
+          ref={ref}
+          aria-invalid={errors[name] ? 'true' : 'false'}
+          {...rest}
+          defaultValue=""
+        >
+          {placeholder && <option value={''}>{placeholder}</option>}
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <label>{errors[name] && <span>{errors[name]}</span>}</label>
+      </div>
+    )
+  }
+)
 
-export default Select;
+Select.displayName = 'Select'
+
+export default Select

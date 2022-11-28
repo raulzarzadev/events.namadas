@@ -1,13 +1,13 @@
-import React from 'react';
-import { InputType } from '.';
+import React from 'react'
+import { InputType } from '.'
 
 interface TextareaType extends InputType {
-  rows?: number;
+  rows?: number
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaType>(
   (props, ref) => {
-    const { label, errors, name = '', type, rows = 5 } = props;
+    const { label, errors, name = '', type, rows = 5 } = props
     return (
       <div className="form-control w-full ">
         <label className="label-text ">{label}</label>
@@ -21,8 +21,10 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaType>(
         />
         <label>{errors[name] && <span>{errors[name]}</span>}</label>
       </div>
-    );
+    )
   }
-);
+)
 
-export default Textarea;
+Textarea.displayName = 'Textarea'
+
+export default Textarea

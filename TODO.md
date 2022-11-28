@@ -28,11 +28,10 @@ events.nadamas.app
 - [ ] Display grid in form images
 - [ ] Add images grid to event modal
 - [ ] Add event gallery
-- [ ] if want registration should accept therms. 
+- [ ] if want registration should accept therms.
 - [ ] if want add prices should receive registrations
-- [x] add triathlon sub events 
+- [x] add triathlon sub events
 
- 
 ### progress
 
 - [ ] create events out side of events nadamas easier and add props

@@ -1,96 +1,74 @@
-import DateComponent from '@comps/DateComponent';
-import RangeDate from '@comps/RangeDate';
-import { EventPaymentType } from '@firebase/EventPayments/eventPayment.model';
+import DateComponent from '@comps/DateComponent'
+import RangeDate from '@comps/RangeDate'
+import { EventPaymentType } from '@firebase/EventPayments/eventPayment.model'
 import {
   createEventPayment,
-  getEventPaymentByIntent,
-} from '@firebase/EventPayments/main';
-import { Price } from '@firebase/Events/event.model';
-import useEvents from 'hooks/useEvents';
-import { GetServerSidePropsContext } from 'next';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import myFormatDate from 'utils/myFormatDate';
-
-// interface LabelOptions {
-//   label: string;
-// }
-// const LABELS: Record<string, LabelOptions> = {
-//   VALID: {
-//     label: 'Successful payment',
-//   },
-//   WAITING: {
-//     label: 'Waiting for the confirmation',
-//   },
-//   PAID_OUT: {
-//     label: 'Payment Confirmed',
-//   },
-// };
-
-// const PAYMENT_STATUS = {
-//   VALID: 'VALID',
-//   WAITING: 'WAITING',
-//   PAID_OUT: 'PAID_OUT',
-//   INVALID: 'INVALID',
-// };
+  getEventPaymentByIntent
+} from '@firebase/EventPayments/main'
+import { Price } from '@firebase/Events/event.model'
+import useEvents from 'hooks/useEvents'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 const EventPayment = () => {
   const {
     query: {
-      id: eventId,
+      id,
       priceId,
       payment_intent_client_secret: paymentIntentSecret,
       payment_intent: paymentIntent,
-      redirect_status: redirectStatus,
-    },
-  } = useRouter();
+      redirect_status: redirectStatus
+    }
+  } = useRouter()
 
-  const { event } = useEvents({ eventId: `${eventId}` });
-  const price = event?.prices?.find(({ id }) => id === priceId);
+  const eventId = id as string
+
+  const { event } = useEvents({ eventId })
+  const price = event?.prices?.find(({ id }) => id === priceId)
   const eventPaymentExist = async (
     paymentIntent: EventPaymentType['paymentIntent']
   ) => {
-    const payment = await getEventPaymentByIntent(paymentIntent);
-    if (!payment) return false;
-    return payment[0];
-  };
+    const payment = await getEventPaymentByIntent(paymentIntent)
+    if (!payment) return false
+    return payment[0]
+  }
 
   const [eventPayment, setEventPayment] = useState<EventPaymentType | null>(
     null
-  );
+  )
 
   const verifyEventPayment = async ({
     price,
-    paymentIntent,
+    paymentIntent
   }: {
-    price: Price;
-    paymentIntent: EventPaymentType['paymentIntent'];
+    price: Price
+    paymentIntent: EventPaymentType['paymentIntent']
   }) => {
-    const eventPayment = await eventPaymentExist(paymentIntent);
+    const eventPayment = await eventPaymentExist(paymentIntent)
     if (!eventPayment) {
       const newEventPayment: EventPaymentType = {
         status: 'VALID',
         priceId: price?.id,
         price,
         paymentIntent,
-        paymentIntentSecret,
-      };
+        paymentIntentSecret
+      }
       createEventPayment(newEventPayment).then((res) => {
-        setEventPayment(newEventPayment);
-      });
+        setEventPayment(newEventPayment)
+      })
     } else {
-      setEventPayment(eventPayment);
+      setEventPayment(eventPayment)
     }
-  };
+  }
 
   useEffect(() => {
     if (redirectStatus === 'succeeded' && price) {
-      verifyEventPayment({ price, paymentIntent });
+      verifyEventPayment({ price, paymentIntent })
     }
-  }, [paymentIntent, price]);
+  }, [paymentIntent, price])
 
-  if (!price || !event) return <div>Loading ...</div>;
+  if (!price || !event) return <div>Loading ...</div>
 
   return (
     <div>
@@ -128,9 +106,9 @@ const EventPayment = () => {
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
 // type DateType = string | number | Date | undefined;
 
-export default EventPayment;
+export default EventPayment

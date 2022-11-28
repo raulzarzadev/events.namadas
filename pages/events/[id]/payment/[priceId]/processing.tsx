@@ -1,5 +1,5 @@
-import EventPayment from "@comps/EventPayment";
-import Head from "next/head";
+import EventPayment from '@comps/EventPayment'
+import Head from 'next/head'
 
 const ProcessingPayment = () => {
   return (
@@ -9,7 +9,7 @@ const ProcessingPayment = () => {
       </Head>
       <EventPayment />
     </>
-  );
-};
+  )
+}
 
-export default ProcessingPayment;
+export default ProcessingPayment

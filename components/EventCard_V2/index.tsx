@@ -1,28 +1,28 @@
-import { EventLinkInfo } from '@comps/events/event';
-import EventDetailsHeader from '@comps/events/event/EventDetails/EventDetailsHeader';
-import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
-import Modal from '@comps/modal';
-import { Event } from '@firebase/Events/event.model';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
-import { fromNow } from 'utils/myFormatDate';
+import { EventLinkInfo } from '@comps/events/event'
+import EventDetailsHeader from '@comps/events/event/EventDetails/EventDetailsHeader'
+import ImagesList from '@comps/inputs/inputFiles_V2/imagesList'
+import Modal from '@comps/modal'
+import { Event } from '@firebase/Events/event.model'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
+import { fromNow } from 'utils/myFormatDate'
 export interface EventType extends Event {}
 
 const EventCard = ({
-  event,
+  event
 }: {
-  redirect?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  event: EventType;
-  onSubscribe?: (id: string) => {};
+  redirect?: boolean
+  size?: 'sm' | 'md' | 'lg'
+  event: EventType
+  onSubscribe?: (id: string) => {}
 }) => {
-  const { title, id, images = [], status } = event;
-  const firsImage = images?.[0]?.url || images?.[0]?.src;
-  const [openModal, setOpenModal] = useState(false);
+  const { title, images = [], status } = event
+  const firsImage = images?.[0]?.url ?? images?.[0]?.src
+  const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => {
-    setOpenModal(!openModal);
-  };
+    setOpenModal(!openModal)
+  }
   return (
     <>
       <a
@@ -72,11 +72,11 @@ const EventCard = ({
         )}
       </Modal>
     </>
-  );
-};
+  )
+}
 
 const EventModalInfo = ({ event }: { event: EventType }) => {
-  const { id, resume, links, images } = event;
+  const { id, resume, links, images } = event
   return (
     <div className="">
       <EventDetailsHeader event={event} />
@@ -84,7 +84,7 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
         <div className="flex w-full justify-between ">
           {/* <RatingInput /> */}
           <span></span>
-          <Link href={`/events/${id}`}>
+          <Link href={`/events/${id ?? ''}`}>
             <button className="btn btn-outline btn-circle">Go</button>
           </Link>
         </div>
@@ -94,7 +94,7 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
           <span className="text-xs">Resume</span>
           <p>{resume}</p>
           <div className="text-center">
-            <Link href={`/events/${event.id}/announcement`}>
+            <Link href={`/events/${event?.id ?? ''}/announcement`}>
               <a className="link">Read full announcement</a>
             </Link>
           </div>
@@ -118,8 +118,8 @@ const EventModalInfo = ({ event }: { event: EventType }) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const EventTitle = ({ title }: { title?: string }) => {
   return (
@@ -128,11 +128,11 @@ const EventTitle = ({ title }: { title?: string }) => {
         <label className=" ">{title}</label>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const EventLabel = ({ event }: { event: Event }) => {
-  const currentTime = new Date().getTime();
+  const currentTime = new Date().getTime()
   const LABELS = {
     postponed: (
       <div className="bg-warning px-2 rounded-t-lg">
@@ -154,24 +154,24 @@ const EventLabel = ({ event }: { event: Event }) => {
         <label className="text-base-100 text-sm font-bold">Finished</label>
       </div>
     ),
-    null: <></>,
-  } as const;
-  type EventLabel = keyof typeof LABELS;
+    null: <></>
+  } as const
+  type EventLabel = keyof typeof LABELS
 
   const status = (): EventLabel => {
-    if (event.status === 'POSTPONED') return 'postponed';
-    if ((event?.date || 0) < currentTime) return 'finished';
-    if ((event?.date || 0) > currentTime) return 'upcoming';
+    if (event.status === 'POSTPONED') return 'postponed'
+    if ((event?.date ?? 0) < currentTime) return 'finished'
+    if ((event?.date ?? 0) > currentTime) return 'upcoming'
     if (
       event.includeFinishDate &&
-      (event?.date || 0) > currentTime &&
-      (event?.finishAt || 0) > currentTime
+      (event?.date ?? 0) > currentTime &&
+      (event?.finishAt ?? 0) > currentTime
     )
-      return 'inCourse';
-    return 'null';
-  };
+      return 'inCourse'
+    return 'null'
+  }
 
-  return LABELS[status()];
-};
+  return LABELS[status()]
+}
 
-export default EventCard;
+export default EventCard

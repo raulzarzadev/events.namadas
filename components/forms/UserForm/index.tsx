@@ -1,118 +1,116 @@
-import { Text, Toggle } from '@comps/inputs';
-import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2';
-import Phone from '@comps/inputs/Phone';
-import Textarea from '@comps/inputs/Textarea';
-import Section from '@comps/Section';
-import { updateUser } from '@firebase/Users/main';
-import { User } from '@firebase/Users/user.model';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import myFormatDate from 'utils/myFormatDate';
+import { Text, Toggle } from '@comps/inputs'
+import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2'
+import Phone from '@comps/inputs/Phone'
+import Textarea from '@comps/inputs/Textarea'
+import Section from '@comps/Section'
+import { updateUser } from '@firebase/Users/main'
+import { User } from '@firebase/Users/user.model'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import myFormatDate from 'utils/myFormatDate'
 
 interface ProfileType {
-  label: string;
-  name: 'isAthlete' | 'isCompany';
+  label: string
+  name: 'isAthlete' | 'isCompany'
 }
 const PROFILE_TYPES: ProfileType[] = [
   { name: 'isAthlete', label: 'Athlete' },
-  //{ name: 'isCoach', label: 'Coach' },
-  //{ name: 'isTutor', label: 'Father or tutor' },
-  { name: 'isCompany', label: 'Events Agency' },
-];
+  { name: 'isCompany', label: 'Events Agency' }
+]
 
 const FORM_LABELS = {
   error: {
     // error when saving , should be disabled
     title: '',
     button: 'Error',
-    disabled: true,
+    disabled: true
   },
   save: {
     // ready to save if event is new, should be active
     title: 'Create new user',
     button: 'Save',
-    disabled: false,
+    disabled: false
   },
   loading: {
     //  should be disabled
     title: '',
     button: 'Loading',
-    disabled: true,
+    disabled: true
   },
   saved: {
     // successfully saved , should be active
     title: '',
     button: 'Saved',
-    disabled: false,
+    disabled: false
   },
   edit: {
     // event exist form labels should change, should be active
     title: 'Edit event',
     button: 'Edit',
-    disabled: false,
+    disabled: false
   },
   clean: {
     // no modifications and button should be disabled
     title: '',
     button: 'Saved',
-    disabled: true,
-  },
-};
+    disabled: true
+  }
+}
 
 export default function UserForm({ user }: { user: User }) {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors , isDirty},
+    formState: { errors, isDirty },
     setValue,
-    reset,
-    
+    reset
   } = useForm({
     defaultValues: {
       ...user,
       name: user.displayName,
-      birth: myFormatDate(user.birth, 'yyyy-MM-dd'),
-    },
-  });
+      birth: myFormatDate(user.birth, 'yyyy-MM-dd')
+    }
+  })
 
-  const [formStatus, setFormStatus] = useState(FORM_LABELS.clean);
+  const [formStatus, setFormStatus] = useState(FORM_LABELS.clean)
 
-  useEffect(()=>{
+  useEffect(() => {
     setFormStatus(FORM_LABELS.save)
-  },[isDirty])
-
+  }, [isDirty])
 
   const onSubmit = async (form: any) => {
     setFormStatus(FORM_LABELS.loading)
     try {
-      form?.id&& await updateUser(form?.id, form)
-      setFormStatus(FORM_LABELS.saved);
-      reset(formValues,{keepValues:true})
+      form?.id && (await updateUser(form?.id, form))
+      setFormStatus(FORM_LABELS.saved)
+      reset(formValues, { keepValues: true })
     } catch (error) {
-      setFormStatus(FORM_LABELS.error);
-      
+      setFormStatus(FORM_LABELS.error)
     }
-  };
+  }
 
-  const formValues = watch();
+  const formValues = watch()
 
   // console.log(formValues)
   const handleSetImages = (images: any[], setImagesOps?: SetImagesOps) => {
     // if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading);
     if (images.length) {
-      setValue('images', images);
+      setValue('images', images)
       handleSubmit((props: any) => {
-        onSubmit(props);
-      })();
+        onSubmit(props)
+      })()
     }
-  };
-
-  
+  }
 
   return (
     <div className="relative">
-      <form onSubmit={handleSubmit(onSubmit)} className="">
+      <form
+        onSubmit={() => {
+          handleSubmit(onSubmit)
+        }}
+        className=""
+      >
         <div className="flex justify-end sticky top-8 p-2 bg-base-100 z-10">
           <button className="btn btn-primary " disabled={formStatus.disabled}>
             {formStatus.button}
@@ -131,13 +129,13 @@ export default function UserForm({ user }: { user: User }) {
             placeholder="Name"
             errors={errors}
             //  error={errors.name.message}
-            {...register('name', { value: formValues?.name || '' })}
+            {...register('name', { value: formValues?.name ?? '' })}
           />
           <Text
             label={'Alias (optional)'}
             placeholder="Alias (optional)"
             //  error={errors.name.message}
-            {...register('alias', { value: formValues.alias || null })}
+            {...register('alias', { value: formValues.alias ?? null })}
             errors={errors}
           />
           <Text
@@ -145,7 +143,7 @@ export default function UserForm({ user }: { user: User }) {
             type="date"
             //  error={errors.name.message}
             {...register('birth', {
-              value: myFormatDate(formValues.birth, 'yyyy-MM-dd') || '',
+              value: myFormatDate(formValues.birth, 'yyyy-MM-dd') || ''
             })}
             errors={errors}
           />
@@ -164,14 +162,14 @@ export default function UserForm({ user }: { user: User }) {
                       type={'checkbox'}
                       // label={label}
                       {...register(`profileType.${name}`, {
-                        setValueAs: (value) => !!value,
+                        setValueAs: (value) => !!value
                       })}
                       // value={`${true}`}
                       //  checked={true}
                       // value={true}
                     />
                   </label>
-                );
+                )
               })}
             </div>
           </div>
@@ -183,7 +181,7 @@ export default function UserForm({ user }: { user: User }) {
             placeholder="Phone (optional)"
             //  error={errors.name.message}
             onChange={(value: any) => {
-              setValue('contact.phone', value);
+              setValue('contact.phone', value)
             }}
             value={watch('contact.phone')}
             /* {...register('contact.whatsapp', {
@@ -221,7 +219,7 @@ export default function UserForm({ user }: { user: User }) {
                 // onChange={(e) => console.log(e.target.value)}
                 //  error={errors.name.message}
                 {...register('companyInfo.name', {
-                  value: formValues?.companyInfo?.name || '',
+                  value: formValues?.companyInfo?.name ?? ''
                 })}
                 errors={errors}
               />
@@ -231,7 +229,7 @@ export default function UserForm({ user }: { user: User }) {
                 // onChange={(e) => console.log(e.target.value)}
                 //  error={errors.name.message}
                 {...register('companyInfo.resume', {
-                  value: formValues?.companyInfo?.resume || null,
+                  value: formValues?.companyInfo?.resume ?? null
                 })}
                 rows={2}
                 errors={errors}
@@ -242,7 +240,7 @@ export default function UserForm({ user }: { user: User }) {
                 placeholder="Phone (optional)"
                 //  error={errors.name.message}
                 onChange={(value: any) => {
-                  setValue('companyInfo.phone', value);
+                  setValue('companyInfo.phone', value)
                 }}
                 value={formValues.companyInfo?.phone}
                 /* {...register('contact.whatsapp', {
@@ -255,7 +253,7 @@ export default function UserForm({ user }: { user: User }) {
                 // onChange={(e) => console.log(e.target.value)}
                 //  error={errors.name.message}
                 {...register('companyInfo.email', {
-                  value: formValues?.companyInfo?.email || null,
+                  value: formValues?.companyInfo?.email ?? null
                 })}
                 errors={errors}
               />
@@ -270,7 +268,7 @@ export default function UserForm({ user }: { user: User }) {
                 placeholder=" (recommended)"
                 //  error={errors.name.message}
                 {...register('medicInformation.bloodType', {
-                  value: watch('medicInformation.bloodType') || null,
+                  value: watch('medicInformation.bloodType') ?? null
                 })}
                 errors={errors}
               />
@@ -282,7 +280,7 @@ export default function UserForm({ user }: { user: User }) {
                 }
                 //  error={errors.name.message}
                 {...register('medicInformation.considerations', {
-                  value: watch('medicInformation.considerations') || null,
+                  value: watch('medicInformation.considerations') ?? null
                 })}
                 errors={errors}
               />
@@ -294,7 +292,7 @@ export default function UserForm({ user }: { user: User }) {
                 placeholder="(recommended)"
                 //  error={errors.name.message}
                 {...register('emergencyContact.name', {
-                  value: watch('emergencyContact.name') || null,
+                  value: watch('emergencyContact.name') ?? null
                 })}
                 errors={errors}
               />
@@ -309,7 +307,7 @@ export default function UserForm({ user }: { user: User }) {
                 label={'Relationship'}
                 placeholder=" (recommended)"
                 {...register('emergencyContact.relationship', {
-                  value: watch('emergencyContact.relationship') || null,
+                  value: watch('emergencyContact.relationship') ?? null
                 })}
                 errors={errors}
               />
@@ -318,7 +316,7 @@ export default function UserForm({ user }: { user: User }) {
                 placeholder="number"
                 //  error={errors.name.message}
                 onChange={(value: any) => {
-                  setValue('emergencyContact.phone', value);
+                  setValue('emergencyContact.phone', value)
                 }}
               />
             </Section>
@@ -326,5 +324,5 @@ export default function UserForm({ user }: { user: User }) {
         )}
       </form>
     </div>
-  );
+  )
 }

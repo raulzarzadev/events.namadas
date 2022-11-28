@@ -1,15 +1,13 @@
-import PickerLocation from '@comps/GoogleMaps/PickerLocation';
-import Icon from '@comps/Icon';
-import { Text } from '@comps/inputs';
-import InputLocalDate from '@comps/inputs/InputLocalDate';
-import Textarea from '@comps/inputs/Textarea';
-import { SubEvent } from '@firebase/Events/event.model';
-import Link from 'next/link';
-import { useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
-import myFormatDate from 'utils/myFormatDate';
-import { UseFormReturnHardSubmit } from '..';
-import SubEventInfo from './SubEventInfo';
+import PickerLocation from '@comps/GoogleMaps/PickerLocation'
+import Icon from '@comps/Icon'
+import { Text } from '@comps/inputs'
+import InputLocalDate from '@comps/inputs/InputLocalDate'
+import Textarea from '@comps/inputs/Textarea'
+import { useState } from 'react'
+import { Controller, useFormContext } from 'react-hook-form'
+import myFormatDate from 'utils/myFormatDate'
+import { UseFormReturnHardSubmit } from '..'
+import SubEventInfo from './SubEventInfo'
 
 export type FormFields =
   | 'title'
@@ -21,15 +19,15 @@ export type FormFields =
   | 'price'
   | 'distance'
   | 'location'
-  | 'link';
+  | 'link'
 
 const SubEventFields = ({
   handleRemoveSubEvent,
   // defaultFormFields,
-  index: subEventIndex,
+  index: subEventIndex
 }: {
-  handleRemoveSubEvent: () => void;
-  index: number;
+  handleRemoveSubEvent: () => void
+  index: number
 }) => {
   const {
     register,
@@ -37,10 +35,10 @@ const SubEventFields = ({
     formState: { errors },
     setValue,
     watch,
-    hardSubmit,
-  }: UseFormReturnHardSubmit = useFormContext();
-  const formValues = watch();
-  const subEventValues = formValues?.subEvents[subEventIndex];
+    hardSubmit
+  }: UseFormReturnHardSubmit = useFormContext()
+  const formValues = watch()
+  const subEventValues = formValues?.subEvents[subEventIndex]
 
   const FIELDS_OPTIONS: FormFields[] = [
     'title',
@@ -52,32 +50,33 @@ const SubEventFields = ({
     'price',
     'distance',
     'location',
-    'link',
-  ];
+    'link'
+  ]
 
-  const _defaultFormFields = Object.keys(subEventValues);
-  const [subEventFields, setEventFields] = useState(_defaultFormFields);
+  const _defaultFormFields = Object.keys(subEventValues)
+  const [subEventFields, setEventFields] = useState(_defaultFormFields)
 
   const handleSetFields = ({ target: { name, checked } }: any) => {
     if (!checked) {
-      const removeValue = { ...subEventValues };
-      delete removeValue[name];
-      setValue(`subEvents.${subEventIndex}`, removeValue);
+      const removeValue = { ...subEventValues }
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      delete removeValue[name]
+      setValue(`subEvents.${subEventIndex}`, removeValue)
     }
     if (subEventFields.includes(name)) {
-      const removeFiled = subEventFields.filter((field) => field !== name);
-      setEventFields(removeFiled);
+      const removeFiled = subEventFields.filter((field) => field !== name)
+      setEventFields(removeFiled)
     } else {
-      setEventFields([...subEventFields, name]);
+      setEventFields([...subEventFields, name])
     }
-  };
+  }
 
-  const [showResume, setShowResume] = useState(true);
+  const [showResume, setShowResume] = useState(true)
 
   const handleSave = () => {
-    setShowResume(true);
-    hardSubmit && hardSubmit();
-  };
+    setShowResume(true)
+    hardSubmit?.()
+  }
 
   return (
     <div className="my-2 bg-base-300 py-2">
@@ -86,7 +85,7 @@ const SubEventFields = ({
           subEvent={subEventValues}
           index={subEventIndex}
           handleEdit={() => {
-            setShowResume(false);
+            setShowResume(false)
           }}
         />
       )}
@@ -101,8 +100,8 @@ const SubEventFields = ({
               type="button"
               className="btn btn-outline btn-square btn-error mb-0 btn-sm  "
               onClick={(e) => {
-                e.preventDefault();
-                handleRemoveSubEvent();
+                e.preventDefault()
+                handleRemoveSubEvent()
               }}
             >
               <Icon name="delete" />
@@ -111,9 +110,9 @@ const SubEventFields = ({
               type="button"
               className="btn btn-outline btn-square btn-success mb-0 btn-sm  mx-2"
               onClick={(e) => {
-                e.preventDefault();
+                e.preventDefault()
 
-                handleSave();
+                handleSave()
               }}
             >
               <Icon name="done" />
@@ -134,7 +133,7 @@ const SubEventFields = ({
                     />
                   </label>
                 </div>
-              );
+              )
             })}
           </div>
 
@@ -193,7 +192,7 @@ const SubEventFields = ({
                     render={({
                       field,
                       fieldState: { invalid, isTouched, isDirty, error },
-                      formState,
+                      formState
                     }) => (
                       <InputLocalDate
                         label="Date"
@@ -217,7 +216,7 @@ const SubEventFields = ({
                     render={({
                       field,
                       fieldState: { invalid, isTouched, isDirty, error },
-                      formState,
+                      formState
                     }) => (
                       <InputLocalDate
                         label="Finish at"
@@ -271,7 +270,7 @@ const SubEventFields = ({
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SubEventFields;
+export default SubEventFields

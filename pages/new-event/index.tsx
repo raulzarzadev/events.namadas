@@ -1,5 +1,5 @@
-import FormEvent from '@comps/events/FormEvent';
-import PrivatePage from 'HOCS/PrivatePage';
+import FormEvent from '@comps/events/FormEvent'
+import PrivatePage from 'HOCS/PrivatePage'
 
 const NewEvent = () => {
   // TODO create an interface to import events from other pages,
@@ -8,7 +8,7 @@ const NewEvent = () => {
     <PrivatePage>
       <FormEvent />
     </PrivatePage>
-  );
-};
+  )
+}
 
-export default NewEvent;
+export default NewEvent

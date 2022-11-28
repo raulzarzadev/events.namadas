@@ -1,10 +1,10 @@
-import Icon from '@comps/Icon';
-import { Text } from '@comps/inputs';
-import InputImage from '@comps/inputs/InputImage';
-import { EventLink } from '@firebase/Events/event.model';
-import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import FormSection from '../FormSection';
+import Icon from '@comps/Icon'
+import { Text } from '@comps/inputs'
+import InputImage from '@comps/inputs/InputImage'
+import { EventLink } from '@firebase/Events/event.model'
+import { FirebaseCRUD } from '@firebase/FirebaseCRUD'
+import { useFieldArray, useFormContext } from 'react-hook-form'
+import FormSection from '../FormSection'
 
 const AddLinksSection = () => {
   const {
@@ -12,43 +12,45 @@ const AddLinksSection = () => {
     formState: { errors },
     control,
     watch,
-    setValue,
-  } = useFormContext();
+    setValue
+  } = useFormContext()
 
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
-    name: 'links', // unique name for your Field Array,
-  });
+    name: 'links' // unique name for your Field Array,
+  })
 
-  const formValues = watch();
+  const formValues = watch()
 
   const handleAddSubEvent = () => {
+    const linksLength = formValues?.links?.length ?? 0
     const appendNewEvent: EventLink = {
-      label: `link ${formValues?.links?.length + 1}`,
+      label: `link ${parseInt(linksLength) + 1}`,
       url: '',
-      image: '',
-    };
-    append(appendNewEvent);
-  };
+      image: ''
+    }
+    append(appendNewEvent)
+  }
   const handleChangeInputImage = async (e: any) => {
-    const files = e.target.files;
-    const fieldName = e.target.name;
+    const files = e.target.files
+    const fieldName = e.target.name
     const imageUploaded = await FirebaseCRUD.uploadFileAsync({
       file: files[0],
-      fieldName: `events/${formValues?.id}/links`,
-    });
-    setValue(fieldName, imageUploaded.url);
-    return imageUploaded.url;
-  };
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      fieldName: `events/${formValues?.id}/links`
+    })
+    setValue(fieldName, imageUploaded.url)
+    return imageUploaded.url
+  }
 
   const handleDeleteImage = (imageUrl: string, fieldName: string) => {
-    console.log(imageUrl);
+    console.log(imageUrl)
     FirebaseCRUD.deleteFile({ url: imageUrl }).then((res) => {
-      console.log(res);
-      setValue(fieldName, null);
-    });
-    return {};
-  };
+      console.log(res)
+      setValue(fieldName, null)
+    })
+    return {}
+  }
   // console.log(formValues);
   return (
     <FormSection title="Links related">
@@ -93,8 +95,8 @@ const AddLinksSection = () => {
           <button
             className="btn btn-md "
             onClick={(e) => {
-              e.preventDefault();
-              handleAddSubEvent();
+              e.preventDefault()
+              handleAddSubEvent()
             }}
           >
             Add link
@@ -102,7 +104,7 @@ const AddLinksSection = () => {
         </div>
       </div>
     </FormSection>
-  );
-};
+  )
+}
 
-export default AddLinksSection;
+export default AddLinksSection

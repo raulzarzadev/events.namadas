@@ -1,13 +1,13 @@
-import { ReactNode, useEffect, useState } from 'react';
-import { DISTANCES, STYLES } from './SWIMMING_TESTS';
-import { TestType } from './tests.model';
+import { ReactNode, useEffect, useState } from 'react'
+import { DISTANCES, STYLES } from './SWIMMING_TESTS'
+import { TestType } from './tests.model'
 export interface PickerSwimmingTestType {
-  tests?:TestType[]
-  setTests?: (tests:TestType[]) => void,
-  onTestClick? : (test:TestType) => void,
-  disabled? :boolean,
-  compact? :boolean,
-  currentSelected?: TestType|null,
+  tests?: TestType[]
+  setTests?: (tests: TestType[]) => void
+  onTestClick?: (test: TestType) => void
+  disabled?: boolean
+  compact?: boolean
+  currentSelected?: TestType | null
 }
 export default function PickerSwimmingTests({
   tests,
@@ -15,44 +15,44 @@ export default function PickerSwimmingTests({
   onTestClick = () => {},
   disabled = false,
   compact = true,
-  currentSelected = null,
-}:PickerSwimmingTestType) {
-  const isCurrentlySelected = (test:TestType) => {
-    const distance = currentSelected?.distance;
-    const style = currentSelected?.style;
+  currentSelected = null
+}: PickerSwimmingTestType) {
+  const isCurrentlySelected = (test: TestType) => {
+    const distance = currentSelected?.distance
+    const style = currentSelected?.style
 
-    return distance === test?.distance && style === test?.style;
-  };
-  const [form, setForm] = useState<TestType[] | []>([]);
-  const handleAddTest = (test:TestType) => {
+    return distance === test?.distance && style === test?.style
+  }
+  const [form, setForm] = useState<TestType[] | []>([])
+  const handleAddTest = (test: TestType) => {
     if (testsAlreadyExist(test)) {
       const cleaned = form.filter(
         ({ distance, style }) =>
           !(test.distance === distance && style === test.style)
-      );
-      setTests(cleaned);
-      setForm(cleaned);
+      )
+      setTests(cleaned)
+      setForm(cleaned)
     } else {
-      setTests([...form, test]);
-      setForm([...form, test]);
+      setTests([...form, test])
+      setForm([...form, test])
     }
-  };
+  }
 
   useEffect(() => {
     if (tests) {
-      setForm(tests);
+      setForm(tests)
     }
     return () => {
-      setForm([]);
-    };
-  }, [tests]);
+      setForm([])
+    }
+  }, [tests])
 
-  const testsAlreadyExist = (test: { distance: any; style: any; }) => {
+  const testsAlreadyExist = (test: { distance: any; style: any }) => {
     return !!form.find(
       ({ distance, style }) =>
         distance === test.distance && style === test.style
-    );
-  };
+    )
+  }
   return (
     <div className="flex w-full p-1 max-w-md mx-auto">
       <div className="flex flex-col w-16">
@@ -80,25 +80,23 @@ export default function PickerSwimmingTests({
                 className="w-full h-full p-1 flex justify-center items-center"
                 disabled={disabled}
                 onClick={(e) => {
-                  e.preventDefault();
-                  handleAddTest({ distance, style: styleId });
+                  e.preventDefault()
+                  handleAddTest({ distance, style: styleId })
                 }}
               >
                 <div
                   className={`w-full h-full flex justify-center items-center ${
-                    isCurrentlySelected({ distance, style: styleId }) &&
-                    'border-2'
+                    isCurrentlySelected({ distance, style: styleId })
+                      ? 'border-2'
+                      : ''
                   }`}
                   onClick={(e) => {
-                    e.preventDefault();
-                    onTestClick({ distance, style: styleId });
+                    e.preventDefault()
+                    onTestClick({ distance, style: styleId })
                   }}
                 >
                   {testsAlreadyExist({ distance, style: styleId }) ? (
-                    <>
-                      0
-                      {/* <Icon size="1rem" name="done" /> */}
-                    </>
+                    <>0{/* <Icon size="1rem" name="done" /> */}</>
                   ) : (
                     'x'
                   )}
@@ -109,24 +107,24 @@ export default function PickerSwimmingTests({
         </div>
       ))}
     </div>
-  );
+  )
 }
 
 interface PickerCell {
-  children:ReactNode
-  style:'normal'|'title'
-  size: 'sm'|'md' |'lg' 
+  children: ReactNode
+  style: 'normal' | 'title'
+  size: 'sm' | 'md' | 'lg'
 }
-const Cell = ({ children, style = 'normal', size = 'md' }:PickerCell) => {
+const Cell = ({ children, style = 'normal', size = 'md' }: PickerCell) => {
   const styling = {
     title: `font-bold  text-sm`,
-    normal: `font-normal`,
-  };
+    normal: `font-normal`
+  }
   const sizign = {
     sm: `h-6 text-xs`,
     md: `h-8 text-sm`,
-    lg: `h-10`,
-  };
+    lg: `h-10`
+  }
   return (
     <div
       className={`
@@ -134,5 +132,5 @@ const Cell = ({ children, style = 'normal', size = 'md' }:PickerCell) => {
     >
       {children}
     </div>
-  );
-};
+  )
+}

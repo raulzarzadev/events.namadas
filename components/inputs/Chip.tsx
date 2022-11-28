@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-const Chip=({label='', checked=false})=>{
-  const [isChecked, setIsChecked]=useState(checked)
-  const handleChange=({target:{checked}}:any)=>{
-    console.log(checked);
+const Chip = ({ label, checked }: { label: string; checked: boolean }) => {
+  const [isChecked, setIsChecked] = useState(checked)
+  const handleChange = ({ target: { checked } }: any) => {
+    console.log(checked)
     setIsChecked(checked)
   }
   return (
@@ -32,7 +32,7 @@ const Chip=({label='', checked=false})=>{
         </label>
       </span>
     </div>
-  );
+  )
 }
 
 export default Chip

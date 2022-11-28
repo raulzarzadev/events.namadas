@@ -1,39 +1,34 @@
-import { SubEvent } from '@firebase/Events/event.model';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import myFormatDate from 'utils/myFormatDate';
-import SubEventFields from './SubEventFields_v2';
+import { SubEvent } from '@firebase/Events/event.model'
+import { useFieldArray, useFormContext } from 'react-hook-form'
+import myFormatDate from 'utils/myFormatDate'
+import SubEventFields from './SubEventFields_v2'
 
 const SubEventForm = () => {
-  const {
-    control,
-    register,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useFormContext();
+  const { control, watch } = useFormContext()
 
   const {
     fields: subEvents,
     append,
-    remove,
+    remove
   } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
-    name: 'subEvents', // unique name for your Field Array,
-  });
+    name: 'subEvents' // unique name for your Field Array,
+  })
 
-  const formValues = watch();
+  const formValues = watch()
 
   const handleAddSubEvent = () => {
+    const subEventsLength = parseInt(formValues?.subEvents?.length)
     const appendNewEvent: Partial<SubEvent> = {
-      title: `event ${formValues?.subEvents?.length + 1}`,
+      title: `event ${subEventsLength + 1}`,
       // distance: '',
       // comments: '',
-      date: myFormatDate(formValues.date, 'datetime'),
+      date: myFormatDate(formValues.date, 'datetime')
       // finishAt: null,
       // style: '',
-    };
-    append(appendNewEvent);
-  };
+    }
+    append(appendNewEvent)
+  }
 
   return (
     <div>
@@ -43,7 +38,7 @@ const SubEventForm = () => {
             <SubEventFields
               key={field.id}
               handleRemoveSubEvent={() => {
-                remove(index);
+                remove(index)
               }}
               index={index}
             />
@@ -52,8 +47,8 @@ const SubEventForm = () => {
             <button
               className="btn btn-md "
               onClick={(e) => {
-                e.preventDefault();
-                handleAddSubEvent();
+                e.preventDefault()
+                handleAddSubEvent()
               }}
             >
               Add a event
@@ -62,6 +57,6 @@ const SubEventForm = () => {
         </div>
       </div>
     </div>
-  );
-};
-export default SubEventForm;
+  )
+}
+export default SubEventForm

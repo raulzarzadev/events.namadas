@@ -1,16 +1,16 @@
-import Icon from '@comps/Icon';
-import { SubEvent } from '@firebase/Events/event.model';
-import Link from 'next/link';
-import myFormatDate from 'utils/myFormatDate';
+import Icon from '@comps/Icon'
+import { SubEvent } from '@firebase/Events/event.model'
+import Link from 'next/link'
+import myFormatDate from 'utils/myFormatDate'
 
 const SubEventInfo = ({
   subEvent,
   index,
-  handleEdit,
+  handleEdit
 }: {
-  subEvent: SubEvent;
-  index: number;
-  handleEdit: any;
+  subEvent: SubEvent
+  index: number
+  handleEdit: any
 }) => {
   const {
     comments,
@@ -22,14 +22,14 @@ const SubEventInfo = ({
     style,
     title,
     location,
-    link,
-  } = subEvent;
+    link
+  } = subEvent
 
   const formatDistance = (distance: number | string) => {
-    const dist = parseFloat(`${distance}`);
-    if (dist < 1000) return `${dist} mts`;
-    if (dist >= 1000) return `${dist / 1000} Kms`;
-  };
+    const dist = parseFloat(`${distance}`)
+    if (dist < 1000) return `${dist} mts`
+    if (dist >= 1000) return `${dist / 1000} Kms`
+  }
 
   return (
     <div className="p-1 bg-base-200 rounded-lg">
@@ -39,8 +39,8 @@ const SubEventInfo = ({
             type="button"
             className="btn btn-outline btn-square btn-sm btn-info mb-0  "
             onClick={(e) => {
-              e.preventDefault();
-              handleEdit();
+              e.preventDefault()
+              handleEdit()
             }}
           >
             <Icon name="edit" />
@@ -68,7 +68,7 @@ const SubEventInfo = ({
         {<span>{comments}</span> && <p>{<span>{comments}</span>}</p>}
         {link && (
           <div className="text-end mr-2">
-            <a href={link} target="_blank" className="link">
+            <a href={link} target="_blank" className="link" rel="noreferrer">
               see more
             </a>
           </div>
@@ -84,7 +84,7 @@ const SubEventInfo = ({
             }`}
           >
             <a className="link flex " target={'_blank'}>
-              {location?.address || 'location'}
+              {location?.address ?? 'location'}
               <span>
                 <Icon name="location" />
               </span>
@@ -93,7 +93,7 @@ const SubEventInfo = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SubEventInfo;
+export default SubEventInfo

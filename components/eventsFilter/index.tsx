@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 const EventsFilter = () => {
   return (
@@ -13,28 +13,19 @@ const EventsFilter = () => {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-const BySport=()=>{
-  return (
-    <div>
-      <div className=" max-w-sm mx-auto my-2">
-        <h3 className="mb-2">Por deporte:</h3>
-        <div className="flex mx-auto justify-around ">
-          <FilterChip label="Aguas abiertas" />
-          <FilterChip label="Natación Olimpica" />
-          <FilterChip label="Que incluyan natación" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const FilterChip=({label='', checked=false})=>{
-  const [isChecked, setIsChecked]=useState(checked)
-  const handleChange=({target:{checked}}:any)=>{
-    console.log(checked);
+const FilterChip = ({
+  label,
+  checked
+}: {
+  label: string
+  checked?: boolean
+}) => {
+  const [isChecked, setIsChecked] = useState(checked)
+  const handleChange = ({ target: { checked } }: any) => {
+    console.log(checked)
     setIsChecked(checked)
   }
   return (
@@ -63,7 +54,7 @@ const FilterChip=({label='', checked=false})=>{
         </label>
       </span>
     </div>
-  );
+  )
 }
 
-export default EventsFilter;
+export default EventsFilter

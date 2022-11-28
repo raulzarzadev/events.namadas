@@ -14,7 +14,7 @@ import BasicInformation from './BasicInformation'
 import ParticipantsSection from './ParticipantsSection'
 import AddLinksSection from './AddLinksSection'
 
-const FormEvent = ({ event }: { event?: Partial<EventType> }) => {
+const FormEvent = ({ event }: { event: any }) => {
   const eventAlreadyExist = event?.id
   const router = useRouter()
   const currentDate = new Date().getTime()

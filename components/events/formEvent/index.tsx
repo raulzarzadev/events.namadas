@@ -4,7 +4,7 @@ import { createEvent, updateEvent } from '@firebase/Events/main'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { useForm, FormProvider } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import myFormatDate from 'utils/myFormatDate'
 
 import SubEventsSection from './SubEventSection_v2'
@@ -193,26 +193,25 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       <p className="text-center mb-4">
         {formStatus?.title || 'Create new event'}
       </p>
-      <FormProvider {...methods}>
-        <form
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onSubmit={handleSubmit(onSubmit)}
-          data-test-id="event-form"
-          data-test-op={eventAlreadyExist ? 'editing-event' : 'new-event'}
-          className={'mb-24 max-w-lg mx-auto px-1'}
-        >
-          <StepperForm steps={STEPS} />
-          <div className="flex justify-around fixed w-full bottom-0 bg-base-200 p-2 border-t-4 border-t-base-100 left-0 right-0">
-            <button
-              className="btn btn-primary"
-              data-test-id="submit-event-form"
-              disabled={formStatus.disabled}
-            >
-              {formStatus.button}
-            </button>
-          </div>
-        </form>
-      </FormProvider>
+
+      <form
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        onSubmit={handleSubmit(onSubmit)}
+        data-test-id="event-form"
+        data-test-op={eventAlreadyExist ? 'editing-event' : 'new-event'}
+        className={'mb-24 max-w-lg mx-auto px-1'}
+      >
+        <StepperForm steps={STEPS} />
+        <div className="flex justify-around fixed w-full bottom-0 bg-base-200 p-2 border-t-4 border-t-base-100 left-0 right-0">
+          <button
+            className="btn btn-primary"
+            data-test-id="submit-event-form"
+            disabled={formStatus.disabled}
+          >
+            {formStatus.button}
+          </button>
+        </div>
+      </form>
     </div>
   )
 }

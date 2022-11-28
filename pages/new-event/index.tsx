@@ -6,7 +6,7 @@ const NewEvent = () => {
   // TODO search events and publish it
   return (
     <PrivatePage>
-      <FormEvent />
+      <FormEvent event={undefined} />
     </PrivatePage>
   )
 }

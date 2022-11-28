@@ -28,6 +28,7 @@ const InputShare = ({
               .catch((error) => console.log('Error sharing', error))
           } else {
             console.error("Browser doesn't support Web Share API")
+            // @ts-expect-error
             copy(url)
           }
         }}

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 function useCopyToClipboard() {
-  const [copiedText, setCopiedText] = useState<string | null>(null)
+  const [copiedText, setCopiedText] = useState<string | undefined>()
   const VISIBLE_FOR = 1000
   const [visible, setVisible] = useState(false)
   const copy = async (text: string) => {
@@ -21,7 +21,7 @@ function useCopyToClipboard() {
       return true
     } catch (error) {
       console.warn('Copy failed', error)
-      setCopiedText(null)
+      setCopiedText(undefined)
       return false
     }
   }

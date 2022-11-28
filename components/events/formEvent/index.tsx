@@ -1,4 +1,4 @@
-import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2'
+// import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2'
 import { Event } from '@firebase/Events/event.model'
 import { createEvent, updateEvent } from '@firebase/Events/main'
 import Head from 'next/head'
@@ -7,12 +7,12 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import myFormatDate from 'utils/myFormatDate'
 
-import SubEventsSection from './SubEventSection_v2'
-import EventDates from './EventDates'
-import StepperForm from './StepperForm'
-import BasicInformation from './BasicInformation'
-import ParticipantsSection from './ParticipantsSection'
-import AddLinksSection from './AddLinksSection'
+// import SubEventsSection from './SubEventSection_v2'
+// import EventDates from './EventDates'
+// import StepperForm from './StepperForm'
+// import BasicInformation from './BasicInformation'
+// import ParticipantsSection from './ParticipantsSection'
+// import AddLinksSection from './AddLinksSection'
 
 const FormEvent = ({ event }: { event?: Partial<Event> }) => {
   const eventAlreadyExist = event?.id
@@ -35,16 +35,16 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
     defaultValues: event ? { ...defaultValues, ...event } : defaultValues
   })
 
-  const { handleSubmit, watch, setValue } = methods
+  const { handleSubmit, watch } = methods
 
-  const hardSubmit = () => {
-    console.log('hard submit')
-    setFormStatus(FORM_LABELS.loading)
-    handleSubmit((props: any) => {
-      console.log('submit')
-      onSubmit(props)
-    })()
-  }
+  // const hardSubmit = () => {
+  //   console.log('hard submit')
+  //   setFormStatus(FORM_LABELS.loading)
+  //   handleSubmit((props: any) => {
+  //     console.log('submit')
+  //     onSubmit(props)
+  //   })()
+  // }
 
   const formValues = watch()
   const onSubmit = (data: any): void => {
@@ -128,59 +128,59 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
 
   const [formStatus, setFormStatus] = useState(FORM_LABELS.clean)
 
-  const handleSetImages = (images: any[], setImagesOps?: SetImagesOps) => {
-    if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading)
-    if (images.length) {
-      setValue('images', images)
-      hardSubmit()
-    }
-  }
+  // const handleSetImages = (images: any[], setImagesOps?: SetImagesOps) => {
+  //   if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading)
+  //   if (images.length) {
+  //     setValue('images', images)
+  //     hardSubmit()
+  //   }
+  // }
   // console.log({ errors });
 
   // console.log(formValues);
 
-  const STEPS = [
-    {
-      label: 'Information',
-      Component: <BasicInformation />
-    },
-    {
-      label: 'Dates',
-      Component: <EventDates />
-    },
-    {
-      label: 'Sub Events',
-      Component: <SubEventsSection />
-    },
-    {
-      label: 'Participants',
-      helperText: 'Esta seccion esta deshabilitada por ahora',
-      Component: <ParticipantsSection />
-    },
-    {
-      label: 'Related ',
-      helperText: `Add some links to help users find more information about others
-        events, sponsors and social media`,
-      Component: (
-        <>
-          <AddLinksSection />
-        </>
-      )
-    },
-    {
-      label: 'Media',
-      Component: (
-        <InputFiles
-          fieldName="eventImage"
-          label="Add some images "
-          images={formValues?.images}
-          setImages={handleSetImages}
-          displayAs="row"
-          // disabled={disabled}
-        />
-      )
-    }
-  ]
+  // const STEPS = [
+  //   {
+  //     label: 'Information',
+  //     Component: <BasicInformation />
+  //   },
+  //   {
+  //     label: 'Dates',
+  //     Component: <EventDates />
+  //   },
+  //   {
+  //     label: 'Sub Events',
+  //     Component: <SubEventsSection />
+  //   },
+  //   {
+  //     label: 'Participants',
+  //     helperText: 'Esta seccion esta deshabilitada por ahora',
+  //     Component: <ParticipantsSection />
+  //   },
+  //   {
+  //     label: 'Related ',
+  //     helperText: `Add some links to help users find more information about others
+  //       events, sponsors and social media`,
+  //     Component: (
+  //       <>
+  //         <AddLinksSection />
+  //       </>
+  //     )
+  //   },
+  //   {
+  //     label: 'Media',
+  //     Component: (
+  //       <InputFiles
+  //         fieldName="eventImage"
+  //         label="Add some images "
+  //         images={formValues?.images}
+  //         setImages={handleSetImages}
+  //         displayAs="row"
+  //         // disabled={disabled}
+  //       />
+  //     )
+  //   }
+  // ]
 
   return (
     <div className="relative">
@@ -201,7 +201,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
         data-test-op={eventAlreadyExist ? 'editing-event' : 'new-event'}
         className={'mb-24 max-w-lg mx-auto px-1'}
       >
-        <StepperForm steps={STEPS} />
+        {/* <StepperForm steps={STEPS} /> */}
         <div className="flex justify-around fixed w-full bottom-0 bg-base-200 p-2 border-t-4 border-t-base-100 left-0 right-0">
           <button
             className="btn btn-primary"

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --check --ignore-path .gitignore .",
+    "format": "prettier --check  '**/*{.ts,.tsx,.js,.jsx}'",
     "format:fix": "prettier --write  '**/*{.ts,.tsx,.js,.jsx}' ",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit",
     "cypress:open": "cypress open"

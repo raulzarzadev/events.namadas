@@ -6,7 +6,7 @@ import Textarea from '@comps/inputs/Textarea'
 import { useState } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 import myFormatDate from 'utils/myFormatDate'
-import { UseFormReturnHardSubmit } from '..'
+// import { UseFormReturnHardSubmit } from '..'
 import SubEventInfo from './SubEventInfo'
 
 export type FormFields =
@@ -34,9 +34,10 @@ const SubEventFields = ({
     control,
     formState: { errors },
     setValue,
-    watch,
-    hardSubmit
-  }: UseFormReturnHardSubmit = useFormContext()
+    watch
+    // hardSubmit
+  } = useFormContext()
+  const hardSubmit = () => {}
   const formValues = watch()
   const subEventValues = formValues?.subEvents[subEventIndex]
 

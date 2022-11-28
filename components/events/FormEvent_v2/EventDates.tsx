@@ -11,6 +11,7 @@ const EventDates = () => {
     watch
   } = useFormContext()
   const formValues = watch()
+
   return (
     <div>
       <FormSection title="Event dates">

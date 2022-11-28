@@ -27,14 +27,16 @@ const MobileDashboard = () => {
 }
 
 type MenuLinks = 'user' | 'company' | 'events' | 'config'
-const MobileMenu = ({ setSelected, selected, isCompany }: any) => {
+const MobileMenu = ({ setSelected, selected }: any) => {
   return (
     <div>
       <menu className=" mx-auto flex overflow-x-auto p-2 h-14 ">
         <ul className="flex text-center items-center text-lg">
           <li className="w-36 ">
             <MenuLink
-              onClick={() => setSelected('user')}
+              onClick={() => {
+                setSelected('user')
+              }}
               label="User"
               selected={selected === 'user'}
             />
@@ -72,14 +74,21 @@ const MobileMenu = ({ setSelected, selected, isCompany }: any) => {
 const MenuLink = ({
   label,
   selected,
+  onClick,
   ...rest
 }: {
   label: string
   selected: boolean
+  onClick: () => void
 }) => {
   return (
     <>
-      <a {...rest}>
+      <a
+        {...rest}
+        onClick={() => {
+          onClick()
+        }}
+      >
         {label}
         {selected && <div className="border-b-4" />}
       </a>

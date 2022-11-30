@@ -179,7 +179,7 @@ const FormEvent = ({ event }: { event: any }) => {
     }
   ]
 
-  console.log(formValues)
+  //  console.log(formValues)
 
   return (
     <div className="relative">

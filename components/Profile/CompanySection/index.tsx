@@ -1,4 +1,5 @@
 import EventsRow from '@comps/events/eventsRow'
+import EventsTable from '@comps/EventsTable'
 import CompanyForm from '@comps/forms/CompanyForm'
 import Icon from '@comps/Icon'
 import { Toggle } from '@comps/inputs'
@@ -48,6 +49,7 @@ const CompanySection = ({
     <div>
       {isCompany ? (
         <div>
+          <h2 className="text-xl font-bold ">Company Information</h2>
           <div className="w-full flex justify-end">
             <button
               className="btn btn-sm flex"
@@ -79,7 +81,10 @@ const CompanySection = ({
             <h4 className="font-bold text-center">Resume:</h4>
             <p className=" text-center whitespace-pre-line">{resume}</p>
           </div>
-          <EventsRow events={companyEvents} title="Company events" />
+          {/* <EventsRow events={companyEvents} title="Company events" /> */}
+          <div>
+            <EventsTable events={companyEvents} />
+          </div>
           <Modal
             title="edit company "
             open={openModal}

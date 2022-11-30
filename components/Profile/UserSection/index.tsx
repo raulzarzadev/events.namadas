@@ -59,32 +59,8 @@ export default function UserSection({ user }: { user: User }) {
   return (
     <>
       {/* <Section title={'Personal Information '}> */}
-      <div className="grid">
-        <div className="flex justify-end">
-          <button
-            className="btn btn-info btn-sm"
-            onClick={() => handleOpenEditUser()}
-          >
-            <span>
-              <Icon name="edit" />
-            </span>
-            Edit
-          </button>
-        </div>
-        <div>
-          <h3 className="font-bold text-lg">User images</h3>
-        </div>
-        <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2 justify-start">
-          <ImagesList
-            showDelete={false}
-            // label="Add more images "
-            images={images}
-            childrenClassName={'w-36 h-36  '}
-
-            // setImages={handleSetImages}
-            // disabled={disabled}
-          />
-        </div>
+      <div>
+        <h3 className="font-bold text-lg">User information</h3>
       </div>
 
       {image && (
@@ -96,6 +72,16 @@ export default function UserSection({ user }: { user: User }) {
           </div>
         </div>
       )}
+      <div className="flex justify-center">
+        <button
+          className="btn btn-ghost btn-xs btn-circle"
+          onClick={() => handleOpenEditUser()}
+        >
+          <span>
+            <Icon name="edit" size="xs" />
+          </span>
+        </button>
+      </div>
       <div className="text-center">
         {profileType?.isCompany && (
           <div className="capitalize">
@@ -135,6 +121,20 @@ export default function UserSection({ user }: { user: User }) {
       <div className="text-center">
         <h4>Email:</h4>
         <p className="font-bold text-center">{contact?.email ?? email}</p>
+      </div>
+
+      <div className="grid">
+        <div className="grid grid-flow-col overflow-auto gap-1 p-1 pb-2 justify-start">
+          <ImagesList
+            showDelete={false}
+            // label="Add more images "
+            images={images}
+            childrenClassName={'w-24 h-24 '}
+
+            // setImages={handleSetImages}
+            // disabled={disabled}
+          />
+        </div>
       </div>
 
       {profileType?.isAthlete && (

@@ -10,7 +10,7 @@ interface ModalDeleteType {
   title: string
   handleDelete: () => void
   openButtonProps?: OpenButtonProps
-  buttonLabel: string
+  buttonLabel: string | null
 }
 
 const ModalDelete = ({
@@ -47,7 +47,7 @@ const ModalDelete = ({
         <span className="text-error">
           <Icon name="delete" />{' '}
         </span>
-        {buttonLabel && <span>{buttonLabel}</span>}
+        {buttonLabel ?? <span>{buttonLabel}</span>}
       </button>
       <Modal title={title} open={open} handleOpen={handleOpen}>
         <div>

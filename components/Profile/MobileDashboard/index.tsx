@@ -1,7 +1,6 @@
 import useAuth from 'hooks/useAuth'
 import { useState } from 'react'
 import CompanySection from '../CompanySection'
-import UserEvents from '../UserEvents'
 import UserSection from '../UserSection'
 
 const MobileDashboard = () => {

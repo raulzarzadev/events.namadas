@@ -1,4 +1,3 @@
-import EventsRow from '@comps/events/eventsRow'
 import EventsTable from '@comps/EventsTable'
 import CompanyForm from '@comps/forms/CompanyForm'
 import Icon from '@comps/Icon'

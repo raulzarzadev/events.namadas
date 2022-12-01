@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const useSortByField = (array: any[]) => {
+  useEffect(() => {
+    setArraySorted(array)
+  }, [array])
   const [sortReverse, setSortReverse] = useState(true)
   const [arraySorted, setArraySorted] = useState(array)
 

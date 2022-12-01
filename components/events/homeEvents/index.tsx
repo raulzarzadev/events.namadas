@@ -1,40 +1,40 @@
-import { Event } from '@firebase/Events/event.model';
-import EventsRow from '../eventsRow';
+import { Event } from '@firebase/Events/event.model'
+import EventsRow from '../eventsRow'
 
 const HomeEvents = ({ events }: { events: Event[] }) => {
   const groupEventsByLabels = (events: Event[]) => {
     return events.reduce((prev: any, curr: any) => {
       curr?.labels?.forEach((label: string) => {
         if (prev[label]) {
-          prev[label] = [...prev[label], curr];
+          prev[label] = [...prev[label], curr]
         } else {
-          prev[label] = [curr];
+          prev[label] = [curr]
         }
-      });
-      return { ...prev };
-    }, {});
-  };
+      })
+      return { ...prev }
+    }, {})
+  }
 
   const groupByDate = (events: Event[]) => {
     return events.reduce(
       (prev: any, curr: any) => {
         if (curr.date < new Date().getTime()) {
-          return { ...prev, past: [...prev.past, curr] };
+          return { ...prev, past: [...prev.past, curr] }
         } else {
-          return { ...prev, upcoming: [...prev.upcoming, curr] };
+          return { ...prev, upcoming: [...prev.upcoming, curr] }
         }
       },
       {
         upcoming: [],
-        past: [],
+        past: []
       }
-    );
-  };
+    )
+  }
   const omitPatsEvent = (events: Event[]) =>
-    events.filter((event) => (event?.date || 0) > new Date().getTime());
+    events.filter((event) => (event?.date ?? 0) > new Date().getTime())
 
-  const eventsByDate = groupByDate(events);
-  const eventsByLabels = groupEventsByLabels(omitPatsEvent(events));
+  const eventsByDate = groupByDate(events)
+  const eventsByLabels = groupEventsByLabels(omitPatsEvent(events))
 
   const ROWS_TITLES: Record<string, string> = {
     upcoming: 'Próximamente ⏰',
@@ -50,8 +50,8 @@ const HomeEvents = ({ events }: { events: Event[] }) => {
     'valle-man': 'ValleMan 🏊‍♀️ 🏊‍♀️ 🏊‍♀️ 🚴‍♀️🚴‍♀️🚴‍♀️🏃‍♀️🏃‍♀️🏃‍♀️',
     swim: 'Natación 🏊',
     sea: 'En el mal 🌊🏊‍♀️',
-    openWater: 'Aguas abiertas 🏊🏊‍♀️',
-  };
+    openWater: 'Aguas abiertas 🏊🏊‍♀️'
+  }
   return (
     <div className="grid gap-4">
       {Object.entries(eventsByDate).map(([key, events]: any) => (
@@ -61,7 +61,7 @@ const HomeEvents = ({ events }: { events: Event[] }) => {
         <EventsRow key={key} title={ROWS_TITLES[key] || key} events={events} />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default HomeEvents;
+export default HomeEvents

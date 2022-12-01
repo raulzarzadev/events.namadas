@@ -1,57 +1,55 @@
-import { FirebaseCRUD } from '@firebase/FirebaseCRUD';
-import { useState } from 'react';
-import PreviewFile from './PreviewFile';
+import { FirebaseCRUD } from '@firebase/FirebaseCRUD'
+import { useState } from 'react'
+import PreviewFile from './PreviewFile'
 
 export interface InputFileType {
-  disabled?: boolean;
-  setFile: (file: string | null) => void;
-  file: string;
-  label: string;
+  disabled?: boolean
+  setFile: (file: string | null) => void
+  file: string
+  label: string
   // name: string;
 }
-interface Uploaded {
-  url: string;
-}
+
 const InputFile = ({
   disabled,
-  //handleChange,
+  // handleChange,
   label,
   // handleDelete,
-  //name = 'inputFile',
+  // name = 'inputFile',
   file,
-  setFile,
+  setFile
 }: InputFileType) => {
   const [previewFile, setPreviewFile] = useState<string | undefined | null>(
     file
-  );
-  const [uploading, setUploading] = useState(false);
-  const fieldName = 'eventsPdf';
+  )
+  const [uploading, setUploading] = useState(false)
+  const fieldName = 'eventsPdf'
 
   const handleDelete = async (urlFile: string) => {
     return await FirebaseCRUD.deleteFile({ url: urlFile }).then((res) => {
-      console.log(res);
-      setFile(null);
-      setPreviewFile(null);
-    });
-  };
+      console.log(res)
+      setFile(null)
+      setPreviewFile(null)
+    })
+  }
 
   const handleChange = async (e: any): Promise<string> => {
-    console.log('change');
-    const files = e.target.files;
+    console.log('change')
+    const files = e.target.files
     const imageUploaded = await FirebaseCRUD.uploadFileAsync({
       file: files[0],
-      fieldName: fieldName,
-    });
-    const urlFile = imageUploaded.url;
-    return urlFile;
-  };
+      fieldName
+    })
+    const urlFile = imageUploaded.url
+    return urlFile
+  }
 
   return (
     <>
       <PreviewFile
         file={previewFile}
         previewSize="xl"
-        handleDelete={() => handleDelete(file)}
+        handleDelete={async () => await handleDelete(file)}
         uploading={uploading}
       />
       <div className="form-control mx-auto">
@@ -60,13 +58,13 @@ const InputFile = ({
         </label>
         <input
           onChange={(e) => {
-            setUploading(true);
+            setUploading(true)
             handleChange(e)
               .then((res) => {
-                setPreviewFile(res);
-                setFile(res);
+                setPreviewFile(res)
+                setFile(res)
               })
-              .finally(() => setUploading(false));
+              .finally(() => setUploading(false))
           }}
           type="file"
           className="file-input file-input-bordered file-input-success w-full max-w-xs"
@@ -75,7 +73,7 @@ const InputFile = ({
         />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default InputFile;
+export default InputFile

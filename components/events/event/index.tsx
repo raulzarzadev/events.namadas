@@ -1,40 +1,40 @@
-import Carousel from '@comps/carousel';
-import DateComponent from '@comps/DateComponent';
-import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
-import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
-import PreviewImage from '@comps/previewImage';
-import RangeDate from '@comps/RangeDate';
-import { Event, EventLink, SubEvent } from '@firebase/Events/event.model';
-import Link from 'next/link';
-import myFormatDate from 'utils/myFormatDate';
-import EventDetailsHeader from './EventDetails/EventDetailsHeader';
+import Carousel from '@comps/carousel'
+import ImagesList from '@comps/inputs/inputFiles_V2/imagesList'
+import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2'
+import PreviewImage from '@comps/previewImage'
+import {
+  Event as EventType,
+  EventLink,
+  SubEvent
+  // SubEvent
+} from '@firebase/Events/event.model'
+import Link from 'next/link'
+import SubEventInfo from '../FormEvent_v2/SubEventSection_v2/SubEventInfo'
+// import SubEventInfo from '../FormEvent/SubEventSection_v2/SubEventInfo'
+import EventDetailsHeader from './EventDetails/EventDetailsHeader'
 
-const Event = ({ event }: { event: Event | null | undefined }) => {
-  //const { userEventPayments } = useEventsPayments({ eventId:event?.id });
-  if (!event) return <div>Loading ...</div>;
+const Event = ({ event }: { event: EventType | null | undefined }) => {
+  // const { userEventPayments } = useEventsPayments({ eventId:event?.id });
+  if (!event) return <div>Loading ...</div>
 
   const {
     title,
-    date,
     resume,
-    userId,
     images,
     subEvents = [],
     swimmingType,
     eventType,
-    includeFinishDate,
-    finishAt,
     id: eventId,
     announcement,
-    links,
-  } = event;
+    links
+  } = event
 
-  const LABELS: Record<Event['swimmingType'], string> = {
+  const LABELS: Record<EventType['swimmingType'], string> = {
     '25m': 'Pool 25m',
     '50m': 'Pool 50m',
     openWater: 'Open Water',
-    swimmingPool: 'Swimming pool',
-  };
+    swimmingPool: 'Swimming pool'
+  }
 
   return (
     <div>
@@ -58,7 +58,7 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
 
         {announcement && (
           <div className="text-center">
-            <Link href={`${eventId}/announcement`}>
+            <Link href={`${eventId ?? ''}/announcement`}>
               <a className="link text-center mx-auto">Read full announcement</a>
             </Link>
           </div>
@@ -76,8 +76,13 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
               <PickerSwimmingTests tests={subEvents} disabled />
             ) : (
               <div className="grid gap-2 p-1">
-                {subEvents?.sort(sortByDate).map((sub: SubEvent, i) => (
-                  <SubEvent key={`${sub.title}-${i}`} subEvent={sub} />
+                {subEvents?.sort(sortByDate).map((subEvent: SubEvent, i) => (
+                  <SubEventInfo
+                    key={`${subEvent?.title ?? ''}-${i}`}
+                    subEvent={subEvent}
+                    index={i}
+                    handleEdit={undefined}
+                  />
                 ))}
               </div>
             )}
@@ -99,14 +104,14 @@ const Event = ({ event }: { event: Event | null | undefined }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const sortByDate = (a: any, b: any) => {
-  if (a.date > b.date) return 1;
-  if (a.date < b.date) return -1;
-  return 0;
-};
+  if (a.date > b.date) return 1
+  if (a.date < b.date) return -1
+  return 0
+}
 
 export const EventLinkInfo = ({ link }: { link: EventLink }) => {
   return (
@@ -118,24 +123,7 @@ export const EventLinkInfo = ({ link }: { link: EventLink }) => {
         </a>
       </Link>
     </div>
-  );
-};
+  )
+}
 
-const SubEvent = ({ subEvent }: { subEvent: SubEvent }) => {
-  const { title, comments, distance, date, style } = subEvent;
-  return (
-    <div className=" p-1">
-      <div className="flex w-full justify-between">
-        <h3 className="w-2/3 font-bold">{title || style}</h3>
-        <span className="w-1/3 text-end">
-          {date && myFormatDate(date, 'dd MMM HH:mm')}
-        </span>
-      </div>
-      <div>
-        <p>{comments}</p>
-      </div>
-    </div>
-  );
-};
-
-export default Event;
+export default Event

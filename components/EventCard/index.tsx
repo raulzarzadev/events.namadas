@@ -1,11 +1,11 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from 'next/image'
+import Link from 'next/link'
 
 export interface EventType {
-  title: string;
-  resume: string;
-  id: string;
-  image?: string;
+  title: string
+  resume: string
+  id: string
+  image?: string
   images?: EventImageType[]
   userId: string
 }
@@ -20,22 +20,22 @@ export interface EventImageType {
 const EventCard = ({
   event,
   redirect = false,
-  size = 'lg',
+  size = 'lg'
 }: {
-  redirect?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  event: EventType;
-  onSuscribe?: (id: string) => {};
+  redirect?: boolean
+  size?: 'sm' | 'md' | 'lg'
+  event: EventType
+  onSuscribe?: (id: string) => {}
 }) => {
-  const { title, resume, id, image, images = [] } = event;
+  const { title, resume, id, images = [] } = event
   const sizing = {
     sm: 'max-w-[180px]',
     md: 'max-w-[200px]',
-    lg: 'max-w-[250px]',
-  };
+    lg: 'max-w-[250px]'
+  }
 
   const firsImage = images?.[0]
-  console.log(firsImage);
+  console.log(firsImage)
 
   // FIX group-hover is not working
   const cutTestAt = (length: number, text: string = '') => {
@@ -64,7 +64,7 @@ const EventCard = ({
         </a>
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default EventCard;
+export default EventCard

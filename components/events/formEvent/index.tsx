@@ -1,33 +1,24 @@
-import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2';
-import { Event } from '@firebase/Events/event.model';
-import { createEvent, updateEvent } from '@firebase/Events/main';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import {
-  useForm,
-  FormProvider,
-  UseFormReturn,
-  FieldValues,
-} from 'react-hook-form';
-import myFormatDate from 'utils/myFormatDate';
+import InputFiles, { SetImagesOps } from '@comps/inputs/inputFiles_V2'
+import { Event as EventType } from '@firebase/Events/event.model'
+import { createEvent, updateEvent } from '@firebase/Events/main'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import myFormatDate from 'utils/myFormatDate'
 
-import SubEventsSection from './SubEventSection_v2.tsx';
-import EventDates from './EventDates';
-import StepperForm from './StepperForm';
-import BasicInformation from './BasicInformation';
-import ParticipantsSection from './ParticipantsSection';
-import AddLinksSection from './AddLinksSection';
+import SubEventsSection from './SubEventSection_v2'
+import EventDates from './EventDates'
+import StepperForm from './StepperForm'
+import BasicInformation from './BasicInformation'
+import ParticipantsSection from './ParticipantsSection'
+import AddLinksSection from './AddLinksSection'
 
-export interface UseFormReturnHardSubmit
-  extends UseFormReturn<FieldValues, any> {
-  hardSubmit?: () => void;
-}
-const FormEvent = ({ event }: { event?: Partial<Event> }) => {
-  const eventAlreadyExist = event?.id;
-  const router = useRouter();
-  const currentDate = new Date().getTime();
-  const defaultValues: Partial<Event> = {
+const FormEvent = ({ event }: { event?: Partial<EventType> }) => {
+  const eventAlreadyExist = event?.id
+  const router = useRouter()
+  const currentDate = new Date().getTime()
+  const defaultValues: Partial<EventType> = {
     date: myFormatDate(currentDate, 'datetime'),
     finishAt: myFormatDate(currentDate, 'datetime'),
     status: 'HIDDEN',
@@ -36,134 +27,132 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       startAt: myFormatDate(currentDate, 'inputDate'),
       limit: 0,
       acceptSubscriptions: false,
-      acceptTerms: false,
-    },
-  };
+      acceptTerms: false
+    }
+  }
 
   const methods = useForm({
-    defaultValues: event ? { ...defaultValues, ...event } : defaultValues,
-  });
+    defaultValues: event ? { ...defaultValues, ...event } : defaultValues
+  })
 
-  const { handleSubmit, watch, setValue }: UseFormReturnHardSubmit = methods;
+  const { handleSubmit, watch, setValue } = methods
 
   const hardSubmit = () => {
-    console.log('hard submit');
-    setFormStatus(FORM_LABELS.loading);
+    console.log('hard submit')
+    setFormStatus(FORM_LABELS.loading)
     handleSubmit((props: any) => {
-      console.log('submit');
-      onSubmit(props);
-    })();
-  };
+      console.log('submit')
+      onSubmit(props)
+    })()
+  }
 
-  const formValues = watch();
-  const onSubmit = (data: Event) => {
+  const formValues = watch()
+  const onSubmit = (data: any): void => {
     // console.log(data);
-    setFormStatus(FORM_LABELS.loading);
+    setFormStatus(FORM_LABELS.loading)
     event?.id // eventAlreadyExist
       ? updateEvent(event?.id, data)
           .then((res) => {
-            console.log(res);
+            console.log(res)
           })
           .catch((err) => {
-            setFormStatus(FORM_LABELS.error);
-            console.error(err);
+            setFormStatus(FORM_LABELS.error)
+            console.error(err)
           })
           .finally(() => {
-            setFormStatus(FORM_LABELS.saved);
+            setFormStatus(FORM_LABELS.saved)
           })
       : createEvent(data)
           .then((res) => {
-            if (res?.ok) {
-              router.push(`/events/${res.res.id}/edit`);
+            const id = res?.res?.id
+            if (typeof id === 'string') {
+              router.push(`/events/${id}/edit`)
             }
-            console.log(res);
+            console.log(res)
           })
           .catch((err) => {
-            setFormStatus(FORM_LABELS.error);
-            console.error(err);
+            setFormStatus(FORM_LABELS.error)
+            console.error(err)
           })
           .finally(() => {
-            setFormStatus(FORM_LABELS.saved);
-          });
-  };
+            setFormStatus(FORM_LABELS.saved)
+          })
+  }
 
   const FORM_LABELS = {
     error: {
       // error when saving , should be disabled
       title: '',
       button: 'Error',
-      disabled: true,
+      disabled: true
     },
     save: {
       // ready to save if event is new, should be active
       title: 'Create new event',
       button: 'Save',
-      disabled: false,
+      disabled: false
     },
     loading: {
       //  should be disabled
       title: '',
       button: 'Loading',
-      disabled: true,
+      disabled: true
     },
     saved: {
       // successfully saved , should be active
       title: '',
       button: 'Saved',
-      disabled: false,
+      disabled: false
     },
     edit: {
       // event exist form labels should change, should be active
       title: 'Edit event',
       button: 'Edit',
-      disabled: false,
+      disabled: false
     },
     clean: {
       // no modifications and button should be disabled
       title: '',
       button: 'Saved',
-      disabled: true,
-    },
-  };
+      disabled: true
+    }
+  }
 
   useEffect(() => {
     if (eventAlreadyExist) {
-      setFormStatus(FORM_LABELS?.edit);
+      setFormStatus(FORM_LABELS?.edit)
     } else {
-      setFormStatus(FORM_LABELS.save);
+      setFormStatus(FORM_LABELS.save)
     }
-  }, []);
+  }, [])
 
-  const [formStatus, setFormStatus] = useState(FORM_LABELS.clean);
+  const [formStatus, setFormStatus] = useState(FORM_LABELS.clean)
 
   const handleSetImages = (images: any[], setImagesOps?: SetImagesOps) => {
-    if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading);
+    if (setImagesOps?.uploading) setFormStatus(FORM_LABELS.loading)
     if (images.length) {
-      setValue('images', images);
-      hardSubmit();
+      setValue('images', images)
+      hardSubmit()
     }
-  };
-  // console.log({ errors });
-
-  // console.log(formValues);
+  }
 
   const STEPS = [
     {
       label: 'Information',
-      Component: <BasicInformation />,
+      Component: <BasicInformation />
     },
     {
       label: 'Dates',
-      Component: <EventDates />,
+      Component: <EventDates />
     },
     {
       label: 'Sub Events',
-      Component: <SubEventsSection />,
+      Component: <SubEventsSection />
     },
     {
       label: 'Participants',
       helperText: 'Esta seccion esta deshabilitada por ahora',
-      Component: <ParticipantsSection />,
+      Component: <ParticipantsSection />
     },
     {
       label: 'Related ',
@@ -173,7 +162,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
         <>
           <AddLinksSection />
         </>
-      ),
+      )
     },
     {
       label: 'Media',
@@ -186,9 +175,11 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
           displayAs="row"
           // disabled={disabled}
         />
-      ),
-    },
-  ];
+      )
+    }
+  ]
+
+  console.log(formValues)
 
   return (
     <div className="relative">
@@ -201,10 +192,11 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
       <p className="text-center mb-4">
         {formStatus?.title || 'Create new event'}
       </p>
-      {/* @ts-ignore */}
+      {/* @ts-expect-error */}
       <FormProvider {...methods} hardSubmit={hardSubmit}>
         <form
-          onSubmit={handleSubmit((data: any) => onSubmit(data))}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onSubmit={handleSubmit(onSubmit)}
           data-test-id="event-form"
           data-test-op={eventAlreadyExist ? 'editing-event' : 'new-event'}
           className={'mb-24 max-w-lg mx-auto px-1'}
@@ -222,7 +214,7 @@ const FormEvent = ({ event }: { event?: Partial<Event> }) => {
         </form>
       </FormProvider>
     </div>
-  );
-};
+  )
+}
 
-export default FormEvent;
+export default FormEvent

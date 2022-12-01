@@ -1,8 +1,8 @@
-import Icon from '@comps/Icon';
-import useGeolocation from 'hooks/useGeolocation';
+import Icon from '@comps/Icon'
+import useGeolocation from 'hooks/useGeolocation'
 
 const GeolocationInput = () => {
-  const { geolocation, askForLocation } = useGeolocation();
+  const { geolocation, askForLocation } = useGeolocation()
   return (
     <div className="mr-2 flex">
       {geolocation ? (
@@ -15,7 +15,7 @@ const GeolocationInput = () => {
         </button>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default GeolocationInput;
+export default GeolocationInput

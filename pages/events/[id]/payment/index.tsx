@@ -1,12 +1,8 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
 
 const Payments = () => {
   const router = useRouter()
-  return (
-    <div>
-      {router.asPath}
-    </div>
-  );
+  return <div>{router.asPath}</div>
 }
 
-export default Payments;
+export default Payments

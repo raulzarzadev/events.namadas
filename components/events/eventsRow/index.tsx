@@ -1,18 +1,18 @@
-import EventCard, { EventType } from '@comps/EventCard_V2';
-import Icon from '@comps/Icon';
-import { IconName } from '@comps/Icon/icons-list';
-import { sortFromNow } from 'utils/myFormatDate';
+import EventCard, { EventType } from '@comps/EventCard_V2'
+import Icon from '@comps/Icon'
+import { IconName } from '@comps/Icon/icons-list'
+import { sortFromNow } from 'utils/myFormatDate'
 
 const EventsRow = ({
   events,
   title = 'Events',
   iconName,
-  subtitle,
+  subtitle
 }: {
-  events: EventType[];
-  title: string;
-  iconName?: IconName;
-  subtitle?: string;
+  events: EventType[]
+  title: string
+  iconName?: IconName
+  subtitle?: string
 }) => {
   return (
     <div className=" mx-auto w-full ">
@@ -35,7 +35,7 @@ const EventsRow = ({
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EventsRow;
+export default EventsRow

@@ -1,10 +1,10 @@
-import { getUser, getVisibleCompanies } from '@firebase/Users/main';
-import { useEffect, useState } from 'react';
-import useAuth from './useAuth';
+import { getUser, getVisibleCompanies } from '@firebase/Users/main'
+import { useEffect, useState } from 'react'
+import useAuth from './useAuth'
 
 const useCompanies = () => {
-  const { user } = useAuth();
-  const [companies, setCompanies] = useState<any>([]);
+  const { user } = useAuth()
+  const [companies, setCompanies] = useState<any>([])
   // console.log(planingEvents);
   const formatUserAsCompany = ({
     companyInfo,
@@ -13,7 +13,7 @@ const useCompanies = () => {
     displayName,
     alias,
     profileType,
-    updatedAt,
+    updatedAt
   }: any) => {
     return {
       companyInfo,
@@ -23,25 +23,25 @@ const useCompanies = () => {
       displayName,
       alias,
       profileType,
-      updatedAt,
-    };
-  };
+      updatedAt
+    }
+  }
 
   useEffect(() => {
     if (user)
       getVisibleCompanies().then((companies) => {
-        setCompanies(companies.map((company) => formatUserAsCompany(company)));
-      });
-  }, []);
+        setCompanies(companies.map((company) => formatUserAsCompany(company)))
+      })
+  }, [])
 
   const getCompany = async (id: string) => {
     const company = await getUser(id).then((res) => {
-      return formatUserAsCompany(res);
-    });
-    return company;
-  };
+      return formatUserAsCompany(res)
+    })
+    return company
+  }
 
-  return { companies, getCompany };
-};
+  return { companies, getCompany }
+}
 
-export default useCompanies;
+export default useCompanies

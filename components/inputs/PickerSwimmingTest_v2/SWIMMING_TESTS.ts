@@ -1,10 +1,10 @@
-import { DistanceType, StyleType } from "./tests.model"
+import { DistanceType, StyleType } from './tests.model'
 
 export const getStyleInfo = (style: string) => {
   return STYLES.find(({ id }) => id === style)
 }
 
-export const STYLES:StyleType[] = [
+export const STYLES: StyleType[] = [
   {
     label: 'C',
     id: 'crawl',
@@ -43,7 +43,7 @@ export const STYLES:StyleType[] = [
 ]
 
 // eslint-disable-next-line no-sparse-arrays
-export const DISTANCES:DistanceType[] = [
+export const DISTANCES: DistanceType[] = [
   {
     label: '25',
     id: '25'
@@ -63,7 +63,7 @@ export const DISTANCES:DistanceType[] = [
   {
     label: '400',
     id: '400'
-  }, /*
+  } /*
   {
     label: '800',
     id: '800'
@@ -76,5 +76,4 @@ export const DISTANCES:DistanceType[] = [
     label: '4x50',
     id: '4x50'
   } */
-
 ]

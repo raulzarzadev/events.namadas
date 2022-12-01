@@ -19,12 +19,10 @@ const Hero = () => {
 
   return (
     <div>
-      <Carousel images={images}/>
-      <div className='flex w-full justify-center my-2'>
-        <Link href={'/new-event'} >
-          <a className='btn btn-outline'>
-          Crea un evento gratis!
-          </a>
+      <Carousel images={images} />
+      <div className="flex w-full justify-center my-2">
+        <Link href={'/new-event'}>
+          <a className="btn btn-outline">Crea un evento gratis!</a>
         </Link>
       </div>
     </div>

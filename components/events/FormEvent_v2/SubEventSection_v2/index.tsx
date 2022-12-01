@@ -1,14 +1,10 @@
-import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2';
-import { useFormContext } from 'react-hook-form';
-import FormSection from '../FormSection';
-import SubEventForm from './SubEventForm';
+import PickerSwimmingTests from '@comps/inputs/PickerSwimmingTest_v2'
+import { useFormContext } from 'react-hook-form'
+import FormSection from '../FormSection'
+import SubEventForm from './SubEventForm'
 const SubEventsSection = ({ hideSubEvents }: { hideSubEvents?: boolean }) => {
-  const {
-    setValue,
-    formState: { errors },
-    watch,
-  } = useFormContext();
-  const formValues = watch();
+  const { setValue, watch } = useFormContext()
+  const formValues = watch()
 
   return (
     <div>
@@ -28,7 +24,7 @@ const SubEventsSection = ({ hideSubEvents }: { hideSubEvents?: boolean }) => {
         )}
       </FormSection>
     </div>
-  );
-};
+  )
+}
 
-export default SubEventsSection;
+export default SubEventsSection

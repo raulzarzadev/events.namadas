@@ -1,20 +1,20 @@
-import Icon from '@comps/Icon';
-import { ReactNode, useEffect, useState } from 'react';
-import { DISTANCES, STYLES } from './SWIMMING_TESTS';
-import { TestType } from './tests.model';
+import Icon from '@comps/Icon'
+import { ReactNode, useEffect, useState } from 'react'
+import { STYLES } from './SWIMMING_TESTS'
+import { TestType } from './tests.model'
 export interface PickerSwimmingTestType {
-  tests?: TestType[];
-  setTests?: (tests: TestType[]) => void;
-  disabled?: boolean;
-  compact?: boolean;
+  tests?: TestType[]
+  setTests?: (tests: TestType[]) => void
+  disabled?: boolean
+  compact?: boolean
 }
 export default function PickerSwimmingTests({
   tests,
   setTests = () => {},
   disabled = false,
-  compact = true,
+  compact = true
 }: PickerSwimmingTestType) {
-  const [form, setForm] = useState<TestType[] | []>([]);
+  const [form, setForm] = useState<TestType[] | []>([])
 
   // const handleAddTest = (test: TestType) => {
   //   if (testsAlreadyExist(test)) {
@@ -32,72 +32,72 @@ export default function PickerSwimmingTests({
 
   useEffect(() => {
     if (tests) {
-      const distances = tests?.map(({ distance }) => parseInt(`${distance}`));
-      setDistances([...new Set(distances)]);
+      const distances = tests?.map(({ distance }) => parseInt(`${distance}`))
+      setDistances([...new Set(distances)])
     }
-  }, [tests]);
+  }, [tests])
 
   useEffect(() => {
     if (tests) {
-      setForm(formatTest(tests));
+      setForm(formatTest(tests))
     }
     return () => {
-      setForm([]);
-    };
-  }, [tests]);
+      setForm([])
+    }
+  }, [tests])
 
   const testsAlreadyExist = (test: { distance: any; style: any }) => {
     return !!form.find(
       ({ distance, style }) =>
         distance === test.distance && style === test.style
-    );
-  };
+    )
+  }
 
   const formatTest = (tests: TestType[]) =>
     tests.map((test) => {
-      return { ...test, distance: parseInt(`${test.distance}`) };
-    });
+      return { ...test, distance: parseInt(`${test.distance}`) }
+    })
 
-  const [newDistance, setNewDistance] = useState(50);
+  const [newDistance, setNewDistance] = useState(50)
 
-  const [distances, setDistances] = useState<number[]>([]);
+  const [distances, setDistances] = useState<number[]>([])
 
   const handleChangeOptions = ({ target: { value, name } }: any) => {
-    setNewDistance(parseInt(value));
-  };
+    setNewDistance(parseInt(value))
+  }
 
   const handleAddDistance = (distance: number) => {
-    if (!distances.includes(distance)) setDistances([...distances, distance]);
-  };
+    if (!distances.includes(distance)) setDistances([...distances, distance])
+  }
   const handleRemoveDistance = (distance: number) => {
-    const filteredDistance = [...distances].filter((item) => item !== distance);
-    handleRemoveDistanceTests(distance);
-    setDistances(filteredDistance);
-  };
+    const filteredDistance = [...distances].filter((item) => item !== distance)
+    handleRemoveDistanceTests(distance)
+    setDistances(filteredDistance)
+  }
 
   const handleRemoveDistanceTests = (distance: number) => {
     const testsRemoved = [...form].filter((test) => {
-      return test.distance !== distance;
-    });
-    setForm(testsRemoved);
-    setTests(testsRemoved);
+      return test.distance !== distance
+    })
+    setForm(testsRemoved)
+    setTests(testsRemoved)
     // console.log(testsRemoved)
-  };
+  }
 
   const handleRemoveTest = (test: TestType) => {
     const testRemoved = [...form]?.filter(
       ({ distance, style }) =>
         !(distance === test.distance && style === test.style)
-    );
-    setForm(testRemoved);
-    setTests(testRemoved);
-  };
+    )
+    setForm(testRemoved)
+    setTests(testRemoved)
+  }
 
   const handleAddTest = (test: TestType) => {
-    const testAdded = [...form, test];
-    setForm(testAdded);
-    setTests(testAdded);
-  };
+    const testAdded = [...form, test]
+    setForm(testAdded)
+    setTests(testAdded)
+  }
 
   return (
     <div>
@@ -119,8 +119,8 @@ export default function PickerSwimmingTests({
             />
             <button
               onClick={(e) => {
-                e.preventDefault();
-                handleAddDistance(newDistance);
+                e.preventDefault()
+                handleAddDistance(newDistance)
               }}
             >
               <Icon name="plus" />
@@ -132,20 +132,23 @@ export default function PickerSwimmingTests({
         <div className="flex flex-col w-16">
           <Cell size={compact ? 'md' : 'lg'} style="title">
             <div className="flex flex-col w-full">
-              <span className="text-right text-xs sm:text-sm font-normal">Style</span>
-              <span className="text-right text-xs sm:text-sm font-normal">Distance</span> 
+              <span className="text-right text-xs sm:text-sm font-normal">
+                Style
+              </span>
+              <span className="text-right text-xs sm:text-sm font-normal">
+                Distance
+              </span>
             </div>
           </Cell>
-          <div className='relative'>
-         
+          <div className="relative">
             {distances.map((distance) => (
               <Cell key={distance} style="normal" size={compact ? 'sm' : 'lg'}>
                 <span className={'flex justify-end w-full'}>
                   {!disabled ? (
                     <button
                       onClick={(e) => {
-                        e.preventDefault();
-                        handleRemoveDistance(distance);
+                        e.preventDefault()
+                        handleRemoveDistance(distance)
                       }}
                     >
                       <Icon name="delete" size="xs" />
@@ -177,10 +180,10 @@ export default function PickerSwimmingTests({
                     }`}
                     disabled={disabled}
                     onClick={(e) => {
-                      e.preventDefault();
+                      e.preventDefault()
                       testsAlreadyExist({ distance, style: styleId })
                         ? handleRemoveTest({ distance, style: styleId })
-                        : handleAddTest({ distance, style: styleId });
+                        : handleAddTest({ distance, style: styleId })
                     }}
                   >
                     {testsAlreadyExist({ distance, style: styleId }) ? (
@@ -200,24 +203,24 @@ export default function PickerSwimmingTests({
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 interface PickerCell {
-  children: ReactNode;
-  style: 'normal' | 'title';
-  size: 'sm' | 'md' | 'lg';
+  children: ReactNode
+  style: 'normal' | 'title'
+  size: 'sm' | 'md' | 'lg'
 }
 const Cell = ({ children, style = 'normal', size = 'md' }: PickerCell) => {
   const styling = {
     title: `font-bold  text-sm`,
-    normal: `font-normal`,
-  };
+    normal: `font-normal`
+  }
   const sizing = {
     sm: `h-6 text-xs`,
     md: `h-8 text-sm`,
-    lg: `h-10`,
-  };
+    lg: `h-10`
+  }
   return (
     <div
       className={`
@@ -225,5 +228,5 @@ const Cell = ({ children, style = 'normal', size = 'md' }: PickerCell) => {
     >
       {children}
     </div>
-  );
-};
+  )
+}

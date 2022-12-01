@@ -1,15 +1,14 @@
-import PaymentCard from '@comps/PaymentCard';
-import PaymentsHistory from '@comps/PaymentsHistory';
-import { listenUserEventsPayments } from '@firebase/EventPayments/main';
-import { useEffect, useState } from 'react';
-import { sortFromNow } from 'utils/myFormatDate';
+import PaymentCard from '@comps/PaymentCard'
+import { listenUserEventsPayments } from '@firebase/EventPayments/main'
+import { useEffect, useState } from 'react'
+import { sortFromNow } from 'utils/myFormatDate'
 
 const UserEvents = () => {
   useEffect(() => {
-    listenUserEventsPayments((res: any) => setUpcomingEvents(res));
-  }, []);
+    listenUserEventsPayments((res: any) => setUpcomingEvents(res))
+  }, [])
 
-  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([])
   // console.log(upcomingEvents);
   return (
     <div>
@@ -25,7 +24,7 @@ const UserEvents = () => {
       </div>
       {/* <EventsRow events={userEventPayments} title='Subscribed events'/>   */}
     </div>
-  );
-};
+  )
+}
 
-export default UserEvents;
+export default UserEvents

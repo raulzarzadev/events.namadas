@@ -1,23 +1,24 @@
-import PickerLocation from '@comps/GoogleMaps/PickerLocation';
-import { Text } from '@comps/inputs';
-import InputFile from '@comps/inputs/InputFile';
-import Textarea from '@comps/inputs/Textarea';
-import { Coordinates } from '@firebase/Events/event.model';
-import { useFormContext } from 'react-hook-form';
-import { UseFormReturnHardSubmit } from '.';
-import EventStatusForm from './EventStatusForm';
-import FormSection from './FormSection';
-import EventTypeForm from './SubEventSection_v2.tsx/EventTypeForm';
+import PickerLocation from '@comps/GoogleMaps/PickerLocation'
+import { Text } from '@comps/inputs'
+import InputFile from '@comps/inputs/InputFile'
+import Textarea from '@comps/inputs/Textarea'
+import { Coordinates } from '@firebase/Events/event.model'
+import { useFormContext } from 'react-hook-form'
+// import { UseFormReturnHardSubmit } from '.'
+import EventStatusForm from './EventStatusForm'
+import FormSection from './FormSection'
+import EventTypeForm from './SubEventSection_v2/EventTypeForm'
 
 const BasicInformation = () => {
   const {
     register,
     formState: { errors },
     setValue,
-    watch,
-    hardSubmit,
-  }: UseFormReturnHardSubmit = useFormContext();
-  const formValues = watch();
+    watch
+  } = useFormContext()
+
+  const hardSubmit = () => {}
+  const formValues = watch()
   return (
     <div>
       <FormSection title="Basic information ">
@@ -67,16 +68,16 @@ const BasicInformation = () => {
         <InputFile
           file={formValues.announcementPDF}
           setFile={(file) => {
-            console.log({ file });
-            setValue('announcementPDF', file);
-            hardSubmit && hardSubmit();
+            console.log({ file })
+            setValue('announcementPDF', file)
+            hardSubmit?.()
           }}
           label={'Upload a PDF'}
           // name={'announcementPDF'}
         />
       </FormSection>
     </div>
-  );
-};
+  )
+}
 
-export default BasicInformation;
+export default BasicInformation

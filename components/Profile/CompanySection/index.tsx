@@ -1,59 +1,59 @@
-import EventsRow from '@comps/events/eventsRow';
-import CompanyForm from '@comps/forms/CompanyForm';
-import Icon from '@comps/Icon';
-import { Toggle } from '@comps/inputs';
-import ImagesList from '@comps/inputs/inputFiles_V2/imagesList';
-import Modal from '@comps/modal';
-import Section from '@comps/Section';
-import { updateUser } from '@firebase/Users/main';
-import { CompanyInfo } from '@firebase/Users/user.model';
-import useAuth from 'hooks/useAuth';
-import useEvents from 'hooks/useEvents';
-import { useState } from 'react';
+import EventsTable from '@comps/EventsTable'
+import CompanyForm from '@comps/forms/CompanyForm'
+import Icon from '@comps/Icon'
+import { Toggle } from '@comps/inputs'
+import ImagesList from '@comps/inputs/inputFiles_V2/imagesList'
+import Modal from '@comps/modal'
+import { updateUser } from '@firebase/Users/main'
+import { CompanyInfo } from '@firebase/Users/user.model'
+import useAuth from 'hooks/useAuth'
+import useEvents from 'hooks/useEvents'
+import { useState } from 'react'
 
 const CompanySection = ({
   companyInfo,
-  isCompany,
+  isCompany
 }: {
-  isCompany?: boolean;
-  companyInfo?: CompanyInfo;
+  isCompany?: boolean
+  companyInfo?: CompanyInfo
 }) => {
-  if (!companyInfo) return <></>;
-  const { email, phone, images = [], resume, name } = companyInfo;
-  const { user } = useAuth();
-  const userId = user?.id;
-  const [_isCompany, _setIsCompany] = useState(isCompany);
-  const [buttonVisible, setButtonVisible] = useState(false);
+  if (!companyInfo) return <></>
+  const { email, phone, images = [], resume, name } = companyInfo
+  const { user } = useAuth()
+  const userId = user?.id
+  const [_isCompany, _setIsCompany] = useState(isCompany)
+  const [buttonVisible, setButtonVisible] = useState(false)
   const handleChange = (checked: boolean) => {
-    _setIsCompany(checked);
-    setButtonVisible(true);
-  };
+    _setIsCompany(checked)
+    setButtonVisible(true)
+  }
   const handleSubmit = () => {
     if (userId)
       updateUser(userId, {
-        profileType: { isCompany: _isCompany },
+        profileType: { isCompany: _isCompany }
       })
         .then((res) => {
-          console.log(res);
+          console.log(res)
         })
         .finally(() => {
-          setButtonVisible(false);
-        });
-  };
-  const [openModal, setOpenModal] = useState(false);
+          setButtonVisible(false)
+        })
+  }
+  const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => {
-    setOpenModal(!openModal);
-  };
-  const { userEvents: companyEvents } = useEvents();
+    setOpenModal(!openModal)
+  }
+  const { userEvents: companyEvents } = useEvents()
   return (
     <div>
       {isCompany ? (
         <div>
+          <h2 className="text-xl font-bold ">Company Information</h2>
           <div className="w-full flex justify-end">
             <button
               className="btn btn-sm flex"
               onClick={(e) => {
-                handleOpenModal();
+                handleOpenModal()
               }}
             >
               <span>Edit</span>
@@ -63,8 +63,8 @@ const CompanySection = ({
           <h2 className="font-bold text-center">{name}</h2>
           <div>
             <h4 className="font-bold text-center">Contact: </h4>
-            <p className=" text-center">{email || 'sin'}</p>
-            <p className=" text-center">{phone || 'sin'}</p>
+            <p className=" text-center">{email ?? 'sin'}</p>
+            <p className=" text-center">{phone ?? 'sin'}</p>
           </div>
           <div className="grid">
             <h4 className="text-lg font-bold">Company Images </h4>
@@ -80,7 +80,10 @@ const CompanySection = ({
             <h4 className="font-bold text-center">Resume:</h4>
             <p className=" text-center whitespace-pre-line">{resume}</p>
           </div>
-          <EventsRow events={companyEvents} title="Company events" />
+          {/* <EventsRow events={companyEvents} title="Company events" /> */}
+          <div>
+            <EventsTable events={companyEvents} />
+          </div>
           <Modal
             title="edit company "
             open={openModal}
@@ -94,8 +97,8 @@ const CompanySection = ({
           <h2 className="text-center">Set your profile as company</h2>
           <form
             onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit();
+              e.preventDefault()
+              handleSubmit()
             }}
           >
             <Toggle
@@ -110,7 +113,7 @@ const CompanySection = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default CompanySection;
+export default CompanySection

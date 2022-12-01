@@ -14,7 +14,7 @@ const nextConfig = withPWA({
     ]
   },
   // put other next js options here
-  async redirects () {
+  async redirects() {
     return [
       {
         source: '/events',

@@ -1,23 +1,23 @@
-import { EventPaymentType } from '@firebase/EventPayments/eventPayment.model';
-import { Event } from '@firebase/Events/event.model';
-import useEvents from 'hooks/useEvents';
-import Image from 'next/image';
-import Link from 'next/link';
-import myFormatDate, { fromNow } from 'utils/myFormatDate';
+import { EventPaymentType } from '@firebase/EventPayments/eventPayment.model'
+import { Event } from '@firebase/Events/event.model'
+import useEvents from 'hooks/useEvents'
+import Image from 'next/image'
+import Link from 'next/link'
+import { fromNow } from 'utils/myFormatDate'
 export interface EventType extends Event {}
 
 const PaymentCard = ({
-  payment,
+  payment
 }: {
-  redirect?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  payment: EventPaymentType;
+  redirect?: boolean
+  size?: 'sm' | 'md' | 'lg'
+  payment: EventPaymentType
 }) => {
-  const {  id, status, createdAt , price } = payment;
-  const {event}=useEvents({eventId:`${price?.eventId}`})
-  const defaultImage = event?.images?.[0].url ||event?.images?.[0].src
+  const { status, price } = payment
+  const { event } = useEvents({ eventId: `${price?.eventId ?? ''}` })
+  const defaultImage = event?.images?.[0].url ?? event?.images?.[0].src
   return (
-    <Link href={`/events/${event?.id}`}>
+    <Link href={`/events/${event?.id ?? ''}`}>
       <a className="w-[200px]">
         <EventTitle title={price?.title} />
         <figure className="relative  w-[200px] h-[115px] ">
@@ -33,8 +33,8 @@ const PaymentCard = ({
         />
       </a>
     </Link>
-  );
-};
+  )
+}
 
 const EventInfo = ({ when }: { when?: string }) => {
   return (
@@ -43,8 +43,8 @@ const EventInfo = ({ when }: { when?: string }) => {
         <label className=" ">{when}</label>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const EventTitle = ({ title }: { title?: string }) => {
   return (
@@ -53,22 +53,22 @@ const EventTitle = ({ title }: { title?: string }) => {
         <label className=" ">{title}</label>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const UpcomingLabel = ({
   status = 'WAITING',
-  fromNow,
+  fromNow
 }: {
-  status: EventPaymentType['status'];
-  fromNow?: string;
+  status: EventPaymentType['status']
+  fromNow?: string
 }) => {
   const STATUS_LABEL: Record<any, string> = {
     INVALID: 'Invalid payment',
     VALID: 'Valid ',
     WAITING: 'Waiting',
-    PAID_OUT: 'Payment checked',
-  };
+    PAID_OUT: 'Payment checked'
+  }
   return (
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 ">
       <div className="flex justify-center">
@@ -77,7 +77,7 @@ const UpcomingLabel = ({
         </label>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PaymentCard;
+export default PaymentCard

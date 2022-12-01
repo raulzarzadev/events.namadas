@@ -1,6 +1,6 @@
 const RatingInput = () => {
-  const handleChange=({target:{name, value}}:any)=>{
-    console.log({name, value})
+  const handleChange = ({ target: { name, value } }: any) => {
+    console.log({ name, value })
   }
   return (
     <div>
@@ -41,7 +41,7 @@ const RatingInput = () => {
         <span className="text-xs align-bottom ">(250)</span>
       </div>
     </div>
-  );
+  )
 }
 
-export default RatingInput;
+export default RatingInput

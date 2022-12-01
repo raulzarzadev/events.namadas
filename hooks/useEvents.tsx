@@ -1,62 +1,62 @@
-import { Event } from '@firebase/Events/event.model';
+import { Event } from '@firebase/Events/event.model'
 import {
   getEvents,
   getEventsByStatus,
   listenEvent,
-  listenUserEvents,
-} from '@firebase/Events/main';
-import { SetStateAction, useEffect, useState } from 'react';
+  listenUserEvents
+} from '@firebase/Events/main'
+import { SetStateAction, useEffect, useState } from 'react'
 // import { useDispatch, useSelector } from 'react-redux';
 // import { selectEventState, setEvent } from 'store/slices/eventSlice';
-import useAuth from './useAuth';
+import useAuth from './useAuth'
 
 interface UseEvenType {
-  eventId?: Event['id'];
-  getAllEvents?: boolean;
-  getByStatus?: Event['status'] | undefined;
+  eventId?: Event['id']
+  getAllEvents?: boolean
+  getByStatus?: Event['status'] | undefined
 }
 function useEvents(props?: UseEvenType) {
   // const dispatch = useDispatch();
   //  const event = useSelector(selectEventState);
-  const eventId = props?.eventId;
-  const getAllEvents = props?.getAllEvents;
-  const getByStatus = props?.getByStatus;
+  const eventId = props?.eventId
+  const getAllEvents = props?.getAllEvents
+  const getByStatus = props?.getByStatus
 
-  const { user } = useAuth();
+  const { user } = useAuth()
 
-  const [userEvents, setUserEvents] = useState([]);
-  const [events, setEvents] = useState<Event[] | []>([]);
-  const [event, setEvent] = useState<Event | null | undefined>(undefined);
+  const [userEvents, setUserEvents] = useState([])
+  const [events, setEvents] = useState<Event[] | []>([])
+  const [event, setEvent] = useState<Event | null | undefined>(undefined)
 
   useEffect(() => {
     if (getAllEvents) {
       getEvents().then((res) => {
-        setEvents(res);
-      });
+        setEvents(res)
+      })
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (getByStatus) {
-      getEventsByStatus(getByStatus).then((res) => setEvents(res));
+      getEventsByStatus(getByStatus).then((res) => setEvents(res))
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (eventId) {
-      listenEvent(eventId, setEvent);
+      listenEvent(eventId, setEvent)
     }
-  }, [eventId]);
+  }, [eventId])
 
   useEffect(() => {
     if (user) {
       listenUserEvents((res: SetStateAction<never[]>) => {
-        setUserEvents(res);
-      });
+        setUserEvents(res)
+      })
     }
-  }, []);
+  }, [])
 
-  return { event, userEvents, events };
+  return { event, userEvents, events }
 }
 
-export default useEvents;
+export default useEvents

@@ -1,29 +1,28 @@
-import ModalDelete from '@comps/modal/ModalDelete_v2';
-import PreviewImage from '@comps/previewImage';
-import { Price } from '@firebase/Events/event.model';
-import { removeItemToUserCart } from '@firebase/UserCart/main';
-import { CartProduct } from '@firebase/UserCart/UserCart.model';
-import useAuth from 'hooks/useAuth';
-import Link from 'next/link';
-import { calculateOrderAmount } from 'pages/api/create-payment-intent';
-import { useEffect, useState } from 'react';
+import ModalDelete from '@comps/modal/ModalDelete_v2'
+import PreviewImage from '@comps/previewImage'
+import { removeItemToUserCart } from '@firebase/UserCart/main'
+import { CartProduct } from '@firebase/UserCart/UserCart.model'
+import useAuth from 'hooks/useAuth'
+import Link from 'next/link'
+import { calculateOrderAmount } from 'pages/api/create-payment-intent'
+import { useEffect, useState } from 'react'
 
 const OrderSummary = ({ items = [] }: { items: CartProduct[] }) => {
   const {
-    userCart: { id: cartId, products },
-  } = useAuth();
+    userCart: { id: cartId }
+  } = useAuth()
 
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    setTotal(calculateOrderAmount(items));
-  });
+    setTotal(calculateOrderAmount(items))
+  })
 
   const handleDeleteItem = (item: CartProduct) => {
     if (cartId) {
-      removeItemToUserCart(cartId, item).then((res) => console.log(res));
+      removeItemToUserCart(cartId, item).then((res) => console.log(res))
     }
-  };
+  }
 
   return (
     <div className="bg-base-200  rounded-lg p-2 w-full">
@@ -55,14 +54,14 @@ const OrderSummary = ({ items = [] }: { items: CartProduct[] }) => {
                     handleDelete={() => handleDeleteItem(item)}
                     buttonLabel=""
                     openButtonProps={{
-                      className: 'btn btn-ghost btn-sm btn-circle',
+                      className: 'btn btn-ghost btn-sm btn-circle'
                     }}
                   />
                 </div>
 
                 <div className="grid">
                   <span className="text-xs">
-                    <Link href={`/events/${item.eventId}`}>
+                    <Link href={`/events/${item.eventId ?? ''}`}>
                       <a className="hover:underline cursor-pointer">
                         {item.event?.title}
                       </a>
@@ -77,7 +76,7 @@ const OrderSummary = ({ items = [] }: { items: CartProduct[] }) => {
                 <div className="divider mt-0" />
               </div>
             </div>
-          );
+          )
         })}
         <div>
           <div className="text-end">
@@ -91,7 +90,7 @@ const OrderSummary = ({ items = [] }: { items: CartProduct[] }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default OrderSummary;
+export default OrderSummary

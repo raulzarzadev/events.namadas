@@ -1,12 +1,16 @@
-import myFormatDate from "utils/myFormatDate";
+import myFormatDate from 'utils/myFormatDate'
 interface RangeDateType {
-  startAt?: DateType;
+  startAt?: DateType
   finishAt?: DateType
-  format?:string
+  format?: string
 }
-type DateType = string | number | Date | undefined | null;
+type DateType = string | number | Date | undefined | null
 
-const RangeDate = ({ startAt, finishAt , format='dd-MM-yy',}: RangeDateType) => {
+const RangeDate = ({
+  startAt,
+  finishAt,
+  format = 'dd-MM-yy'
+}: RangeDateType) => {
   return (
     <span className="grid place-content-center text-center">
       <span>
@@ -20,6 +24,6 @@ const RangeDate = ({ startAt, finishAt , format='dd-MM-yy',}: RangeDateType) => 
         `}
       </span>
     </span>
-  );
-};
+  )
+}
 export default RangeDate

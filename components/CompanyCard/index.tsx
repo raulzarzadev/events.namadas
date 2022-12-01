@@ -1,51 +1,42 @@
-import RatingInput from '@comps/inputs/RatingInput';
-import Modal from '@comps/modal';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
+import RatingInput from '@comps/inputs/RatingInput'
+import Modal from '@comps/modal'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
 export interface CompanyCardType {
-  alias:string
-  companyInfo:{
-    isVisible:boolean
-    email:string
-    phone:string
-    resume:string
-    name:string
-  },
-  createdAt:number
-  displayName:string
-  images:any[]
-  profileType:{
-    isCompany:boolean
-    isAthlete:boolean
+  alias: string
+  companyInfo: {
+    isVisible: boolean
+    email: string
+    phone: string
+    resume: string
+    name: string
   }
-  userId:string
-  id:string
+  createdAt: number
+  displayName: string
+  images: any[]
+  profileType: {
+    isCompany: boolean
+    isAthlete: boolean
+  }
+  userId: string
+  id: string
 }
 
 const CompanyCard = ({
-  company,
+  company
 }: {
-  redirect?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  company: CompanyCardType;
+  redirect?: boolean
+  size?: 'sm' | 'md' | 'lg'
+  company: CompanyCardType
   // onSubscribe?: (id: string) => {};
 }) => {
-  const {
-   images,
-   alias,
-   companyInfo,
-   createdAt,
-   displayName,
-   id,
-   profileType,
-   userId
-  }: Partial<CompanyCardType> = company;
-  const firsImage = images?.[0];
-  const [openModal, setOpenModal] = useState(false);
+  const { images, companyInfo }: Partial<CompanyCardType> = company
+  const firsImage = images?.[0]
+  const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => {
-    setOpenModal(!openModal);
-  };
+    setOpenModal(!openModal)
+  }
   return (
     <>
       <a
@@ -85,11 +76,14 @@ const CompanyCard = ({
         </div>
       </Modal>
     </>
-  );
-};
+  )
+}
 
 const EventModalInfo = ({ company }: { company: CompanyCardType }) => {
-  const { id, companyInfo:{name,email, resume, phone} , images } = company;
+  const {
+    id,
+    companyInfo: { resume }
+  } = company
 
   return (
     <div className="">
@@ -102,17 +96,15 @@ const EventModalInfo = ({ company }: { company: CompanyCardType }) => {
           </Link>
         </div>
       </div>
-     
+
       {resume && (
         <div>
-          <h4 className='font-bold'>About us</h4>
-          <p className='whitespace-pre-line'>{resume}</p>
+          <h4 className="font-bold">About us</h4>
+          <p className="whitespace-pre-line">{resume}</p>
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-
-
-export default CompanyCard;
+export default CompanyCard

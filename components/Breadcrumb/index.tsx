@@ -7,7 +7,7 @@ const Breadcrumb = () => {
 
   const getCrumbs = (path: string) => {
     if (path === '/') return [{ route: '/', label: 'home' }]
-    const pathWithoutOptionalParams = path.split(/{\?#}/g)[0]
+    const pathWithoutOptionalParams = path.split(/[?#]/g)[0]
     const pathItems = pathWithoutOptionalParams.split('/')
     return pathItems.reduce((prev: any, curr: any, i: number, arr: any[]) => {
       if (curr === '') return [...prev, { route: '/', label: 'home' }]

@@ -7,18 +7,6 @@ import myFormatDate, { fromNow } from 'utils/myFormatDate'
 import Link from 'next/link'
 import Icon from '@comps/Icon'
 
-const labelsFormatter = (value: string[]) => {
-  return (
-    <div className="">
-      {value?.map((label, i) => (
-        <span key={i} className="rounded-full  border  p-0.5 ">
-          {label}
-        </span>
-      ))}
-    </div>
-  )
-}
-
 const actionsFormatter = (value: Event['id']) => {
   return (
     <div>

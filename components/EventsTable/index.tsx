@@ -1,21 +1,132 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import Icon from '@comps/Icon'
-import ModalDelete from '@comps/modal/ModalDelete_v2'
-import { Event as EventType } from '@firebase/Events/event.model'
-import useSortByField from 'hooks/useSortByField'
-import Link from 'next/link'
+import { Event, Event as EventType } from '@firebase/Events/event.model'
+import { useTable, useSortBy } from 'react-table'
+import { useMemo } from 'react'
+import { formatEventsForTable } from './utils.table'
 import myFormatDate, { fromNow } from 'utils/myFormatDate'
+import Link from 'next/link'
+import Icon from '@comps/Icon'
 
+const labelsFormatter = (value: string[]) => {
+  return (
+    <div className="">
+      {value?.map((label, i) => (
+        <span key={i} className="rounded-full  border  p-0.5 ">
+          {label}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+const actionsFormatter = (value: Event['id']) => {
+  return (
+    <div>
+      <Link href={`/events/${value}/edit`}>
+        <Icon name="edit" />
+      </Link>
+    </div>
+  )
+}
 const EventsTable = ({ events }: { events: EventType[] }) => {
-  const handleDeleteEvent = (id?: string) => {
-    console.log(id, 'delete')
-  }
-  const { arraySorted: sortedEvents, handleSortBy } = useSortByField(events)
+  const formattedData = formatEventsForTable(events, [
+    { fieldName: 'title' },
+    { fieldName: 'address' },
+    {
+      fieldName: 'createdAt',
+      formatter: (date) => fromNow(date),
+      label: 'created'
+    },
+    { fieldName: 'date', formatter: (date) => myFormatDate(date, 'dd MMM yy') },
+    { fieldName: 'id', label: 'Actions', formatter: actionsFormatter }
+    // { fieldName: 'labels', formatter: labelsFormatter }
+  ])
+
+  const data = useMemo(() => formattedData.rows, [events])
+  const columns = useMemo(() => [...formattedData.headers], [events])
+
+  const tableInstance = useTable(
+    {
+      columns,
+      data
+    },
+    useSortBy
+  )
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    tableInstance
 
   return (
     <div className="overflow-auto">
       <h3 className="text-center font-bold text-xl">All events </h3>
-      <table className="table table-compact table-fixed mx-auto ">
+      <table {...getTableProps()} className={'table table-compact mx-auto'}>
+        <thead>
+          {
+            // Loop over the header rows
+            headerGroups.map((headerGroup) => (
+              // Apply the header row props
+              // eslint-disable-next-line react/jsx-key
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {
+                  // Loop over the headers in each row
+                  headerGroup.headers.map((column) => (
+                    // Apply the header cell props
+                    // eslint-disable-next-line react/jsx-key
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                    >
+                      {
+                        // Render the header
+                        column.render('Header')
+                      }
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? ' 🔽'
+                            : ' 🔼'
+                          : ''}
+                      </span>
+                    </th>
+                  ))
+                }
+              </tr>
+            ))
+          }
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {
+            // Loop over the table rows
+            rows.map((row) => {
+              // Prepare the row for display
+              prepareRow(row)
+              return (
+                // Apply the row props
+                // eslint-disable-next-line react/jsx-key
+                <tr {...row.getRowProps()}>
+                  {
+                    // Loop over the rows cells
+                    row.cells.map((cell) => {
+                      // Apply the cell props
+                      return (
+                        // eslint-disable-next-line react/jsx-key
+                        <td {...cell.getCellProps()}>
+                          <div className="max-w-[160px] truncate">
+                            {cell.value}
+                            {/* {
+                              // Render the cell contents
+                              cell.render('Cell')
+                            } */}
+                          </div>
+                        </td>
+                      )
+                    })
+                  }
+                </tr>
+              )
+            })
+          }
+        </tbody>
+      </table>
+      {/* <table className="table table-compact table-fixed mx-auto ">
         <thead>
           <tr>
             <th className="w-10">
@@ -92,7 +203,7 @@ const EventsTable = ({ events }: { events: EventType[] }) => {
           ))}
           <tr></tr>
         </tbody>
-      </table>
+      </table> */}
     </div>
   )
 }

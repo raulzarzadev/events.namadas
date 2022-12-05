@@ -112,7 +112,7 @@ const EventsTable = ({ events }: { events: EventType[] }) => {
                         )
                       return (
                         // eslint-disable-next-line react/jsx-key
-                        <td {...cell.getCellProps()}>
+                        <th {...cell.getCellProps()} className="font-normal">
                           <div className="max-w-[160px] truncate">
                             {formattedCellValue}
                             {/* {
@@ -120,7 +120,7 @@ const EventsTable = ({ events }: { events: EventType[] }) => {
                               cell.render('Cell')
                             } */}
                           </div>
-                        </td>
+                        </th>
                       )
                     })
                   }

@@ -1,8 +1,9 @@
 import { Event as EventType } from '@firebase/Events/event.model'
+import myFormatDate, { fromNow } from 'utils/myFormatDate'
 
 export type Headers = Array<{ Header: string; accessor: string }>
 export type Rows = Array<Record<string, string>>
-interface Titles {
+export interface Titles {
   fieldName: keyof EventType
   label?: string
   formatter?: (value: any) => any
@@ -36,4 +37,15 @@ export const formatEventsForTable = (
   })
 
   return { rows, headers }
+}
+
+export const formatValueAfterPropsTableCreated = (value: any, column: any) => {
+  console.log(column)
+  if (column === 'date') {
+    return myFormatDate(value, 'dd-MMM-yy')
+  }
+  if (column === 'created') {
+    return fromNow(value)
+  }
+  return value
 }

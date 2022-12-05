@@ -2,33 +2,37 @@
 import { Event, Event as EventType } from '@firebase/Events/event.model'
 import { useTable, useSortBy } from 'react-table'
 import { useMemo } from 'react'
-import { formatEventsForTable } from './utils.table'
-import myFormatDate, { fromNow } from 'utils/myFormatDate'
-import Link from 'next/link'
-import Icon from '@comps/Icon'
+import {
+  formatEventsForTable,
+  formatValueAfterPropsTableCreated,
+  Titles
+} from './utils.table'
+import EventOptions from '@comps/events/event/EventOptions'
 
 const actionsFormatter = (value: Event['id']) => {
   return (
     <div>
-      <Link href={`/events/${value}/edit`}>
-        <Icon name="edit" />
-      </Link>
+      <EventOptions eventId={value} config={{ iconsOnly: true }} />
     </div>
   )
 }
+const COLS_CONFIG: Titles[] = [
+  { fieldName: 'title' },
+  { fieldName: 'address' },
+  {
+    fieldName: 'createdAt',
+    // formatter: (date) => fromNow(date),
+    label: 'created'
+  },
+  {
+    fieldName: 'date'
+    // formatter: (date) => myFormatDate(date, 'dd MMM yy')
+  },
+  { fieldName: 'id', label: 'Actions', formatter: actionsFormatter }
+]
+
 const EventsTable = ({ events }: { events: EventType[] }) => {
-  const formattedData = formatEventsForTable(events, [
-    { fieldName: 'title' },
-    { fieldName: 'address' },
-    {
-      fieldName: 'createdAt',
-      formatter: (date) => fromNow(date),
-      label: 'created'
-    },
-    { fieldName: 'date', formatter: (date) => myFormatDate(date, 'dd MMM yy') },
-    { fieldName: 'id', label: 'Actions', formatter: actionsFormatter }
-    // { fieldName: 'labels', formatter: labelsFormatter }
-  ])
+  const formattedData = formatEventsForTable(events, COLS_CONFIG)
 
   const data = useMemo(() => formattedData.rows, [events])
   const columns = useMemo(() => [...formattedData.headers], [events])
@@ -94,11 +98,16 @@ const EventsTable = ({ events }: { events: EventType[] }) => {
                     // Loop over the rows cells
                     row.cells.map((cell) => {
                       // Apply the cell props
+                      const formattedCellValue =
+                        formatValueAfterPropsTableCreated(
+                          cell.value,
+                          cell.column.Header
+                        )
                       return (
                         // eslint-disable-next-line react/jsx-key
                         <td {...cell.getCellProps()}>
                           <div className="max-w-[160px] truncate">
-                            {cell.value}
+                            {formattedCellValue}
                             {/* {
                               // Render the cell contents
                               cell.render('Cell')

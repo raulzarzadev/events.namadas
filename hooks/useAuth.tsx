@@ -1,16 +1,6 @@
-import {
-  getOneCart,
-  listenCart,
-  listenUserCarts
-} from '@firebase/UserCart/main'
-import { UserCart } from '@firebase/UserCart/UserCart.model'
-import {
-  authStateChanged,
-  googleLogin,
-  logout,
-  setUser
-} from '@firebase/Users/main'
-import { useRouter } from 'next/router'
+import { getOneCart, listenCart } from '@firebase/UserCart/main'
+import { UserCartDTO } from '@firebase/UserCart/UserCart.model'
+import { authStateChanged, googleLogin, logout } from '@firebase/Users/main'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectAuthState, setAuthState } from 'store/slices/authSlice'
@@ -18,7 +8,7 @@ import { selectAuthState, setAuthState } from 'store/slices/authSlice'
 function useAuth() {
   const dispatch = useDispatch()
   const { user, authState } = useSelector(selectAuthState)
-  const [userCart, setUserCart] = useState<UserCart>({ products: [] })
+  const [userCart, setUserCart] = useState<UserCartDTO>({ products: [] })
   const handleLogin = () => {
     googleLogin()
   }

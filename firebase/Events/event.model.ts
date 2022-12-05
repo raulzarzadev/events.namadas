@@ -72,7 +72,7 @@ export interface PriceEventData
       | 'includeFinishDate'
     >
   > {
-  createdBy: User['id']
+  createdBy?: User['id']
 }
 export interface EventLink {
   label: string

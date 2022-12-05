@@ -10,7 +10,7 @@ const CheckoutPage = () => {
   const [items, setItems] = useState<CartProduct[]>([])
 
   useEffect(() => {
-    validateItemsStillValid(userCart.products).then((res: CartProduct[]) =>
+    validateItemsStillValid(userCart?.products).then((res: CartProduct[]) =>
       setItems(res)
     )
   }, [userCart.products])

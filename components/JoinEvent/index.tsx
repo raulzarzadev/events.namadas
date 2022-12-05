@@ -10,7 +10,7 @@ const JoinEvent = ({ event }: { event: Event }) => {
   const { user, userCart } = useAuth()
 
   const alreadyPaid = (priceId: Price['id']): boolean => {
-    const prod = userCart?.products.find((item: any) => item?.id === priceId)
+    const prod = userCart?.products?.find((item: any) => item?.id === priceId)
     return !!prod
   }
 

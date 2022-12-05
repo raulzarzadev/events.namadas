@@ -2,24 +2,24 @@ import { getEvent } from '@firebase/Events/main'
 import { CartProduct } from '@firebase/UserCart/UserCart.model'
 
 export const validateItemsStillValid = async (
-  items: CartProduct[]
+  items: CartProduct[] = []
 ): Promise<CartProduct[]> => {
   const eventsIds = items.reduce(
     (prev: string[], curr: CartProduct): string[] => {
-      if (prev.includes(curr?.eventId || '')) return [...prev]
-      return [...prev, curr?.eventId || '']
+      if (prev.includes(curr?.eventId ?? '')) return [...prev]
+      return [...prev, curr?.eventId ?? '']
     },
     []
   )
 
-  const eventsPromises = eventsIds?.map((eventId) => {
-    return getEvent(eventId)
+  const eventsPromises = eventsIds?.map(async (eventId) => {
+    return await getEvent(eventId)
   })
 
   const events = await Promise.all(eventsPromises)
 
   const itemsValidated = items.map((item) => {
-    let invalidPrice = false
+    const invalidPrice = false
     const event: any = events.find((event) => event?.id === item.eventId)
 
     const latestPrice = event?.prices?.find(

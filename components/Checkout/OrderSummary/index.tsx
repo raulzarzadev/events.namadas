@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { calculateOrderAmount } from 'pages/api/create-payment-intent'
 import { useEffect, useState } from 'react'
 
-const OrderSummary = ({ items = [] }: { items: CartProduct[] }) => {
+const OrderSummary = ({ items = [] }: { items?: CartProduct[] }) => {
   const {
     userCart: { id: cartId }
   } = useAuth()

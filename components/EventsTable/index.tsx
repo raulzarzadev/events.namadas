@@ -8,6 +8,7 @@ import {
   Titles
 } from './utils.table'
 import EventOptions from '@comps/events/event/EventOptions'
+import Icon from '@comps/Icon'
 
 const actionsFormatter = (value: Event['id']) => {
   return (
@@ -66,17 +67,23 @@ const EventsTable = ({ events }: { events: EventType[] }) => {
                     <th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                     >
-                      {
-                        // Render the header
-                        column.render('Header')
-                      }
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? ' 🔽'
-                            : ' 🔼'
-                          : ''}
-                      </span>
+                      <div className="flex item-center">
+                        {
+                          // Render the header
+                          column.render('Header')
+                        }
+                        <span className=" flex items-center">
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <Icon name="down" size="xs" />
+                            ) : (
+                              <Icon name="up" size="xs" />
+                            )
+                          ) : (
+                            ''
+                          )}
+                        </span>
+                      </div>
                     </th>
                   ))
                 }

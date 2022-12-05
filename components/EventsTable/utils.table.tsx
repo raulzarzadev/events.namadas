@@ -40,7 +40,6 @@ export const formatEventsForTable = (
 }
 
 export const formatValueAfterPropsTableCreated = (value: any, column: any) => {
-  console.log(column)
   if (column === 'date') {
     return myFormatDate(value, 'dd-MMM-yy')
   }

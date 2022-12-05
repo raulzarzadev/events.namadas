@@ -1,32 +1,34 @@
-import { getEvent } from '@firebase/Events/main'
 import { arrayRemove, arrayUnion, where } from 'firebase/firestore'
 import { auth } from '..'
 import { FirebaseCRUD } from '../FirebaseCRUD'
 import { CartProduct, UserCart } from './UserCart.model'
 
+type UserCartDTO = Partial<UserCart>
+
 const userCartsCRUD = new FirebaseCRUD('carts')
+export const createCart = async (newCart: UserCartDTO) =>
+  await userCartsCRUD.create(newCart)
 
-export const createCart = (newCart: UserCart) => userCartsCRUD.create(newCart)
+export const updateCart = async (cartId: string, newCart: UserCart) =>
+  await userCartsCRUD.update(cartId, newCart)
 
-export const updateCart = (cartId: string, newCart: UserCart) =>
-  userCartsCRUD.update(cartId, newCart)
+export const deleteCart = async (cartId: string) =>
+  await userCartsCRUD.delete(cartId)
 
-export const deleteCart = (cartId: string) => userCartsCRUD.delete(cartId)
+export const getCart = async (cartId: string) => await userCartsCRUD.get(cartId)
+export const getOneCart = async (userId: string) =>
+  await userCartsCRUD.getOne([where('userId', '==', userId)])
 
-export const getCart = (cartId: string) => userCartsCRUD.get(cartId)
-export const getOneCart = (userId: string) =>
-  userCartsCRUD.getOne([where('userId', '==', userId)])
-
-export const listenCart = (cartId: string, cb: CallableFunction) =>
-  userCartsCRUD.listen(cartId, cb)
+export const listenCart = async (cartId: string, cb: CallableFunction) =>
+  await userCartsCRUD.listen(cartId, cb)
 
 export const listenUserCarts = (cb: CallableFunction) => {
   const userId = auth.currentUser?.uid
   userCartsCRUD.listenDocs([where('userId', '==', userId)], cb)
 }
 
-export const addItemToUserCart = (cartId: string, item: CartProduct) => {
-  return userCartsCRUD.update(cartId, {
+export const addItemToUserCart = async (cartId: string, item: CartProduct) => {
+  return await userCartsCRUD.update(cartId, {
     products: arrayUnion({ ...item, added: { date: new Date().getTime() } })
   })
 }
@@ -39,7 +41,7 @@ export const removeItemToUserCart = async (
     // products.find((price) => price.id === item.id)
     //  res.prices.find((price) => price.id === item.id)
   )
-  return userCartsCRUD.update(cartId, {
+  return await userCartsCRUD.update(cartId, {
     products: arrayRemove(originalCartPrice)
   })
 }

@@ -1,6 +1,9 @@
 import DateComponent from '@comps/DateComponent'
 import RangeDate from '@comps/RangeDate'
-import { EventPaymentType } from '@firebase/EventPayments/eventPayment.model'
+import {
+  EventPaymentDTO,
+  EventPaymentType
+} from '@firebase/EventPayments/eventPayment.model'
 import {
   createEventPayment,
   getEventPaymentByIntent
@@ -34,20 +37,18 @@ const EventPayment = () => {
     return payment[0]
   }
 
-  const [eventPayment, setEventPayment] = useState<EventPaymentType | null>(
-    null
-  )
+  const [eventPayment, setEventPayment] = useState<EventPaymentDTO | null>(null)
 
   const verifyEventPayment = async ({
     price,
     paymentIntent
   }: {
     price: Price
-    paymentIntent: EventPaymentType['paymentIntent']
+    paymentIntent: EventPaymentDTO['paymentIntent']
   }) => {
     const eventPayment = await eventPaymentExist(paymentIntent)
     if (!eventPayment) {
-      const newEventPayment: EventPaymentType = {
+      const newEventPayment: EventPaymentDTO = {
         status: 'VALID',
         priceId: price?.id,
         price,

@@ -58,7 +58,6 @@ const EventsTable = ({ events }: { events: EventType[] }) => {
     headerGroups,
     rows,
     prepareRow,
-    visibleColumns,
     preGlobalFilteredRows,
     state,
     setGlobalFilter

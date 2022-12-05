@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Event, Event as EventType } from '@firebase/Events/event.model'
-import { useTable, useSortBy } from 'react-table'
-import { useMemo } from 'react'
+import {
+  useTable,
+  useSortBy,
+  useGlobalFilter,
+  useAsyncDebounce
+} from 'react-table'
+import { useMemo, useState } from 'react'
 import {
   formatEventsForTable,
   formatValueAfterPropsTableCreated,
@@ -17,6 +22,7 @@ const actionsFormatter = (value: Event['id']) => {
     </div>
   )
 }
+
 const COLS_CONFIG: Titles[] = [
   { fieldName: 'title' },
   { fieldName: 'address' },
@@ -43,14 +49,31 @@ const EventsTable = ({ events }: { events: EventType[] }) => {
       columns,
       data
     },
+    useGlobalFilter,
     useSortBy
   )
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    visibleColumns,
+    preGlobalFilteredRows,
+    state,
+    setGlobalFilter
+  } = tableInstance
 
   return (
     <div className="overflow-auto">
       <h3 className="text-center font-bold text-xl">All events </h3>
+      <div className="flex w-full justify-center my-3">
+        <GlobalFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          globalFilter={state.globalFilter}
+          setGlobalFilter={setGlobalFilter}
+        />
+      </div>
       <table {...getTableProps()} className={'table table-compact mx-auto'}>
         <thead>
           {
@@ -90,6 +113,7 @@ const EventsTable = ({ events }: { events: EventType[] }) => {
               </tr>
             ))
           }
+          {/* Global filter search */}
         </thead>
         <tbody {...getTableBodyProps()}>
           {
@@ -130,85 +154,34 @@ const EventsTable = ({ events }: { events: EventType[] }) => {
           }
         </tbody>
       </table>
-      {/* <table className="table table-compact table-fixed mx-auto ">
-        <thead>
-          <tr>
-            <th className="w-10">
-              <button
-                onClick={() => {
-                  handleSortBy('title')
-                }}
-              >
-                Event
-              </button>
-            </th>
-            <th>
-              <button
-                onClick={() => {
-                  handleSortBy('Date')
-                }}
-              >
-                Date
-              </button>
-            </th>
-            <th>
-              <button
-                onClick={() => {
-                  handleSortBy('createdAt')
-                }}
-              >
-                Created
-              </button>
-            </th>
-            <th>
-              <button
-                onClick={() => {
-                  handleSortBy('status')
-                }}
-              >
-                Status
-              </button>
-            </th>
-
-            <th>Ops</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedEvents.map((event) => (
-            <tr key={event.id}>
-              <td className="truncate">
-                <div className="w-[120px] truncate">{event.title}</div>
-              </td>
-              <td>{myFormatDate(event.date, 'dd-MM-yy')}</td>
-              <td>{fromNow(event.createdAt)}</td>
-              <td>
-                <div className="w-[80px] truncate">{event?.status}</div>
-              </td>
-              <td>
-                <div>
-                  <Link href={`/events/${event.id}`}>
-                    <a className="btn btn-xs btn-circle btn-ghost btn-info">
-                      <Icon name="edit" />
-                    </a>
-                  </Link>
-                  <ModalDelete
-                    handleDelete={() => {
-                      handleDeleteEvent(event.id)
-                    }}
-                    buttonLabel={null}
-                    openButtonProps={{
-                      className: 'btn btn-xs btn-circle btn-ghost'
-                    }}
-                    title={'Delete event'}
-                  ></ModalDelete>
-                </div>
-              </td>
-            </tr>
-          ))}
-          <tr></tr>
-        </tbody>
-      </table> */}
     </div>
+  )
+}
+
+const GlobalFilter = ({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter
+}: any) => {
+  const count = preGlobalFilteredRows.length
+  const [value, setValue] = useState(globalFilter)
+  const onChange = useAsyncDebounce((value) => {
+    setGlobalFilter(value || undefined)
+  }, 200)
+
+  return (
+    <span>
+      Search:{' '}
+      <input
+        value={value || ''}
+        onChange={(e) => {
+          setValue(e.target.value)
+          onChange(e.target.value)
+        }}
+        placeholder={`${count} records...`}
+        className="input input-sm mx-auto input-bordered"
+      />
+    </span>
   )
 }
 

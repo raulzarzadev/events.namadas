@@ -10,7 +10,7 @@ interface InputFilesType {
   fieldName: string
   displayAs?: 'row' | 'grid'
 }
-interface ImageType {
+export interface ImageType {
   url?: string | undefined
   metadata?: any
   uploading?: boolean
@@ -48,6 +48,21 @@ const InputFiles = ({
     const newImages: any = await Promise.all(uploadingFiles)
     setUploadingImages([])
     setImages([...images, ...newImages], { uploading: false })
+  }
+  const handleSetAsFirst = (index: number) => {
+    const _images = [...images]
+    const chosenImage = _images.splice(index, 1)[0]
+    _images.splice(0, 0, chosenImage)
+    setImages(_images)
+  }
+
+  const handleDelete = async (urlFile: string) => {
+    return await FirebaseCRUD.deleteFile({ url: urlFile })
+      .then((res) => {
+        console.log(res)
+        setImages(images.filter((image) => image.url !== urlFile))
+      })
+      .catch((err) => console.error(err))
   }
 
   return (
@@ -90,13 +105,27 @@ const InputFiles = ({
               {[...images, ...uploadingImages]?.map(({ url, uploading }, i) => (
                 <div
                   key={`${url ?? ''}-${i}`}
-                  className={` aspect-square w-36`}
+                  className={` aspect-square w-36 relative`}
                 >
+                  {i === 0 || (
+                    <div className="absolute z-10">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          handleSetAsFirst(i)
+                        }}
+                        className="btn btn-xs opacity-80"
+                      >
+                        set as first
+                      </button>
+                    </div>
+                  )}
                   <PreviewImage
                     image={url}
                     uploading={uploading}
                     previewSize="full"
-                    //  handleDelete={() => handleOpenDelete(url)}
+                    handleDelete={async () => await handleDelete(url)}
                   />
                 </div>
               ))}

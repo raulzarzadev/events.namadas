@@ -8,7 +8,7 @@ const SubEventsSection = ({ hideSubEvents }: { hideSubEvents?: boolean }) => {
 
   return (
     <div>
-      <FormSection title="Classify event">
+      <FormSection title="Classify event" className="bg-base-100">
         {!hideSubEvents && (
           <>
             <h4 className=" font-bold">Sub events</h4>

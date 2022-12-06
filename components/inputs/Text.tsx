@@ -2,7 +2,7 @@ import React from 'react'
 import { InputType } from '.'
 export interface TextType extends Omit<InputType, 'size'> {}
 const Text = React.forwardRef<HTMLInputElement, TextType>((props, ref) => {
-  const { label, errors, name = '', type, helpertext = '' } = props
+  const { label, errors = {}, name = '', type, helpertext = '' } = props
   return (
     <div className="form-control w-full ">
       <label className="label-text ">{label}</label>

@@ -3,11 +3,13 @@ import { Autocomplete, GoogleMap, useLoadScript } from '@react-google-maps/api'
 import Icon from '@comps/Icon'
 import useGeolocation from 'hooks/useGeolocation'
 import { Coordinates } from '@firebase/Events/event.model'
+import Modal from '@comps/modal'
 interface PickerLocationType {
   className: string
   setLocation?: (location: Coordinates) => void
   location?: Coordinates
   disabled?: boolean
+  label?: string
 }
 const GOOGLE_MAP_LIBRARIES: Array<
   'places' | 'drawing' | 'geometry' | 'localContext' | 'visualization'
@@ -17,21 +19,49 @@ export default function PickerLocation({
   disabled,
   className = 'h-10',
   setLocation,
-  location
+  location,
+  label = 'Selecciona una ubicación'
 }: PickerLocationType) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? '',
     libraries: GOOGLE_MAP_LIBRARIES
   })
 
+  const [openModal, setOpenModal] = useState(false)
+  const handleOpenModal = () => {
+    setOpenModal(!openModal)
+  }
   if (!isLoaded) return <div>Loading...</div>
   return (
-    <Map
-      className={className}
-      setLocation={setLocation}
-      location={location}
-      disabled={disabled}
-    />
+    <div>
+      <div className=" ">
+        <label className="flex w-full justify-center ">
+          {location?.address ?? label}
+          <button
+            className=""
+            onClick={(e) => {
+              e.preventDefault()
+              handleOpenModal()
+            }}
+          >
+            <Icon name="location" />
+          </button>
+        </label>
+      </div>
+      <Modal
+        size="full"
+        title="Slecciona una ubicación"
+        open={openModal}
+        handleOpen={handleOpenModal}
+      >
+        <Map
+          className={className}
+          setLocation={setLocation}
+          location={location}
+          disabled={disabled}
+        />
+      </Modal>
+    </div>
   )
 }
 

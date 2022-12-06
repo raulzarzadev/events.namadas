@@ -6,7 +6,7 @@ interface InputDateType extends Omit<InputType, 'type' | 'size'> {
 }
 
 const InputDate = React.forwardRef<any, InputDateType>((props, ref) => {
-  const { label, errors, name, type, ...rest } = props
+  const { label, errors = {}, name, type, ...rest } = props
   return (
     <div className="form-control w-full ">
       <label className="label">{label}</label>

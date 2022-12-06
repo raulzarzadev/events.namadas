@@ -67,9 +67,9 @@ const PreviewImage = ({
               blurDataURL={image}
             />
             {showDelete && (
-              <div className="absolute right-0 ">
+              <div className="absolute right-0 flex ">
                 <button
-                  className=" hover:text-error text-white "
+                  className=" btn btn-error btn-xs btn-circle btn-ghost text-error  "
                   onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()

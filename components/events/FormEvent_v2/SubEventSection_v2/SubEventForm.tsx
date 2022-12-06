@@ -31,16 +31,17 @@ const SubEventForm = () => {
   return (
     <div>
       <div>
-        <div className="grid gap-4">
+        <div className="grid  ">
           {subEvents.map((field, index) => (
-            <SubEventFields
-              key={field.id}
-              handleRemoveSubEvent={() => {
-                remove(index)
-              }}
-              //  defaultFormFields={defaultFormFields}
-              index={index}
-            />
+            <div key={field.id} className="my-1">
+              <SubEventFields
+                handleRemoveSubEvent={() => {
+                  remove(index)
+                }}
+                //  defaultFormFields={defaultFormFields}
+                index={index}
+              />
+            </div>
           ))}
           <div className="w-full flex justify-center my-2">
             <button

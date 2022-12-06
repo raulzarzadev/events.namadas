@@ -110,7 +110,7 @@ export interface SubEvent {
   date?: string
   style: string
   image?: string
-  price?: string | number
+  price?: number
   location?: Coordinates
   link?: string
 }

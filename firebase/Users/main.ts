@@ -11,20 +11,22 @@ import { User } from './user.model'
 
 const usersCRUD = new FirebaseCRUD('users')
 
-export const setUser = (itemId: string, newItem: object) =>
-  usersCRUD.setDoc(itemId, newItem)
+export const setUser = async (itemId: string, newItem: object) =>
+  await usersCRUD.setDoc(itemId, newItem)
 
-export const createUser = (newItem: any) => usersCRUD.create(newItem)
+export const createUser = async (newItem: any) =>
+  await usersCRUD.create(newItem)
 
-export const updateUser = (itemId: string, newItem: Partial<User>) =>
-  usersCRUD.update(itemId, newItem)
+export const updateUser = async (itemId: string, newItem: Partial<User>) =>
+  await usersCRUD.update(itemId, newItem)
 
-export const deleteUser = (itemId: string) => usersCRUD.delete(itemId)
+export const deleteUser = async (itemId: string) =>
+  await usersCRUD.delete(itemId)
 
-export const getUser = (itemId: string) => usersCRUD.get(itemId)
+export const getUser = async (itemId: string) => await usersCRUD.get(itemId)
 
-export const listenUser = (itemId: string, cb: CallableFunction) =>
-  usersCRUD.listen(itemId, cb)
+export const listenUser = async (itemId: string, cb: CallableFunction) =>
+  await usersCRUD.listen(itemId, cb)
 
 export function authStateChanged(cb: CallableFunction) {
   onAuthStateChanged(auth, async (user) => {
@@ -38,8 +40,8 @@ export function authStateChanged(cb: CallableFunction) {
   })
 }
 
-export function getVisibleCompanies() {
-  return usersCRUD.getMany([where('companyInfo.isVisible', '==', true)])
+export async function getVisibleCompanies() {
+  return await usersCRUD.getMany([where('companyInfo.isVisible', '==', true)])
 }
 
 export async function googleLogin() {
@@ -63,15 +65,16 @@ export async function googleLogin() {
       const email = error.customData.email
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error)
+
       // ...
     })
 }
 
-export function logout() {
-  return signOut(auth)
+export async function logout() {
+  return await signOut(auth)
 }
 
-export const updateCompany = (
+export const updateCompany = async (
   companyId: string,
   companyInfo: User['companyInfo']
-) => usersCRUD.update(companyId, { companyInfo })
+) => await usersCRUD.update(companyId, { companyInfo })

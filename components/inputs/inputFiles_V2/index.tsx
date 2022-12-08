@@ -11,7 +11,7 @@ interface InputFilesType {
   displayAs?: 'row' | 'grid'
 }
 export interface ImageType {
-  url?: string | undefined
+  url: string
   metadata?: any
   uploading?: boolean
 }
@@ -33,7 +33,7 @@ const InputFiles = ({
     const files = e.target.files
     setUploadingImages(
       [...files].map(() => {
-        return { uploading: true }
+        return { uploading: true, url: '' }
       })
     )
 

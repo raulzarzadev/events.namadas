@@ -47,6 +47,7 @@ const FormContent = () => {
           location={formValues?.location}
         />
       </div>
+
       <div>
         <h3 className="font-bold text-lg text-center mt-5">Location</h3>
         <InputFiles

@@ -31,7 +31,7 @@ import './initialize_persistence'
 
 export const storageRef = (path = '') => ref(storage, path)
 export class FirebaseCRUD {
-  constructor(private collectionName: string = '') {}
+  constructor(private readonly collectionName: string = '') {}
 
   static format = (
     date: string | number | Date,
@@ -100,7 +100,7 @@ export class FirebaseCRUD {
 
   static deleteFile = async ({ url }: { url: string }) => {
     const desertRef = storageRef(url)
-    return deleteObject(desertRef).then(() => {
+    return await deleteObject(desertRef).then(() => {
       // File deleted successfully
       return { ok: true, url }
     })
@@ -276,7 +276,7 @@ export class FirebaseCRUD {
     const res: any[] = []
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      //console.log(doc.id, " => ", doc.data());
+      // console.log(doc.id, " => ", doc.data());
       res.push(FirebaseCRUD.normalizeDoc(doc))
     })
     return res[0]
@@ -306,7 +306,7 @@ export class FirebaseCRUD {
     const res: any[] = []
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      //console.log(doc.id, " => ", doc.data());
+      // console.log(doc.id, " => ", doc.data());
       res.push(FirebaseCRUD.normalizeDoc(doc))
     })
     return res
@@ -401,7 +401,7 @@ export class FirebaseCRUD {
     } else if (typeof date === 'number') {
       return new Date(date)
     } else if (typeof date === 'string') {
-      let aux = new Date(date)
+      const aux = new Date(date)
       if (isNaN(aux.getTime())) {
         return null
       } else {

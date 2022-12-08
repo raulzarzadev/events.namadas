@@ -1,4 +1,4 @@
-import FormEvent from '@comps/events/FormEvent_v2'
+import FormEvent from '@comps/events/FormEvent_simple'
 import PrivatePage from 'HOCS/PrivatePage'
 
 const NewEvent = () => {

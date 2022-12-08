@@ -12,6 +12,7 @@ const FormEvent = ({ event }: { event: any }) => {
   const router = useRouter()
   const currentDate = new Date().getTime()
   const defaultValues: Partial<EventType> = {
+    title: 'New Event',
     date: myFormatDate(currentDate, 'datetime'),
     finishAt: myFormatDate(currentDate, 'datetime'),
     status: 'HIDDEN',

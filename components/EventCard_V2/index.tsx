@@ -18,7 +18,7 @@ const EventCard = ({
   onSubscribe?: (id: string) => {}
 }) => {
   const { title, images = [], status } = event
-  const firsImage = images?.[0]?.url ?? images?.[0]?.src
+  const firsImage = images?.[0]?.url
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => {
     setOpenModal(!openModal)

@@ -10,18 +10,12 @@ import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 
 import Image from 'next/image'
-
-interface ImageType {
-  src: string
-  text?: string
-  url?: string
-  loading?: boolean
-}
+import { EventImage } from '@firebase/Events/event.model'
 
 const Carousel = ({
   images = []
 }: {
-  images?: ImageType[] | [] | undefined
+  images?: EventImage[] | [] | undefined
 }) => {
   return (
     <div className="">
@@ -40,9 +34,7 @@ const Carousel = ({
           <SwiperSlide key={i} className="">
             <div className="relative w-full h-72 ">
               <Image
-                src={
-                  (image?.src || image?.url) ?? '/images/defaultEventImage.jpeg'
-                }
+                src={image?.url ?? '/images/defaultEventImage.jpeg'}
                 objectFit="cover"
                 layout="fill"
               />

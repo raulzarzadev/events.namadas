@@ -73,11 +73,7 @@ const EventColCard = ({
         <div className="w-full mx-auto">
           <figure className="relative  w-full h-[165px]  ">
             {firsImage && (
-              <Image
-                src={firsImage?.url ?? firsImage?.src}
-                objectFit="cover"
-                layout="fill"
-              />
+              <Image src={firsImage?.url} objectFit="cover" layout="fill" />
             )}
             <UpcomingLabel status={status} />
           </figure>

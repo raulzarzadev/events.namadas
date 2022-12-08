@@ -15,7 +15,7 @@ const PaymentCard = ({
 }) => {
   const { status, price } = payment
   const { event } = useEvents({ eventId: `${price?.eventId ?? ''}` })
-  const defaultImage = event?.images?.[0].url ?? event?.images?.[0].src
+  const defaultImage = event?.images?.[0]?.url
   return (
     <Link href={`/events/${event?.id ?? ''}`}>
       <a className="w-[200px]">

@@ -96,9 +96,8 @@ export interface EventSubscription {
 export type SwimmingTypes = 'openWater' | '25m' | '50m' | 'swimmingPool'
 
 export interface EventImage {
-  src: string
   alt: string
-  url?: string
+  url: string
   text?: string
 }
 export interface SubEvent {
